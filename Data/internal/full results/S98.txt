@@ -1,0 +1,373 @@
+*Advanced Materials Research Vols 403-408 (2012) pp 3704-3708* *Online: 2011-11-29*
+*© (2012) Trans Tech Publications, Switzerland*
+*[doi:10.4028/www.scientific.net/AMR.403-408.3704](http://dx.doi.org/10.4028/www.scientific.net/AMR.403-408.3704)*
+## **Web Based Application Maintenance Cost Estimation Modeling ** **using Bayesian SEM ** Somchai Prakancharoen
+
+Department of Computer and Information Science Faculty of Applied Science
+
+King Mongkut’s University of Technology North Bangkok, Thailand
+
+spk@kmutnb.ac.th
+
+**Keywords:** Web based application software maintenance, Factor analysis, Structural equation
+modeling: SEM, Bayesian analysis.
+
+**Abstract.** The objectives of this research were to find out the Structural equation modeling
+coefficient and other parameter estimation under unknown prior distribution and compare this new
+model’s coefficient accuracy with the former model on “Web based application maintenance cost
+estimation multi group modeling” [16]. This new coefficient and parameter were estimated with
+Bayesian analysis instead of Maximum likelihood estimation (ML). The input model used in
+Bayesian analysis was started from the ML-model result [16]. The new values were replaced into the
+former model then MMRE was detected from 30 (testing) completed software maintenance projects
+while 192 projects were used for SEM model training. The result of cross validation was about
+44.08% for Bayesian analysis refined SEM model while the ML-SEM model was 47.58%.
+
+**Introduction**
+
+Software maintenance is effort consumption activity and may cause critical event if it cannot be
+delivered to user in a suitable cost. If we can precisely estimate amount of software maintenance cost
+then project planning of software maintenance could be easily defined.
+
+The web based application software maintenance cost estimation model [16] was especially
+designed for the public and private sector of Thailand web based application during 2006-2009.
+Factor analysis technique and Structural equation modeling were used to find out factors and factors
+relationships respectively. Indeed, these small project’s dataset [16], only 170 cases training, might
+cause inaccurate estimation so that Bayesian analysis technique was chosen to refine the estimation of
+parameter and coefficient results.
+
+**Literature References**
+
+**Factor analysis.** [1] Factor analysis is technique of reducing some unimportance indicators and
+grouping some related indicators to be new latent variable (factor or component). There are many
+method used to compose indicators to new component such as Principle component analysis: PCA,
+Maximum likelihood estimation: ML.
+
+**Structural Equation Modeling: SEM.** [2] Structural equation modeling is a method of
+confirmatory factor analysis. It can analyze whether a user’s purposed model of factor relation is good
+or not. Estimation method of model calculation are Maximum Likelihood Estimation: ML,
+Generalized Least Squares: GLS, Asymptotically distribution free: ADF, Unweighted least square
+:ULS …etc. Result model of SEM must be checked with Goodness of fit by some statistics such as
+Chi-square (χ [2] ) (ought to non significance), Goodness of Fit Index: GFI (exceed > 0.9), Adjusted
+Goodness of Fit Index: AGFI (exceed > 0.9), Root Mean Square Error of Approximation: RMSEA
+(lower than <= 0.06) and Hoelter’s N (ought to exceed 75).
+
+**Software sizing.** Donald J.Reifer [11] present that “Web Objects”, source code sizing method, has
+a similar concept to “Function Point”. “Web object” defined the web based software sizing with more
+reasonable size estimation to web based application than Function point. The attribute of web object
+
+All rights reserved. No part of contents of this paper may be reproduced or transmitted in any form or by any means without the written permission of Trans
+[Tech Publications, www.ttp.net. (ID: 128.210.126.199, Purdue University Libraries, West Lafayette, USA-13/04/15,07:28:31)](http://www.ttp.net)
+
+**Advanced Materials Research Vols. 403-408** **3705**
+
+covered Internal logical files, External interface files, External inputs, External outputs, External
+inquiries, # multi-media files, # web building blocks, # scripts (animation, audio, video, visual, etc.),
+# of links (xml, html and query language lines). We have chosen to use web object in software sizing
+in this research.
+
+**Relevant researches.** Literature review from related papers [3,4,5,6,7,8,9,10,12,13,14] were
+studied and collected some commonly used indicators in software maintenance cost estimation.
+
+**Evaluation criterion.** Cross validation of purposed model is an another important activity to
+confirm of model reliability. The final best fitted model would be tested with completed software
+maintenance in actual cost. Predicted cost from the purposed model were calculated and then
+analyzed MMRE value (Mean Magnitude of Relative Error) [15] as Eq. 1.
+
+
+1 *n*  *Actual* *i* − *Predicted* *i* 
+# = ∑  ×
+
+*n* *i* =1  *Actual* *i* 
+
+
+1 *n* *Actual* *i* − *Predicted* *i*
+# MMRE = ∑  ×100                                               (1)
+
+*n* *Actual*
+
+
+1 *n* *Actual* *i* − *Predicted* *i*
+
+×100
+
+
+*n* *Actual* *i* − *Predicted* *i*
+
+
+1
+
+
+*i* =1 *i*
+
+
+=
+
+
+**Bayesian analysis** . [17] Bayesian analysis was the technique to estimation of those parameters
+from a given samples. Maximum likelihood in SEM assume that probability distribution of Uniform
+distribution (prior) while Bayesian analysis try out the probability distribution from empirical
+environment and combined it with Bayesian’s theorem to gain posterior distribution. The unknown
+parameters should be estimated from this distribution without former assumption about distribution.
+
+**Research Framework**
+
+**Independence variables collection.** Literature review from relevant researches were considered and
+summary that 17 indicators were mostly referenced in software maintenance cost estimation as
+illustrated in Table 1.
+
+Table 1: Most common referenced indicators.
+
+|Indicator|Description|DataType|
+|---|---|---|
+|Web_Object|Web Object|0-∞|
+|App_Req|Application Requirement|1-5|
+|App_Reli|Application Reliability|1-5|
+|App_Comp|Application Complexity|1-5|
+|App_Modu|Application Modularity|1-5|
+|MT-Cap|Maintenance Team Capability|1-5|
+|MT_Exp|Maintenance Team Experience|1-5|
+|MT_Coh|Maintenance Team Cohesive|1-5|
+|MT_Stab|Maintenance Team Stability|1-5|
+|MT_App-Exp|Maintenance Team Application Experience|1-5|
+|App_Plt_Diff|Application Platform Difficulty|1-5|
+|App_Lang_Diff|Application Language Difficulty|1-5|
+|App_Aging|Application Aging|1-5|
+|App_Lang_Old|Application Language Oldie|1-5|
+|App_Rel_T_Org|Application Related to Organization|1-5|
+|CMM_Lev|Capability Maturity Model|1-5|
+|MT_T|Maintenance Team Tool|1-5|
+
+
+
+(level 1-5 is Likert rating scale : 1 =very low, 2 =low, 3 =nominal, 4 =high, 5 =very high)
+
+**Data collection.** Indicators from Table 1. were designed to be a form fill-in questionnaire. This
+questionnaires were then submitted to target software department. Twenty two completed software
+maintenance projects were additional collected (2009) while the amount of cases in [16] were two
+hundred cases (2006-2008). In conclude, two hundred and twenty two completed software
+maintenance projects were the new total amount of cases. Data from questionnaire was prepared and
+cleaning before statistical processing. Some Indicator (Such as M_Cost, Web_Object) have more
+skew ness than criterion (not exceed +/- 1) thus Log10 transformation for both indicator (represent
+with L_M_Cost, L_Web_Object) would reduce their skewness to become a normal distribution. All
+variables were transformed to standardized value, prefixed with alphabet “z”, for preventing sizing
+domination of each indicator.
+
+**3706** **MEMS, NANO and Smart Systems**
+
+**Factor Analysis.** One hundred and ninety two completed software projects were used to construct
+factor with PCA method. KMO value was “0.815”, Bartlett’s test of Sphericity was non significant
+(α=0.001) and cumulative variance explained = “72.54 %” (appropriate large). This could conclude
+that factor analysis met good criterion. Variamax rotation method could depict more clarity factor and
+their indicators as presenting in Table 2.
+
+Table 2: Factors and their composed indicators.
+
+|Factor|Indicator|
+|---|---|
+|App_Attribute|zApp-Req, zApp_Aging, zApp_Lang_Old, zApp_Rel_T_Org, zCMM_Lev, zL_Web_Object|
+|App_Diffculty|zApp_Comp, zApp_Plt_Diff, zApp_Lang-diff|
+|App_Reliability_Modularity|zApp_Reli, zApp_Modu|
+|MT_Attribute|zMT_Cap, zMT_Exp, zMT_App_Exp, zMT_Coh, zMT_Stab, zMT_T|
+
+
+
+**Structural equation modeling (SEM).**
+
+  - Four extracted factors and their indicator were constructed to be a researcher’s suggested
+model subject to concept of researcher as represented in Fig 1. Latent variable maintenance cost
+(MT_Cost) was a target latent variable which composed of one manifest variable zL_M_Cost.
+MT_Cost was endogenous latent variable while other factors were exogenous latent variables.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figures. 1: Researcher’s suggested model.
+
+  - SEM with ML estimation for all remaining significance factors and theirs indicators were
+consider to be modified their relationships by adding, cutting. Goodness of fit indices were
+immediately observed whether their goodness of fit statistics were closely to the best criterion. After
+many trials were tried out, the met criterion model (goodness of fit) was illustrated in Fig 2. The
+passed statistics criterion was shown in Table 3.
+
+Table 3: Important goodness of fit statistics.
+
+|Statistics|Value|
+|---|---|
+|Chi_ square (χ2)|12.358 (p=0.262)|
+|RMSEA|0.044|
+|HOELTER ’s N|180(0.01)|
+
+
+
+Chi_square (χ [2] ), RMSEA and Hoelter’s N were all passed lower criterion of best fit model. Final
+model in Fig 2 illustrated significant factor and their indicators with M_Cost. Their relation ship
+quantity and direction were shown as well. M_Cost could be calculated from Eq. 5 (unstandardized)
+
+**Advanced Materials Research Vols. 403-408** **3707**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figures. 2: Final model-best fitted.
+
+MT_Cost   = 1.010 * App_Attribute - 0.060 * MT_Attribute                         (2)
+ZL_M_Cost = 0.96 * MT_Cost + 0.98 * elc                                       (3)
+L_M_Cost  = ZL_M_Cost * σ *L* _ *M* _ *COST* + *L* _ *M* _ *Cost* (4)
+
+M_Cost     = anti Log 10 ( L_M_Cost )                                          (5)
+while “elc” estimation value was equal to “0.084”, σ *L* _ *M* _ *COST* = “0.701” and *L* _ *M* _ *Cost* = “0.660”
+
+  - Bayesian analysis. The SEM model from Fig 2 was refined their coefficient and parameter
+with Bayesian analysis. After perform MCMC simulation (Monte Carlo Markov chain) about 80,000
+rounds the partial example of coefficient estimation were presented in Table 4.
+
+Table 4: Partial example of coefficient by Bayesian estimation.
+
+|Regression weights|Mean|S.E.|
+|---|---|---|
+|ZApp_Lang_Old<--App_Attribute|0.596|0.001|
+|ZMT_Exp<--MT_Attribute|0.805|0.010|
+|MT_Cost<--MT_Attribute|-0.056|0.001|
+|MT_Cost<--App_Attribute|1.113|0.000|
+|ZApp_Rel_T_Org<--App_Attribute|0.836|0.001|
+|ZL_Web_Object<--App_Attribute|1.061|0.001|
+
+
+
+Coefficients in equation were then value replaced with new value of coefficient which were estimated
+by Bayesian analysis above. The new equations were presented in (Eq. 6-9).
+MT_Cost   = 1.113 * App_Attribute - 0.056 * MT_Attribute (6)
+ZL_M_Cost = 0.96 * MT_Cost + 0.98 * elc (7)
+L_M_Cost  = ZL_M_Cost * σ *L* _ *M* _ *COST* + *L* _ *M* _ *Cost* (8)
+
+M_Cost    = anti Log 10 ( L_M_Cost )                                         (9)
+while “elc” estimation value was equal to “0.092”, σ *L* _ *M* _ *COST* = “0.701” and *L* _ *M* _ *Cost* = “0.660”
+
+  - Cross validation. Software maintenance cost predicted value from Eq. 5 and Eq. 9 were then
+compared to thirty known software maintenance cost of completed software maintenance projects.
+MMRE of SEM Eq. 5 and Eq. 9 were presented in Table 5.
+
+Ta b l e 5: MMRE v al ue o f M _Cos t .
+
+|Item|Equation (5)|Equation (9)|
+|---|---|---|
+|MMRE|47.58%|44.08%|
+|Accuracy|52.42%|55.92%|
+
+**3708** **MEMS, NANO and Smart Systems**
+
+**Summary**
+
+**Conclusion.**
+
+  - Maintenance cost estimation in Eq. 5 could be used to predict software maintenance cost with
+accuracy percentage 52.42%.
+
+  - Maintenance cost estimation in Eq. 9, refined coefficient with Bayesian estimation, could
+predict software maintenance cost with more accuracy percentage 55.92%.
+**Suggestion for further research.** This model was small dataset then Bayesian analysis gave more
+accuracy estimation cause of not require Uniform distribution assumption but if dataset increase cases
+Bayesian analysis should closely to the ML estimation. In this situation, MT_Attribute and
+App_Attribute were interacted together which might cause non linear effect so that Partial least
+square method could be considered using to reduce this effect for increasing model prediction
+
+accuracy.
+
+**References**
+
+[1] R.J. Rummel. Factor analysis . Hawaii University : USA. 2002.
+
+[2] Garson David. Structural equation modeling. North-Carolina state university: USA. 2007.
+
+[3] Crosby Philip. Practical software engineering. University of Calgary:USA, 2005.
+
+[4] Mukhija Arun. Estimating software maintenance.Institute of informatik. Zurich University: SWISS, 2008.
+
+[5] Banker D. Rajiv et El. Factor affecting software maintenance. Carnegie mellon university: USA. 1988.
+
+[6] Stark E. George. Measurement to manage software maintenance. Mitre corporation. Colorado: USA.1997.
+
+[7] Mukhija Arun and Glinz M. Estimating software maintenance.Requirement research group. Zurich
+university: SWISS. 2003.
+
+[8] Mustafa K. Quality metric development framework. Al husain bin talal university: JORDAN. 2005.
+
+[9] Cristine W. Thackaberry. Estimating metrics for course ware maintenance effort. Washington
+state university: USA. 1998.
+
+[10] Krishnan S. Mayuram. The role of team factors in software cost and quality. University of
+Michigan: USA. 1998.
+
+[11] Riefer J. Donald. Web object counting convention. Reifer institute. CA: USA. 2006.
+
+[12] David F. Rico. Software process improvement. J.Ross Publishing: USA. 2007.
+
+[13] DACS. Software Maintenance Metrics. : USA. 2006.
+
+[14] Pankatt b. Hatt, Inflencing Factors In Outsource software maintenance, ACM Sigsoft, 2006.
+
+[15] Martin Shepperd, Software project effort using analogies, IEEE Vol 23,1997.
+
+[16] Somchai Prakancharoen, Web Based Application Maintenance cost Estimation Multi group
+Modeling, PSU 2nd Phuket research conference, Prince of songkla university- Phuket campus,
+Thailand, 2009.
+
+[17] Sik-Yum Lee, Structural Equation Modeling: A Bayesian Approach, Wiley press, USA, 2011.
+

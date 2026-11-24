@@ -1,0 +1,967 @@
+# An Empirical Study on the Estimation of Software Development Effort with Use Case Points
+
+
+Luís M. Alves
+
+Escola de Tecnologia e Gestão
+Instituto Politécnico de
+
+Bragança
+Bragança, Portugal
+*lalves@ipb.pt*
+
+
+André Sousa
+
+Dep. Sistemas de Informação
+Escola de Engenharia
+Universidade do Minho
+Guimarães, Portugal
+*pg20115@alunos.uminho.pt*
+
+
+Pedro Ribeiro
+
+Centro ALGORITMI
+
+Universidade do Minho
+Guimarães, Portugal
+*pmgar@dsi.uminho.pt*
+
+
+Ricardo J. Machado
+
+Centro ALGORITMI
+
+Universidade do Minho
+Guimarães, Portugal
+*rmac@dsi.uminho.pt*
+
+
+***Abstract*** **—Empirical studies are important in software**
+**engineering to evaluate new tools, techniques, methods and**
+**technologies in a structured way before they are introduced in**
+**the industrial (real) software process. Perform empirical**
+**studies in a real context is very difficult due to various**
+**obstacles, so, we intend to create a stable environment that**
+**allows us to perform reliably empirical studies with students.**
+**This paper describes a case study with 104 students grouped in**
+**seven teams that developed a software system (Web**
+**application) for a real costumer. In this study we used a model**
+**based on Use Case Points (UCP) to estimate the resources**
+**needed to develop a software system.**
+
+***Keywords—empirical*** ***studies;*** ***software*** ***engineering***
+***management; software engineering process; software quality;***
+***use case models; use case points.***
+
+I. I NTRODUCTION
+
+Empirical studies in software engineering have had a
+significant role in the evaluation of tools, techniques,
+methods and technologies before they introduced in
+industrial software. In the early nineties, Basili introduced,
+for the first time, the concept of *experience factory* [1].
+These authors developed an organizational schema for
+collecting experiences on reuse of empirical results, for
+analysing them and generalizing the knowledge contained
+
+[2]. This scheme was designed based on many years of the
+Software Engineering Laboratory (SEL) work. Empirical
+studies developed within the SEL involved students from
+different USA universities and industry partners.
+
+With our approach we do not intend to create a new SEL.
+Instead, we intend to create a space (virtual or physical) that
+allows us to conduct empirical studies in the software
+engineering area by involving students that are enrolled in
+our current software engineering courses (both at
+undergraduate and postgraduate university programmes).
+
+To ensure compliance, in terms of cost, schedule and
+quality of an IT (Information and Technology) project is
+important to estimate the total amount of resources early in
+developing process. Currently, there are several methods to
+estimate the resources needed to develop a software system.
+
+
+For this propose, in our research we find *Function Points*
+(FP) [3], *Use Case Points* (UCP) [4] and LOC ( *Lines of*
+*Code* ) methods.
+
+In our empirical study we used graduate and
+undergraduate students that were randomized grouped in
+seven teams to develop a software system. We applied the
+original UCP method for estimate the effort needed to
+develop the software system of each one teams.
+
+Our final goal of carrying out empirical studies with
+students is to understand its validity when compared with the
+corresponding studies in real industrial settings. We intend to
+answer if it is adequate to use students as subjects in
+empirical studies? What is the better way to involve students
+as subjects in order to obtain valid results? Can we use the
+results with student in real context?
+
+In this paper, a description of Empirical Software
+Engineering (ESE) using students versus professionals as
+subject is presented in Section 2. Section 3 describes related
+work with *Function Points*, *Use Case Points* and LOC ( *Lines*
+*of Code* ) methods. In Section 4, we present in detail the
+original *Use Case Points* method that we use in the next
+section. In section 5 we briefly describe the case study we
+have developed to initially assess the effectiveness of using
+UCP method in educational context. Finally, in Section 6 we
+present the conclusions and future work.
+
+II. ESE USING S TUDENTS VERSUS P ROFESSIONALS
+
+In this section, based on literature review we describe the
+strengths/weaknesses of using students versus professionals
+in the empirical software engineering context.
+
+In the survey conducted in [5], a total of 5,488 subjects
+took part in the 113 experiments investigated, eighty-seven
+percent were students and nine percent were professionals.
+This survey demonstrates the importance of using students in
+this context.
+
+In many studies, students are used instead of professional
+software developers, although the objective is to draw
+conclusions valid for professional software developers. The
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply. 978-1-4673-5261-1/13/$31.00 ©2013 IEEE
+
+differences are only minor, and it is concluded that software
+engineering students may be used instead of professional
+software developers under certain conditions. Höst et al.
+have a paper where the performance of software engineering
+students in empirical studies is discussed and evaluated [6].
+The authors emphasize two main reasons for performing this
+kind of studies. First, it may serve as a measure of the quality
+of education. A large difference in performance between
+professional software developers in industry and students in
+their last year at the university may imply that the persons
+leaving the university need experience and training before
+they are able to fully contribute. A second reason for
+studying the differences between students and professionals
+is that many empirical studies in software engineering
+research rely on students as subjects, although attempting to
+generalize the findings to professional software developers
+
+[6]. Höst et al. argue that the main reason to use students as
+subjects is often that they are available at universities and
+they are willing to participate in studies as part of courses
+they attend. In many cases, it is possible to combine the
+learning objectives of the courses with the research
+objectives of the studies.
+
+Tichy refer that software graduate students are so close to
+professional status that the differences are marginal. The
+author also refer that this students are technically more up to
+date than the "average" software developer who may not
+even have a degree in computing. About software
+professionals, Ticky refers that they may be better prepared
+in the application domain and may have learnt to deal with
+systems and organizations of larger scale than a student. The
+author also argues that a theory is provisionally accepted
+only if it has been tested in at least two experiments by
+independent groups and the empirical work have a main role
+in this issue [7]. In educational context, we can do empirical
+work with students from different courses, schools and
+regions. Later, if possible, we can reply these experiments in
+industrial context.
+
+Sjøberg et al. argue that the main reason of most subjects
+in software engineering experiments are students is that they
+are more accessible and easier to organize, and hiring them is
+generally inexpensive. Consequently, it is easier to run an
+experiment with students than with professionals and the
+risks are low. However, authors refer that the discussion in
+the software engineering community about students versus
+professionals seems over-simplified [8].
+
+Jaccheri et al. refer that empirical studies are often
+carried out with students because they are viewed as
+inexpensive subjects for pilot studies. The authors also argue
+that, at any rate, the final goal of carrying out empirical
+studies with students is performing empirical studies in
+industrial organizations and establishing collaborations with
+them [9].
+
+Svahnberg et al. refer that the students are readily
+available, often willing to participate, and require no or little
+compensation. They conducted a study where they found out
+that students are able to both have a personal view and
+express their opinion about the way it works in industry. This
+study was about requirement selection task where students
+
+
+must select which requirement that should go into a specific
+release of a system [10].
+
+Carver et al. have developed a checklist that provides
+guidance for researchers and educators when planning and
+conducting studies in university courses. Initially, the authors
+identified the requirements that research and pedagogy place
+on a valid empirical study with students and after, they used
+this information as the basis for develop that checklist [11].
+
+III. EFFORT ESTIMATION METHODS
+
+There are great efforts and contributions to measure the
+size of a software system and estimate the effort needed to
+develop it. Measuring the size of a software system is
+different to estimate the effort needed to develop it. The first
+is an activity that estimates a probability of a software
+system size in a measurement unit while the second
+estimates the effort required to developing it. The
+relationship between the size of a software system and effort
+required to develop it is given by the productivity of the
+software development team.
+
+Metrics are measurement methodologies whose main
+objective is to estimate the size of software system and
+assist, as an indicator, the project management of software
+system development. The estimated size is one of the most
+commonly used metrics for software size, since has direct
+impact on development effort and project management. It is
+an indicator of the amount of work to be performed and this
+kind of knowledge can be used to help us to estimate the cost
+and the lead time for the project [4]. According to Pressman,
+measurement enables managers to plan, monitor, improve
+and enhance the software process development [12].
+
+Estimating the size of a software system is a critical
+development process activity. Not only does size impact the
+technical solution; it also impacts the project management
+solution [13].
+
+The size of the software system means the amount of
+work to be performed in a project development. Each project
+can be estimated according to the physical size (which is
+measured through the requirements specification, analysis,
+construction and testing); based on the functions that the user
+gets, in the complexity of the problem that the software
+system will solve and in the reusability of the project, which
+measures how much the product will be copied or modified
+from another existing product [14] [15].
+
+Currently, there are several metrics of size estimation and
+it is difficult to select the most appropriate for the size of a
+software project in an organization. The main metrics were
+developed based on the software functions such as: *Function*
+*Points* [16], *Bang* [17], *Feature Points* [18], *Boeing' s 3D*
+*Function Points* [19], *Mark II* [20], *Use Case Points* [4],
+*COSMIC Full Function Points* [21].
+
+*A.* *LOC (Lines of Code)*
+
+The first metrics of software size estimation emerged in
+mid-1960's, although the first dedicated book on software
+metrics was not published until 1976 [22]. These metrics
+were based on the physical size of *Lines of Code* (LOC) and
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+
+were used as the basis for "measuring programming
+productivity and effort" [14]. This metric considers the
+software from the perspective of the internal structure and is
+applied in the final stages of the software project [23].
+
+Ross highlights two advantages of using LOC method: 1)
+the possibility to estimate automatically, and 2) the ease of
+using historical data because most of the existing data about
+estimation were measured by LOC method. The
+disadvantages are related to ambiguity, because the metric
+becomes ambiguous when dealing with non-textual
+abstractions and the lack of significance of the measure to
+the end user (costumer) [13]. Besides these disadvantages
+Fenton and Pfleeger note that a count in LOC depends on the
+degree of code reusing and the programming language and
+can be five times higher than another estimate, due to
+differences in techniques of measurement of blank lines,
+comment lines, data declaration and statements [15]. The
+authors also emphasize that the LOC method penalizes small
+and well-designed programs, it is not adequate to nonprocedural programming languages and is difficult to obtain
+in the early planning stages of development of a software
+system [15].
+
+LOC method was a metric widely used until mid-1970.
+From there emerged various programming languages and
+consequently the need for other ways to estimate the size of
+software.
+
+*B.* *Function Points*
+
+The *Function Points* (FP) is one of the first metrics to
+measure the size of software with some precision. It is the
+most used in the industry and became an international
+standard in 2002 through the ISO/IEC 20926 [24]. Currently,
+the mapping of the *Function Points* method to estimate
+object oriented software projects has been widely discussed
+in the literature.
+
+*Function Points* method was developed in the mid 70's
+and published in 1979 by Allan Albrecht in an attempt to
+minimize the difficulties associated with lines of code as a
+measure of software size, and to assist in generating a
+mechanism that could predict the effort associated with
+software development [3, 25]. The first version of *Function*
+*Points* aimed to be applied early in the software development
+process, to be related to economic productivity and to be
+independent of the source code or programming language.
+
+In 1984, Allan Albrecht refined this version and later,
+with the increased use of the *Function Points* method, it
+became necessary to define a guide to interpret the original
+rules for new environments. Due to this need, in 1986 was
+created the *International Function Point Users Group*
+(IFPUG) [26]. From this date, the IFPUG became
+responsible for defining the counting rules, the training and
+certification of professionals interested in the application of
+this metric and dissemination of several historical databases
+of productivity of software development in industry,
+provided by various agencies, including the *International*
+*Software Benchmarking Group* [27]. This information
+enables the estimation of development time for new software
+projects and team productivity based on previous estimates
+
+
+made by the *Function Points* method [25, 28]. The *Function*
+*Points* has become the most widely used and studied metric
+in the history of software engineering and in late 1993 had
+groups of users in 18 countries [29].
+
+The *Function Points* method aims to establish a measure
+of "size" of software in function points (unit of measure for
+software as well as the hour is unit of measurement for time),
+by quantifying the functions implemented from the point of
+view of user in a business focus and not in technical focus
+
+[25]. As the basic principle, this metric focus on
+requirements specification to obtain estimates of time, cost,
+effort and resources in early phase of software development
+process independently of the technology used for their
+implementation [30]. It provides a count indicative early in
+software development process without knowing details of the
+data model. Later in the software development process, this
+count becomes more accurate estimate of the complexity of
+functions and, at the end of software development (in the
+implementation phase), a detailed count is performed,
+obtained from the degree of complexity of the functions
+raised in the functional process, data model, description of
+the screens and reports [25, 26].
+
+In general, organizations apply the *Function Points* as "a
+method for determining the size of the software package
+purchased; to support the analysis of productivity and
+quality; to estimate the costs, resources and efforts of
+development projects and maintenance of software" [28]. In
+addition to these purposes, Longstreet highlights other
+utilities of *Function Points* method: "define when and where
+to make reengineering; estimate test cases; understand the
+increase of scope; assist in contract negotiations; develop a
+standard set of metrics; and make benchmark of software"
+
+[25].
+
+*C.* *Use Case Points*
+
+The *Use Case Points* (UCP) metric was defined to
+estimate Object Oriented (OO) projects based on the same
+philosophy of *Function Points* and in the process
+" *Objectory* ", where the use case concept was developed.
+Later, Ivar Jacobson developed " *Object-Oriented Software*
+*Engineering (OOSE)* ", methodology based in use cases, a
+technique widely used in industry to describe and collect the
+functional requirements of the software. Considering that the
+use cases model was developed to collect the requirements
+based on use and users vision, it makes sense to base the
+estimation of size and resources of software projects in use
+cases [31].
+
+Since the UCP method was selected to perform the
+empirical study with the students, next we present the
+relevant characteristics and the counting process of this
+method.
+
+IV. USE CASE POINTS METHOD
+
+The first description of the method was published by
+Gustav Karner [4] with the aim of creating a model that
+would allow estimating the resources required to develop a
+software system under *Objectory AB* (later acquired by
+Rational Software). Its influences came from the classic
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+
+*Function Point* method. However, after the original work,
+the author has not done any further publication or justified
+aspects of the conception of the method, thus it was being
+applied and adapted according to the circumstances. The
+method consists in calculating a metric called *Use Case*
+*Points* that give us an estimation of the size and complexity
+of a software project. If we know the development team
+productivity (to be obtained based on previous projects), we
+can derive an estimate of the effort required to develop the
+software project.
+
+The UCPs are related to functional, technical and
+environmental complexity of the software project, namely
+the following aspects:
+
+- The number and complexity of the actors and use cases
+in the system;
+
+- Several non-functional requirements with impact on the
+project (e.g. performance, usability, reliability, etc.);
+
+- The impact of the environment where the project is
+developed.
+When applying the method, we must first calculate the
+complexity of actors and use cases in the system to quantify
+the variables *Unadjusted Actor Weight* (UAW) and
+*Unadjusted Use Case Weight* (UUCW), respectively. When
+combined with their weight, we obtain an inadequate
+measure of the size and complexity of the system called
+*Unadjusted called Use Case Points* (UUCP). The next step is
+to adjust this measure with a number of technical factors and
+environmental factors given by *Technical Complexity factor*
+(TCF) and *Environmental* *Factor* (EF) variables,
+respectively. These factors combined with the UUCP
+variable will produce the effective number of UCPs that
+reflect the size and complexity of the software project. In the
+following subsections we detail the steps needed to calculate
+the UCPs.
+
+*A.* *Unadjusted Actor Weight (UAW)*
+
+An actor is an entity that interacts with the system to
+achieve its goals: a person, a machine, a software
+application, etc. Thus, to capture these differences, each
+actor is classified as *simple*, *average* or *complex* and each
+actor type is associated with a weight as shown in Table I.
+
+TABLE I. C OMPLEXITY OF ACTORS
+
+|Category|Number of transactions|Weight|
+|---|---|---|
+|Simple|3 or less|5|
+|Average|4 to 7|10|
+|Complex|More than 7|15|
+
+
+
+|Category|Example|Weight|
+|---|---|---|
+|Simple|An external system through an<br>API (Application Programming<br>Interface)|1|
+|Average|A user who interacts with the<br>system through a command line|2|
+|Complex|A user who interacts with the<br>system through a Graphical<br>User Interface (GUI)|3|
+
+
+Although we believe that a GUI is more complex than a
+command line or API, there are no published studies that
+justify this aspect [32]. The complexity of the actors in the
+system is given by the *Unadjusted Actor Weight* (UAW)
+variable, and is calculated by the sum of the products
+between the actors in each category with their associated
+weights.
+
+
+*B.* *Unadjusted Use Case Weight (UUCW)*
+
+A use case is a story about how users interact with the
+system to achieve their goals. There are several ways to write
+a use case, however, to avoid that the measurement of the
+number of UCPs of the software project is not affected, all
+use cases of the system must be written with the same level
+of detail. The user-objectives oriented approach described in
+
+[33] is suitable for apply the method.
+
+Such as actors are classified according to their
+complexity, the use cases are also classified as *simple*,
+*average* or *complex* through the number of transactions
+containing the main course of success and alternative
+courses, as shown in Table II.
+
+TABLE II. C OMPLEXITY OF USE CASES
+
+It is noted that a transaction cannot be a step in the
+courses of use cases. Ivar Jacobson (the use cases author)
+defines a transaction as an action triggered by the user to
+which the system reacts and presents the results of its
+processing [34].
+
+To calculate the *Unadjusted Use Case Weight* (UUCW)
+variable, each use case must be classified according to its
+category and the corresponding weight must be multiplied by
+the number of use cases the systems possesses of each
+category.
+
+*C.* *Unadjusted Use Case Points (UUCP)*
+
+After calculating the complexity of actors and use cases
+of the system, the respective variables must be combined to
+determine an estimation of the *Unadjusted Use Case Points*
+(UUCP). UUCP is considered an unadjusted estimation
+because it will be adjusted by a set of technical and
+environmental factors to calculate the effective value of the
+UCPs of the software project. The calculation of UUCP uses
+the following equation:
+
+UUCP = UAW + UUCW (1)
+
+*D.* *Technical Complexity Factor (TCF)*
+
+The size of the software system does not depend only on
+its functions and the users it serves. It also depends on the
+quality characteristics of the system. Therefore, there is a
+number of technical or non-functional factors that must be
+considered to measure the size of the system based on what
+was agreed between the costumer and the supplier. A list
+describing all technical factors proposed by Karner is shown
+in Table III [4].
+
+The impact of each factor within the project is rated on a
+scale 0, 1, 2, 3, 4 and 5, where 0 means that it is irrelevant
+and 5 means it is essential. If the factor is neither important
+nor irrelevant it must be rated with the value of 3. The rate of
+the factor must be multiplied by the associated weight as
+shown in Table III. The sum of all the products calculates the
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+
+*TFactor* value, which is used to calculate the *Technical*
+*Complexity Factor* (TCF):
+
+TCF = 0.6 + (0.01 x *TFactor* ) (2)
+
+Karner based the constants 0.6 and 0.01 on the
+adjustment factors of *Function Points* created by Albrecht
+
+[3]. For example, for a given system with a *TFactor* equal to
+42, the TCF is:
+
+TCF = 0.6 + (0.01 x 42) = 1.02 (3)
+
+TABLE III. *T* *ECHNICAL* *F* *ACTORS* CONTRIBUTING TO COMPLEXITY
+
+|Factor|Description|Weight|
+|---|---|---|
+|T1|Distributed systems|2|
+|T2|Performance|2|
+|T3|Efficiency|1|
+|T4|Complex internal processing|1|
+|T5|Code reusability|1|
+|T6|Installation ease|0.5|
+|T7|Usability|0.5|
+|T8|Portability|2|
+|T9|Changeability|1|
+|T10|Concurrency|1|
+|T11|Security|1|
+|T12|Accessibility of others|1|
+|T13|Training|1|
+
+
+
+*E.* *Environmental Factor (EF)*
+
+The characterization of the software development teams
+is also important to obtain a measure of the size and
+complexity of the software project; thus there is a set of
+aspects related to the development environment that must be
+weighed. The levels of the motivation of the team or the
+familiarity with the software process development adopted
+are examples of environmental factors that must be taken
+into account on the calculation of the UCP value. A list
+describing all environmental factors proposed by Karner is
+shown in Table IV [4].
+
+The impact of each factor within the project is rated on a
+scale 0, 1, 2, 3, 4 and 5, where 0 means that it is irrelevant
+and 5 means it is essential. If the factor is neither important
+nor irrelevant it must be rated with the value of 3. The rate of
+the factor must be multiplied by the associated weight as
+shown in Table IV. The sum of all the products calculates the
+*EFactor* value, which is used to calculate the *Environmental*
+*Factor* (EF):
+
+EF = 1.4 + (−0.03 x *EFactor* ) (4)
+
+TABLE IV. *E* *NVIRONMENTAL* *F* *ACTORS* CONTRIBUTING TO EFFICIENCY
+
+
+For example, for a given system with an *EFactor* equal to
+17.5, the EF is:
+
+− −
+EF = 1.4 + ( 0.03 x 17.5) = 1.+ ( 0.51) = 0.89 (5)
+
+*F.* *Use Case Points (UCP)*
+
+Finally, after calculating the above variables shown in the
+previous subsections, the last step is to calculate the effective
+number of UCPs of the system using the following equation:
+
+UCP = UUCP x TCF x EF (6)
+
+If the team productivity is known, the UCP value can be
+used to estimate the effort required to develop a software
+system. According to Karner, each UCP corresponds to 20
+hours of work [4].
+
+V. CASE STUDY
+
+Based on the previously described approach for
+calculating the UCP, a case study was developed to
+determine the productivity of some student software
+development teams.
+The teams were constituted by second year students of
+the course 8604N5 Software System Development (SSD)
+from the undergraduate degree in Information Systems and
+Technology in University of XXX (the first University to
+offer in XXXX DEng, MSc and PhD degrees in
+Computing). The teams had between 10 and 17 people (1
+team with 10, 1 team with 14, 1 team with 15, 3 teams with
+16 and 1 with 17). Each team receives an sequential
+identification number (Team 1, Team 2, .., Team 7) and the
+description of the customer problem.
+The teams developed a software project of medium
+complexity, using the *Unified Modeling Language* (UML)
+notation encompassed in an iterative and incremental
+software development process, in this case, the *Rational*
+*Unified Process* (RUP). The teams followed the guidelines
+established by the RUP reduced model [35, 36], executing
+the phases of inception, elaboration and construction
+according to the best practices suggested by CMMI-DEV
+v1.2 ML2. The project lasted 3 months. This software
+project was to develop a Web solution using object-oriented
+technologies and relational databases, to support the
+information system of one local costumer that provided all
+the information about the organization and interacted directly
+with the teams.
+
+The main goal of case study was to calculate the
+productivity of the teams in hours/man per UCP, based on
+the size of each software project and in effort reported by
+each team. To determine the teams productivity, we have
+used the following equation:
+
+Productivity = Effort[h] / Size[UCP] (7)
+
+The measurement of the functional size expressed by
+UUCP metric was based on the latest version of the use case
+model that developed by each team. Each team has chosen a
+different number of components to develop. The quality
+attributes and restrictions were also different for each team.
+These differences had considerable impact on the
+
+|Factor|Description|Weight|
+|---|---|---|
+|E1|Experience with a software<br>development process|1.5|
+|E2|Development experience with<br>similar projects|0.5|
+|E3|Experience with OOP|1|
+|E4|Maturity in OO analysis|0.5|
+|E5|Motivation|1|
+|E6|Stability of requirements|2|
+|E7|Part time workers|-1|
+|E8|Experience with technologies<br>adopted|-1|
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+
+calculation of the TCF. For reasons of space is not shown
+the table with the weights of technical factors assigned to
+each of the teams. Table V presents the weight of
+environmental factors across all teams.
+To calculate the team' s productivity we have used the
+real effort that each team reported to develop the software
+system. This effort involved hours spent within the project,
+as well as attending lectures related with the SSD course.
+
+TABLE V. W EIGHT OF ENVIRONMENTAL FACTORS ON TEAMS
+
+|Description|Weight|
+|---|---|
+|Experience with RUP|3|
+|Development experience with<br>similar projects|0|
+|Experience with OOP|3|
+|Maturity in OO analysis|1|
+|Motivation|3|
+|Stability of requirements|3|
+|Part time workers|1|
+|Experience with technologies|3|
+
+
+
+Table VI presents the metrics collected from each
+development team. From this table we can conclude that the
+productivity factors of the teams vary between 5,6 hours to
+12,2 hours per UCP. On average, the productivity factor per
+team is 9,36 hours per UCP. These results are directly
+related to the total effort accomplished in hours and the size
+of projects measured in UCPs.
+In general, teams with more elements reported more
+effort. Normally, we tend to assume that the size of projects
+in UCPs is proportional to the functional size. However, this
+did not happen to all teams, as seen in Fig. 1 .
+
+This discrepancy occurs primarily for two reasons. The
+first indicates that the teams with more members (and
+reporting more effort) give more emphasis on documentation
+tasks (mainly the writing of reports). The other reason is due
+to the quality of artifacts (mainly the use case models) that
+are limited by the reduced experience of the teams in
+requirements specification. We could observe in all teams,
+use cases with poor quality, leading to a subjective
+interpretation to identify transactions in the main and
+alternative courses. Additionally, the majority of the use
+cases were classified as *simple* according the UCP method
+because it had few transactions.
+
+Based on the costumer assessment, the teams with the
+highest software project size in UCPs had the best results,
+especially teams Team4, Team3 and Team7 (with the
+exception of the Team6). Finally, it was also found that the
+use case models of these teams were superior to the others.
+
+
+VI. CONCLUSIONS
+
+In the empirical study, the average productivity of the
+teams was based on the size of the software projects in UCPs
+and in total effort made throughout the all phases of the
+software project development. We believe that the average
+productivity could be used in future situations: (1) in the
+business planning phase of the project within the Software
+Process and Methodologies (SPM) course (first semester) to
+estimate the development effort of the project to implement
+in the SSD course (second semester); (2) during the
+implementation phase for control purposes, to calibrate the
+effort of every moment of the project. The results could also
+be packaged in database (repositories) with historical data
+with projects information. This data can include all
+measurements obtained in all project of the teams.
+
+Fig. 1. Comparison between total effort and software size per team
+
+After application of the UCP method in three real
+projects, Karner found that it takes 20 man hours to complete
+one UCP [4]. This factor has been accepted as an historically
+collected figure representing productivity [31, 37]. The
+teams involved in the case study presented coefficients of
+productivity more generous. This does not mean that they are
+super teams, but means that further research is needed to find
+the reason of this discrepancy. However, we believe that
+empirical studies involving students on these subjects are
+important for the scientific community and the industry.
+
+
+Considering also that productivity is directly related to
+
+alternative courses. Additionally, the majority of the use
+
+the effort made and with the functional size per UCP, we
+
+*simple* according the UCP method
+
+suggest for future editions of the SMP and SSD courses that
+all teams use a development tool, for example *Teamwork*
+
+Based on the costumer assessment, the teams with the *Project Manager* [38], in order to accurately determine the
+highest software project size in UCPs had the best results, effective involved effort. We intent to assess the influence of
+especially teams Team4, Team3 and Team7 (with the this tool in the teams performance. As future work, the
+exception of the Team6). Finally, it was also found that the determination of the productivity of each element according
+
+the role of the RUP that he/she assumes is also an interesting
+experiment.
+TABLE VI. R ESULTS OF THE SOFTWARE DEVELOPMENT TEAMS
+
+|Description|Team1|Team2|Team3|Team4|Team5|Team6|Team7|
+|---|---|---|---|---|---|---|---|
+|Number of elements|10|15|16|17|16|16|14|
+|Total effort [hours]|2094|2118|2511|5467,5|3517,5|4287|4548|
+|Unadjusted Actor Weight (UAW)|36|27|45|42|30|21|87|
+|Unadjusted Use Case Weight (UUCW)|170|165|365|400|300|305|570|
+|Unadjusted Use Case Points (UUCP)|206|192|410|442|330|326|657|
+|Technical Complexity Factor (TCF)|1,075|1,045|1,095|1,075|1,115|1,075|0,955|
+|Environmental Factor(EF)|1,01|1,01|1,01|1,01|1,01|1,01|1,01|
+|Software size|221,45|206,4|448,95|475,15|367,95|350,45|627,44|
+|Use Case Points (UCP)|224|203|453|480|372|354|634|
+|Productivity [hours / UCP]|9,36|10,45|5,54|11,39|9,47|12,11|7,18|
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+
+R EFERENCES
+
+[1] Basili, V., Caldiera, G., McGarry, F., Pajerski, R., Page, G., and
+Waligora, S. "The Software Engineering Laboratory-an
+Operational Software Experience Factory." In *14th ICSE* . 11-15
+May 1992. Proceedings of the 14th International Conference on
+Software Engineering. Melbourne, Australia, pp. 370-381.
+
+[2] Visaggio, G., "Empirical Experimentation in Software
+Engineering." In Lucia, Ferrucci, Tortora, and Tucci (ed.).
+2008. *Emerging* *Methods,* *Technologies* *and* *Process*
+*Management in Software Engineering* . Hoboken, New Jersey:
+John Wiley & Sons, Inc., p. 227.
+
+[3] Albrecht, A. J. "Measuring application development
+productivity." In *IBM Application Development Symposium* . 1517 October 1979. Monterey, California, USA, pp. 83-92.
+
+[4] Karner, G. September 1993. "Use Case Points: Resource
+Estimation for Objectory Projects." *Objective Systems SF AB.*
+
+[5] Sjøberg, D. I. K., Hannay, J. E., Hansen, O., Kampenes, V. B.,
+Karahasanovic, A., Liborg, N. K., and Rekdal, A. C. September
+2005. "A survey of controlled experiments in software
+engineering." *IEEE Transactions on Software Engineering.* Vol.
+31, pp. 733-753.
+
+[6] Höst, M., Regnell, B., and Wohlin, C. November 2000. "Using
+Students as Subjects—A Comparative Study of Students and
+Professionals in Lead-Time Impact Assessment." *Empirical*
+*Software Engineering.* Vol. 5, pp. 201-214.
+
+[7] Tichy, W. F. December 2000. "Hints for Reviewing Empirical
+Work in Software Engineering." *Empirical* *Software*
+*Engineering.* Vol. 5, pp. 309-312.
+
+[8] Sjøberg, D. I. K., Anda, B., Arisholm, E., Dyba, T., Jorgensen,
+M., Karahasanovic, A., Koren, E. F., and Vokac, M.
+"Conducting realistic experiments in software engineering." In
+*ISESE’ 02* . 3-4 October 2002. Proceedings of the 2002
+International Symposium on Empirical Software Engineering.
+Nara, Japan, pp. 17-26.
+
+[9] Jaccheri, L. and Morasca, S. "Involving industry professionals
+in empirical studies with students." In *Int.Conf. on ESE Issues:*
+*Critical Assessment and Future Directions* . 26-30 June 2006.
+Proceedings of the 2006 International Conference on Empirical
+Software Engineering Issues: Critical Assessment and Future
+Directions. Dagstuhl Castle, Germany, pp. 152-152.
+
+[10] Svahnberg, M., Aurum, A., and Wohlin, C. "Using students as
+subjects - an empirical evaluation." In *ESEM 2008* . 9-10
+October 2008. Proceedings of the 2nd International Symposium
+on Empirical Software Engineering and Measurement.
+Kaiserslautern, Germany, pp. 288-290.
+
+[11] Carver, J. C., Jaccheri, L., Morasca, S., and Shull, F. 2010. "A
+checklist for integrating student empirical studies with research
+and teaching goals." *Empirical Software Engineering.* Vol. 15,
+pp. 35-59.
+
+[12] Pressman, R. S. 2005. *Software Engineering: A practitioner's*
+*approach* . Sixth Edition ed. New York, USA: McGraw-Hill.
+
+[13] Ross, M., "Size Does Matter: Continuous Size Estimating and
+Tracking," unpublished.
+
+[14] Fenton, N. E. and Neil, M. "Software metrics: roadmap." In
+*CFSE* . 4-11 June 2000. Proceedings of the Conference on The
+Future of Software Engineering. Limerick, Ireland, pp. 357-370.
+
+[15] Fenton, N. E. and Pfleeger, S. L. 1997. *Software Metrics: A*
+*Rigorous and Practical Approach* . Second Edition ed. Boston,
+USA: PWS Publishing Company.
+
+[16] Albrecht, A. J. and Gaffney, J. E., Jr. 1983. "Software Function,
+Source Lines of Code, and Development Effort Prediction: A
+Software Science Validation." *IEEE Transactions on Software*
+*Engineering.* Vol. SE-9, pp. 639-648.
+
+[17] DeMarco, T. April 1984. "An algorithm for sizing software
+products." *SIGMETRICS Perf. Ev. Rev.* Vol. 12, pp. 13-22.
+
+[18] Jones, C. and Jones, C. "Feature Points (Function Point Logic
+for Real Time and System Software)." In *IFPUG Fall 1988*
+*Conference* . October 1988. Proceedings of the IFPUG Fall 1988
+Conference. Montreal, Québec, Canada.
+
+
+
+[19] Whitmire, S. "3D Function Points: Scientific and real-time
+extensions to Function Points." In *Pacific Northwest Software*
+*Quality Conf.* 19-21 October 1992. Portland, USA, pp. 137-154.
+
+[20] Symons, C. R. 1991. *Software Sizing and Estimating: MK II*
+*FPA (Function Point Analysis)* . N. Y., USA: John Wiley &
+Sons.
+
+[21] COSMIC-FP. 2003. *COSMIC-FFP Measurement Manual, v.*
+*2.2* . The Common Software Measurement Int. Cons.
+
+[22] Gilb, T. 1977. *Software Metrics* . Cambridge, Massachusetts,
+USA: Winthrop Publishers.
+
+[23] Misic, V. B. and Tesic, D. "Downsizing the estimation of
+software quality: a small object-oriented case study." In *TOOLS*
+*27* . 22-25 September 1998. Proceedings of the Technology of
+Object-Oriented Languages. Beijing, China, pp. 308-317.
+
+[24] Dekkers, C. A. May 2003 2003. "Measuring the “logical” or
+“functional” size of software projects and software application."
+*ISO Bulletin.* pp. 11-13.
+
+[25] Longstreet, D. "Fundamentals of Function Point Analysis."
+http://www.SoftwareMetrics.com . Accessed:6 December 2012.
+
+[26] IFPUG. "International Function Point Users Group."
+http://www.ifpug.org . Accessed:6 December 2012.
+
+[27] ISBSG. "International Software Benchmarking Group."
+https:// www.isbsg.org . Accessed:6 December 2012.
+
+[28] Garmus, D. and Herron, D. 2000. *Function Point Analysis:*
+*Measurement Practices for Successful Software Projects* . New
+Jersey, USA: Addison-Wesley.
+
+[29] Jones, C. August 1994. "Function Points." *Computer.* Vol. 27,
+pp. 66-67.
+
+[30] Furey, S. March 1997. "Why we should use function points."
+*IEEE on Software.* Vol. 14, pp. 28-30.
+
+[31] Damodaran, M. and Washington, A., "Estimation Using Use
+Case Points," unpublished.
+
+[32] Abran, A. 2010. *Software Metrics and Software Metrology* . 1
+edition ed. New Jersey, USA: Wiley-IEEE Computer Society.
+
+[33] Cockburn, A. 2000. *Writing Effective Use Cases* . 1 edition ed.
+New York, USA: Addison-Wesley.
+
+[34] Jacobson, I. 1992. *Object-Oriented Software Engineering: A*
+*Use Case Driven Approach* . New York, USA: Addison-Wesley.
+
+[35] Borges, P., Monteiro, P., and Machado, R. J. "Tailoring RUP to
+Small Software Development Teams." In *SEAA 2011* . 30
+August - 2 September 2011. Proceedings of the 37th
+EUROMICRO Conference on Software Engineering and
+Advanced Applications. Oulu, Finland, pp. 306-309.
+
+[36] Borges, P., Monteiro, P., and Machado, R. J. "Mapping RUP
+roles to small software development teams." In *4th International*
+*Conference on Software Quality Days (SWQD 2012)* . 17-19
+January 2012. Vienna, pp. 59-70.
+
+[37] Anda, B., Dreiem, H., Sjoberg, D. I. K., and Jorgensen, M.
+"Estimating Software Development Effort Based on Use CasesExperiences from Industry." In *UML' 2001* . 1-5 October 2001.
+Proceedings of the 4th International Conference on The Unified
+Modeling Language, Modeling Languages, Concepts, and
+Tools. Toronto, Canada, pp. 487-502.
+
+[38] Teamwork Project Manager. http://www.teamworkpm.net/ .
+Accessed:11 May 2012.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:16 UTC from IEEE Xplore. Restrictions apply.
+

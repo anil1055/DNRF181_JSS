@@ -1,0 +1,1785 @@
+# ���������������������������������������� ����������������������������������
+
+��������������������������������������������������������������������������������
+
+
+�������������������������������������������
+�����������������������������
+��������������������������������������������
+����������������������������������������������������������������������������
+
+**ABSTRACT** **1. INTRODUCTION**
+
+A reliable effort estimation is crucial for a successful web
+
+application development planning. Several approaches exist to
+address this issue. Among them, the algorithmic approach is one
+of the most widely used and investigated methods. It is based on
+suitable effort prediction models which relate the development
+effort with project characteristics. The size represents one of the
+most interesting characteristics of software products and several
+measures can be defined in order to estimate the size of web
+
+systems. Moreover, several techniques have been proposed in the
+literature to build the effort prediction models. Thus, of special [17], [19], [21], [24], [25]).
+interest should be to establish the most effective size measures to
+
+be employed in effort prediction models and the most suitable
+techniques for the model construction. To this aim some empirical *Model* and *Non-Model* *Based Methods*
+studies have been undertaken so far. Since it is widely recognized
+that several investigations should be performed to verify/confirm
+empirical results, in the paper we will report on an empirical
+analysis we have carried out by exploiting data coming from 15
+web projects developed by a software company. In particular, for
+the analysis we have considered two sets of size measures: Length
+
+software projects. Among these,
+
+Measures (e.g. number of pages, number of medias, number of
+client and server side scripts) and Functional Measures (e.g.
+external input, external output, external query). Moreover, we
+
+effort/cost models. Among these,
+
+have employed different techniques, such as Linear Regression,
+Regression Tree, and Analogy-Based Estimation, in order to
+determine the one that provides the best prediction.
+
+
+**Categories and Subject Descriptors**
+D.2.8 [ **Software Engineering** ]: Metrics – *Product metrics,*
+*Process metrics.*
+
+**General Terms**
+
+Management, Measurement, Documentation, Economics,
+Experimentation, Theory, Verification.
+
+**Keywords**
+Web applications, Size metrics, Effort prediction models,
+Empirical validation.
+
+Copyright is held by the author/owner(s).
+*ICWE'06*, July 11-14, 2006, Palo Alto, California, USA.
+ACM 1-59593-352-2/06/0007
+
+
+**1. INTRODUCTION**
+
+Effort estimation is a critical activity for planning and monitoring
+software project development and for delivering the product on
+time and within budget. Significant over or under-estimates can
+be very expensive for a company. Consequently, it is paramount
+for the competitiveness of a software company to be able to
+effectively predict in advance the effort required to develop a
+software project. Nowadays, the growth in complexity and
+number of provided features makes the effort estimation a crucial
+activity also for web application development ([10], [15], [16],
+
+[17], [19], [21], [24], [25]).
+
+In the literature a lot of different methods to estimate software
+
+development cost have been proposed, conventionally divided in
+*Model* and *Non-Model* *Based Methods* . While the latter mainly
+take into account expert judgments (thus with highly-subjective
+factors), Model-Based methods rely on a formal approach,
+involving the application of some algorithms to a number of
+inputs, to produce an effort estimate. The inputs for these
+algorithms are factors that influence the development effort of
+software projects. Among these, *Software Size* is a widely
+accepted key cost driver. For traditional desktop applications,
+several size measures have been conceived to be employed in
+effort/cost models. Among these, *Function Points* ( *FPs* ) have
+achieved a wide acceptance to estimate the size of business
+systems and to indirectly predict the project effort, cost, and
+duration [3]. But, when dealing with dynamic web applications,
+there is not yet a widely accepted size measure, even if a lot of
+research is currently devoted to this issue ([1], [2], [4], [15], [16],
+
+[17], [18], [19], [21], [24], [25]).
+
+In addition, several techniques have been proposed in the
+literature to build effort prediction models, such as Case-Based
+Reasoning or Analogy-Based Estimation, Linear Regression, and
+Regression Tree ([5], [6], [7], [11], [12], [23], [26]). Also in the
+context of web engineering, some empirical studies have been
+undertaken so far to establish the most suitable techniques for
+model construction ([5], [6]).
+
+It is widely recognized that several investigations should be
+performed to verify/confirm empirical results, especially using
+data coming from industrial world. To this aim, in the paper we
+will report on an empirical analysis we have carried out relying on
+data coming from 15 web projects developed by an Italian
+software company. The analysis aims to gain insight on both the
+size measures that could be considered effective indicators in
+
+predicting development efforts of web applications, and on the
+effectiveness of the modeling techniques. In particular, we have
+employed some *size* measures that have been proposed in the
+
+
+9
+
+literature for early estimations, which can be grouped into two
+categories: *Length Measures* (such as number of pages, medias,
+server side scripts, etc…) and *Functional Measures* (such as
+external input, external output, external query, web building
+blocks, etc…) ([1], [2], [15], [17], [19],[24]).
+
+About the techniques, we have exploited the *Linear Regression*,
+*Regression Tree*, *Analogy-Based Estimation*, a combination of
+Regression Tree and Linear Regression, and a combination of
+Regression Tree and Analogy-Based Estimation, in order to
+determine which one provides the best prediction.
+
+It is worth to point out that in the paper we focus on the Size
+Measures as cost factors. Thus, other factors, such as company
+expertise, client understanding of the needs, etc, are left to further
+investigations. Moreover, our goal is to provide an insight into
+both techniques and size measures exploiting industrial data,
+rather than to define a wide-range, general purpose model for web
+applications.
+
+The remainder of the paper is organized as follows. In Section 2
+the data sets used for the empirical evaluation and the considered
+Size Measures are described. Section 3 presents the empirical
+evaluation we carried out by exploiting various modeling
+techniques. Then, the comparison of the empirical results is
+reported in Section 4. Some final remarks and comparisons with
+related work conclude the paper.
+
+**2. THE DATASET**
+
+To perform the empirical analysis we have exploited data on 15
+web applications, developed by a medium-sized Italian software
+company. The core business of this company is the development
+of enterprise information systems, mainly for local and central
+government. Among other clients, there are educational structures,
+health organizations, research centers, industries, and other public
+institutions. It is highly specialized in the design, development,
+and management of solutions for web portals, enterprise
+intranet/extranet applications (such as content-ware, e-commerce,
+work-flow managers, etc…), and Geographical/Environmental
+Information Systems. The company, established in 1984, has
+about fifty employees, and is certified ISO 9001 for software
+development. Its turnover in the year 2003 was about 5M €.
+
+The web projects used for the empirical study can be classified in
+the following domains: e-government, e-banking, web portals, and
+intranet applications. They were developed in the last four years,
+exploiting a wide range of web-oriented technologies such as
+J2EE, ASP, ASP.NET, etc… Oracle was the commonly adopted
+DBMS, but also SQL Server, Access and MySQL were employed
+in some projects. All the projects match the definition of “web
+application” provided by Conallen in [8].
+
+The information related to the projects about the considered
+measures and the actual effort required for the development
+process have been obtained both from analysis and design
+documents, by using questionnaires filled in by the project
+managers of the software company. In the following, we will
+describe the measures considered for the empirical analysis.
+
+**2.1 The Considered Measures**
+
+Many software measures have been defined to be employed in
+effort/cost models, to predict the effort needed to develop the
+software [14]. Among these, the most frequently investigated
+measures are the Length and the Functional ones, which can be
+
+
+obtained from requirements, analysis, and design documents. In
+particular, for our case study we considered the Length Measures
+shown in Table 1, derived both from previous researches (for
+instance [15], [16], [17]) and from interviews with the company
+project managers. Indeed, three criteria have been adopted to
+select these variables: relevance for the designers and developers,
+easiness to collect, and simplicity and consistency of the counting
+rules [7]. Thus, we used both the Length measures proposed by
+Mendes *et al.*, for hypermedia and web applications, such as
+number of web pages, new images, animations, text pages typed,
+audioclips, etc… ([15], [16], [17], [18], [19]) and other measures
+specific of dynamic web applications, such as Number of Server
+side Scripts and Applications, and Number of External references.
+
+As for Functional Measures, we took into account the ones
+considered in the *Web Objects* approach to size web applications.
+The *Web Objects* method was proposed by Reifer [24] as an
+extension of *FPs* . He added four new web-related components
+(Multimedia Files, Web Building Blocks, Scripts and Links) to
+the five components of *FPs*, to compute the functional size of a
+web application. An empirical study on the application of *Web*
+*Objects* was provided by Ruhe et al. in [25], reporting better
+results than standard *FPs* . This further encouraged us to exploit
+those factors as functional measures of the size. Table 2 contains
+
+the descriptive statistics performed for the variables of Table 1 by
+considering the 15 projects developed by the software company.
+
+**Table 1: Variables for the web applications**
+
+|Variable|Description|Col3|
+|---|---|---|
+|EFH|Effort in person hours to develop the<br>web application||
+|Wpa<br>N_Wpa<br>Me<br>N_Me<br>CSAPP<br>SSApp<br>IL<br>EL|Number of web pages<br>Number of new web pages<br>Number of multimedia elements<br>Number of new multimedia elements<br>Number of Client side Scripts and<br>Applications<br>Number of Server side Scripts and<br>Applications<br>Number of Internal Links<br>Number of External References|Length measures|
+|EI<br>EO<br>EQ<br>ILF<br>EIF<br>WBB<br>MMF<br>Scr<br>Lin|Number of External Input<br>Number of External Output<br>Number of External Query<br>Number of Internal Logical File<br>Number of External Interface File<br>Number of Web Building Block<br>Number of Multimedia File<br>Number of Script<br>Number of Link|Functional measures|
+
+
+
+**3. EMPIRICAL ANALYSIS**
+
+In the following we present the empirical analysis that we have
+carried out by employing the following techniques: *Linear*
+*Regression*, *Regression Tree*, *Analogy-Based Estimation*, a
+*combination of Regression Tree and Linear Regression*, and a
+*combination of Regression Tree and Analogy-Based Estimation* .
+We have chosen these techniques because they are automatable,
+widely applied in Software Engineering, and interpretable, as
+suggested by Briand *et al.* [5]. We provide a brief description of
+the use of each technique while a comparison of the accuracy
+
+
+10
+
+which we gained with the considered prediction methods is
+provided in Section 4.
+
+**Table 2: Descriptive statistics of the dataset**
+
+|EFH|Obs<br>15|MIN<br>1176|MAX<br>3712|MEAN<br>2677,867|STD. DEV.<br>827,115|
+|---|---|---|---|---|---|
+|Wpa<br>N_Wpa<br>Me<br>N_Me<br>CSAPP<br>SSApp<br>EL<br>IL|15<br>15<br>15<br>15<br>15<br>15<br>15<br>15|2<br>2<br>54<br>20<br>5<br>2<br>0<br>124|46<br>46<br>223<br>223<br>55<br>209<br>8<br>592|17<br>17,2<br>104,133<br>82,533<br>26,933<br>80,4<br>4,933<br>279,133|12,317<br>12,167<br>43,533<br>56,599<br>16,918<br>55,414<br>3,770<br>145,322|
+|EI<br>EO<br>EQ<br>ILF<br>EIF<br>WBB<br>MMF<br>Scr<br>Lin|15<br>15<br>15<br>15<br>15<br>15<br>15<br>15<br>15|2<br>5<br>7<br>0<br>1<br>12<br>15<br>56<br>172|59<br>41<br>102<br>7<br>15<br>53<br>225<br>260<br>655|24.533<br>20.2<br>40.267<br>2.733<br>5.667<br>27.867<br>100<br>139.4<br>366.8|18.302<br>11.965<br>27.044<br>2.604<br>4.624<br>14.252<br>49.558<br>62.810<br>172.825|
+
+
+
+**3.1 OLS regression**
+Linear Regression analysis is one of the most commonly used
+statistical techniques for exploring the relationship between a
+dependent variable and one or more independent variables [22].
+In particular, we considered the multiple Linear Regression (LR)
+analysis and a forward Stepwise Regression (SR) which allowed
+us to compute linear regression in stages [22]. To evaluate the
+goodness of fit of a regression model, several indicators have been
+considered. Among them, the square of the linear correlation
+coefficient, *R* [2], indicates the amount of the variance of the
+dependent variable explained by the model related to the
+independent variable. Other useful indicators are the *F* value and
+the corresponding *p-value* (denoted by *Sign F* ), whose high and
+low values, respectively, denote a high degree of confidence for
+the prediction. We have also considered the *p-values* and *t-values*
+for the corresponding coefficients and the intercept. The *p-values*
+give an insight into the accuracy of the coefficients and the
+intercept, whereas their *t-values* allow us to evaluate their
+importance for the generated model. In particular, *p-values* less
+than 0.05 are considered an acceptable threshold, meaning that the
+variables are significant predictors with a confidence of 5%. As
+for the *t-value*, a variable is significant if its corresponding value
+is greater than 1.5.
+
+For our case study, we applied the OLS regression to the dataset
+of 15 web projects. Table 3 (a) shows the models obtained by
+applying a multiple Linear Regression analysis (M1 and M2) and
+a forward Stepwise Regression (M3 and M4) to Length and
+Functional Measures. To identify the independent variables to be
+employed in the LR models, we considered the predictors that are
+statistically correlated to the effort ( *EFH* ) at level 0.05, carrying
+out both Spearman’s rho and Pearson correlations. For all the
+analyses we verified the constancy of the residual variance
+( *homoscedasticity* ) by a Breush-Pagan test, which revealed that
+the null hypothesis of homoscedasticity cannot be rejected, since
+the *p-values* were greater than 0.05. Aanlogusly, the *normality*
+assumption of the residuals was confirmed by a Shapiro-Wilk test.
+In particular, a log transformation was necessary for Length
+
+
+Measures. As for outliers, our analysis revealed that there were
+not extreme values, which might improperly influence the models
+(as reported by Cook’s distance test).
+
+The LR method has identified for the model M1 the number of the
+
+Server-Side scripts and Applications ( *SSApp* ) as the main factor
+affecting the development effort. This makes sense, since we are
+dealing with dynamic web applications. The second affecting
+independent variable is the number of References to External
+Modules ( *EL* ). This again makes sense, due to the nature of the
+considered applications and their underlying technologies, heavily
+interacting with external components. The obtained model is
+characterized by a quite high *R* [2] value and a slightly low *F* value.
+Both *t-value* and *p-value* for *SSApp* satisfy the acceptance threshold,
+while this does not hold for the variable *EL* (Table 3 (b)).
+
+**Table 3: Prediction models obtained by Linear Regression**
+
+|Col1|MODEL|R2|F|SignF|
+|---|---|---|---|---|
+|M1|EFH=0.359*SSApp+<br>0.170*EL+5.402|0.638|10.571|0.002|
+|M2|EFH=8.783*EI- 10.758*EQ+<br>5.17*Scr+ 0.887*Lin+ 983.163|0.749|7.452|0.005|
+|M3|EFH=0.831*ME+<br>0.131*Wpa+3.826|0.974|75.292|0.001|
+|M4|EFH=24.175*EI+<br>1.986*Lin+1356.416|0.716|15.135|0.001|
+
+
+
+(a)
+
+|Col1|Col2|t-value|p-value|
+|---|---|---|---|
+|M1|SSA|3.507|0.004|
+|M1|EL|1.334|0.207|
+|M1|Intercept|8.138|0.000|
+|M2|EI|0.518|0.615|
+|M2|EQ|0.883|0.398|
+|M2|Scr|1.100|0.297|
+|M2|Lin|0.487|0.636|
+|M2|Intercept|2.026|0.070|
+|M3|Me|7.803|0.001|
+|M3|Wpa|3.380|0.028|
+|M3|Intercept|9.135|0.001|
+|M4|EI|2.832|0.000|
+|M4|Lin|2.196|0.015|
+|M4|Intercept|4.565|0.048|
+
+
+
+(b)
+
+About model M2, among Functional Measures, the method has
+identified as main factors affecting the development efforts the
+number of External Inputs ( *EI* ), of External Queries ( *EQ* ), of
+Scripts ( *Scr* ), and of Links ( *Lin* ). However, even if the model
+shows a quite high *R* [2] value, *F* value is low, and the *t-values* and
+the *p-values* of the variables do not reach the acceptance
+thresholds (Table 3 (b)). Consequently, we cannot have a high
+degree of confidence for the prediction obtained using this model.
+
+Model M3 also exploits the *EL* factor together with the total
+number of pages ( *Wpa* ) composing the web application. The
+goodness of this model is confirmed by high *R* *[2]* and *F* values, by a
+*SignF* value which is 0.001, and by *t-values* and *p-values* greater
+than 1.5 and less than 0.05, respectively (Table 3 (b)). Finally,
+model M4 uses *EI* and *Lin* as independent variables. It is
+
+
+11
+
+characterized by a quite high *R* *[2]* and good values for *t-values* and
+*p-values* of the variables and the intercept (Table 3 (b)). Thus, *EI*
+and *Lin* can be considered significant predictors with a high
+degree of confidence.
+
+In summary, the models generated with Stepwise Regression can
+be considered good for estimation and the employed variables can
+be considered significant predictors with a high degree of
+confidence. Conversely, the factors identified by multiple Linear
+Regression cannot be considered significant predictors.
+
+**3.2 Regression Tree**
+Regression Tree (RT) is a variant of decision trees that can be
+used to approximate real-valued functions [5], [6], [17]. This
+technique takes as input a set of numerical variables and generates
+a regression tree predicting the value of the target variable
+(corresponding to the dependent variable in linear regression). In
+particular, a binary tree is built by recursively splitting the input
+data into partitions. At the beginning all data are associated to the
+root. Then, they are split in two parts, minimizing the sum of the
+squared deviations from the mean in the separated parts. At each
+split, the process determines the input variables to be used for
+splitting, and the set of input values of the variable to associate to
+the left and right child nodes, respectively. Let us observe that
+each node has associated the mean value of the target variable.
+The process ends when, for each node, a minimum size specified
+for the node by the user is obtained. Subsequently, to determine
+the predicted value for the target variable, we start from the root
+node and then we follow the right or left branch, based on the
+value of the splitting variable. We continue until a leaf node is
+reached, which contains the predicted value.
+
+As for our empirical study, it is worth noting that the application
+of the technique on Length Measures has determined the splitting
+of the group on the variable *SSApp* . Thus, also this method
+suggested the number of Server-Side scripts and Applications to
+be the main Length variable affecting the development effort for a
+web application. Indeed, the left child node 2 (mean *EFH*
+=1962.3) can be reached if *SSApp* ≤ 63 and had 7 rows associated,
+while the right child node 3 (mean *EFH* = 3304) can be reached if
+SSApp>63 and had 8 rows associated. On the other hand, when
+considering Functional Measures, the technique split the group on
+the variable *EI* . Again, also this method suggested the number of
+User Inputs to be the chief Functional variable. In this case the
+left child node 2 (mean *EFH* = 2024), had 7 rows associated and a
+case goes left if *EI* ≤ 17. The right child node 3 (mean *EFH* =
+3250), had 8 rows and a case goes right if *EI* - 17.
+
+**3.3 Analogy-Based Estimation**
+The idea behind the use of Analogy-based Estimation (AE) is to
+predict the effort of a new project by considering similar projects
+previously developed. In particular, completed projects are
+characterized in terms of a set of *p* features and form the *case*
+*base* . The new project is also characterized in terms of the same *p*
+attributes and it is referred as the *target case* . Then, the similarity
+between the target case and the other cases in the *p* -dimensional
+feature space is measured, and the most similar cases (or projects)
+are used, possibly with adaptations to obtain a prediction for the
+target case [11], [26]. To apply the method, we had to select: the
+relevant project features, the appropriate similarity function, the
+number of analogies to select the similar projects to consider for
+estimation, and the analogy adaptation strategy for generating the
+
+
+estimation. It is worth to point out that the selection of the
+similarity function and the number of analogies are crucial
+decisions. Many researchers suggested to use Euclidean distance
+as similarity measure and 1, 2, and 3 analogies to identify similar
+projects ([5], [6], [17], [19]). The analogy adaptation step allows
+for deciding how to obtain estimation after the most similar cases
+have been determined. Widely used adaptation techniques are the
+nearest neighbor ([5], [19]), the mean of the closest analogies
+
+[17], [19], [23]), the inverse distance weighted mean, and inverse
+rank weighted mean [26].
+
+In our case study, to apply the Analogy-based Estimation
+technique, we have exploited the ANGEL tool [26] on the dataset
+of 15 web projects. To calculate the estimation, ANGEL allows
+the Measurer to choose the relevant predictors, the similarity
+function, the number of analogies, and the analogy adaptation
+technique. We did not use its *subset selection* feature, since it
+might be inefficient, as reported in [5], [26]. In particular, we
+have considered all the selected variables of Table 1 as set of
+
+features, since they are all relevant factors for designers and
+developers. About the similarity function, ANGEL implements
+the Euclidean distance using variables normalized between 0 and
+1. Selecting the number of analogies is a key task, since it refers to
+the number of similar cases to use for estimating the effort
+required by the target case. Since we dealt with a small data set,
+we used 1, 2, and 3 analogies, as suggested by many researchers
+([5], [6], [17], [19]). In order to select similar projects for the
+estimation, we employed the following adaptation strategies:
+mean of k analogies (simple average), inverse distance weighted
+mean, and inverse rank weighted mean [26].
+
+To obtain the prediction, the tool adopts a *jack-knifing* procedure
+on the dataset. Consequently, in our empirical study, ANGEL
+generated 15 predictions, and the corresponding residuals, for
+each selection of the number of analogies and of the analogy
+adaptation technique. Each prediction has been obtained by
+selecting a target project from the dataset, and by considering as
+case base the other 14 projects. For the sake of space we cannot
+report these results in the paper. However, the prediction
+accuracies are compared in Section 4.
+
+**3.4 Combination of Regression Tree and OLS**
+**regression (and Analogy-Based Estimation)**
+As suggested by Briand *et al* . in [5], [6], it is possible to combine
+the use of Regression Trees and Linear Regression. In our
+empirical study, we exploited the RTs described in section 3.2 as
+basis to perform a LR analysis on the observations associated with
+the two leaf nodes. Thus, we applied a simple linear regression by
+using as independent variable SSApp for Length Measures
+(obtaining models M5 and M6 in Table 4) and EI for Functional
+Measures (obtaining models M7 and M8 in Table 4). All the
+models are characterized by very low *R* [2] and *F* values, and *Sign F*
+greater than 0.05. Furthermore, the predictors *SSApp* and *EI* do
+not present good *t-values* and *p-values* . Consequently, all the four
+models cannot be considered good for estimation.
+
+We also combined the use of RT and Analogy-based Estimation,
+by applying the AE on the two sets of observations associated
+obtained with RTs. The accuracy of the prediction for this
+technique are provided in Table 6.
+
+
+12
+
+**Table 4: The prediction models obtained by combining RT and**
+**linear regression**
+
+|Col1|Col2|Model|R2|F|Sign<br>F|
+|---|---|---|---|---|---|
+|M5|SSApp≤63|EFH=20.236*SSApp<br>+ 1155.744|0.2<br>2|1.40|0.290|
+|M6|SSApp>6<br>3|EFH=1.096*SSApp+<br>3176.992|0.0<br>2|0.13|0.728|
+|M7|EI≤17|EFH=67.895*EI+<br>1354.745|0.3<br>6|2.837|0.153|
+|M8|EI>17|EFH=15.77*EI+<br>2660.592|0.2<br>4|1.908|0.216|
+
+
+
+(a)
+
+|Col1|Col2|t-value|p-value|
+|---|---|---|---|
+|M5|SSApp|1.184|0.290|
+|M5|Intercept|1.630|0.164|
+|M6|SSApp|0.365|0.728|
+|M6|Intercept|8.366|0.000|
+|M7|EI|1.684|0.153|
+|M7|Intercept|3.041|0.029|
+|M8|EI|1.381|0.216|
+|M8|Intercept|5.812|0.001|
+
+
+
+(b)
+
+**4. COMPARISON OF THE PREDICTION**
+
+**ACCURACY**
+
+The above modeling techniques allowed us to build some
+estimation models. In order to analyze the prediction accuracy of
+these models we applied a *cross validation* (see, e.g. [5], [6])
+technique (in particular a *leave-1-out* cross validation) by
+partitioning the whole data set into two randomly selected sets:
+the *training set* of 14 projects for model building and the *test set*
+consisting of the remaining project for model evaluation.
+
+To assess the acceptability of the derived effort prediction models,
+we have used *MMRE*, *MdMRE*, *Pred* (l) [7], together with
+*boxplots of residuals*, and *boxplots of z* [12] *.* In the following, we
+compare the gathered empirical results taking into account first
+the summary statistics and then the boxplots.
+
+**4.1 Comparison using summary statistics**
+The *Magnitude of Relative Error* [7] is defined as *MRE* =
+| *EFHreal* — *EFHpred* | / *EFHreal*, where *EFHreal* and *EFHpred*
+are the actual and the predicted efforts, respectively. This value
+has been calculated for each test set derived from the *leave-1-out*
+
+cross validation, using the delivered models. Then, the resulting
+values have been aggregated across all the test sets, by taking into
+account the Mean ( *MMRE* ) and the Median ( *MdMRE* ) [17].
+*Prediction at level* *l*, is defined as *Pred* ( *l* ) = *k* / *N*, where *k* is the
+number of observations with *MRE* less than or equal to *l*, and *N* is
+the total number of observations. *MMRE* and *Pred* ( *l* ) are
+considered the de facto standard to assess prediction models [7],
+used in many comparisons (such as [4],[5],[6],[7],
+
+[12],[17],[23],[25]). According to Conte *et al.*, a good effort
+prediction model should have a *MMRE* ≤ 0.25 and *Pred* (0.25) ≥
+0.75 (i.e., at least 75% of the predicted values should fall within
+25% of their actual values) [9].
+
+
+The values of *MMRE*, *MdMRE*, and *Pred* (0.25) we gathered by
+LR, SR, RT, and RT + LR are shown in Table 5, while the ones
+for the Analogy-based Estimations are provided in Table 6 (at the
+end of the paper, for sake of space).
+
+**Table 5: MMRE, MdMRE, and Pred(0.25)**
+
+|Technique|MMRE|MdMRE|Pred(0.25)|Col5|
+|---|---|---|---|---|
+|Linear Regr<br>Stepwise Regr.<br>Reg. Tree<br>RT + LR|0.18<br>0.28<br>0.17<br>0.17|0.15<br>0.16<br>0.11<br>0.10|0.73<br>0.53<br>0.80<br>0.73|Length measures|
+|Linear Regr<br>Stepwise Regr.<br>Reg. Tree<br>RT + LR|0.20<br>0.16<br>0.20<br>0.19|0.10<br>0.09<br>0.12<br>0.20|0.73<br>0.80<br>0.67<br>0.66|Functional measures|
+
+
+
+From these tables we can notice that the best results with Length
+Measures have been achieved by applying the **Combination of**
+**the Regression Tree and Analogy-Based Estimation** with 3
+analogies and inverse distance weighted mean as adaptation
+strategy. As for the Functional Measures, the best results are
+related to the **Stepwise Regression** . On the other hand, the worst
+results were provided by Length Measures applied to AnalogyBased Estimation, with 1 analogy, and mean of k analogies as
+adaptation strategy.
+
+The statistical significance of these results has been stressed by
+the *Wilcoxon signed rank test* and the *T-Test*, reporting that no
+significant differences can be found for the *MRE* values obtained
+by the two best models.
+
+About the methods presented in Table 5, almost all the models
+(except for the SR on Length Measures) are very close or meet the
+thresholds suggested by Conte [9]. In particular, both the LR
+models show good *MMRE* values and quite good *Pred* (0.25)
+results. The SR models obtain contrasting results, being the worst
+one if applied on Length Measures, and the best if applied on
+Functional Measures. The RT method achieves very remarkable
+results on Length Measures, while on Functional Measures it does
+not satisfy the *Pred* (0.25) threshold. Finally, both RT + LR
+models have good *MMRE* and *MdMRE* values and a few low
+*Pred* (0.25) values. About the statistical significance of these
+results, no noteworthy differences are reported between Length
+and Functional Measures, except for the SR, whose results with
+Functional Measures are much better than those with Length ones.
+
+About the Analogy-based methods, presented in Table 6, their
+*MMRE* and *Pred* (0.25) values are slightly below the usual
+acceptance thresholds. In particular, the best results with Length
+and Functional Measures have been obtained by using 3 and 2
+analogies, respectively, and inverse distance weighted mean as
+adaptation strategy. Also the use of 3 analogies and mean of k
+analogies has provided us good results. However, in general the
+application of the AE provided slightly worse results than the
+application of the Linear and Stepwise Regression analysis and
+RT.
+
+Probably, as suggested by Briand et al. [5], the choice of the
+similarity measure and adaptation strategy can be the reason of the
+lower prediction accuracy of the models obtained with this
+method. Among the various adaptation strategies, the inverse
+distance weighted mean resulted the best one, providing the
+
+
+13
+
+greatest prediction accuracy. Moreover, across the strategies there
+was no statistical difference for Length Measures, except in the
+inverse distance weighted mean vs. inverse rank weighted mean,
+using 2 analogies. Also for Functional Measures there was no
+noteworthy difference, except in the case of inverse distance
+weighted mean vs. mean of k analogies, using 3 analogies. No
+statistical difference was found about the different adaptation
+strategies.
+
+**4.2 Comparison using Boxplots**
+Recently, Kitchenham et al. in [13] argued that boxplots of
+residuals ( *EFHreal* — *EFHpred* ) and the boxplots of z (where z=
+*EFHpred* / *EFHreal* ) may provide a better insight on the
+effectiveness of a prediction model. Indeed, they suggested that
+the use of boxplots of residuals gives a good indication of the
+distribution of the error terms and can help to understand the
+behavior of the summary statistics [13]. Moreover, they provided
+evidence that *MMRE* is a measure of the spread of the variable z,
+while *Pred* (0.25) is a measure of how peaked the distribution of z
+is. Consequently, they claimed that z is a better measure of
+prediction accuracy, since the defined optimum value 1 clearly
+indicates whether or not the prediction model underestimates or
+overestimates [13], and that boxplots of z are a powerful tool to
+evidence it. All these aspects motivated us to analyze the
+prediction accuracy of the models by using also the boxplots of
+residuals and boxplots of *z*, depicted in Figure 1 and Figure 2,
+respectively.
+
+In our case study, these tools largely confirm, in a visual fashion,
+the results obtained by considering summary statistics. In
+particular, they report that the best results have been obtained
+with **Stepwise Regression** applied on Functional Measures, since
+its boxplot presents the smallest box length and tails. Moreover,
+residuals are symmetrically distributed with median adjacent to
+
+zero.
+```
+2.000
+   0
+
+```
+
+By analyzing other boxplots, we can notice that significant results
+have been obtained with RT-L and RT-F, since residuals are quite
+symmetrically distributed, with medians adjacent to zero. RT-L,
+RT-F, and RT+LR-F have medians slightly above zero, pointing
+out that these models slightly underestimate the development
+effort. Moreover, their box length are quite wide.
+
+```
+2,5
+2,0
+1,5
+1,0
+0,5
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+S
+R
+F
+
+```
+```
+R
+T
+L
+
+```
+```
+R
+T
+A
+E k
+3I
+W
+D
+F
+
+```
+```
+R R
+T T
+A A
+E k E k
+3I 2I
+R W
+W D
+F F
+
+```
+```
+ R R
+T T
+A A
+E k E k
+ 3 2I
+M R
+A W
+ F F
+
+```
+```
+R
+T
+A
+E k
+2
+M
+A
+F
+
+```
+```
+R
+T
+A
+E k
+1
+M
+A
+F
+
+```
+```
+R
+T
+A
+E k
+3I
+W
+D
+L
+
+```
+```
+R
+T
+A
+E k
+2I
+W
+D
+L
+
+```
+```
+R
+T
+A
+E k
+3I
+R
+W
+L
+
+```
+```
+ R R
+T T
+A A
+E k E k
+ 3 2I
+M R
+A W
+ L L
+
+```
+```
+R
+T
+A
+E k
+2
+M
+A
+L
+
+```
+```
+R
+T
+A
+E k
+1
+M
+A
+L
+
+```
+```
+R
+T
+L
+R
+F
+
+```
+```
+R
+T
+L
+R
+L
+
+```
+```
+A
+E k
+3I
+W
+D
+F
+
+```
+```
+ A
+ E k
+ 2I
+ W
+ D
+ F
+
+```
+```
+A
+E k
+ 3
+M
+A
+ F
+
+```
+```
+A
+E k
+2I
+ R
+W
+ F
+
+```
+```
+ A
+ E k
+ 3I
+ R
+ W
+ F
+
+```
+```
+A A
+E k E k
+ 1 2
+M M
+A A
+ F F
+
+```
+```
+A
+E k
+3I
+W
+ D
+ L
+
+```
+```
+A
+E k
+2I
+W
+ D
+ L
+
+```
+```
+A
+E k
+3I
+R
+W
+L
+
+```
+```
+A
+E k
+2I
+ R
+W
+ L
+
+```
+```
+A
+E k
+ 2
+M
+A
+ L
+
+```
+```
+A
+E k
+3
+M
+A
+L
+
+```
+```
+M
+R
+L
+
+```
+```
+M
+R
+F
+
+```
+```
+ S
+ R
+ L
+
+```
+```
+R
+T
+F
+
+```
+```
+A
+E k
+1
+M
+A
+L
+
+```
+
+
+
+```
+-2.000
+
+```
+
+S
+
+R
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+3I
+
+W
+
+D
+
+G
+
+
+R
+
+T
+
+A
+
+Ek
+
+2I
+
+W
+
+D
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+3I
+
+R
+
+W
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+2I
+
+R
+
+W
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+3
+
+M
+
+A
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+2
+
+M
+
+A
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+1
+
+M
+
+A
+
+F
+
+
+R
+
+T
+
+A
+
+Ek
+
+3I
+
+W
+
+D
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+2I
+
+W
+
+D
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+3I
+
+R
+
+W
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+2I
+
+R
+
+W
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+3
+
+M
+
+A
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+2
+
+M
+
+A
+
+L
+
+
+R
+
+T
+
+A
+
+Ek
+
+1
+
+M
+
+A
+
+L
+
+
+R
+
+T
+
+L
+
+R
+
+F
+
+
+R
+
+T
+
+L
+
+R
+
+L
+
+
+A
+
+Ek
+
+3I
+
+W
+
+D
+
+F
+
+
+A
+
+Ek
+
+2I
+
+W
+
+D
+
+F
+
+
+A
+
+Ek
+
+3I
+
+R
+
+W
+
+F
+
+
+A
+
+Ek
+
+2I
+
+R
+
+W
+
+F
+
+
+A
+
+Ek
+
+3
+
+M
+
+A
+
+F
+
+
+A
+
+Ek
+
+1
+
+M
+
+A
+
+F
+
+
+A
+
+Ek
+
+2
+
+M
+
+A
+
+F
+
+
+A
+
+Ek
+
+3I
+
+W
+
+D
+
+L
+
+
+A
+
+Ek
+
+2I
+
+W
+
+D
+
+L
+
+
+A
+
+Ek
+
+3I
+
+R
+
+W
+
+L
+
+
+A
+
+Ek
+
+2I
+
+R
+
+W
+
+L
+
+
+A
+
+Ek
+
+3
+
+M
+
+A
+
+L
+
+
+A
+
+Ek
+
+2
+
+M
+
+A
+
+L
+
+
+A
+
+Ek
+
+1
+
+M
+
+A
+
+L
+
+
+R
+
+T
+
+F
+
+
+S
+
+R
+
+L
+
+
+R
+
+T
+
+L
+
+
+M
+
+R
+
+L
+
+
+M
+
+R
+
+F
+
+
+**Figure 1: Boxplots of Residuals** **[1]**
+
+1
+�� MR: Multiple linear Regression;
+�� SR: Stepwise linear Regression;
+�� RT: Regression Tree;
+�� AEkiMA: Analogy-based Estimation (AE) with i analogies and mean
+of i analogies;
+
+
+**Figure 2: Boxplots of Z**
+
+All the models obtained by AE underestimate, except AEK3MA-F
+which overestimates. Moreover, AEK3MA-F has one outlier and
+it is more skewed. The best results are gained with AEk3MA-L
+and AEk3IWD-L and are very similar, confirming the results
+obtained with *MMRE* and *Pred* (0.25), where they present similar
+values. However, the analysis of the *MdMRE* suggests that
+AEk3IWD-L is better.
+
+The boxplots for the models obtained by combining RT and AE
+on Length Measures are characterized by a quite symmetrical
+distribution, with medians below zero (and in some cases far from
+zero). Among these techniques, the best results have been
+obtained by RT+AEk3IRW-L. This result is not corroborated by
+*MMRE* and *Pred* (0.25), which point out that RT+AEk3IWD-L
+and RT+AEk2IWD-L are better techniques. The results of the
+*Wilcoxon signed rank test* and of the *T-Test*, now applied on the
+residuals, point out that there is no statistically significant
+difference for the residuals obtained by applying RT-L, RT-F,
+AEk3IWD-L, and AEK3MA-L. Moreover, for each one of the
+used analogies, tests reported no significant differences in the
+residuals, but for AEk3IWD-L vs. AEk3MA-L.
+
+Also about the measures, tests reported no significant differences,
+except for the LR and SR, whose results with Length Measures
+are much better than those with Functional Measures.
+
+�� AEkiIRW: AE with i analogies and inverse rank weighted mean;
+�� AEkiIWD: AE with i analogies and inverse weighted distance mean;
+�� RT+LR: combination of RT and Linear Regression;
+�� RT+AEkiMA: combination of RT and AE with i analogies and mean
+of i analogies;
+�� RTAEkiIRW: combination of RT and AE with i analogies and
+inverse rank weighted mean;
+�� RTAEkiIWD: combination of RT and AE with i analogies and
+inverse weighted distance mean.
+A final L or F denote Length and Functional measures, respectively.
+
+
+14
+
+Boxplots of *z* confirm the results obtained with the boxplots of
+residuals, and thus, for sake of brevity, we omit their discussion.
+
+**4.3 Summary Discussion on the Measures**
+As for the comparison between the two sets of variables, based on
+the analysis of *MMRE*, *MdMRE*, *Pred* (0.25) and of boxplots
+residuals and boxplots of z, **Length Measures** have provided the
+best results (mainly when using combination of analogy based
+estimation and regression tree). Moreover, the main factor
+affecting the development effort of dynamic web applications
+results the number of Server-Side scripts and Applications
+( *SSApp* ). As for Functional Measures, the best results have been
+gained with Stepwise regression using as predictor External input.
+
+**5. FINAL REMARKS**
+
+In this paper, we have provided the results of an empirical analysis,
+based on an industrial dataset, meant to compare size measures and
+modeling techniques for early estimation the web development
+effort. In particular, we have focused on Linear Regression,
+Regression Tree Analogy-based Estimation and combinations of
+these methods, by using as predictors Length Measures and
+Functional Measures. The results have highlighted that:
+
+�� Length Measures are best indicators of effort development.
+In particular the number of Server-Side scripts/Applications
+is the most influencing factor.
+
+�� The combination of Regression Tree and Analogy-based
+Estimation has provided the best results in defining an effort
+prediction model, if using Length Measures.
+
+�� Stepwise Regression has provided the best results in
+defining an effort prediction model when using Functional
+Measures (in particular External input).
+
+It is worth reporting that several empirical studies have been carried
+out so far to analyze the effectiveness of the considered modeling
+techniques in the case of desktop applications. In particular, Briand
+*et al.* applied Linear (Stepwise) Regression, Regression Tree and
+Analogy-based Estimation, using 1 and 2 analogies, and
+combinations of these techniques ([5], [6]). Their results point out
+that LR and RT are better than AE in predicting efforts, and in
+general RT provides the best results in terms of *MMRE* and
+*Pred* (0.25). Our results confirm, in the context of the web
+applications, their observations except for the application of AE.
+Indeed, while Briand *et al* . achieved weak results, in our cases the
+values of *MMRE*, *MdMRE*, and *Pred* (0.25) encourage us to apply
+this technique to estimate web application development effort.
+
+Mendes *et al.* also applied Stepwise Regression, Regression Tree
+and Analogy-Based Estimation to web hypermedia application
+
+[19]. As for AE they considered three similarity measures, three
+choices for number of analogies (1, 2, and 3), and three choices
+for the analogy adaptation (mean of k analogies, inverse rank
+weighted mean, and median of k analogies). The best result was
+achieved by using weighted distance as similarity measure and 1
+analogy. Moreover, in another work on the analysis of the AE,
+Mendes and Mosley proved that the use of adaptation rules
+presented statistically better prediction accuracy than their
+counterparts than did not use adaptation [21]. In our case study
+the best results with AE have been achieved using 3 (for Length
+Measures) and 2 analogies (for Functional Measures) and the
+inverse distance weighted mean as analogy adaptation strategy.
+Moreover, our analysis confirms Mendes and Mosley's
+
+
+observation of that Stepwise Regression has a better performance
+with respect to Analogy-Based Estimation. Finally, it is worth
+pointing out that our results agree with those provided by Mendes
+*et al* . in [19], where *MMRE* and *Pred* (0.25) indicated that Linear
+Regression models gave better results than Regression Tree
+models. However, one of the limitations of the research proposed
+in the present paper concerns with the size of the considered
+dataset. This was composed by 15 projects, a quite small number
+from a statistical point of view. In order to conduct further
+researches on wider datasets, we are currently gathering
+information on other industrial projects. Moreover another
+important aspect to analyze is related to the generalization of the
+results in other contexts. Indeed, our data come from a single
+company. On one hand, this can lead to more accurate results,
+since the data collection task can be carried out in a more
+
+controlled fashion than in a cross-company scenario, as
+recognized by Mendes et al. in [20]. But, on the other hand, the
+obtained results might not hold in other industrial contexts. In
+particular, the models we provided might not supply accurate
+predictions when used in different companies /domains, where
+some recalibrations could be necessary [20]. As other future work,
+other parameters and/or adaptation strategies should be employed
+to further investigate Analogy-Based Estimation.
+
+**6. REFERENCES**
+
+[1] S.M. Abrahão, O. Pastor, “Measuring the functional size of web
+applications”, in *International Journal of Web Engineering and*
+*Technology*, 1(1), pp. 5-16, 2003.
+
+[2] S.M. Abrahão, Geert Poels, O. Pastor, “Evaluating a Functional
+Size Measurement Method for Web Applications: An Empirical
+Analysis”, in *Proceedings of Tenth International Software*
+*Metrics Symposium (METRICS’04)*, Chicago, Illinois, USA, pp.
+358-369, 2004.
+
+[3] A.J. Albrecht, "Measuring Application Development
+Productivity," in *Proceedings of the Joint SHARE/GUIDE/IBM*
+*Application Development Symposium*, Monterey, CA, pp. 83-92,
+1979.
+
+[4] L. Baresi, S. Morasca, P: Paolini, “Estimating the Design Effort
+of Web Applications,” *in Proceedings of the 9th International*
+*Software Metrics Symposium*, Sydney, Australia, pp. 6272,2003.
+
+[5] L. Briand, K. E. Emam, D. Surmann, I. Wiekzorek, and K.
+Maxwell “An Assessment and Comparison of Common
+Software Cost Estimation Modeling Techniques,” in
+*Proceedings of International Conference on Software*
+*Engineering,* (ICSE’99) *,* Los Angeles, USA, 1999.
+
+[6] L. Briand, T. Langley and I. Wiekzorek, “A Replicated
+Assessment and Comparison of Common Software Cost
+Modeling Techniques”, *International Software Engineering*
+*Research Network Technical Report ISERN-99-15.*
+
+[7] L. Briand, I. Wieczorek. *Software Resource Estimation* .
+Encyclopedia of Software Engineering. Volume 2. P-Z (2nd ed.),
+Marciniak, John J. (ed.) New York: John Wiley & Sons, pp.
+1160-1196, 2002.
+
+[8] J. Conallen, *Building Web Applications with UML*, AddisonWesley Object Technology Series, 1999.
+
+[9] D. Conte, H.E. Dunsmore, V.Y. Shen, *Software engineering*
+*metrics and models*, The Benjamin/Cummings Publishing
+Company, Inc., 1986.
+
+
+15
+
+[10] G. Costagliola, F. Ferrucci, C. Gravino, G. Tortora, G. Vitello,
+“A COSMIC-FFP Based Method to Estimate Web Application
+Development Effort”, in LNCS 3140, N. Koch, P. Fraternali,
+and M. Wirsing (Eds.): ICWE 2004, Monaco, Germany, pp.161165, 2004.
+
+[11] G. Kadoba, M. Cartwright, L. Chen, M. Shepperd, “Experiences
+Using Case-Based Reasoning to Predict Software Project
+Effort”, in *Proceedings of EASE 2000 Conference*, Keele, UK,
+2000.
+
+[12] B. A. Kitchenham, “A Procedure for Analyzing Unbalanced
+Datasets”, *IEEE Transaction on Software Engineering*, 24(4),
+pp. 278-301, 1998.
+
+[13] B. A. Kitchenham, L. M. Pickard, S. G. MacDonell, M. J.
+Shepperd, “What accuracy statistics really measure”, *IEE*
+*Proceedings – Software*, 148(3), pp.81-85, 2001.
+
+[14] Measurement in Software Engineering, Web site
+http://www2.umassd.edu/SWPI/ProcessBibliography/bibmeasurement.html. Last visited on May 07, 2006.
+
+[15] E. Mendes, S. Counsell, N. Mosley, “Comparison of Web Size
+Measures for Predicting Web Design and Authoring Effort”, *IEE*
+*Proceedings-Software* 149(3), pp. 86-92, 2002.
+
+[16] E. Mendes, S. Counsell, N. Mosley, “Web Metrics – Estimating
+Design and Authoring Effort”, *IEEE Multimedia*, Special Issue
+on Web Engineering, pp. 50-57, 2001.
+
+[17] E. Mendes, S. Counsell, N. Mosley, C. Triggs, I. Watson, “A
+Comparative Study of Cost Estimation Models for Web
+Hypermedia Applications”, *Empirical Software Engineering*
+8(2), pp. 163-196, 2003.
+
+[18] E. Mendes, S. Counsell, N. Mosley: Towards a Taxonomy of
+Hypermedia and Web Application Size Metrics. In Proceedings
+of International Conference of Web Engineering (ICWE 2005),
+pp. 110-123, 2005
+
+
+
+[19] E. Mendes, S. Counsell, N. Mosley, C. Triggs, I. Watson, “A
+Comparison of Development Effort Estimation Techniques for
+Web Hypermedia Applications”, in *Proceedings of*
+*International Software Metrics Symposium* ( *METRICS’02* ),
+Ottawa, Canada, pp. 131-140, 2002.
+
+[20] E. Mendes, B. Kitchenham, Further Comparison of CrossCompany and Within-Company Effort Estimation Models for
+Web Applications, *Proceedings of the Software Metrics*, 10th
+International Symposium on (METRICS'04), p.348-357,
+September 11-17, 2004
+
+[21] E. Mendes, N. Mosley, “Further Investigation into the Use of
+CBR and Stepwise Regression to predict Development Effort for
+Web Hypermedia Applications”, in *Proceedings of*
+*International Symposium on Empirical Software Engineering*
+(IESE’02), Nara, Japan, 2002, pp. 79-90.
+
+[22] D. Montgomery, E. Peck, G. Vining, “ *Introduction to Linear*
+*Regression Analysis* ”, John Wiley & Sons, Inc., 3 Ed., 2001.
+
+[23] I. Myrtveit, E. Stensrud, “A Controlled Experiment to Assess the
+Benefits of Estimating with Analogy and Regression Models”,
+*IEEE Transaction on Software Engineering*, 25(4), pp. 510-525,
+1999.
+
+[24] D. Reifer, “Web-Development: Estimating Quick-Time-toMarket Software”, *IEEE software*, 17(8), pp. 57-64, 2000.
+
+[25] M. Ruhe, R. Jeffery, I. Wieczorek, “Cost estimation for web
+applications”, in *Proceedings of 25th International Conference*
+*on Software Engineering* (ICSE’03), Hilton PoRT-Land, Oregon
+USA, pp. 285 – 294, 2003.
+
+[26] M. Shepperd, C. Schofield, “Estimating software Project Effort
+using Analogies”, in *IEEE Transaction on Software*
+*Engineering*, 23(11), pp. 736-743, 2000.
+
+
+**Table 6 Accuracy evaluation for Analogy-based estimation and combination of Analogy-based estimation and Regression Tree**
+
+
+
+
+
+
+
+
+
+
+|Col1|Col2|No.<br>Analogies|Analogy-based estimation|Col5|Col6|Analogy-based Est. + Reg. Tree|Col8|Col9|
+|---|---|---|---|---|---|---|---|---|
+|||No.<br>Analogies|MMRE|MdMRE|Pred(0.25)|MMRE|MdMRE|Pred(0.25)|
+|Functional measures|Mean of k<br>analogies|1|0.24|0.08|0.67|0.25|0.21|0.59|
+|Functional measures|Mean of k<br>analogies|2|0.27|0.17|0.53|0.29|0.20|0.72|
+|Functional measures|Mean of k<br>analogies|3|0.28|0.17|0.60|0.28|0.24|0.58|
+|Functional measures|Inverse<br>distance<br>weighted<br>mean|1|n.a.|n.a.|n.a.|n.a.|n.a.|n.a.|
+|Functional measures|Inverse<br>distance<br>weighted<br>mean|2|0.24|0.12|0.73|0.26|0.19|0.72|
+|Functional measures|Inverse<br>distance<br>weighted<br>mean|3|0.24|0.15|0.73|0.26|0.20|0.65|
+|Functional measures|Inverse rank<br>weighted<br>mean|1|n.a.|n.a.|n.a.|n.a.|n.a.|n.a.|
+|Functional measures|Inverse rank<br>weighted<br>mean|2|0.25|0.11|0.67|0.31|0.20|0.57|
+|Functional measures|Inverse rank<br>weighted<br>mean|3|0.25|0.15|0.73|0.26|0.20|0.65|
+|Length measures|Mean of k<br>analogies|1|0.31|0.21|0.53|0.20|0.19|0.66|
+|Length measures|Mean of k<br>analogies|2|0.24|0.20|0.67|0.20|0.12|0.79|
+|Length measures|Mean of k<br>analogies|3|0.21|0.18|0.73|0.19|0.16|0.86|
+|Length measures|Inverse<br>distance<br>weighted<br>mean|1|n.a.|n.a.|n.a.|n.a.|n.a.|n.a.|
+|Length measures|Inverse<br>distance<br>weighted<br>mean|2|0.22|0.13|0.73|0.19|0.13|0.87|
+|Length measures|Inverse<br>distance<br>weighted<br>mean|3|0.21|0.15|0.73|0.17|0.13|0.87|
+|Length measures|Inverse rank<br>weighted<br>mean|1|n.a.|n.a.|n.a.|n.a.|n.a.|n.a.|
+|Length measures|Inverse rank<br>weighted<br>mean|2|0.26|0.23|0.73|0.20|0.12|0.79|
+|Length measures|Inverse rank<br>weighted<br>mean|3|0.24|0.17|0.66|0.19|0.15|0.86|
+
+
+16
+

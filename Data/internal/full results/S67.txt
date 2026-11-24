@@ -1,0 +1,1923 @@
+Available online at www.sciencedirect.com
+
+The Journal of Systems and Software 81 (2008) 673–690
+
+www.elsevier.com/locate/jss
+# Cross-company vs. single-company web effort models using the Tukutuku database: An extended study
+## Emilia Mendes [a,*], Sergio Di Martino [b], Filomena Ferrucci [b], Carmine Gravino [b]
+
+a Computer Science Department, The University of Auckland, Auckland, New Zealand
+b Dipartimento di Matematica e Informatica, Universita` degli Studi di Salerno, 84084 Fisciano (SA), Italy
+
+Received 26 February 2007; received in revised form 28 May 2007; accepted 27 July 2007
+Available online 17 October 2007
+
+Abstract
+
+In 2004 [Kitchenham, B.A., Mendes, E., 2004a. Software productivity measurement using multiple size measures. IEEE Transactions
+on Software Engineering 30 (12), 1023–1035, Kitchenham, B.A., Mendes, E., 2004b. A comparison of cross-company and singlecompany effort estimation models for web applications. In: Proceedings Evaluation and Assessment in Software Engineering (EASE’
+04), pp. 47–55] (S1) investigated, using data on 63 Web projects, to what extent a cross-company cost model could be successfully
+employed to estimate development effort for single-company Web projects. Their effort models were built using Forward Stepwise
+Regression (SWR) and they found that cross-company predictions were significantly worse than single-company predictions. This study
+S1 was extended by Mendes and Kitchenham [Mendes, E., Kitchenham, B.A., 2004. Further comparison of cross-company and within
+company effort estimation models for web applications. In: Proceedings International Software Metrics Symposium (METRICS’04),
+Chicago, Illinois, September 11–17th, 2004. IEEE Computer Society, pp. 348–357] (S2), who used SWR and Case-based reasoning
+(CBR), and data on 67 Web projects from the Tukutuku database. They built two cross-company and one single-company models
+and found that both SWR cross-company models and CBR cross-company data provided predictions significantly worse than singlecompany predictions. Since 2004 another 83 projects were volunteered to the Tukutuku database, and recently used by Mendes et al.
+
+[Mendes, E., Di Martino, S., Ferrucci, F., Gravino, C., in press. Effort estimation: How valuable is it for a web company to use a
+cross-company data set, compared to using its own single-company data set? In: Proceedings of International World Wide Web
+Conference (WWW’07), Banff, Canada, 8–12 May] (S3), who partially replicated Mendes and Kitchenham’s study (S2), using SWR
+and CBR. They corroborated some of S2’s findings (SWR cross-company model and the CBR cross-company data provided predictions
+significantly worse than single-company predictions) however they replicated only part of S2. The objective of this paper (S4) is therefore
+to extend Mendes et al.’s work and fully replicate S2. We used the same dataset used in S3, and our results corroborated most of those
+obtained in S2. The main difference between S2 and our study was that one of our SWR cross-company models showed significantly
+similar predictions to the single-company model, which contradicts the findings from S2.
+� 2007 Elsevier Inc. All rights reserved.
+
+
+1. Introduction
+
+When planning a software or Web project, early estimation of development effort is a critical management activity,
+since realistic estimates are crucial to the adequate alloca
+ - Corresponding author.
+[E-mail addresses: emilia@cs.auckland.ac.nz (E. Mendes), sdimarti-](mailto:emilia@cs.auckland.ac.nz)
+[no@unisa.it (S. Di Martino), fferrucci@unisa.it (F. Ferrucci), gravino@](mailto:sdimartino@unisa.it )
+unisa.it (C. Gravino).
+
+0164-1212/$ - see front matter � 2007 Elsevier Inc. All rights reserved.
+doi:10.1016/j.jss.2007.07.044
+
+
+tion of resources, and also affect the competitiveness of a
+software/Web company. The literature has numerous
+examples of software and Web effort estimation studies
+(Jørgensen and Shepperd, 2007). However, despite their
+number, there are still challenging issues for which no converging results have been found. One of these issues relates
+to the use of cross-company versus single-company datasets for effort estimation.
+Previous studies in Software Engineering have suggested
+that a company needs its own dataset (a single-company
+
+674 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+dataset) to produce more accurate effort estimates (e.g.
+Kemerer, 1987; Kitchenham and Taylor, 1984). However,
+three main problems can occur when relying on single-company data (Briand et al., 2000; Kitchenham and Mendes,
+2004a,b):
+
+(i) The time required to accumulate enough data on past
+projects from a single-company may be prohibitive.
+(ii) By the time, the dataset is large to be of use, technologies used by the company may have changed, and
+older projects may no longer be representative of current practices.
+(iii) Care is necessary as data needs to be collected in a
+consistent manner.
+
+These three problems have motivated the use of crosscompany datasets for effort estimation and productivity
+benchmarking. The use of a cross-company dataset seems
+particularly useful for companies that do not have their
+own data on past projects from which to obtain their estimates, or that have data on projects developed in different
+application domains and/or technologies. However, the use
+of cross-company datasets has problems of its own (Briand
+et al., 2000; Kitchenham and Mendes, 2004a,b; Mendes
+and Kitchenham, 2004):
+
+(i) Care is necessary as data needs to be collected in a
+consistent manner by means of a uniform data collection control across different companies.
+(ii) Differences in processes and practices may result in
+trends that may differ significantly across companies.
+(iii) Projects may need to be partitioned (e.g. according to
+their completion dates) to identify those that used
+current development practices from those that did
+
+not.
+(iv) Project data should represent a random sample representative of a well-defined population (i.e. it is not
+sufficient that the dataset is large).
+
+To date, 12 studies (nine in Software engineering and
+three in Web engineering) have investigated if estimates
+obtained using cross-company datasets can be as accurate
+as the ones obtained using single-company datasets (Briand
+et al., 1999; Briand et al., 2000; Jeffery et al., 2000; Jeffery
+et al., 2001; Kitchenham and Mendes, 2004b; Lefley and
+Shepperd, 2003; Lokan and Mendes, 2006; Maxwell
+et al., 1999; Mendes and Kitchenham, 2004; Mendes
+et al., 2005; Wieczorek and Ruhe, 2002; Mendes et al., in
+press). Here we focus only on the three studies (S1 – Kitchenham and Mendes, 2004b; S2 – Mendes and Kitchenham,
+2004; and S3 – Mendes et al., in press) that used data on
+Web projects; however, except for Mendes et al. (in press),
+a detailed comparison of all previous studies is provided in
+(Kitchenham et al., 2006).
+S1, S2, and S3 all investigated to what extent a crosscompany cost model could be successfully employed to estimate effort for single-company Web projects (see Table 1).
+
+
+All these three studies employed data from the Tukutuku
+database (Mendes et al., 2003).
+S1 used data on 63 Web projects (50 projects from a
+cross-company dataset (S1CCM) and 13 from a singlecompany dataset (Company 1)). Their cross-company
+model was based on an analysis of the full dataset, including the 13 single-company projects, where they used the
+variables selected when analysing the entire dataset of 63
+projects and recalibrated the parameters after removing
+the Company 1 data. Their effort models were built using
+Forward Stepwise Regression (SWR) and they found that
+cross-company predictions were superior to expert-based
+and median-based predictions, however significantly worse
+than single-company predictions. This study was extended
+by S2, who used SWR and Case-based reasoning (CBR),
+and data on 67 Web projects from the Tukutuku database,
+to investigate similar issues to those previously investigated. Their cross-company dataset combined both the
+cross- and single-company datasets used in S1, and their
+single-company dataset contained data on 14 Web projects
+gathered after S1 had been carried out (Company 2). However, both studies were independent because the singlecompany data used in S2 was not part of the Tukutuku
+dataset used in S1. It was collected from a single-company
+some time after the first set of data had been collected and
+analysed (Kitchenham et al., 2006). They built two crosscompany and one single-company models. One of their
+cross-company models (S2CCM1) was completely independent of the single-company dataset, i.e. it was solely based
+on the data from the 53 cross-company projects. The other
+model (S2CCM2) was based on an analysis of the full data
+set including Company 2 data, where they used the variables selected by analysing the full dataset and recalibrated
+the parameters after removing the Company 2 data. They
+found that cross-company predictions, for both cross-company models, using SWR were significantly worse than single-company, median-based and expert-based predictions;
+and CBR cross-company predictions were superior to single-company predictions. They also used the Company 2
+model to estimate effort for the cross-company projects,
+and found that the predictions obtained were extremely
+poor. Recently, S3 partially replicated Mendes and Kitchenham’s study (S2), using SWR and CBR, and data on 83
+Web projects volunteered to the Tukutuku database after
+S2 was conducted (68 from a cross-company dataset and
+15 from a single-company dataset (Company 3 data)). They
+built one cross-company and one single-company models.
+Their cross-company model was completely independent
+of the single-company dataset. They found that cross-company predictions using both SWR and CBR were significantly worse than single-company, median-based and
+mean-based predictions. In addition, their single-company
+predictions were similar to mean- and median-based predictions. Therefore some of their results contradicted those
+
+from S2.
+
+The objective of this paper is to extend S3 by fully replicating S2. We employed the same dataset of 83 Web pro
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 675
+
+Table 1
+
+Comparison of previous studies using data on Web projects
+
+Study S1 Kitchenham and Mendes (2004b) Study S2 Mendes and Kitchenham (2004) Study S3 Mendes et al. (in
+press)
+
+Database Tukutuku Tukutuku Tukutuku
+
+Application domain(s) Mainly corporate, information, promotional, Mainly corporate, information, promotional, Mainly corporate,
+e-commerce e-commerce information, e-government,
+e-banking, Web portals, and
+intranet applications
+Effort estimation Manual Stepwise regression Stepwise regression (SWR), Case-based Stepwise regression (SWR),
+techniques used reasoning (CBR) Case-based reasoning (CBR)
+Type of application Web-based Web-based Web-based
+Countries Worldwide Worldwide Worldwide
+
+Total Dataset size 53 67 83
+
+Single-company 13 14 15
+Underlying relationship Non-linear Non-linear Non-linear
+between predictors and
+effort for crosscompany model
+
+
+Underlying relationship
+between predictors and
+effort for singlecompany model
+
+Range of Effort values
+(converted to person
+hours)
+
+
+Non-linear Non-linear Non-linear
+
+Min: 6 Min: 6 Min: 1.10
+
+Max: 5000 Max: 5000 Max: 3712
+
+
+Size measure 23 different size measures 9 different size measures 11 different size measures
+Was cross-company No. Baseline model was built using whole Yes (CCM1). No (CCM2). Baseline model Yes
+model built dataset and selected variables used to was built using whole dataset and selected
+independently of the calibrate cross-company model (after variables used to calibrate cross-company
+single-company data? removing single-company projects) model (after removing single-company
+
+
+No. Baseline model was built using whole
+dataset and selected variables used to
+
+calibrate cross-company model (after
+removing single-company projects)
+
+
+Yes (CCM1). No (CCM2). Baseline model
+was built using whole dataset and selected
+variables used to calibrate cross-company
+model (after removing single-company
+projects)
+
+
+Yes
+
+
+Single-company model
+showed significantly
+better accuracy than
+Cross-company model
+
+
+Yes Yes (SWR, for both CCM1 and CCM2) Yes (SWR)
+Yes (CBR) Yes (CBR)
+
+
+jects used in S3, the same effort estimation techniques used
+in both S2 and S3 (SWR and CBR), and the five steps used
+in S2, detailed below:
+
+Step (1) To fit a baseline cross-company model to the full
+dataset of 83 projects. This baseline model was
+used to identify appropriate independent variables
+from a large number of possible size measures and
+cost drivers. Prediction accuracy statistics were
+calculated using a leave-one-out cross-validation.
+Cross-validation is the splitting of a dataset into
+training and validation sets. Training sets are used
+to build models and validation sets are used to val
+idate models. A leave-one-out cross-validation
+
+means that the original dataset is divided into n
+different subsets (n is the size of the original
+dataset) of training and validation sets, where
+each validation set has one project. The equivalent
+for CBR is to use the single-company dataset as a
+case base, after removing one project, and then to
+estimate effort for the project that has been
+removed. This step is iterated n times, each time
+removing a different project.
+
+
+Step (2) We recalibrated the baseline model omitting the
+Company 3 projects and used the resulting model
+(S4CCM2) to predict effort for the Company 3
+projects. The predictions were used to calculate
+prediction accuracy statistics.
+Step (3) We derived another cross-company model
+(S4CCM1) from scratch using the cross-company
+dataset of 68 Web projects. This model was
+employed to predict effort for the Company 3 projects. The predictions were used to calculate prediction accuracy statistics. This step was also
+carried out in S3.
+Step (4) We derived a single-company model for Company
+3 from scratch (S4SCM). We determined the prediction accuracy of estimates for this model using
+a leave-one-out cross-validation. This allowed use
+
+to compare the prediction accuracy for the two
+cross-company models with the prediction accuracy for the single-company model. This step
+was also carried out in S3.
+Step (5) We also used the Company 3 data set to predict
+effort values for the other 68 Web projects
+and constructed accuracy statistics from the
+
+676 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+predictions. This allowed us to assess how good
+the single-company model would be at predicting
+another company’s projects.
+
+Note that our study and S3 are not independent because
+the single-company data used in S3 is the same one used in
+this paper.
+The two research questions addressed in this study are
+the same questions investigated by S1, S2 and S3:
+
+(i) How successful is a cross-company dataset at estimating effort for projects from a single-company?
+(ii) How successful is the use of a cross-company dataset,
+compared to a single-company dataset?
+
+The remainder of the paper is organised as follows: Section 2 describes the research method employed in this study
+and Section 3 details the steps used to answer the two
+research questions investigated. Results using forward stepwise regression and CBR are presented in Sections 4and 5,
+respectively. A discussion of the results is provided in Section 6, followed by a description of threats to validity in
+Section 7. Finally, Section 8 compares our results to those
+from previous studies and conclusions are given in Section
+9.
+
+2. Research method
+
+2.1. Dataset description
+
+The analysis presented in this paper was based on data
+coming from 83 Web projects of the Tukutuku database
+(Mendes et al., 2003), which aims to collect data about
+Web projects, to be used to develop Web cost estimation
+models and to benchmark productivity across and within
+Web Companies. The Tukutuku includes Web hypermedia
+systems and Web applications (Briand et al., 2000). The
+former are characterized by the authoring of information
+using nodes (chunks of information), links (relations
+between nodes), anchors, access structures (for navigation)
+and its delivery over the Web. In addition, typical developers are writers, artists and organisations that wish to publish information on the Web and/or CD-ROMs without
+the need to use programming languages such as Java. Conversely, the latter represents software applications that
+depend on the Web or use the Web’s infrastructure for execution and are characterized by functionality affecting the
+state of the underlying business logic. Web applications
+usually include tools suited to handle persistent data, such
+as local file system, (remote) databases, or Web Services.
+The Tukutuku database currently has data on 150 projects where
+
+ - Projects come from 10 different countries, mainly New
+Zealand (56%), Brazil (12.7%), Italy (10%), Spain
+(8%), United States (4.7%), England (2.7%), and Canada (2%).
+
+
+
+ - Project types are new developments (56%) or enhancement projects (44%).
+
+ - The applications are mainly Legacy integration (27%),
+Intranet and eCommerce (15%).
+
+ - The languages used are mainly HTML (88%), Javascript
+(DHTML/DOM) (76%), PHP (50%), Various Graphics
+Tools (39%), ASP (VBScript, .Net) (18%), and Perl
+(15%).
+
+Each Web project in the database was characterized by
+25 variables, related to a Web application and its development process (see Table 2).
+Within the context of the Tukutuku project, a new higheffort feature/function (Hnew variable) employs at least
+15 h to be developed by one experienced developer, and a
+high-effort adapted feature/function (HFotsA variable)
+
+Table 2
+
+Variables in the Tukutuku database
+
+Variable Scale Description
+
+Name
+
+Company data
+Country Categorical Country company belongs to
+Established Ordinal Year when company was established
+nPeopleWD Ratio Number of people who work on Web design
+and development
+
+Project data
+TypeProj Categorical Type of project (new or enhancement)
+nLang Ratio Number of different development languages
+used
+
+DocProc Categorical If project followed defined and documented
+
+process
+ProImpr Categorical If project team involved in a process
+improvement programme
+Metrics Categorical If project team part of a software metrics
+
+programme
+DevTeam Ratio Size of a project’s development team
+TeamExp Ratio Average team experience with the
+development language(s) employed
+TotEffort Ratio Actual total effort in person hours used to
+develop an application
+EstEffort Ratio Estimated total effort in person hours to
+develop an application
+Accuracy Categorical Procedure used to record effort data
+
+Web application
+TypeApp Categorical Type of Web application developed
+TotWP Ratio Total number of Web pages (new and reused)
+NewWP Ratio Total number of new Web pages
+TotImg Ratio Total number of images (new and reused)
+ImgNew Ratio Total number of new images created
+Fots Ratio Number of features reused without any
+adaptation
+HFotsA Ratio Number of reused high-effort features/
+functions adapted
+Hnew Ratio Number of new high-effort features/functions
+TotHigh Ratio Total number of high-effort features/
+functions
+
+FotsA Ratio Number of reused low-effort features adapted
+New Ratio Number of new low-effort features/functions
+TotNHigh Ratio Total number of low-effort features/functions
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 677
+
+
+employs at least 4 h to be adapted by one experienced
+developer. These values are based on collected data.
+Similar to S2 (Mendes and Kitchenham, 2004), we
+excluded from our analysis some variables based on the following criteria:
+
+ - More than 50% of instances of a variable were zero or
+missing.
+
+ - The variable was categorical (nominal and ordinal).
+
+ - The variable was related to another variable, in which
+case both could not be included in the same model. To
+
+measure the strength of the association between variables we used the Spearman’s rank correlation statistical
+test, with a = 0.05.
+
+The motivation for Mendes and Kitchenham (2004), to
+exclude categorical variables from their analysis was that
+the Tukutuku categorical variables had many levels, thus
+requiring a large number of dummy variables which rapidly reduce the degrees of freedom for analysis. Therefore
+S3 and our study also did not use any of the categorical
+variables in our analysis. Table 3 shows the final set of variables used in the stepwise regression procedure in S2 (Mendes and Kitchenham, 2004), S3 and by ourselves (S4), while
+Table 4 contains the corresponding summary statistics.
+
+Table 4 suggests that there are clear differences between
+the single- and cross-company projects. Single-company
+projects used twice the number of languages as the crosscompany projects and three times the average number of
+people. However, cross-company developers presented,
+on average, twice the experience of the single-company
+developers.
+The cross-company applications are smaller, in number
+of Web pages, than those of the single-company applications. And, therefore, the effort spent on cross-company
+projects is also smaller than that spent on single-company
+projects. Both datasets however presented similar number
+
+Table 3
+
+Variables used in the stepwise procedures
+
+
+Table 4
+
+Summary statistics for variables
+
+Variables Mean Median Std. dev. Min. Max.
+
+Single-company dataset – 15 projects
+nLang 6.27 6 0.88 5 8
+DevTeam 6.20 6 0.41 6 7
+
+TeamExp 1.87 1 1.46 1 6
+TotWP 84.13 74 40.56 31 161
+
+ImgNew 18.00 0 28.16 0 92
+Fots 4.87 5 4.76 0 15
+
+Hnew 15.60 14 6.09 7 27
+
+TotHigh 15.73 16 6.08 7 27
+New 6.60 5 3.40 3 13
+
+TotNHigh 7.07 6 3.35 3 14
+TotEffort 2677.87 2792 827.11 1176 3,712
+
+Cross-company dataset – 68 projects
+nLang 3.57 3 1.54 1 8
+DevTeam 2.68 2 3.16 1 23
+
+TeamExp 3.70 2 2.27 1 10
+TotWP 37.44 19 47.14 1 200
+
+ImgNew 34.68 1.50 135.69 0 1000
+TotNHhigh 5 4 6.27 0 35
+TotEffort 321.33 30.15 800.42 1.10 3644
+EstEffort 268.33 21.50 1337.31 1 10,020
+
+of low-effort features/functions. These differences however
+are not sufficient to suggest that the cross-company data
+cannot be useful to estimate effort for single-company projects, as will be explained in Section 7.
+
+2.2. Modelling techniques
+
+Like S2 and S3, the techniques used to obtain effort
+estimates were forward StepWise Regression (SWR) and
+Case-Based Reasoning (CBR). Except for CBR, all results
+presented here were obtained using the statistical software
+SPSS 10.1.3 for Windows. Finally, all the statistical significance tests used a = 0.05.
+
+
+Variables S2 S3 S4
+
+SC CC CC (baseline) SC CC SC CC CC (baseline)
+
+nLang p p p p p p p p
+
+DevTeam p p p p p p p p
+
+TeamExp p p p p p p p p
+
+TotWP p p p p p p p p
+
+ImgNew p p p p p p p p
+
+Fots p p
+
+HFotsA p p p
+
+Hnew p p
+
+TotHigh p p p p p
+
+New p p
+
+FotsA p p p p
+
+TotNHigh p p p p p p p p
+
+TotEffort p p p p p p p p
+
+EstEffort p p p
+
+CC = cross-company dataset; SC = single-company dataset.
+
+678 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+2.2.1. Forward stepwise regression
+Stepwise regression (Maxwell, 2002) is a statistical technique whereby a prediction model (Equation) is built, and
+represents the relationship between independent (e.g. number of Web pages) and dependent variables (e.g. total
+Effort). This technique builds the model by adding, at each
+stage, the independent variable with the highest association
+to the dependent variable, taking into account all variables
+currently in the model. It aims to find the set of independent variables (predictors) that best explains the variation
+in the dependent variable (response).
+In our study we employed the same set of variables used
+in S3, shown in Table 3. Whenever variables were highly
+skewed they were transformed before being used in the forward stepwise procedure. This was done in order to comply
+with the assumptions underlying stepwise regression (Maxwell, 2002) (e.g. residuals should be independent and normally distributed; relationship between dependent and
+independent variables should be linear). The transformation employed was to take the natural log (ln), which
+makes larger values smaller and brings the data values closer to each other (Maxwell, 2002). A new variable containing the transformed values was created for each original
+variable that needed to be transformed. All new variables
+
+are identified as Lvarname, e.g. Lnlang represents the transformed variable nlang. In addition, whenever a variable
+needed to be transformed but had zero values, the natural
+logarithmic transformation was applied to the variable’s
+value after adding 1.
+
+Table 5 contains the variables we considered in the forward stepwise regression procedure. These are the same
+variables used in S3 for SCM and S4CCM1. All the
+
+cross-company variables, for both the cross-company models, needed to be transformed since they were not normally
+distributed; three of the single-company variables also
+needed to be transformed (DevTeam, TeamExp, and
+TotEff).
+The variable LTotEff was used as the dependent variable when building the single- and cross-company models.
+To verify the stability of each effort model built using
+forward stepwise regression, the following steps were
+employed (Kitchenham and Mendes, 2004b):
+
+Table 5
+
+Variables used in the stepwise regression
+
+SCM S4CCM1 (independent Cross-company baseline
+model) model
+
+nLang LnLang LnLang
+
+LDevTeam LDevTeam LDevTeam
+
+LTeamExp LTeamExp LTeamExp
+
+TotWP LTotWP LTotWP
+
+NewImg LNewImg LNewImg
+
+Fots
+
+LFotsA
+
+Hnew
+
+TotHigh
+
+New
+
+TotNHigh LTotNHhigh LTotNHhigh
+LTotEff LTotEff LTotEff
+
+
+
+ - Use of a residual plot showing residuals vs. fitted values
+to investigate if the residuals are randomly and normally
+distributed.
+
+ - Calculate Cook’s distance values (Cook, 1977) for all
+projects to identify influential data points. Any projects
+with distances higher than 3 · (4/n), where n represents
+the total number of projects, are immediately removed
+from the data analysis (Maxwell, 2002). Those with distances higher than 4/n but smaller than (3 · (4/n)) are
+removed in order to test the model stability, by observing the effect of their removal on the model. If the model
+coefficients remain stable and the adjusted R [2] (goodness
+of fit) improves, the highly influential projects are
+retained in the data analysis.
+
+2.2.2. Case-based reasoning
+CBR is a branch of Artificial Intelligence where knowledge of similar past cases is used to solve new cases
+(Shepperd and Kadoba, 2001). Within the context of
+our investigation, the idea behind the use of the CBR
+technique is to predict the effort of a new project by considering similar projects previously developed. In particular, completed projects are characterized in terms of a set
+of p features (e.g. number of Web pages) and form the
+case base. The new project is also characterized in terms
+of the same p attributes and it is referred as the target
+case. Then, the similarity between the target case and
+the other cases in the p-dimensional feature space is measured, and the most similar cases are used, possibly with
+adaptations to obtain a prediction for the target case.
+To apply the method, we have to select: the relevant project features, the appropriate similarity function, the number of analogies to select the similar projects to consider
+for estimation, and the analogy adaptation strategy for
+generating the estimation. The selection of the similarity
+function and the number of analogies are crucial decisions. Like S2 and S3, the similarity measure used in this
+study is the Euclidean distance. In addition, we used all
+the original numerical attributes, and all the project attributes had equal influence upon the selection of the most
+similar project(s) when considered by the similarity
+function.
+
+2.2.3. Prediction accuracy
+The accuracy of the effort estimates obtained using
+SWR and CBR was measured using the same measures
+employed in S3 and S4, that is, the Mean Magnitude of
+Relative Error (MMRE), Median MRE, and Prediction
+at 25% (Pred(25)) (Conte et al., 1986). In addition we also
+employed boxplots of the absolute residuals to visually
+compare samples and statistical significance tests to compare samples’ distributions (a = 0.05).
+Pred(n) measures the percentage of estimates that are
+within n% of the actual values, and n is usually set at
+25%. MRE is the basis for calculating MMRE and
+MdMRE, and defined as
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 679
+
+
+MRE ¼ [j][e][ �] [^][e][j] ; ð1Þ
+e
+
+where e represents actual effort and ^e estimated effort. The
+difference between MMRE and MdMRE is that the former
+is sensitive to predictions containing extreme MRE values.
+We also used the mean and median of absolute residu
+als, where residuals are calculated as actual effort – estimated effort.
+
+3. Steps to follow to answer our research questions
+
+This Section details the steps that need to be carried out
+to answer each of the two research questions this study
+investigated, by exploiting the dataset, the modelling techniques, and the evaluation criteria described in the previous
+two sections. These were the same steps used in S2. Both
+questions are also presented to provide a context for each
+set of steps.
+
+Question 1. How successful is a cross-company dataset at
+estimating effort for projects from a single-company?
+
+Steps to follow:
+
+(1) Apply SWR to fit a baseline cross-company model to
+the full dataset of 83 projects. Not applicable to CBR
+as this technique does not explicitly build a model.
+(2) If the model uses transformed variables, convert the
+model back to the raw data scale. Not applicable to
+CBR.
+(3) Obtain prediction accuracy statistics for the crosscompany baseline model using a leave-one-out
+cross-validation. Also applicable to CBR.
+(4) Recalibrate the baseline model from step 1 by omitting Company 3 projects. The recalibrated model is
+named S4CCM2.
+(5) Use the model in step 4 to estimate effort for each of
+the 15 single-company projects. The single-company
+projects are the validation set used to obtain effort
+estimates. The estimated effort obtained for each project is also used to calculate accuracy statistics (e.g.
+MRE). Not applicable to CBR.
+(6) The overall model accuracy for S4CCM2 is aggregated from the validation set (e.g. MMRE,
+MdMRE). Not applicable to CBR.
+(7) Apply SWR to build a cross-company model
+(S4CCM1) from scratch using only the 68 projects
+from the cross-company dataset. Not applicable to
+CBR as this technique does not explicitly build a
+model.
+(8) If the model uses transformed variables, convert the
+model back to the raw data scale. Not applicable to
+CBR.
+(9) Use the model in step 7 to estimate effort for each of
+the 15 single-company projects. The single-company
+projects are the validation set used to obtain effort
+estimates. The estimated effort obtained for each pro
+
+ject is also used to calculate accuracy statistics (e.g.
+MRE). The equivalent for CBR is to use the crosscompany dataset as a case base to estimate effort
+for each of the single-company projects.
+(10) The overall model accuracy for S4CCM1 is aggregated from the validation set (e.g. MMRE, MdMRE).
+Also applicable to CBR.
+
+These steps are used to simulate a situation where a
+company uses two cross-company models to estimate effort
+for its new projects.
+
+Question 2. How successful is a cross-company dataset,
+compared to a single-company dataset, for effort estimation?
+
+Steps to follow:
+
+(1) Apply SWR to build a single-company cost model
+(S4SCM) using the single-company dataset. Not
+applicable to CBR since this technique does not
+explicitly build a model.
+(2) Obtain the prediction accuracy of estimates for the
+model obtained in (1) using a leave-one-out cross-validation. Also applicable to CBR.
+(3) The overall model accuracy for S4SCM is aggregated
+across the n validation sets. Also applicable to CBR.
+(4) Compare the accuracy obtained in Step 3 to that
+obtained for S4CCM1 and S4CCM2. Also applicable
+to CBR.
+
+Steps 1–3 simulate a situation where a company builds a
+model using its own dataset, and then uses this model to
+estimate effort for new projects.
+In addition to answering the two research question
+abovementioned we also used the S4SCM model to predict
+effort for the other 68 Web projects and constructed accuracy statistics from the predictions. We also repeated this
+step with CBR. This allowed us to assess how good the single-company model would be at predicting another company’s projects.
+
+4. Obtaining effort estimates using forward stepwise
+regression
+
+4.1. Fitting a baseline cross-company model to select
+variables to be used with S4CCM2
+
+The first model to be built was a baseline cross-company
+model using the full dataset of 83 Web projects (see Table
+6). Its adjusted R [2] was 0.775, thus explaining 77.5% of the
+variation in effort, which is quite remarkable for a crosscompany model.
+
+4.1.1. Checking the model
+The residual plot for the 83 projects showed that nine
+projects seemed to have large residuals. This trend was also
+confirmed using Cook’s distance, where these nine projects
+presented a Cook’s distance greater than 4/83. To check
+
+680 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+Table 6
+
+Best fitting model (baseline model) to calculate LTotEffort
+
+Independent variables Coefficient Std. Error t p > jtj
+
+(Constant) �1.374 0.476 �2.888 0.005
+LTotWP 0.841 0.125 6.724 0.000
+
+LnLang 1.641 0.2666 0.176 0.000
+LDevTeam 0.563 0.217 2.589 0.012
+
+LNewImg 0.282 0.085 3.313 0.001
+LFotsA �0.798 0.221 �3.620 0.001
+
+LTotNHigh 0.489 0.211 2.322 0.023
+
+the model’s stability, a new model was generated without
+those nine projects. In the new model the adjusted R [2]
+
+improved from 0.775 to 0.88 and all the independent variables remained significant; however, the coefficients did not
+present similar values to those in the previous model.
+Therefore, the nine high influence data points were
+removed from further analysis.
+The revisited baseline model is presented in Table 7. The
+adjusted R [2] for the revisited baseline model is now much
+better than the adjusted R [2] for the baseline model used in
+S2, which was 0.67. An adjusted R [2] of 0.88 is quite remarkable for a cross-company model. The baseline models built
+in S2 and in this study are both exponential.
+The Equation as read from the final model’s output is
+
+LTotEffort ¼ �1:178 þ 0:780 LTotWP þ 1:523 LnLang
+
+þ 0:859 LDevTeam � 0:986 LFotsA
+
+þ 0:651 LTotNHigh ð2Þ
+
+Table 7
+
+Final best fitting model (baseline model) to calculate LTotEffort
+
+Independent variables Coefficient Std. Error t p > jtj
+
+(Constant) �1.178 0.414 �2.848 0.006
+LTotWP 0.780 0.115 6.780 0.000
+
+LnLang 1.523 0.220 6.907 0.000
+LDevTeam 0.859 0.194 4.422 0.000
+
+LFotsA �0.986 0.184 �5.356 0.000
+
+LTotNHigh 0.651 0.171 3.812 0.000
+
+
+which, when converted back to the raw data scale, gives the
+equation:
+
+TotEffort ¼ 0:3078 � TotWP [0][:][780] � nLang [1][:][523]
+
+� DevTeam [0][:][859] � FotsA [�][0][:][986]
+
+� TotNHigh [0][:][651] : ð3Þ
+
+Finally, this baseline model selected one of the variables
+selected in S2’s baseline model – DevTeam. The other vari
+ables selected by S2’s baseline model were NewWP and
+TotHigh.
+The residual plot and the P–P plot (Probability plot) for
+the final baseline model are presented in Fig. 1a and b,
+respectively. P–P Plots are normally employed to verify if
+the distribution of a variable matches a given distribution,
+in which case data points gather around a straight line. The
+distribution which has been checked here is the normal dis
+tribution, and Fig. 1b suggests that the residuals are normally distributed.
+
+4.1.2. Measuring the prediction accuracy of the baseline
+model
+
+To assess the accuracy of the predictions for the baseline
+we used a leave-one-out cross-validation procedure, selecting each of the 83 Web projects at a time as validation set,
+and gathering accuracy statistics (e.g. MRE).
+The prediction accuracy statistics are presented in Table
+8, and show that the predictions obtained using the stepwise regression are poor, assuming that a good model
+should present MMRE and MdMRE close to 25% and
+Pred(25) of at least 75% (Conte et al., 1986). In addition,
+the baseline model’s prediction accuracy is superior to predictions based on the median (50) and the mean (747) of
+the aggregated cross-company and single-company datasets (83 projects), confirmed by applying the Wilcoxon
+Signed Ranks paired test to the absolute residuals. The
+Wilcoxon Signed Ranks paired test is a non-parametric statistical test that compares the distributions of two related
+variables. If variables present very different distributions
+they are assumed to be significantly different from one
+
+
+Fig. 1. Residual (a) and P–P plots (b) for best fitting baseline cross-company model.
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 681
+
+
+Table 8
+
+Prediction accuracy statistics for baseline model
+
+Prediction Estimates based on Estimates based
+
+accuracy regression model (%) on mean model
+(%)
+
+
+Estimates based
+
+on median model
+
+(%)
+
+
+Table 9
+
+Best fitting model to calculate LTotEffort after excluding 15 projects from
+Company 3
+
+Independent variables Coefficient Std. Error t p > jtj
+
+(Constant) �0.994 0.529 �1.880 0.065
+LTotWP 0.768 0.136 5.667 0.000
+
+Lnlang 1.535 0.294 5.226 0.000
+LNewImg 0.462 0.092 5.028 0.000
+LFotsA �0.792 0.236 �3.353 0.001
+
+LTotNHigh 0.465 0.227 2.051 0.045
+
+presented a Cook’s distance greater than 4/68. To check
+the model’s stability, a new model was generated without
+those eight projects. In the new model the independent
+variables remained significant, the adjusted R [2] improved
+from 0.666 to 0.742, and the coefficients presented similar
+values to those in the previous model. Therefore, these
+eight high influence data points were not removed from
+further analysis.
+The Equation as read from the final model’s output is
+
+LTotEffort ¼ �0:994 þ 0:768LTotWP þ 1:535LnLang
+
+þ 0:462LNewImg � 0:792LFotsA
+
+þ 0:465LTotNHigh ð4Þ
+
+which, when converted back to the raw data scale, gives the
+equation
+
+TotEffort ¼ 0:37 � TotWP [0][:][768] � nLang [1][:][535]
+
+� NewImg [0][:][462] � FotsA [�][0][:][792]
+
+� TotNHigh [0][:][465] : ð5Þ
+
+S4CCM2 presented a similar adjusted R [2] to the cross-company model built in S2 (S2CCM2), which was 0.63. However, the variables selected by S2CCM2 (NewWP,
+TotHigh, DevTeam) are completely different from those selected by S4CCM2. Both models are exponential.
+The residual plot and the P–P plot (Probability plot) for
+S4CCM2 are presented in Fig. 2a and b, respectively.
+Fig. 2b suggests that the residuals are normally distributed.
+
+
+MMRE 120.74 (48 out of 83) 7094.89 461.00
+MdMRE 56.54 (48 out of 83) 1394.00 98.21
+Pred(25) 18.07 (83 projects) 3.61 4.82
+
+another. These results do not corroborate those from S2,
+where predictions based on the baseline model were similar
+to median-based predictions.
+Note that comparisons between absolute residuals were
+based on the 48 projects for which we were able to obtain
+estimated effort when applying Eq. (5).
+
+4.2. Cross-company and single-company models
+
+We calculated and compared the prediction accuracy for
+the 15 projects from Company 3 derived from three different estimation models:
+
+ - A cross-company model (S4CCM2) based on the 68
+Web projects from the cross-company dataset, however
+using the variables identified in Eq. (3).
+
+ - A cross-company model (S4CCM1) built from scratch
+without the 15 projects from Company 3.
+
+ - A single-company model (S4SCM) built from scratch
+using projects from Company 3 with a leave-one-out validation process.
+
+4.2.1. Building S4CCM2
+The S4CCM2 model is reported in Table 9. Its adjusted
+R [2] is 0.666, thus explaining 66.61% of the variation in
+effort.
+
+4.2.2. Checking the S4CCM2 model
+The residual plot for the 68 projects showed that eight
+projects seemed to have large residuals. This trend was also
+confirmed using Cook’s distance, where these eight projects
+
+
+Fig. 2. Residual (a) and P–P plots (b) for cross-company model S4CCM2.
+
+682 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+4.2.3. Measuring the prediction accuracy of S4CCM2
+To assess the accuracy of the predictions for the crosscompany model S4CCM2 we used as validation set the
+15 projects from the single-company dataset.
+The prediction accuracy statistics are presented in Table
+10, and show that the predictions obtained using the stepwise regression are poor, assuming that a good model
+should present MMRE and MdMRE close to 25% and
+Pred(25) of at least 75% (Conte et al., 1986). In addition,
+S4CCM2’s prediction accuracy was similar to predictions
+based on the median (30.15) and the mean (321.33) of the
+cross-company dataset, confirmed by applying the Wilcoxon Signed Ranks paired test to the absolute residuals.
+The Wilcoxon Signed Ranks paired test is a non-parametric statistical test that compares the distributions of two
+related variables. If variables present very different distributions they are assumed to be significantly different from
+one another. These results corroborate those from S2,
+where predictions based on the S2CCM2 model were similar to median-based predictions. In addition, the predictions obtained using S4CCM2 were either similar to
+those for the baseline model (MdMRE), or better than
+those for the baseline model (MMRE and Pred(25)). These
+are similar results to those reported in S2, where the baseline model presented similar predictions to those of the
+S2CCM2 model.
+
+What these results suggest is that, at least for the companies that volunteered the data employed in this analysis,
+using as the estimated effort for a new project the mean
+or median effort of past cross-company projects is as good
+as using predictions based on a regression model similar to
+the S4CCM2 model.
+
+Note that comparisons between absolute residuals were
+based on the seven projects for which we were able to
+obtain estimated effort when applying Eq. (5).
+
+Fig. 3 shows the boxplots of absolute residuals for the
+seven projects for which regression-based estimates were
+obtained. Overall the distributions of the mean-based
+(MeanRes) and median-based (MedianRes) absolute residuals were very similar, and slightly more peaked than the
+distribution of the S4CCM2-based (S4CCM2Res) absolute
+residuals. S4CCM2’s median is much lower than both
+
+MeanRes’ and MedianRes’ medians, which would suggest
+that S4CCM2-based predictions were slightly superior to
+predictions obtained using either the mean or median
+effort. However, as previously stated, differences between
+absolute residuals were not significantly different.
+
+Table 10
+
+Prediction accuracy statistics for S4CCM2 model
+
+
+Fig. 3. Boxplots of absolute residuals using S4CCM2 (S4CCM2Res),
+mean-based model (MeanRes) and median-based model (MedianRes).
+
+4.2.4. Building S4CCM1
+The S4CCM1 model is described in Table 11. Its
+adjusted R [2] is 0.788, thus explaining 78.8% of the variation
+in effort. This adjusted R [2] is much better than the adjusted
+R [2] for the S4CCM2 model, and also much better than the
+adjusted R [2] for the independent cross-company model built
+in S2 (S2CCM1), which was 0.597. Both S4CCM1 and
+S2CCM1 are exponential. In addition, S4CCM2 selected
+two (TotWP, DevTeam) of the three variables selected by
+S2CCM1 (TotWP, DevTeam, TotHigh).
+The Equation as read from the final model’s output is
+
+LTotEffort ¼ �2:461 þ 0:576LTotWP þ 1:450LnLang
+
+þ 0:365LNewImg þ 1:373LTeamExp
+
+þ 1:027LDevTeam ð6Þ
+
+which, when converted back to the raw data scale, gives the
+equation
+
+TotEffort ¼ 0:085 � TotWP [0][:][576] � nLang [1][:][450]
+
+� NewImg [0][:][365] � TeamExp [1][:][373]
+
+� DevTeam [1][:][027] : ð7Þ
+
+4.2.5. Checking the S4CCM1 model
+The residual plot for the 68 projects showed that eight
+projects seemed to have large residuals. This trend was also
+
+Table 11
+
+Best fitting model to calculate LTotEffort built using only the crosscompany dataset
+
+Independent variables Coefficient Std. Error t p > jtj
+
+(Constant) �2.461 .438 �5.624 .000
+LTotWP .576 .127 4.539 .000
+
+Lnlang 1.450 .245 5.915 .000
+LNewImg .365 .100 3.663 .001
+LTeamExp 1.373 .259 5.294 .000
+LDevTeam 1.027 .279 3.678 .001
+
+
+Prediction Estimates based on
+
+accuracy regression model
+(%)
+
+
+Estimates based
+
+on mean model
+
+(%)
+
+
+Estimates based
+
+on median model
+
+(%)
+
+
+MMRE 60.35 (7 out of 15) 86.54 98.74
+MdMRE 55.28 (7 out of 15) 88.49 98.92
+Pred(25) 6.67 (15 projects) 0 0
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 683
+
+
+confirmed using Cook’s distance, where these eight projects
+presented a Cook’s distance greater than 4/68. To check
+the model’s stability, a new model was generated without
+those eight projects. In the new model the independent
+variables remained significant and the adjusted R [2]
+
+improved from 0.662 to 0.788; however the coefficients
+did not present similar values to those in the previous
+model, therefore, the eight high influence data points were
+removed from further analysis.
+The residual plot and the P–P plot (Probability plot) for
+the final model are presented in Fig. 4a and b, respectively.
+The distribution which has been checked here is the normal
+
+distribution, and Fig. 4b suggests that the residuals are normally distributed.
+
+4.2.6. Measuring the prediction accuracy of S4CCM1
+To assess the accuracy of the predictions for the
+S4CCM1 model we also used as validation set the 15 projects from the single-company dataset. Prediction accuracy
+statistics are presented in Table 12, and suggest that the
+predictions using S4CCM1 are very poor, assuming that
+a good model should present MMRE and MdMRE close
+to 25% and Pred(25) of at least 75% (Conte et al., 1986).
+In addition, S4CCM1’s prediction accuracy was similar
+to predictions based on the median and the mean of the
+cross-company dataset. These patterns were confirmed
+using the Wilcoxon Signed Rank Test to compare the absolute residuals. These results corroborate those obtained in
+S2, where Mendes and Kitchenham (2004) found that the
+S2CCM1 model presented similar predictions to those
+using a median model. In addition, the predictions
+obtained using S4CCM1 were either better to those for
+the baseline model (MMRE), or worse than those for the
+baseline model (MdMRE and Pred(25)). These are similar
+results to those reported in S2, where the baseline model
+presented better predictions than those of the S2CCM1
+model.
+
+What these results suggest is that, at least for the companies that volunteered the data used in this analysis, using as
+the estimated effort for a new project the mean or median
+
+
+MMRE 85.86 86.54 98.74
+
+MdMRE 100.00 88.49 98.92
+
+Pred(25) 6.67 0 0
+
+effort of past cross-company projects is as good as using
+predictions based on a regression model similar to the
+S4CCM1 model.
+
+Fig. 5 shows the boxplots of absolute residuals obtained
+using the regression-based model S4CCM1 (S4CCM1Res),
+and the mean (MeanRes) and median (MedianRes) effort
+for projects from the cross-company dataset. Overall all
+there distributions are very similar. S4CCM1’s median is
+lower than both MeanRes’ and MedianRes’ medians,
+which would suggest that S4CCM1-based predictions were
+slightly superior to predictions obtained using either the
+mean or median effort. However, as previously stated, differences between absolute residuals were not significantly
+different.
+
+4.2.7. Building S4SCM
+The best fitting single-company model is described in
+Table 13. Its adjusted R [2] is 0.673, thus it explains 67.3%
+of the variation in TotEffort. Note that this adjusted R [2] is
+very similar to that obtained for S4CCM2 and much smaller than that obtained for S4CCM1. In addition, this
+adjusted R [2] is also much smaller than the adjusted R [2] for
+the single-company model built in S2, which was 0.95.
+
+4.2.8. Checking the S4SCM model
+The residual plot for the 15 projects showed two projects
+that seemed to have a large residual. This trend was also
+confirmed using Cook’s distance, where these projects
+had their Cook’s distances above the cut-off point (4/15).
+To check the model’s stability, a new model was built
+without these two projects, giving an adjusted R [2] of
+
+
+Table 12
+
+Prediction accuracy statistics for the cross-company dataset
+
+
+Prediction Estimates based on
+
+accuracy regression model
+(%)
+
+
+Estimates based
+
+on mean model
+
+(%)
+
+
+Estimates based
+
+on median model
+
+(%)
+
+
+Fig. 4. Residual (a) and P–P plots (b) for cross-company model S4CCM1.
+
+684 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+which, when transformed back to the raw data scale, gives
+the equation
+
+TotEffort ¼ 1189:157 � e [0][:][048][TotHigh] : ð9Þ
+
+The P–P plot and the residual plot for the final single-company model are presented in Fig. 6a and b, respectively.
+Fig. 6a suggests that the residuals are normally distributed.
+
+
+Fig. 5. Boxplots of absolute residuals using S4CCM1 (S4CCM1Res),
+mean-based model (MeanRes) and median-based model (MedianRes).
+
+Table 13
+
+Best fitting single-company model to calculate TotEffort
+
+Independent variables Coefficient Std. Error t p > jtj
+
+(Constant) 7.081 0.149 47.682 0.000
+TotHigh 0.048 0.009 5.454 0.000
+
+0.721, which is greater than that for the previous model. In
+the new model the independent variables remained significant and the coefficients had very similar values to those in
+the previous model, indicating that the high influence data
+point did not need to be permanently removed from further
+analysis.
+This model is not as good as the one described in S2
+(adjusted R [2] of 0.95), and also has not selected any of
+the variables selected in S2, which included HFotsA and
+FotsA. However, both models are exponential.
+The Equation as read from the final model’s output is
+
+LTotEffort ¼ 7:081 þ 0:048TotHigh ð8Þ
+
+
+4.2.9. Measuring the prediction accuracy of S4SCM
+To assess the accuracy of the predictions for the S4SCM
+we employed the same procedure used in S2, which is a
+leave-one-out cross-validation. This means that for 15
+
+times, a project was omitted from the dataset, and an
+Equation, similar to that shown by Eq. (9), was calculated
+using the remaining 14 projects. At each time the estimated
+effort was calculated for the project that had been omitted
+from the dataset, and likewise, statistics such as MRE and
+absolute residual were also obtained. The prediction accuracy statistics are presented in Table 14 and show that
+S4SCM’s prediction accuracy was not significantly different
+from predictions based on the mean (2792) and median
+(2677.87) effort of projects in the single-company dataset.
+These results were confirmed using the Wilcoxon Signed
+Ranks paired test on absolute residuals, and do not corroborate those obtained in S2, where Mendes and Kitchenham
+(2004) found that the single-company model presented significantly better predictions than estimates based on the
+median effort.
+What these results suggest is that, at least for the companies that volunteered data for this study, effort estimates for
+the single-company projects based on a regression-based
+
+Table 14
+
+Prediction accuracy statistics for the single-company dataset
+
+
+Prediction Estimates based on
+
+accuracy regression model
+(%)
+
+
+Estimates based
+
+on mean model
+
+(%)
+
+
+Estimates based
+
+on median model
+
+(%)
+
+
+MMRE 15.93 31.64 32.25
+
+MdMRE 14.68 25.61 23.3
+
+Pred(25) 86.67 46.67 66.67
+
+
+Fig. 6. P–P plot (a) and residual (b) for best fitting single-company model.
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 685
+
+tions for the cross-company projects obtained using a single-company-based regression model were poor; however
+they did not compare their predictions to those from a
+median- or mean-based effort models.
+
+4.3. Comparison of cross-company and single-company
+models
+
+
+Fig. 7. Boxplots of absolute residuals using S4SCM (S4SCMRes), meanbased model (MeanRes) and median-based model (MedianRes).
+
+model such as S4SCM are as effective as using the mean or
+the median effort for past single-company projects.
+
+Fig. 7 shows the boxplots of absolute residuals obtained
+using the regression-based model S4SCM (S4SCMRes),
+and the mean (MeanRes) and median (MedianRes) effort
+for projects from the cross-company dataset.
+Overall the distributions of MeanRes and MedianRes
+
+are very similar, and flatter than S4SCMRes’ distribution.
+S4SCM’s median is lower than both MeanRes’ and Medi
+anRes’ medians, which would suggest that S4SCM-based
+predictions were slightly superior to predictions obtained
+using either the mean or median effort. However, as previously stated, differences between absolute residuals were
+not significantly different.
+
+4.2.10. Applying the S4SCM to the cross-company dataset
+To assess whether a single-company model can be useful
+to predict effort for projects from other companies, we
+repeated the procedure carried out in S2, and calculated
+estimated effort for each of the 68 projects in the crosscompany dataset using the single-company model from
+Eq. (9) (S4SCM).
+Prediction accuracy statistics and absolute residuals
+were obtained (see Table 15), and all suggest that estimations for the 68 projects based on the S4SCM were extremely poor. In addition, S4SCM’s prediction accuracy was
+significantly worse than predictions based on the median
+(2792) and the mean (2677.867) of the single-company
+dataset. S2 reported that the prediction accuracy of estima
+Table 15
+
+Prediction accuracy statistics for 68 projects based on S4SCM model
+
+
+In order to evaluate the prediction accuracy between
+S4CCM2 and S4SCM, we compared the absolute residuals
+for the seven projects that had their effort estimated using
+S4CCM2 (see Section 4.2) with their corresponding absolute residuals when their effort was estimated using
+S4SCM. These two sets of residuals were compared using
+the Wilcoxon Signed Ranks paired test, and no significant
+differences were found (p = 0.91). This result contradicts
+that obtained in S2. Boxplots of their absolute residuals
+(S4SCMRes and S4CCM2Res) are shown in Fig. 8, and
+indicate that S4SCMRes has a much more peaked distribution than S4CCM2, and lower median. This would suggest
+that overall, even though results are not statistically significant, predictions obtained using the S4SCM model were
+slightly superior to the predictions obtained using the
+S4CCM2 model.
+
+In order to evaluate the prediction accuracy between
+S4CCM1 and S4SCM we compared the absolute residuals
+for the 15 projects that had their effort estimated using
+S4CCM1 (see Section 4.2) with their corresponding absolute
+residuals when their effort was estimated using S4SCM.
+These two sets of residuals were compared using the Wilcoxon Signed Ranks paired test, and significant differences
+were found. This result corroborates that obtained in S2.
+
+Boxplots of their absolute residuals (S4SCMRes and
+S4CCM1Res) are shown in Fig. 8, and indicate that S4SCMRes has a much more peaked distribution than S4CCM1,
+and much lower median. These boxplots confirm that the
+predictions obtained using the S4SCM model were much
+
+Fig. 8. Boxplots of absolute residuals for S4SCM (S4SCMRes), S4CCM2
+(S4CCM2Res), and S4CCM1 (S4CCM1Res).
+
+
+Prediction Estimates based on
+
+accuracy regression model
+(%)
+
+
+Estimates based
+
+on mean model
+
+(%)
+
+
+Estimates based
+
+on median model
+
+(%)
+
+
+MMRE 2.61908E+12 31208.52 32542.41
+
+MdMRE 5668.56 8781.81 9160.36
+
+Pred(25) 0 5.88 5.88
+
+686 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+Table 16
+
+Summary results for SWR
+
+Prediction Aggregated dataset S4CCM2 predicting effort S4CCM1 predicting effort S4SCM predicting effort S4SCM predicting effort for
+statistics of 83 projects for Company 3 projects for Company 3 projects for Company 3 projects cross-company projects
+
+MMRE 120.74 (48 out of 83) 60.35 (7 out of 15) 85.86 19.51 2.61908E+12
+MdMRE 56.54 (48 out of 83) 55.28 (7 out of 15) 100 15.44 5668.56
+Pred(25) 18.07 (83 projects) 6.67 (15 projects) 6.67 73.33 0
+
+
+superior to the predictions obtained using the S4CCM1
+model.
+
+Table 16 summarises the results obtained using stepwise
+regression, showing that S4CCM2 gives better estimates
+than S4CCM1, for MMRE and MdMRE, which corroborates S2 and suggests that the way in which models are
+built can affect the results (Mendes and Kitchenham,
+2004). As in S2, our results also show that a model built
+from single-company data is a poor predictor of cross-company projects. Finally, and reiterating what was previously
+said, the S4CCM2 model did not provide significantly different predictions than the S4SCM model for the Company
+3 data (contradicts S2), and the S4CCM1 provided significantly worse predictions than the S4SCM model for the
+Company 3 data (corroborates S2).
+
+5. Obtaining effort estimates using case-based reasoning
+
+There is no clear answer to date as to what is the best tech
+nique to employ to obtain effort estimates, for a given dataset. Shepperd and Kadoda suggested that dataset
+characteristics should have a strong influence on the choice
+of techniques to employ to obtain effort estimates (Shepperd
+and Kadoba, 2001). The less ‘‘messy’’ the dataset, i.e., small
+number of outliers, small amount of collinearity, strong relationship between independent and dependent variables, the
+higher the chances that regression analysis will give the best
+estimation accuracy. Conversely, very ‘‘messy’’ datasets
+should use CBR to obtain more accurate effort estimates.
+Since the Tukutuku dataset presents some level of collinearity and outliers, S2 investigated its use to obtain effort
+estimates, and S3 repeated some of the steps carried out
+by S2, namely:
+
+(i) To use the 68 cross-company projects in the case base
+to obtain effort estimates for each of the 15 singlecompany projects. This step corresponds to the use
+of the S4CCM1 model and the 15 single-company
+projects as validation set.
+
+Table 17
+
+Summary results for CBR
+
+
+(ii) To use a leave-one-out cross-validation procedure
+to obtain effort estimates for each of the 15 single-company projects using the single-company
+dataset. This step corresponds to the use of the
+S4SCM model and the 15 single-company projects
+as validation set.
+
+We extended S3 by also adding the following steps:
+
+(iii) To use a leave-one-out cross-validation approach to
+obtain effort estimates to each of the 83 projects
+incorporating the cross- and single-company datasets. This step corresponds to obtaining accuracy statistics for the baseline model.
+(iv) To use the single-company dataset to obtain
+effort estimates for each of the 68 cross-company
+projects.
+
+Like S2 and S3, we also used CBR-works 4, from
+Tec:inno, a commercial case-based reasoning tool, to
+obtain our effort estimates. Estimates were based on the
+average effort of the two most similar projects in the case
+base, identified on the basis of Euclidean distance, with
+no different weights associated to attributes, or adaptation
+of the estimated effort.
+Our results for CBR are summarised in Table 17, as
+follows:
+
+ - CBR predictions for Company 3 projects using the crosscompany data (68 projects) were significantly worse
+than predictions obtained for Company 3 projects using
+the single-company data (15 projects). These results corroborate those for S2.
+
+ - CBR predictions for the whole data set of 83 projects
+were similar to the baseline model’s regression-based
+predictions (p < 0.083). These results contradict those
+for S2 where CBR predictions for the whole data set
+were found to be significantly better than the regression
+model predictions (p < 0.05).
+
+
+Prediction Aggregated dataset Cross-company data predicting Single-company data predicting Single-company data predicting effort
+statistics of 83 projects effort for Company 3 projects effort for Company 3 projects for cross-company projects
+
+MMRE 111.93 92.54 15 14430.99
+
+MdMRE 45.45 93.13 15 5146.52
+
+Pred(25) 31.33 0 80 1.47
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 687
+
+
+
+ - CBR predictions for Company 3 projects using the crosscompany data (68 projects) were not significantly different from the predictions obtained for Company 3 projects using the S4CCM1 model. These results
+corroborate those from S2.
+
+ - CBR predictions for Company 3 using the single-company dataset were similar to predictions obtained for
+Company 3 projects using the S4SCM model. These
+results contradict those from S2.
+
+ - CBR predictions for the cross-company projects using
+Company 3 data were not significantly different from
+the predictions obtained for the same cross-company
+projects using the S4SCM model. These results corroborate those from S2.
+
+6. Discussion
+
+The research questions addressed in this study are as
+follows:
+
+1. How successful is a cross-company dataset when estimating effort for projects from a single-company, when
+the estimate is obtained from a dataset that does not
+
+include that company’s data.
+2. How successful is the use of a cross-company dataset,
+compared to a single-company dataset.
+
+Summary results for our study for both SWR and CBR
+are presented in Table 18, pairing SWR to CBR results.
+Our first research question is addressed by the results
+from Sections 4.2 and 5.
+
+The accuracy of estimates of both regression-based
+cross-company models does not indicate good prediction
+accuracy. MMREs and MdMREs for both S4CCM1 and
+S4CCM2 are poor (see Table 16) according to a suggested
+threshold of 25% to indicate good accuracy (Conte et al.,
+1986), and both Pred(25) are extremely poor according to
+another suggested threshold of 75% to indicate a good pre
+Table 18
+
+Summary results for our study
+
+
+diction model (Conte et al., 1986). The same pattern is
+observed for CBR-based predictions (see Table 17). Our
+results corroborate those from Mendes and Kitchenham
+
+(2004).
+In addition, we also compared the predictions obtained
+using the S4CCM1 and S4CCM2 models to the predictions
+obtained using a Median and Mean effort models, and no
+significant differences were found. These results suggest
+that, at least for the dataset employed, there is no advantage to a company that does have past projects from which
+to develop their own models, to use a cross-company
+model to obtain effort estimates. It can simply use as estimated effort the mean or median-based effort from past
+projects.
+Finally, like S2, we also investigated to what extend a
+model built using single-company data would provide good
+predictions when estimating effort for cross-company projects. We used S4SCM to estimate effort for each of the
+68 cross-company projects and the predictions obtained
+were extremely poor (see Table 18). These results corroborate those from S2.
+
+Our second research question is also addressed by the
+results from Sections 4.2 and 5.
+
+First, we used the Wilcoxon Signed Ranks paired test
+for two related samples to compare the absolute residuals
+obtained for Company 3 projects using the S4SCM model
+to the absolute residuals obtained for Company 3 projects
+using the S4CCM2 model. No significant differences were
+found, indicating that predictions obtained for Company
+3 projects using S4SCM were similar to predictions
+obtained for Company 3 projects using the S4CCM2
+model. Our results contradicted those from S2.
+
+Second, we used the Wilcoxon Signed Ranks paired
+test for two related samples to compare the absolute
+residuals obtained for Company 3 projects using the
+S4SCM model to the absolute residuals obtained for Com
+pany 3 projects using the S4CCM1 model. Results showed
+that predictions obtained for Company 3 projects using
+
+
+Training and validation sets S4 Basis for predictions MMRE MdMRE Pred(25)
+
+SWR Aggregated dataset of 83 projects Leave-one-out cross- 120.74 (48 of 83) 56.54 (48 of 83) 18.07
+validation
+
+CBR Aggregated dataset of 83 projects Leave-one-out cross- 111.93 45.45 31.33
+validation
+
+SWR S4CCM1 predicting effort for Company 3 projects Company 3 data 85.86 100 6.67
+CBR Cross-company data predicting effort for Company 3 Company 3 data 92.54 93.13 0
+projects
+
+SWR S4SCM predicting effort for Company 3 projects Leave-one-out cross- 19.51 15.44 73.33
+validation
+
+CBR Single-company data predicting effort for Company 3 Leave-one-out cross- 15 15 80
+projects validation
+
+SWR S4SCM predicting effort for cross-company projects Cross-company data 2.61908E + 12 5,668.56 0
+CBR Single-company data predicting effort for cross-company Cross-company data 14,430.99 5,146.52 1.47
+projects
+
+SWR S4CCM2 predicting effort for Company 3 projects Company 3 data 60.35 (7 of 15) 55.28 (7 of 15) 6.67
+
+688 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+S4SCM were significantly superior to predictions obtained
+for Company 3 projects using the S4CCM1 model. Our
+results corroborated those from S2.
+
+Third, we used the Wilcoxon Signed Ranks paired test
+for two related samples to compare the absolute residuals
+obtained for Company 3 projects using CBR and Company
+3 data to the absolute residuals obtained for Company 3
+projects using CBR and the cross-company data. Results
+showed that predictions obtained for Company 3 projects
+using CBR and Company 3 data were significantly superior
+to predictions obtained for Company 3 projects using CBR
+and the cross-company data. These results also corroborated those from S2.
+
+7. Threats to validity
+
+As for the threats to the validity of this study, our comments are as follows:
+
+7.1. Construct validity
+
+The size measures and cost drivers used in the Tukutuku
+database and therefore in our study have been obtained
+from the results of a survey investigation (Mendes et al.,
+2003), using data from 133 on-line Web forms aimed at giving quotes on Web development projects. In addition, these
+measures and cost drivers have also been confirmed by an
+established Web company and a second survey involving
+33 Web companies in New Zealand. Consequently it is
+our belief that the 25 variables identified are measures that
+are meaningful to Web companies and are constructed
+from information their customers can provide at a very
+early stage in the project development.
+As for the quality of the effort data, we asked companies
+how their effort data was collected (see Table 19).
+At least for 83% of Web projects in the Tukutuku database effort values were based on more than guesstimates. In
+relation to the 83 projects used in this study, 85% of the 68
+cross-company projects and 100% of the 15 single-company projects are also more than guesstimates.
+
+7.2. Internal validity
+
+Table 4 shows that Company 3 projects used on average
+six different languages, were on average developed by a
+team of six people who had an average development experience of a year. Conversely, the cross-company projects
+
+Table 19
+
+How effort data was collected
+
+Data collection method # of projects % of projects
+
+Hours worked per project task per day 93 62
+Hours worked per project per day/week 32 21.3
+Total hours worked each day or week 13 8.7
+No timesheets (guesstimates) 12 8
+
+
+used on average three different languages, were on average
+developed by a team of two people who had an average
+development experience of two years. These values suggest
+that because the average team experience for Company 3
+projects was low they compensated for it with larger teams
+and more languages. These numbers suggest that both
+groups could be similar in terms of their productivity.
+We compared the productivity between Company 3 and
+cross-company projects by employing the productivity
+method proposed by Kitchenham and Mendes (2004a)
+where productivity is measured using the following
+Equation:
+
+Productivity ¼ AdjustedSize=Effort: ð10Þ
+
+The AdjustedSize measure contains only size measures that
+together are strongly associated with effort. In addition, the
+relationship between these size measures and effort does
+not need to be linear.
+
+The benefits of using this method for measuring productivity are as follows (Kitchenham and Mendes, 2004a):
+
+ - The standard value of productivity is one, since it is
+obtained using the ratio of estimated to actual effort.
+
+ - A productivity value greater than one suggests aboveaverage productivity.
+
+ - A productivity value smaller than one suggests belowaverage productivity.
+
+ - The stepwise regression technique used to build a regression model that represents the AdjustedSize measure can
+also be employed to construct upper and lower bounds
+on the productivity measure. These bounds can be used
+to assess whether the productivity achieved by a specific
+project is significantly better or worse than expected.
+
+ - The productivity measure automatically allows for diseconomies (or economies) of scale before being used in
+a productivity analysis. This means that an investigation
+of factors that affect productivity will only select factors
+that affect the productivity of all projects. If we ignore
+the impact of diseconomies (or economies) or scale, we
+run the risk of detecting factors that differ between large
+and small projects rather than factors that affect the productivity of all projects.
+
+Both the independent samples T-test and the Mann–
+Whitney Test confirmed that productivity values all came
+from the same distribution.
+
+7.3. External validity
+
+The data set used in this investigation comprises data on
+projects volunteered by individual companies, and therefore it does not represent a random sample of projects from
+a defined population. This means that we cannot conclude
+that the results of this study promptly apply to other companies different from the ones that volunteered the data
+used here. However, we believe that Web companies that
+
+E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690 689
+
+
+develop projects with similar characteristics to those used
+in this paper may be able to apply our results to their
+Web projects.
+
+8. Comparing our results to those from S1 and S2
+
+Table 20 summarises the results for two previous studies
+(S1 and S2) and ours. The legend to be used when reading
+this table is as follows:
+
+ - Baseline represents the use of the aggregated cross- and
+single-company datasets.
+
+ - CCM2 represents a cross-company that uses independent variables that have been previously selected using
+a baseline model.
+
+ - CCM1 represents the use of a cross-company dataset (to
+build a SWR-based regression model or as a CBR case
+base).
+
+ - SCM represents the use of a single-company dataset (to
+build a SWR-based regression model or as a CBR case
+base).
+
+ - NP means Not Performed, i.e., not carried out in the
+study.
+
+Table 20
+
+Summary of all studies
+
+
+Overall, except for CCM2 in S4 (S4CCM2), SCM presented significantly better accuracy than cross-company
+models, either for CBR or SWR. In most cases, cross-company models were similar to a baseline model, either based
+on the mean or median effort. Exceptions are the regression-based baseline model in our study (S4), the regression-based SCM model in S2, and the regression-based
+CCM2 model in S1.
+
+The points of disagreement between studies S2 and ours
+are highlighted in Table 20 using grey shaded areas. The
+strongest disagreement relates to the regression-based
+CCM2 model, which in S2 is significantly worse than the
+SCM, and in our study it is not.
+These results suggest that unless a Web company
+already has data on past projects that can be aggregated
+to a cross-company dataset and used to fit a baseline
+model, it may be a more suitable option to use expert-based
+estimations (or to adjust the cross-company-based estimates with expert option) until it is possible to build its
+own single-company model. This is even more appropriate
+for Web companies that develop Web applications of the
+same type, using the same technologies and staff (Kitchenham and Mendes, 2004b).
+
+
+Study Technique Model Significantly
+different from
+SCM
+
+
+Significantly different from experts Significantly different from Significantly different from
+estimates mean effort model median effort model
+
+
+S1 SWR Baseline N/A No significance tests used, but MMRE NP NP
+worse than experts estimates
+
+CCM2 Yes. CCM2 worse Yes. CCM2 better than experts NP Yes. CCM2 better than
+than SCM estimates Median model
+SCM N/A Yes. SCM better than experts estimates NP NP
+
+S2 SWR Baseline N/A No significance tests used, but MMRE NP No. Baseline similar to
+worse than experts estimates Median model
+CCM2 Yes. CCM2 worse No significance tests used, but MMRE NP No. CCM2 similar to
+than SCM worse than experts estimates Median model
+CCM1 Yes. CCM1 worse No significance tests used, but MMRE NP No. CCM1 similar to
+than SCM worse than experts estimates Median model
+SCM N/A Yes. SCM better than experts estimates NP Yes. SCM better than
+Median model
+
+CBR Baseline N/A NP NP NP
+
+CCM1 Yes. CCM1 worse NP NP NP
+
+than SCM
+
+S4 SWR Baseline N/A N/A [a] Yes. Baseline better than Yes. Baseline better than
+
+Mean model Median model
+
+CCM2 No. CCM2 similar N/A [a] No. CCM2 similar to No. CCM2 similar to
+
+to SCM Mean model Median model
+CCM1 [b] Yes. CCM1 worse N/A [a] No. CCM1 similar to No. CCM1 similar to
+
+than SCM Mean model Median model
+SCM [b] N/A N/A [a] No. SCM similar to Mean No. SCM similar to
+
+model Median model
+
+CBR Baseline N/A N/A [a] NP NP
+CCM1 [b] Yes. CCM1 worse N/A [a] NP NP
+
+than SCM
+
+a Experts’ estimates were not available.
+b Same results for S3. As the dataset is the same we did not include S3 in the summary table.
+
+690 E. Mendes et al. / The Journal of Systems and Software 81 (2008) 673–690
+
+
+9. Conclusions
+
+Our results show that the cross-company data when
+used to estimate effort for the Company 3 projects provided
+poor prediction accuracy. However, unlike the CBR-based
+predictions and predictions obtained using the S4CCM1
+model, predictions for Company 3 projects based on the
+S4CCM2 model were not significantly different (worse)
+than the predictions for Company 3 projects obtained using
+the S4SCM model. Our results for S4CCM2 contradict
+
+those from S2, however, overall the cross-company predictions for single-company projects were significantly worse
+than the single-company predictions for single-company
+projects. None of our models, except for the baseline
+model, were significantly different from the median or
+mean-based effort models. These are similar results to those
+obtained in S2, where the only model that presented significantly better predictions than the median-based effort
+model was the regression-based single-company model.
+One possible reason for the better performance of the single-company dataset, compared to the cross-company one,
+may be related to the size of the single-company datasets.
+Recently, Kitchenham et al. (2006), by means of a systematic review, found that all studies where single-company
+predictions were significantly better than cross-company
+predictions employed smaller single-company datasets,
+smaller number of projects in the cross-company models,
+and databases where maximum effort was also smaller.
+They speculate that as single-company datasets grow, they
+incorporate less similar projects so that differences between
+single- and cross-company datasets cease to be significant.
+As part of our future work we aim to replicate our study
+using further data.
+
+Acknowledgement
+
+We would like to thank all those companies that have
+volunteered data on their projects to the Tukutuku
+database.
+
+References
+
+Briand, L.C., El-Emam, K., Maxwell, K., Surmann, D., Wieczorek, I.,
+1999. An assessment and comparison of common cost estimation
+models. In: Proceedings of the 21st International Conference on
+Software Engineering, ICSE‘99. pp. 313–322.
+Briand, L.C., Langley, T., Wieczorek, I., 2000. A replicated assessment of
+common software cost estimation techniques. In: Proceedings of the
+22nd International Conference on Software Engineering, ICSE’00. pp.
+377–386.
+
+Conte, S.D., Dunsmore, H.E., Shen, V.Y., 1986. Software Engineering
+Metrics and Models. Benjamin-Cummins.
+Cook, R.D., 1977. Detection of influential observations in linear regression. Technometrics 19, 15–18.
+
+
+Jeffery, R., Ruhe, M., Wieczorek, I., 2000. A comparative study of two
+software development cost modeling techniques using multi-organizational and company-specific data. Information and Software Technology 42, 1009–1016.
+Jeffery, R., Ruhe, M., Wieczorek, I., 2001. Using public domain metrics
+to estimate software development effort. In: Proceedings International Software Metrics Symposium (METRICS’01), London. pp.
+16–27.
+
+Jørgensen, M., Shepperd, M.J., 2007. A systematic review of software
+development cost estimation studies. IEEE Transactions Software
+Engineering 33 (1), 33–53.
+Kemerer, C.F., 1987. An empirical validation of software cost estimation
+models. Communications ACM 30 (5), 416–429.
+Kitchenham, B.A., Mendes, E., 2004a. Software productivity measurement using multiple size measures. IEEE Transactions on Software
+Engineering 30 (12), 1023–1035.
+Kitchenham, B.A., Mendes, E., 2004b. A comparison of cross-company
+and single-company effort estimation models for web applications. In:
+Proceedings Evaluation and Assessment in Software Engineering
+(EASE’04). pp. 47–55.
+Kitchenham, B.A., Taylor, N.R., 1984. Software cost models. ICL
+Technical Journal, 73–102.
+Kitchenham, B.A., Mendes, E., Travassos, G., 2006. A systematic review
+of cross- and within-company cost estimation studies. In: Proceedings
+of Empirical Assessment in Software Engineering. pp. 89–98.
+Lefley, M., Shepperd, M.J., 2003. Using genetic programming to improve
+software effort estimation based on general datasets. In: Proceedings of
+GECCO 2003. LNCS 2724. Springer-Verlag, pp. 2477–2487.
+Lokan, C.J., Mendes, E., 2006. Cross-company and single-company effort
+models using the ISBSG database: a further replicated study. In:
+Proceedings of the International Symposium on Empirical Software
+Engineering ISESE’06, Rio de Janeiro, Brazil. pp. 75–84.
+Maxwell, K., 2002. Applied Statistics for Software Managers. Software
+Quality Institute Series. Prentice Hall.
+Maxwell, K., Wassenhove, L.V., Dutta, S., 1999. Performance evaluation
+of general and company specific models in software development effort
+estimation. Management Science 45 (6), 787–803.
+Mendes, E., Di Martino, S., Ferrucci, F., Gravino, C., in press. Effort
+estimation: how valuable is it for a web company to use a crosscompany data set, compared to using its own single-company data set?
+In: Proceedings of International World Wide Web Conference
+(WWW’07), Banff, Canada, 8–12 May.
+Mendes, E., Kitchenham, B.A., 2004. Further comparison of crosscompany and within company effort estimation models for web
+applications. In: Proceedings International Software Metrics Symposium (METRICS’04), Chicago, Illinois, September 11–17th, 2004.
+IEEE Computer Society. pp. 348–357.
+Mendes, E., Mosley�, N., Counsell, S., 2003. Investigating early web
+size measures for web cost estimation. In: Proceedings of Evaluation
+and Assessment in Software Engineering (EASE’03), Keele. pp. 1–
+22.
+
+Mendes, E., Lokan, C., Harrison, R., Triggs, C., 2005. A replicated
+comparison of cross-company and within-company effort estimation
+models using the ISBSG database. In: Proceedings of Metrics’05,
+September 19–22. p. 36.
+Shepperd, M.J., Kadoda, G., 2001. Using simulation to evaluate
+prediction techniques. In: Proceedings IEEE 7th International Software Metrics Symposium (METRICS’01), London, UK. pp. 349–358.
+Wieczorek, I., Ruhe, M., 2002. How valuable is company-specific data
+compared to multi-company data for software cost estimation? In:
+Proceedings International Software Metrics Symposium (METRICS’02), Ottawa, June 2002. pp. 237–246.
+

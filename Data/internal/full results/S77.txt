@@ -1,0 +1,944 @@
+2009 35th Euromicro Conference on Software Engineering and Advanced Applications
+# ***Estimating Web Application Development Effort Using Web-COBRA and COSMIC: *** ***An Empirical Study***
+
+
+Filomena Ferrucci, Carmine Gravino
+
+Dipartimento di Matematica e Informatica
+
+University of Salerno
+Via Ponte Don Melillo, Fisciano (SA), Italy
+
+
+Sergio Di Martino
+Dipartimento di Scienze Fisiche
+Università degli Studi di Napoli “Federico II”
+
+Via Cinthia, I-80126 Napoli, Italy
+
+
+Email: {fferrucci, gravino}@unisa.it Email: dimartino@na.infn.it
+
+***Abstract*** **—Even if the adaptation of the COBRA method to**
+**the web has many appealing characteristics, its effectiveness**
+**in predicting Web application development effort has been**
+**previously assessed only in one empirical study, using the**
+**Web Objects measure. The study provided positive results,**
+**but it is widely recognized that several empirical**
+**investigations should be performed to validate/confirm the**
+**usefulness of effort estimation approaches. Moreover, the**
+**use of other size measures in combination with Web-COBRA**
+
+**has not yet been investigated in the literature. These two**
+**aspects encouraged us to further analyze the effectiveness of**
+**Web-COBRA. In particular, we used a dataset of 15 Web**
+**applications, whose functional size was measured using**
+**COSMIC. In this paper we describe the empirical analysis**
+**we conducted, whose results confirm that Web-COBRA can**
+**be profitably exploited for estimating Web application**
+**development effort, also when used in combination with**
+**COSMIC.**
+
+
+Email: {fferrucci, gravino}@unisa.it
+
+
+***Keywords:*** *Web applications, Effort estimation, COSMIC*
+
+I. I NTRODUCTION
+
+In the field of Web Engineering various techniques
+have been proposed to predict the effort required for the
+development of an application [1], [3], [10], [18], [19],
+
+[20], [21], [25], and among them Web-COBRA seems to
+be of particular interest, thanks to its ability to combine
+expert’s opinions with a formal modeling technique [25].
+Web-COBRA is an adaptation of the COBRA method [4],
+an acronym of COst estimation, Benchmarking and Risk
+Analysis, since it provides an explicit support for these
+three fundamental tasks of project management. COBRA
+is a typical Composite Method, proposed to merge the pros
+of both the Model and Non-Model Based methods [5], by
+exploiting expert’s judgments, gathered in a controlled
+fashion, with other cost drivers to be exploited with an
+algorithmic approach. Indeed, Non-Model Based methods
+are mainly based on expert’s guesstimates, while Model
+Based methods rely on a more formal approach, involving
+the application of some algorithms to a number of inputs
+(i.e. factors that influence the development cost) to
+produce an effort estimate. Among these factors, or “cost
+drivers”, the size of the application is by far the most
+widely used [5].
+
+To the best of our knowledge, to date only one
+empirical study has been carried out to assess the
+effectiveness of Web-COBRA. In that work, the authors
+employed Web Objects as size measure [23] and exploited
+a dataset of 12 Web applications. The results obtained
+highlighted the effectiveness of the method in the
+
+
+considered context, but of course other replications in
+different setting are required to assess the usefulness of the
+proposal. Indeed, in the field of Empirical Software
+Engineering, it is widely recognized that prediction
+methods and size measures can be affordably applied in
+industrial settings only if their effectiveness has been
+empirically validated in different studies [27]. This fact
+motivated us to conduct a new study on Web-COBRA.
+Moreover, we were interested also in assess the
+performance of the method in combination with COSMIC.
+This because COSMIC is becoming one of the most
+diffused methods for measuring the functional size of
+software, while Web-COBRA allows us to take into
+account also a number of factors that are relevant for a
+specific context and can affect the development effort of
+each specific project. For our empirical study, we exploited
+a dataset composed of 15 Web applications developed by
+an Italian software company.
+
+The remainder of the paper is organized as follows. In
+Section II we describe the research method we exploited.
+In Section III we report on the empirical analysis we
+performed together with a discussion of the gathered
+results. The validity of the empirical study is discussed in
+Section IV while Section V contains a description of
+related work. The paper ends by giving some final remarks
+and suggestions on future work.
+
+II. R ESEARCH METHOD
+
+*A.* *The COBRA Method for the Web*
+
+Web-COBRA was proposed to predict the
+development effort of Web applications, taking into
+account “the needs of a typical Web application
+company”. In the following we describe the key aspects of
+this method, but for sake of brevity it is not possible to
+expose it in details. The interested reader can consult the
+work in [25]. To apply Web-COBRA, two key aspects
+have to be setup for a specific environment:
+
+1. The set of external factors that can lead to a rise of
+
+the cost for an application within the specific domain.
+These factors are modeled by introducing the concept
+of cost overhead, defined as “the additional
+percentage on top of the cost of an application
+running under optimal conditions” [4].
+
+2. The relationship between cost overhead and
+cost/effort.
+
+
+978-0-7695-3784-9/09 $25.00 © 2009 IEEE978-0-7695-3784-9/09 $26.00 © 2009 IEEE 306
+
+DOI 10.1109/SEAA.2009.47
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+In the following we detail these two points.
+The first aspect is captured by a causal model, i.e. a list
+of all the cost factors (and their relationships) that may
+affect a development cost within a specific domain. This
+conceptual, qualitative model is obtained through the
+acquisition of experts’ knowledge. Then, the experts are
+asked to “quantify” the effect of each of these identified
+factors on the development cost, by specifying the
+percentage of overhead above an “optimal” application
+that each factor may induce. Since different experts may
+provide different estimations of these percentages, based
+on their previous experience, these factors are modeled as
+uncertain variables requiring a minimal, most likely, and
+maximal values. For example, experts may agree that the
+factor “safety of the web application” may affect the
+development cost/effort ranging from 10% (minimal),
+through 50% (most likely), to 80% (maximal). To obtain
+the causal model, a triangular distribution of these cost
+overheads is calculated. It is worth noting that the range of
+the distribution provides an indication on how uncertain
+the experts are about the overhead inducted by the specific
+cost factor [25].
+In the second step, the relationship between the cost
+overhead and the development cost is modeled by using
+the Ordinary Least Squares Regression (OLSR) [22] and
+employing past data of the company. The causal model
+and the determined relationship between effort and cost
+overhead are used to obtain the effort estimations for new
+applications. In this step a Monte Carlo simulation can be
+run to provide a distribution from where an estimate of the
+effort can be obtained by taking the mean of the
+distribution.
+
+The main differences between COBRA and WebCOBRA regard the weighting of the cost factors. In
+particular, OBRA allows to assign a weight to each expert
+in order to take into account his/her degree of experience.
+On the other hand, both in [25] and in this study, all the
+company experts had very similar experience, making
+unnecessary to “weight” their expertise.
+
+*B.* *The Employed Size Measure*
+
+COSMIC stands for COmmon Software Measurement
+International Consortium and is a widely adopted method
+for sizing software, approved as an ISO standard
+(ISO/IEC 19761:2003). This method was originally
+conceived for business and real-time applications, but it
+can be successfully applied in many other contexts, where
+the software is mainly dominated by large amounts of data
+movements [9]. Indeed, the basic idea underlying the
+COSMIC approach is that, for many kinds of software, the
+main programming efforts are devoted to handle data
+movements from/to the mass storage and the users. Thus,
+their number can provide a meaningful sight of the system
+size. In order to identify these data movements, a proper
+context model for the specific application has to be
+defined, bounding the software from its operating
+environment. Basically each data movement crossing a
+boundary has to be counted [9]. Four kinds of data
+movements are considered: *Entry, Exit*, *Write*, *Read* . The
+size of the software, expressed in terms of Cosmic
+
+
+Functional Point [9], is given by the sum of all data
+
+movements.
+The application of the COSMIC method in the Web
+domain has been analyzed by some researchers in the last
+years [11], [18], [24]. The difficulties of applying the FPA
+(Function Point Analysis) method for sizing an Internet
+bank system, firstly motivated Rollo to use the COSMIC
+in the context of Web applications [24]. However, he did
+not present any empirical result supporting his thesis.
+Subsequently, Mendes *et al.* applied the COSMIC
+measurement to Web sites without server-side elaborations
+and the context model they considered had the Web Server
+as data store [18]. Using data about 37 Web systems
+developed by academic students, they constructed an effort
+estimation model by applying OLSR. Unfortunately, the
+model did not provide good estimations. Subsequently, an
+empirical study based on the use of 44 Web applications
+(mainly Web portals, e-commerce sites, etc…), developed
+by academic students, was performed to assess the
+COSMIC approach [11]. The effort estimation model
+obtained by employing OLSR provided encouraging
+results. The analysis presented in the following takes into
+account the suggestions of [11] for the application of the
+COSMIC approach.
+
+*C.* *Validation Technique and Evaluation Criteria*
+
+As done in [25], we applied a leave-1-out cross
+validation in order to verify whether or not the predicted
+efforts were useful estimations of the actual development
+efforts. It is widely used in empirical studies when dealing
+with small datasets [5]. In particular, to apply the
+technique, the original dataset is divided into N different
+subsets (where N is the size of the original dataset) of
+training and validation sets, where each validation set has
+one observation. Then, N steps are performed and at each
+step, the training set is used to determine the estimation
+model and the validation set to assess the obtained
+
+estimates.
+To evaluate the accuracy of the obtained estimations,
+we used some summary measures, namely MMRE,
+MdMRE and Pred(0.25) [8], which have been widely used
+in many comparisons to assess the accuracy of software
+estimation models [10], [11], [18]-[21]. In the following,
+we briefly recall the main concepts underlying the MMRE
+and Pred(0.25). The Magnitude of Relative Error [8] is
+defined as:
+
+(1) MRE = |EFHreal — EFHpred | / EFHreal
+
+where EFHreal and EFHpred are the actual and the
+predicted efforts, respectively. MRE has to be calculated
+for each observation in the dataset. All the MRE values are
+aggregated across all the observations using the mean and
+the median, giving rise to the Mean of MRE (MMRE), and
+the Median MRE (MdMRE), where the latter is less
+sensitive to extreme values [19].
+The prediction at level 0.25 [8], defined as:
+
+(2) Pred(0.25) = k /N
+
+where k is the number of observations whose MRE is less
+than or equal to 0.25, and N is the total number of
+observations. Pred(0.25) is a quantification of the
+
+307
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+percentage of predictions whose error is less than 25%.
+According to [8], a good effort estimation model should
+have a MMRE≤0.25 and Pred(0.25)≥0.75, meaning that
+the mean estimation error should be less than 25%, and at
+least 75% of the estimated values should fall within 25%
+
+of their actual values.
+As suggested in [20], we also analyzed MMRE,
+MdMRE, and Pred(0.25) obtained by considering at each
+step of the leave-1-out cross validation the mean of effort
+(i.e., MeanEffort) and the median of effort (i.e.,
+MedianEffort) across all the dataset of past projects, as
+estimated value. The aim is to have a benchmark to assess
+
+whether the estimates obtained with Web-COBRA and
+COSMIC are significantly better than estimates based on
+the mean and median effort of the previous projects.
+Indeed, if this is not the case then, for a software company,
+it could be more useful to simply use the mean or the
+median effort of the past developed applications rather
+than dealing with more complex estimation methods [20].
+Moreover, we tested the statistical significance of the
+obtained results, by using absolute residuals, in order to
+establish if one estimation model provided better results
+than others [16], [19]. In particular, we performed
+statistical tests (the T-Test and the Wilcoxon test.) to verify
+the following null hypothesis “the two considered
+population have identical distributions”. If the null
+hypothesis is true, then the number of positive and
+negative differences should be approximately the same.
+Furthermore, to have also an indication of the
+practical/managerial significance of the results we verified
+the effect size [14]. Effect size is a simple way of
+quantifying the difference between two groups. It has
+many advantages over the use of tests of statistical
+significance alone since “whereas p-values reveal whether
+a finding is statistically significant, effect size indicates
+practical significance”. Employing the Wilcoxon test and
+the T-test, the effect size was determined by using the
+formula: r = Z-score / sqrt(N), where N is the number of
+observations. In particular, we first calculated the effect
+size and then compared it to the Cohen's benchmarks [7]:
+so r=0.20 indicates a small effect, r=0.50 indicates medium
+effect, and r=0.80 indicates a large effect.
+
+III. E MPIRICAL STUDY
+
+In this section, we start by describing the dataset
+employed in the empirical study and the differences with
+respect the dataset used in the previous case study on WebCOBRA. Then, we report on the empirical analysis and
+discuss the results.
+
+*A.* *Dataset Description*
+
+The empirical study we present in this paper is based
+on a dataset coming from a medium-sized software
+company operating in Italy, whose core business is the
+development of enterprise information systems, mainly for
+local and central government. The company is specialized
+in the development and management of solutions for Web
+portals, enterprise intranet/extranet applications (such as
+Content Management Systems, e-commerce, work-flow
+managers, etc…), and Geographical Information Systems.
+It has about fifty employees and a turnover of about 5M €.
+It is certified ISO 9001:2000, and it is also a certified
+partner of Microsoft, Oracle, and ESRI.
+
+
+Data used in the study are related to a set of 15 Web
+applications, including e-government, e-banking, Web
+portals, and Intranet applications, developed by exploiting
+different Web-oriented technologies (e.g., J2EE,
+ASP.NET). Oracle has been the most commonly adopted
+DBMS, but also SQL Server, Access and MySQL have
+been employed in some applications.
+Table I provides some descriptive statistics about the
+considered dataset, taking into account the size (expressed
+in terms of COSMIC), the actual effort (expressed in terms
+of person-hours), and the peak staff (expressed in terms of
+people involved in the project). Moreover, it also reports
+the statistics of the dataset considered by Ruhe *et al* . for
+the first assessment of Web-COBRA [25]. They used 12
+Web applications, such as B2B, intranet or financial,
+developed between 1998 and 2002 by a small Australian
+software company, with about twenty employees. The
+most of these projects were new developments, even if
+there were also enhancements, and re-development
+projects.
+
+TABLE I. D ESCRIPTIVE STATISTICS OF THE DATASET
+
+|Col1|Min|Max|Median|Mean|Std.<br>Dev.|
+|---|---|---|---|---|---|
+|Our study|Our study|Our study|Our study|Our study|Our study|
+|COSMIC|264|1,022|2,792|602.4|249.1|
+|Effort|1176|3,712|1389|2,677.9|827.1|
+|Peak Staff|6|7|6|6.2|0.4|
+|Ruhe et al.’s study|Ruhe et al.’s study|Ruhe et al.’s study|Ruhe et al.’s study|Ruhe et al.’s study|Ruhe et al.’s study|
+|Effort|267|2,504|Un-know|883|710|
+|Peak Staff|2|6|Un-know|3|1.5|
+
+
+
+As described before, the 15 Web applications of our
+study are of the same kind, but they are more recent, being
+developed between 2003 and 2006. Other differences are
+related to the size of the team. Indeed, the development
+teams considered in our study are in mean 2 times bigger
+than the ones of Ruhe *et al.*, in terms of employed people.
+Furthermore, the effort required to develop the Web
+applications are in mean 3 times greater than the one of
+Ruhe *et al* .’s study.
+
+*B.* *The Empirical Analysis*
+
+To apply Web-COBRA, the following steps were
+conducted:
+
+1) Identification and quantification of cost factors.
+
+2) Data collection for the Web applications.
+
+Regarding the identification and quantification of cost
+factors, a large number of cost drivers may affect the
+development cost of software applications. However, for
+each domain, only a subset of these factors results relevant
+
+[4]. To select the set of the cost drivers that result
+significant for the considered domain, we drafted an initial
+list of cost drivers, based on a review of the literature on
+Web effort/cost estimation, including the cost factors
+identified in [25]. This preliminary list was submitted to
+five experts of the software company involved in our
+empirical study. Then a Delphi method [17] was adopted
+until they agreed on the final set of cost drivers. They were
+asked to comment, based on their experience, on the clarity
+
+308
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+of the factors (to avoid that different project managers
+could interpret them in different ways), on their
+completeness (to avoid that some key factors might not be
+considered), and on relevance for the Web application
+development domain, working also to reduce as much as
+possible redundancies and overlaps. A final list of 10 cost
+drivers was devised. They are listed in Table II. A deeper
+description can be found in the Technical Report [12]. It is
+worth noting that this list includes four cost factors
+employed in [25]: Novelty of Requirements, Importance of
+Software Reliability, Novelty of Technology, and
+Developer’s Technical Capabilities [1] .
+Then, the experts were asked to quantify the cost
+factors, specifying their minimal, most likely, and maximal
+inducted overhead. Again, a Delphi method was used to
+obtain a single representative triple for each cost factor. It
+is worth noting that, as done in [25], in our case study we
+checked for orthogonality among cost factors by excluding
+dependent cost factors or modifying their definitions to
+avoid overlaps.
+The information on the cost overhead for each project *p*
+was obtained by the sum of all the triangular distributions
+of cost factors of *p*, given their minimal, most likely, and
+maximal values indicated by project managers. In
+particular, for each cost factor, the project manager
+specified its influence on the Web application by means of
+a value in the range 0..3, where 0 means that no influence
+was due to that factor, and 3 represents the highest impact.
+The descriptive statistics of the cost factors are shown in
+Table II. Again, further details can be found in [12].
+The information on Effort, Size (expressed in terms of
+COSMIC), and co_overhead obtained from cost factors
+was exploited to build an estimation model and validate it.
+Observe that Web-COBRA assumes that the relationship
+between effort and size is linear. We have performed the
+required statistical tests to verify this linearity in our
+dataset. Moreover, the size of a Web application is
+modeled as an uncertain variable, which underlies a
+triangular distribution and an uncertainty of 5% was
+considered in [25]. The obtained equation is:
+
+(3) *Effort* = 1.222* *COSMIC*   - *co_overhead* +1146,351
+
+Then, we applied a leave-1-out cross validation, by
+performing 15 steps, where at each step the original dataset
+was partitioned into a training set of 14 Web applications
+and a validation set consisting of the remaining
+application. The training set was used to determine the
+estimation model and the validation set to assess the
+obtained estimates. Moreover, we run a Monte Carlo
+simulation (considering 1000 iterations) that allowed us to
+use the relationship between cost overhead and effort
+together with the causal model in order to obtain a
+probability distribution of the effort for the new project.
+Then, the mean value of the distribution was used as the
+estimated effort value.
+To evaluate the accuracy of the estimates we employed
+the summary measures MMRE, MdMRE, and Pred(0.25).
+Table III contains the results, which highly fit the
+acceptable threshold defined in [8] since MMRE (and
+
+1 *Importance of Software Reliability* was not included in the final list
+selected by the project managers in the study presented in [25].
+
+
+|Cost factor|Min.|Max.|Med.|Mea<br>n|Std.<br>Dev.|
+|---|---|---|---|---|---|
+|Novelty of Requirements|0|2|1|0.933|0.700|
+|Importance of Software<br>Portability|0|1|0|0.333|0.488|
+|Importance of Software<br>Reliability|0|3|0|0.533|0.915|
+|Importance of Software<br>Usability|0|3|1|1.067|1.033|
+|Importance of Software<br>Efficiency and<br>Performance|0|1|0|0.133|0.352|
+|Novelty of Technologies|0|3|0|0.867|1.125|
+|Integration/Interaction<br>with legacy systems|0|3|1|1.400|0.828|
+|Temporal Overlap with<br>other projects|1|3|2|1.800|0.676|
+|Productivity of the adopted<br>technological platform|1|3|2|1.800|0.775|
+|Developer’s Technical<br>Capabilities|1|1|1|1.000|0|
+
+
+We also calculated the summary statistics MMRE,
+MdMRE, and Pred(0.25) obtained by employing at each
+step of the leave-1 out cross validation the mean of effort
+(i.e., MeanEffort) and the median of effort (i.e.,
+MedianEffort) of all the projects in the dataset, as
+estimated value. They are also shown in Table III, where
+we can see that the values of MMRE and Pred(0.25) do not
+match the acceptance thresholds suggested in [8]. The
+values of MMRE and Pred(0.25) suggest that the
+estimations achieved by using Web-COBRA with
+COSMIC are better than those obtained using MeanEffort
+and MedianEffort.
+Moreover, as suggested in [16], we also tested the
+statistical significance of the obtained results by using
+paired absolute residuals. To this end, we performed both
+the T-Test and the Wilcoxon test. The analysis revealed
+that the absolute residuals obtained with Web-COBRA, in
+combination with COSMIC, were significantly better than
+those obtained using MeanEffort and MedianEffort.
+To have an indication of the practical/managerial
+significance of these results we also analyzed the effect
+size [14]. The statistics on effect size revealed that all
+results statistically significant were also practical
+significant according to the widely used Cohen's
+benchmarks [7]. Indeed, medium effect sizes were
+highlighted for Web-COBRA with COSMIC vs
+MeanEffort (r=0.71) and Web-COBRA with COSMIC vs
+MedianEffort (r=0.58).
+
+TABLE III. D ESCRIPTIVE ACCURACY EVALUATION
+
+|Col1|MMRE|MdMRE|Pred(0.25)|
+|---|---|---|---|
+|Web-COBRA|0.11|0.10|0.93|
+|MeanEffort|0.34|0.27|0.47|
+|MedianEffort|0.33|0.24|0.60|
+
+
+
+*C.* *Comparison with the previous case study*
+
+To compare our results with the previous empirical
+study, in Table IV we have reported the values of the
+summary statistics on the prediction accuracy obtained in
+
+309
+
+
+MdMRE) values are less than 0.25 and Pred(0.25) values
+are greater than 0.75.
+
+TABLE II. D ESCRIPTIVE S TATISTICS OF COST FACTORS
+
+
+
+
+
+
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+the previous research on Web-COBRA. We can observe
+that the MMRE and Pred(0.25) values we obtained are
+slightly better than those of [25]. Thus, the analysis
+reported in the present paper has confirmed the results of
+
+[25], showing the effectiveness of Web-COBRA to
+estimate Web application development effort. Moreover,
+our results extend the ones of previous study, since we
+applied Web-COBRA by employing a different measure
+(i.e., COSMIC) and using Web applications from a
+different context.
+
+TABLE IV. C OMPARISON WITH THE RESULTS OF [25]
+
+|Col1|MMRE|MdMRE|Pred(0.25)|
+|---|---|---|---|
+|Web-COBRA &<br>COSMIC|0.11|0.10|0.93|
+|Web-COBRA &<br>Web Objects|0.17|0.15|0.75|
+
+
+
+IV. C ASE STUDY VALIDITY
+
+It is widely recognized that several factors can bias the
+construct, internal, external, and conclusion validity of
+empirical studies. To satisfy construct validity a study has
+“to establish correct operational measures for the concepts
+being studied” [15]. In other words, it represents to what
+extent the predictor and response variables precisely
+measure the concepts they claim to measure [19]. A
+research study has internal validity if its outcome can be
+considered as a function of the measured variables and not
+of extraneous factors. Conclusion validity is concerned
+with the ability to draw statistically correct conclusions
+while external validity is concerned with the ability to
+generalize the results to other contexts. In the following,
+we will analyze the presented empirical study with respect
+to each of these types of validity.
+*Construct validity* relates to the choice of the size
+measure and cost factors as well as the way to collect
+them. Regarding the selection of the measure, we
+employed a measure that has been used in the past to size
+Web applications and estimate development effort. [11],
+
+[18]. All the cost factors that may affect the development
+effort of Web applications were identified together with
+company experts, using a Delphi approach. To mitigate
+biases, these factors are modeled as uncertain variables
+requiring a minimal, most likely, and maximal values. The
+collection of information about the measure, cost factors,
+and actual effort represents the main difficulties to carry
+out this kind of study.
+Concerning the effort collection, the software company
+used timesheets to keep track of this information, where
+each team member annotates the information about his/her
+development effort, and weekly each project manager
+stored the sum of the efforts for the team. In order to
+collect all the significant information to calculate the
+values of the size measure, the authors defined a template
+to be filled in by the project managers. All the project
+managers were trained on the use of the questionnaires.
+They took into account the COSMIC Measurement
+Manual [9] and the rules provided in [11] for the collection
+required to apply COSMIC.
+To mitigate the threat to validity of the counting
+results, one of the authors analyzed the filled templates and
+the analysis and design documents, in order to cross-check
+the provided information. The same author calculated the
+
+
+values of the size measure. Moreover, the size of a Web
+application was considered as an uncertain variable (by
+using an uncertainty of 5% as done in [25]). Indeed
+measuring the size of a system with a method not
+experienced before may introduce some bias. As for the
+collection of the information on the cost factors, we
+defined a questionnaire together with some company
+experts. Then, this questionnaire was submitted to the
+project managers of the considered Web applications.
+Some factors should be taken into account for the
+*internal validity* : subjects’ authoring and designing
+experience, and reliability of the data and lack of
+standardization [3], [15], [18]. The subjects involved in the
+study were professionals who worked in the software
+company. No initial selection of the subjects was carried
+out, so no bias was apparently introduced. Moreover, the
+Web applications were developed with technologies and
+methods that subjects had experienced. Consequently,
+confounding effects from the employed methods and tools
+can be excluded. As for the reliability of the data and lack
+of standardization, the questionnaires used were the same
+for all the Web applications and the project managers were
+instructed on how to use the questionnaires, to correctly
+provide the required information. Instrumentation effects
+in general did not occur.
+As for the *conclusion validity* we carefully applied the
+statistical tests, verifying all the required assumptions.
+However, the main threat to conclusion validity could be
+related to the number of Web applications composing the
+dataset. Indeed, 15 Web applications can be considered a
+not so large number from a statistical point of view to
+allow us to make generalization about the values obtained.
+However, observe that Web-COBRA does not require a
+large number of data to determine the relationship between
+cost overhead an effort, which is the crucial step of the
+method [4], [25].
+The Web applications involved in this empirical
+analysis are representative samples of modern Web
+applications, taking into account their type, functionalities,
+target platforms, and complexity. Thus, we are confident
+that the type of analyzed Web applications did not bias the
+validity of the achieved results.
+Regarding generalization of the results, Web-COBRA
+is a Composite Model Based method that uses both
+experts’ knowledge and data about past applications to
+define a company-specific estimation model, tailored for
+an intended software development context. It is widely
+recognized that the results obtained in an industrial context
+might not hold in other contexts. Indeed, each context
+might be characterized by some specific application and
+human factors, such as development process, developer
+experience, application domain, tools, technologies used,
+time, and budget constraints [6]. Thus, replications of the
+study in several and different companies are necessary to
+generalize of the results.
+
+V. R ELATED WORK
+
+In the previous sections we have analyzed the use of
+Web-COBRA and COSMIC. In the following we discuss
+related work taking into account empirical studies that
+exploited other size measures and estimation methods.
+The measure Web Objects [23] are characterized by the
+use of four new Web-related components together with the
+
+310
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+five function types of the Function Point Analysis method
+
+[12], namely Multimedia Files, Web Building Blocks,
+Scripts, and Links. To size a Web application, firstly the
+instances of the nine components are counted and a
+complexity (low, average, or high) is associated to them.
+Then, by using a calculation worksheet a weight is
+associated to each counted instance of the components.
+The total amount of Web Objects is obtained according to
+the weights that are related to the complexity of each
+component [23], giving an indication of the size of the
+considered Web application. An empirical study based on
+a dataset of 12 Web applications from industrial world was
+performed to establish whether or not Web Objects can be
+affordably used to estimate the development effort of Web
+applications [25]. In particular, OLSR and Web-COBRA
+were exploited to obtain estimates, gathering in both cases
+encouraging results. More details about the empirical study
+exploiting Web-COBRA have been provided in Section
+III.C.
+Some authors investigated the usefulness of size
+measures such as number of Web pages, media elements,
+internal links, etc. [1], [18], [19]. Several studies have been
+conducted to investigate and compare the effectiveness of
+these measures in combination with estimation techniques
+like Linear and Stepwise Regression, Case-Based
+Reasoning, Regression Tree, and Bayesian Networks [10],
+
+[19], [21]. In [19] a dataset of 37 Web systems developed
+by academic students was exploited and the empirical
+results suggested that Stepwise Regression provided
+statistically significant superior predictions than other
+techniques when using length size measures, such as
+number of Web pages, number of new media. On the
+contrary, a study exploiting a dataset containing data on 15
+Web software applications developed by a single Web
+company (the ones also employed in the empirical study
+presented in this paper) revealed that none of the employed
+techniques (i.e., Stepwise Regression, Regression Tree,
+and Case-Based Reasoning) was statistically significantly
+superior than others [10].
+Recently, Mendes and Mosley investigated the use of
+Bayesian Networks (BN) for Web effort estimation using
+the Web applications of the Tukutuku database [21]. They
+employed two training sets, each with 130 Web
+applications, to construct the models while their accuracy
+was measured using two test sets, each containing data on
+65 Web applications. They also compared the accuracy of
+the obtained estimates with those obtained by exploiting
+Manual Stepwise Regression and Case-Based Reasoning,
+and median of effort and mean of effort. The analysis
+revealed that Manual Stepwise Regression provided
+significantly better estimations than any of the models
+obtained by using Bayesian Networks and is the only
+approach that provided significantly better results than the
+median effort based model.
+Baresi and Morasca proposed a different approach
+defining several measures on the basis of attributes
+obtained from design artifacts [3]. They observed that the
+design phase is often a critical one and requires an
+important part of the total effort of a Web application,
+since the implementation can be partially automated by
+tools that exploit design artifacts. In particular, they
+reported on a case study, and two replications, conducted
+with students of an advanced university class, that
+
+
+highlighted the impact of some attributes, obtained from
+artifacts designed with W2000, on the total effort required
+for designing Web applications. It is worth noting that, in
+our empirical study, Web applications were not
+automatically obtained from design documents, thus our
+focus was on the effort to develop Web applications.
+Abrahão and Pastor proposed the OOmFPWeb method
+
+[1] which maps the Functional Points concepts into the
+primitives used in the conceptual modeling phase of
+OOWS, a method for producing software for the Web.
+More recently, Abrahão *et al* . have also proposed a
+model-driven functional size measurement procedure,
+namely the Object-Oriented Hypermedia Function Points
+(OO-HFP), for Web applications developed using the
+Object-Oriented Hypermedia (OO-H ) method [2]. This
+proposal goes in the same line of Baresi and Morasca’s
+proposal since the source code of Web applications can be
+automatically generated from OO-H conceptual models
+using a tool called VisualWade. An empirical validation of
+this approach revealed that the obtained effort estimates
+are comparable with those obtained by using the Tukutuku
+measures [20].
+
+VI. C ONCLUSIONS
+
+In this paper, we have investigated the use of WebCOBRA proposed in [25] for estimating Web application
+development effort. In particular, we have applied WebCOBRA in combination with the COSMIC measure
+exploiting data from 15 industrial Web applications
+developed by an Italian software company. The empirical
+analysis confirms and extends the results provided in a
+previous study since it reveals the effectiveness of WebCOBRA also in combination with another size measure,
+namely COSMIC.
+To the best of our knowledge, it is the first time that
+Web-COBRA is used with this size measure. The
+COSMIC method has been developed to improve the
+measurement of the functional size of a large number of
+software types and has been recently used also for Web
+applications [10], [11], [18], [24]. Thus, the empirical
+study presented in this paper also corroborates the results
+presented in [11]. In that paper, we showed the
+effectiveness of COSMIC to be employed as size measure
+for constructing effort estimation models for Web
+applications using OLSR as modeling technique. The
+combination of the Web-COBRA method with the
+COSMIC measure appears to be especially interesting
+since it allows us to combine functional aspects of a
+software system (captured by COSMIC) with other factors
+identified by the application of Web-COBRA.
+In the future, we intend analyze other
+extensions/adaptations of COBRA in the context of Web
+applications, e,g., that provided in [26].
+
+R EFERENCES
+
+[1] S.M. Abrahão, O. Pastor, “Measuring the functional size of
+Web applications”, *International* *Journal* *of* *Web*
+*Engineering and Technology*, 1(1), 2003, pp. 5-16.
+
+[2] S. Abraho, E. Mendes, J. Gomez, E. Insfran, “A Modeldriven Measurement Procedure for Sizing Web
+Applications: Design, Automation and Validation”, in
+*Proc. of* *Model Driven Engineering Languages and Systems*
+(MoDELS’07), Springer Verlag, pp. 467-481.
+
+311
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+
+[3] L. Baresi and S. Morasca, “Three Empirical Studies on
+Estimating the Design Effort of Web Applications”,
+*Transaction on Software Engineering and Methodology*,
+16(4), 2007.
+
+[4] L. Briand, K. El Emam, F. Bomarius, “COBRA: A Hybrid
+Method for Software Cost Estimation, Benchmarking, and
+Risk Assessment”, in *Proc. of the Intern. Conference on*
+*Software Engineering* (ICSE’98), 1998, pp. 390-399.
+
+[5] L. Briand, I. Wieczorek, “ *Resource Estimation in Software*
+*Engineering* ”, Encyclopedia of Software Engineering.
+Volume 2. P-Z (2nd ed.), Marciniak, John J. (ed.) New
+York: John Wiley & Sons, 2002, pp. 1160-1196.
+
+[6] L. Briand, J. Wust, “Modeling development effort in
+Object-Oriented systems using design properties”,
+*Transaction on Software Engineering* 27(11), 2001, pp.
+936-986.
+
+[7] J. Cohen, “ *Statistical Power Analysis for the Behavioral*
+*Science* ”, Lawrence Erlbaum Hillsdale, New Jersey, 1988.
+
+[8] D. Conte, H.E. Dunsmore, V.Y. Shen, “ *Software*
+*engineering* *metrics* *and* *models* ”, The
+Benjamin/Cummings Publishing Company, Inc., 1986.
+
+[9] COSMIC. URL: http://www.cosmicon.com, 2007.
+
+[10] G. Costagliola, S. Di Martino, F. Ferrucci, C. Gravino, G.
+Tortora, G. Vitiello, “Effort estimation modeling
+techniques: a case study for Web applications”, in *Proc. of*
+*Intern. Conference on Web Engineering* (ICWE’06), 2006,
+pp. 9-16.
+
+[11] G. Costagliola, S. Di Martino, F. Ferrucci, C. Gravino, G.
+Tortora, G. Vitiello, “A COSMIC-FFP: Approach to
+Predict Web Application Development Effort”, *Journal of*
+*Web Engineering* 5(2), 2006, pp. 93-120.
+
+[12] Technical Report on this Empirical Study, available at
+http://people.na.infn.it/~dimartino/webcobra.html
+
+[13] International Function Point Users Group 2004. Function
+point counting practices manual, release 4.2.1.
+
+[14] V. Kampenes, T. Dybå, J. E. Hannay, D. I.K. Sjøberg, “A
+Systematic Review of Effect Size in Software Engineering
+Experiments”, *Information and Software Technology* 4(1112), 2007, pp.1073-1086.
+
+[15] B. A. Kitchenham, S.L. Pfleeger, L. M. Pickard, “Case
+Studies for Method and Tool Evaluation”, *IEEE Software*
+12(4), 1995, pp. 52–62.
+
+
+
+[16] B. A. Kitchenham, L. M. Pickard, S. G. MacDonell, M. J.
+Shepperd, “What accuracy statistics really measure”, *IEE*
+*Proceedings – Software*, 148(3), 2001, pp. 81-85.
+
+[17] Linstone H.A., Turoff M., “ *The Delphi Method: Techniques*
+*and Applications* ”, Addison- Wesley. Publishing Co. Inc.,
+1975.
+
+[18] E. Mendes, S. Counsell, N. Mosley, “Comparison of Web
+Size Measures for Predicting Web Design and Authoring
+Effort”, *IEE Proceedings-Software* 149(3), 2002, pp. 86-92.
+
+[19] E. Mendes, S. Counsell, N. Mosley, C. Triggs, I. Watson,
+“A Comparative Study of Cost Estimation Models for Web
+Hypermedia Applications”, *Empirical* *Software*
+*Engineering* 8(2), 2003, pp. 163-196.
+
+[20] E. Mendes, B. Kitchenham, “Further Comparison of Crosscompany and Within-company Effort Estimation Models
+for Web Applications”, in *Proc. of Intern. Software Metrics*
+*Symposium* (METRICS’04), 2004, pp. 348-357.
+
+[21] E. Mendes, N. Mosley, “Bayesian Network Models for
+Web Effort Prediction: A Comparative Study”, *IEEE*
+*Transactions on Software Engineering*, 34(6), 2009, pp.
+723-737.
+
+[22] D. Montgomery, E. Peck, G. Vining, “ *Introduction to*
+*Linear Regression Analysis* ”, J. Wiley & Sons, Inc., 3rd
+Ed., 2001.
+
+[23] D. Reifer, “Web-Development: Estimating Quick-Time-toMarket Software”, *IEEE Software*, 17(8), 2000, pp. 57-64.
+
+[24] T. Rollo, “Sizing E-Commerce”, in Proc. of the ACOSM
+2000 - Australian Conference on Software Measurement,
+2000.
+
+[25] M. Ruhe, R. Jeffery, I. Wieczorek, “Cost estimation for
+Web applications”, in *Proc. of the Intern. Conference on*
+*Software Engineering* (ICSE’03), 2003, pp. 285–294.
+
+[26] A. Trendowicz, J. Heidrich, J. Münch, Y. Ishigai, K.
+Yokoyama, and N. Kikuchi, “Development of a Hybrid
+Cost Estimation Model in an Iterative Manner”, in *Proc. of*
+*the Intern. Conference on Software Engineering* (ICSE’06),
+2006, pp. 331-340.
+
+[27] C. Wohlin, P. Runeson, M. Host, M. Ohlsson, B. Regnel,
+A. Wesslen, “ *Experimentation in Software Engineering*    *An Introduction* ”, Kluwer, 2000.
+
+312
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:12:53 UTC from IEEE Xplore. Restrictions apply.
+

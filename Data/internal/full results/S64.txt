@@ -1,0 +1,930 @@
+### **Software Cost Estimation Models Using Radial Basis ** **Function Neural Networks **
+
+Ali Idri [1], Azeddine Zahi [2], Emilia Mendes [3], and Abdelali Zakrani [1 ]
+
+1 Department of Software Engineering, ENSIAS, Mohamed V University
+Rabat, Morocco
+```
+         idri@ensias.ma, zakrani@gmail.com
+
+```
+2 Department of Computer Science FST, Sidi Mohamed Ben Abdellah Universit
+Fez, Morocco
+```
+             azahi@fst-usmba.ac.ma
+
+```
+3 Computer Science Department, The University of Auckland, Private Bag 92019
+Auckland, New Zealand
+```
+            emilia@cs.auckland.ac.nz 
+
+```
+**Abstract.** Radial Basis Function Neural Networks (RBFN) have been recently
+studied due to their qualification as an universal function approximation. This
+paper investigates the use of RBF neural networks for software cost estimation.
+The focus of this study is on the design of these networks, especially their middle layer composed of receptive fields, using two clustering techniques: the Cmeans and the APC-III algorithms. A comparison between a RBFN using
+C-means and a RBFN using APC-III, in terms of estimates accuracy, is hence
+presented. This study uses the COCOMO’81 dataset and data on Web applications from the Tukutuku database.
+
+**Keywords:** Software effort estimation, Neural Networks, predictive accuracy,
+Radial basis function neural networks.
+
+**1  Introduction**
+
+Estimating software development effort remains a complex problem, and one which
+continues to attract considerable research attention. Improving the accuracy of the
+effort estimation models available to project managers would facilitate more effective
+control of time and budgets during software development. In order to make accurate
+estimates and avoid gross mis-estimations, several cost estimation techniques have
+been proposed, grouped into two major categories: (1) parametric models, which are
+derived from the statistical or numerical analysis of historical projects data [2], and
+(2) non-parametric models, which are based on a set of artificial intelligence techniques such as artificial neural networks, analogy-based reasoning, regression trees,
+genetic algorithms and rule-based induction [3,8,19,20,21]. In this paper, we focus on
+non-parametric cost estimation models based on artificial neural networks, and in
+particular Radial Basis Function Neural Networks.
+Based on biological receptive fields, Moody and Darken proposed a network architecture referred to as the Radial Basis Function Network (RBFN), which employs
+
+J.J. Cuadrado-Gallego et al. (Eds.): IWSM-Mensura 2007, LNCS 4895, pp. 21–31, 2008.
+© Springer-Verlag Berlin Heidelberg 2008
+
+22 A. Idri et al.
+
+local receptive fields to perform function mappings [16]. RBFN can be used for a
+wide range of applications, primarily because it can approximate any regular function
+
+[17]. A RBFN is a three-layer feedforward network consisting of one input layer, one
+middle-layer and an output layer. Fig. 1 illustrates a possible RBFN architecture configured for web development effort. The RBFN generates output (effort) by propagating the initial inputs (cost drivers) through the middle-layer to the final output layer.
+Each input neuron corresponds to a component of an input vector. The middle layer
+contains M neurons, plus, eventually, one bias neuron. Each input neuron is fully
+connected to the middle-layer neurons. The activation function of each middle neuron
+is usually the Gaussian function:
+
+2
+
+
+*x* − *[c]* *i*
+
+
+− − *i*
+
+( 2 ) (1)
+
+= σ *i*
+
+
+−
+
+( 2 )
+
+
+*f* ( *x* ) = *e* σ *i*
+
+
+( *x* ) = *e* *i*
+
+
+where c i and σ i are the center and the width of the *i* *[th]* middle neuron respectively. *.*
+
+denotes the Euclidean distance. Hence, each *i* *[th]* hidden neuron has its own *receptive*
+*field* in the input space, a region centered on c i with size proportional to σ i. . The Gaussian function decreases rapidly if the width σ i is small, and slowly if it is large. The
+output layer consists of one output neuron that computes the development effort as a
+linear weighted sum of the middle layer outputs as follows:
+
+2
+
+
+*x* − *c*
+
+
+−
+
+*M* (−
+
+= =
+
+
+*j*
+
+
+*M*
+
+# ∑
+
+=
+
+
+(− 2 )
+
+
+β *with* *y* = *e* σ *j* (2)
+
+
+*j* β *j* *with* *y* *j* = *e* *j*
+
+
+*Effort* = *y* β *with* *y* = *e*
+
+
+*j*
+
+
+1
+
+
+The use of an RBFN to estimate software development effort requires the determination of the middle-layer parameters (receptive fields) and the weights β j . The choice
+of the receptive fields, especially their distribution in the input space is often critical
+to the successful performance of an RBF network [18]. In general, there are two primary sources of this knowledge:
+
+- The use of some clustering techniques to analyze and find clusters in the training
+data. The results of this grouping are used to establish prototypes of the receptive
+fields.
+
+- The use of existing empirical domain knowledge to form the set of receptive
+fields. Along this line emerge some fuzzy models; in particular, some interesting
+equivalence between RBF networks and Fuzzy Rule-Based systems [11].
+
+The aim of this study is to discuss the preprocessing phase of the RBFN networks
+in designing software cost estimation as it occurs through data clustering techniques.
+More especially, we use two clustering techniques: 1) the APC-III algorithm developed by Hwang and Bang [6], and 2) the best-known clustering method that is the Cmeans algorithm. In an earlier work [10], we have empirically evaluated these two
+clustering techniques, when designing RBF neural networks for software cost estimation, using the COCOMO’81 dataset. The RBFN designed with the C-means algorithm performed better, in terms of cost estimates accuracy, than the RBFN designed
+with the APC-III algorithm [10]. To confirm those results, this paper replicates that
+study using a dataset of 53 Web projects from the Tukutuku database [14].
+
+Software Cost Estimation Models Using Radial Basis Function Neural Networks 23
+
+Input layer   Hidden layer    Output
+Teamexp *c* *i* *,* � *i*
+
+
+Devteam
+
+Webpages
+
+Img
+
+Anim
+
+
+
+*Effort*
+
+
+
+**Fig. 1.** An example of Radial Basis Function Network architecture for Web development effort
+
+This paper is structured as follows. Section 2 briefly describes how the two clustering algorithms APC-III and C-means, can be used in the design of an RBF neural
+network. In Section 3, the empirical results obtained using an RBFN on the COCOMO’81 and the Tukutuku datasets are discussed and compared in terms of prediction accuracy. Conclusions and an overview of future work are presented in Section 5.
+
+**2  Clustering Techniques for RBF Neural Networks**
+
+Clustering techniques have been successfully used in many application domains, including biology, medicine, economics, and patterns recognition [1,4,5,12,13]. These
+techniques can be grouped into major categories: Hierarchical or Partitional [5]. In
+this paper, we focus only on the Partitional clustering algorithm since it is used more
+frequently than other clustering algorithms in pattern recognition fields. Generally,
+Partitional clustering algorithms suppose that the data set can be well represented by
+finite prototypes. Partitional clustering is also referred to as an objective functionbased clustering algorithm.
+Clustering has been often used as a pre-processing phase in the design of RBF neural networks, where its primary aim is to set up an initial distribution of the receptive
+fields (hidden neurons) across the input variables space of the input variables. In particular, this implies a location of the modal values of these fields (e.g., the modes of
+the Gaussian functions).
+In this work, we use and compare the C-means and the APC-III clustering algorithms to determine the receptive fields of an RBF network for software cost estimation [9,10]. These two clustering techniques are briefly presented next.
+APC-III is a one-pass clustering algorithm with a constant radius R 0 defined as follows:
+
+
+1 *N*
+### 0 = α ∑ min( P i −
+
+*N* *i* =1 *i* ≠ *j*
+
+
+1
+### ∑ min( P i − P )
+
+### R 0 = α ∑ min( P i − P j )                     (3)
+
+*N* *i* =1 *i* ≠ *j*
+
+
+Where *N* is the number of historical software projects and α is a predetermined constant. *R* *0* expresses the radius of each cluster and consequently it controls the number
+of the clusters provided. APC-III generates many clusters if *R* *0* is small and few clusters if it is large. The outline of the APC-III algorithm can be stated as follows:
+
+24 A. Idri et al.
+
+1- Initially, the number of clusters is set at 1; the center of this cluster *C* *1* is the first
+software project in the dataset, say *P* *1*
+2- Iterate from *i=2* to *N* ( *N* is the number of historical software projects)
+a. For *j=1* to *c* ( *c* is the number of clusters)
+
+   - Compute *d* *ij* ( *d* *ij* is the Euclidean distance of *P* *i* and *c* *j*, *c* *j* is the center of
+cluster *C* *j* )
+
+   - If *d* *ij* *<R* *0* then
+`o` Include *P* *i* into *C* *j* and adjust the center of *C* *j*
+`o` Exit from the loop
+b. If *P* *i* is not included in any clusters then
+
+   - Create a new cluster that has *P* *i* as a center
+
+C-means clustering algorithm has been successfully applications in fields such as
+pattern recognition and data compression. It is a multi-pass and time-consuming clustering algorithm. The C-means algorithm partitions a collection of *N* vectors into *c*
+clusters *C* *i*, i=1,.., *c* . The aim is to find cluster centers (centroids) by minimizing a dissimilarity (or distance) function which is given in below.
+
+
+*c*
+
+=
+#### ∑∑
+
+*i* =1 *x* ∈
+
+#### J = ∑∑ d ( x k, c i )                             (4)
+
+*i* =1 *x* *k* ∈ *C* *i*
+
+
+*k*, *i*
+
+*i* =1 *x* ∈ *C*
+
+
+where *c* *i* is the center of cluster *C* *i* ; *d(x* *k* *,c* *i* *)* is the distance between *i* *[th]* center ( *c* *i* ) and *k* *[th]*
+data point. For simplicity, the Euclidian distance is used as dissimilarity measure and
+the overall dissimilarity function is expressed as follows.
+
+
+*c*
+#### = ∑∑ x k −
+
+*i* =1 *x* ∈ *C*
+
+#### J = ∑∑ x k − c i
+
+*i* =1 *x* *k* ∈ *C* *i*
+
+
+*k* *i*
+
+*i* =1 *x* ∈ *C*
+
+
+2 (5)
+
+
+The outline of the C-means algorithm can be stated as follows:
+
+1- Define the number of the desired clusters, *c* .
+2- Initialize the centers *C* *i*,i=1.. *c* . This is typically achieved by randomly selecting *c*
+points from among all of the data points.
+3- Compute the Euclidean distance between *x* *j* and *c* *i* *,* *j=1* .. *N* and *i* =1.. *c*
+4- Assign each *x* *j* to the most closer cluster *C* *i*
+5- Recalculate the centers *c* *i*
+6- Compute the objective function *J* given in Equation 5. Stop if its improvement
+over previous iteration is below a threshold.
+7- Iterate from step 3.
+
+As mentioned earlier, the use of an RBFN to estimate software development effort
+requires the determination of its architecture parameters according to the characteristics of the used datasets (COCOMO’81 or Tukutuku database), especially the number
+of input neurons, number of hidden neurons, centers *c* *i*, widths σ *i* and weights β *j* .
+The number of input neurons is the same as the number of attributes (cost drivers)
+describing the historical software projects in the dataset. Hence, the number of input
+neurons is equal to 13 for COCOMO’81 and is equal to 9 for the Tukutuku dataset.
+The number of hidden neurons is determined by the number of clusters (c) provided
+
+Software Cost Estimation Models Using Radial Basis Function Neural Networks 25
+
+by the APC-III or the C-means algorithms described in Section 2. Concerning the
+widths σ i, they were usually determined in the literature to cover the input space as
+uniformly as possible [6]. Covering the historical software project space uniformly
+implies that the RBFN will be able to generate an estimate for a new project even
+though it is not similar to any historical project. In such a situation, we prefer that the
+RBFN does not provide any estimate than one that may easily lead to wrong managerial decisions and project failure. In [9,10], we had adopted a simple strategy based
+primarily on assigning one value to all σ i ; this value depends on the radius R 0 used in
+the APC-III algorithm. Because here we investigate two clustering techniques, we
+adopt one of the following formulas to determine σ i :
+
+
+⎧
+
+⎪⎨
+
+⎪⎩
+
+
+*d* ( *x*, *c* *i* ) *if* *card* ( *C* *i*
+
+
+max *d* ( *x*, *c* *i* ) *if* *card* ( *C* *i* ) - 1
+
+
+= max *x* *j* ∈ *C* *i* ( *x* *j*, *c* *i* ) *if* ( *i* ) 
+
+= *x* *j* ∈ *C* *i* *j*, *i* *i*
+
+*i* ⎪⎨
+
+max σ *k* *if* *card* ( *C* *i*
+
+
+σ *i* = ⎪⎨ *x* *j* ∈ *C* *i* (6)
+
+max σ *if* *card* ( *C* ) = 1
+
+
+*i* = ⎪⎨ *x* *j* ∈ *C* *i* *j*, *i* *i*
+
+min σ *k* *if* *card* ( *C* *i*
+
+
+= max *x* *j* ∈ *C* *i* ( *x* *j*, *c* *i* ) *if* ( *i* ) 
+
+⎧
+
+⎪⎨
+
+⎪⎩
+
+
+max *d* ( *x*, *c* *i* ) *if* *card* ( *C* *i* ) - 1
+
+
+*k* *i*
+*k* / *card* ( *C* *k* )>1
+
+
+min σ *k* *if* *card* ( *C* *i* ) = 1
+
+
+*d* ( *x*, *c* *i* ) *if* *card* ( *C* *i*
+
+
+∈
+
+
+∈
+
+
+max σ *k* *if* *card* ( *C* *i* ) = 1
+
+
+σ *i* = ⎪⎨ *x* *j* ∈ *C* *i* (7)
+
+min σ *if* *card* ( *C* ) = 1
+
+
+=
+
+
+*k* *i*
+*k* / *card* ( *C* *k* )>1
+
+
+=
+
+
+*k*
+
+
+
+
+*k*
+
+
+
+
+where card( *C* *i* ) is the cardinality of cluster *C* *i* .
+Concerning the weights β *j*, we may set each β *j* to the associated effort of the center
+of the *j* *[th]* neuron. However, this technique is not optimal and does not take into account the overlapping that may exist between receptive fields of the hidden layer.
+Thus, we use the Delta rule to derive the values of β *j* .
+
+**3  Data Description**
+
+In this work, we evaluate empirically these two clustering techniques when designing
+RBF neural networks for software cost estimation based on two different databases:
+
+The COCOMO’81 dataset and data web from Tukutuku database.
+
+� The COCOMO’81 dataset contains 252 software projects which are mostly scientific applications developed by Fortran [2,10]; Each project is described by 13 attributes (see Table 1) : the software size measured in KDSI (Kilo Delivered Source
+Instructions) and the remaining 12 attributes are measured on a scale composed of six
+linguistic values: ‘very low’, ‘low’, ‘nominal’, ‘high’, ‘very high’ and ‘extra high’.
+These 12 attributes are related to the software development environment such as the
+experience of the personnel involved in the software project, the method used in the
+development and the time and storage constraints imposed on the software.
+� The Tukutuku dataset contains 53 Web projects [14,15]. Each Web application is
+described using 9 numerical attributes such as: the number of html or shtml files used,
+the number of media files and team experience (see Table 2). However, each project
+volunteered to the Tukutuku database was initially characterized using more than 9
+software attributes, but some of them were grouped together. For example, we
+grouped together the following three attributes: number of new Web pages developed
+by the team, number of Web pages provided by the customer and the number of Web
+pages developed by a third party (outsourced) in one attribute reflecting the total
+number of Web pages in the application (Webpages).
+
+26 A. Idri et al.
+
+**Table 1.** Software attributes for COCOMO’81
+
+Software attribute Description
+
+SIZE Software Size
+
+DATA Database Size
+
+TIME Execution Time Constraint
+
+STOR Main Storage Constraint
+VIRTMIN Virtual Machine Volatility
+VIRT MAJ Virtual Machine Volatility
+TURN Computer Turnaround
+ACAP Analyst Capability
+AEXP Applications Experience
+PCAP Programmer Capability
+VEXP Virtual Machine Experience
+LEXP Programming Language Experience
+SCED Required Development
+
+**Table 2.** Software attributes for the web dataset
+
+Attribute Description
+
+Teamexp Average number of years of experience the team has on Web development
+
+Devteam Number of people who worked on the software project
+
+Webpages Number of web pages in the application
+
+Textpages Number of text pages in the application(text page has 600 words)
+
+Img Number of images in the application
+
+Anim Number of animations in the application
+
+Audio/video Number of audio/video files in the application
+
+Tot-high Number of high effort features in the application
+
+Tot-nhigh Number of low effort features in the application
+
+**4  Empirical Results**
+
+The following section presents and discusses the results obtained when applying the
+RBFN to the COCOMO’81 and the Tukutuku datasets. The calculations were made
+
+using two software prototypes developed using the C programming language under a
+Microsoft Windows PC environment. The first software prototype implements the
+APC-III and the C-means clustering algorithms, providing both the clusters and their
+centers from the database. The second software prototype implements a cost estimation model based on an RBFN architecture in which the middle-layer parameters are
+determined by means of the first software prototype.
+The accuracy of the estimates generated by the RBFN is evaluated by means of the
+Mean Magnitude of Relative Error MMRE and the Prediction level Pred defined as
+follows:
+
+Software Cost Estimation Models Using Radial Basis Function Neural Networks 27
+
+
+*N*
+
+
+−
+
+*Effort* *actual* *i* *Effort*
+
+
+1 *Effort* *actual*, *i* − *Effort* *estimated*, *i* ×100
+
+## MMRE = ∑ N actual, i − estimated, i ×100                (8)
+
+
+= *actual*, *i* − *estimated*, *i* ×
+## ∑ N = Effort actual i
+
+
+*actual*, *i* *estimated*, *i*
+
+*Effort* *actual* *i*
+
+
+*i* =1 *actual*, *i*
+
+
+1,
+
+
+*k*
+*Pred(p)* = (9)
+*N*
+
+where N is the total number of observations, k is the number of observations with an
+MRE less than or equal to p. A common value for p is 25.
+To decide on the number of hidden units, we have conducted several experiments
+with both the C-means and the APC-III algorithms. These experiments use the full
+dataset for training. Choosing the ‘best’ classification to determine the number of hidden neurons and their centers is a complex task. For software cost estimation, we suggest that the ‘best’ classification is the one that satisfies the following criteria:
+
+� It provides coherent clusters, i.e. the software projects of a given cluster
+have satisfactory degrees of similarity;
+� It improves the accuracy of the RBFN.
+
+where *N* is the total number of observations, *k* is the number of observations with an
+MRE less than or equal to *p* . A common value for *p* is 25.
+
+**4.1  RBFN with C-Means Algorithm**
+
+
+To measure the coherence of clusters in the case of the C-means algorithm, one of the
+two criteria was used: the objective function *J* given in Equation 5 or the Dunn’s index defined by the following Equation:
+
+⎛ ⎛ ⎞⎞ (10)
+
+*D* 1 = 1 min ≤ *i* ≤ *c* ⎜⎜ [⎜] *i* + 1 min ≤ *j* ≤ *c* − 1 ⎜⎜ [⎜] max *d* ( *C* ( *d* *i*,( *CC* *jk* ))) ⎟⎟ [⎟] ⎟⎟ [⎟]
+
+⎝ ⎝ 1 ≤ *k* ≤ *c* ⎠⎠
+
+*d* ( *C* *i*, *C* *j* ) = *x* *i* ∈ *C* min *i*, *x* *j* ∈ *C* *j* *d* ( *x* *i*, *x* *j* ) *d* ( *C* *k* ) = *x* *i* max, *x* *j* ∈ *C* *k* *d* ( *x* *j*, *x* *k* )
+
+where *d(C* *i* *,C* *j* *) is* the distance between clusters *C* *i* *,* and *C* *j* (intercluster distance); and
+*d(C* *k* *)* is the intracluster distance of cluster *C* *k* .
+The Dunn’s index ( *D* *1* ) expresses the idea of identifying clusters that are compact
+and well separated. The main goal of the measure ( *D* *1* ) is to maximize the intercluster
+distances and minimize the intra-cluster distances. Therefore, the number of cluster
+that maximizes *D* *1* is taken as the optimal number of the clusters.
+Several experiments were conducted with an RBFN, each time using one of the
+classifications generated by the C-means algorithm. These experiments used the full
+set of historical projects for training and testing. For each number of clusters ( *c* ), the
+RBFN used the two C-means classifications that respectively minimise J or maximise
+*D1* . For instance, when fixing *c* to 34 for the Tukutuku dataset, the two chosen classifications were respectively those for which *J* is equal to 9299.78 and *D* *1* is equal to
+7.14.
+
+Fig. 2-a and Fig 2-b show the relationship between the accuracy of the RBFN on
+the Tukutuku and the COCOMO’81 datasets, measured in terms of Pred(0.25) and
+
+
+⎛
+
+⎜
+⎜ [⎜]
+
+⎝
+
+
+⎛ ⎛
+
+⎜ ⎜
+
+=
+
+
+⎜ ⎜ *d* ( *C* *i*, *C*
+
+*D* = min min
+
+
+⎜ ⎜ *d* ( *C* *i*, *C* *j* )
+
+min min
+
+
+⎜
+⎜ [⎜]
+
+⎝
+
+
+*i*, *j*
+
+
+1 1 ≤ *i* ≤ *c* ⎜ *i* + 1 ≤ *j* ≤ *c* − 1 ⎜ max( *d* ( *C* *k*
+
+⎝ 1 ≤ *k* ≤ *c*
+
+
+*i* ≤ *c* *i* + 1 ≤ *j* ≤ *c* − 1 max( *d* ( *C*
+
+
+≤ *i* ≤ *c* ⎜ *i* + 1 ≤ *j* ≤ *c* − 1 ⎜ max( *d* ( *C* *k* ))
+
+⎝ 1 ≤ *k* ≤ *c*
+
+
+⎞
+
+⎟
+⎟ [⎟]
+
+⎠
+
+
+⎞
+
+⎟
+⎟ [⎟]
+
+⎠
+
+
+*d* ( *C* *i*, *C* *j* ) = *x* ∈ *C* min, *x* ∈ *C* *d* ( *x* *i*, *x* *j* )
+
+
+= max
+
+*x* *i*, *x* *j* ∈ *C* *k*
+
+
+= *x* *i* ∈ *C* min *i*, *x* *j* ∈ *C* *j* *d* ( *x* *i*, *x* *j* ) *d* ( *C* *k* ) = *x* *i* max, *x* *j* ∈ *C* *k* *d* ( *x* *j*, *x* *k* )
+
+28 A. Idri et al.
+
+MMRE, and the used classifications (number of clusters) minimizing the objective
+function *J* or maximizing the *D* *1* index. It can be noticed for both datasets that the
+accuracy of the RBFN when using the C-means classification that minimizes J
+(Pred_J and MMRE_J) is superior to the accuracy obtained when using the classification maximizing *D* *1* (Pred_D 1 and MMRE_D 1 ). Fig. 2-a (resp. Figure 2-b) shows only
+the results of experiments for the Tukutuku dataset (resp. the COCOMO’81 dataset)
+when the number of clusters is higher than 34 (resp. is higher than 120) because the
+evaluated accuracy of the RBFN is acceptable (the common values used in the literature are Pred(25)>= 70 and MMRE<=30). Also, the obtained classifications for c
+lower than 34 (resp. lower than 120) are, in general, less coherent, i.e. some clusters are
+composed of projects that are not sufficiently similar; for those projects, the RBFN may
+generate inaccurate estimates.
+
+120
+
+120
+
+100
+
+100
+
+80
+
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+Pred J
+
+Pred D1
+
+MMRE J
+
+MMRE D1
+
+
+60
+
+40
+
+20
+
+0
+
+
+Pred J
+
+Pred D1
+
+MMRE J
+
+MMRE D1
+
+
+34 38 42 46 50
+
+number of clusters
+
+
+100 150 200 250
+
+**number of clusters**
+
+
+(a) Based on Tukutuku dataset (b) Based on COCOMO’81 dataset
+
+**Fig. 2.** Relationship between the accuracy of RBFN (MMRE and Pred) and the used classification of the C-means (J and D1) for the Tukutuku and the COCOMO’81 dataset
+
+**4.2  RBFN with the APC-III Algorithm**
+
+The classifications generated by the APC-III algorithm depend on the number α that
+defines the radius R 0 . Table 3 shows the classifications obtained according to different
+values of α (see Equation 3).
+The results presented in Table 3-a and Table 3-b show that the number of clusters
+is monotonic decreasing according to α . This is due to the fact that the radius *R* *0* is
+monotonic increasing according to α. For each value of α, the presentation sequence
+of the software projects was varied. Indeed, the classification provided by the APC-III
+depends on this presentation sequence because it influences the determination of the
+centers; for each α we retained the classification minimizing the number of clusters.
+Thus, several experiments for each dataset were conducted using an RBFN, each time
+employing one of the classifications of the Table 3-a or Table3-b. These experiments use
+the entire dataset of projects for training and testing. The weights β *j* were calculated using
+the Delta learning rule. The RBFN converges quickly for both datasets, with fewer than
+12000 iterations of learning. The accuracy of the estimates generated by the RBFN
+was evaluated by means of the MMRE and the Pred(25) indicators. Fig. 3-a corresponding to the Tukutuku dataset shows the MMRE and Pred as functions of the
+
+Software Cost Estimation Models Using Radial Basis Function Neural Networks 29
+
+**Table 3.** Number of clusters according to α for the Tukutuku and the COCOMO’81 datasets
+
+α Number of clusters
+0.2|0.25|0.35|0.4|0.45 52| 50| 48| 44| 43
+0.5|0.55|0.6 41| 38|37
+0.65 | 0.7 36 | 34
+
+(a) For the Tukutuku dataset
+
+α Number of clusters
+0.4|0.5|0.6|0.7|0.8 251|244|234|216/200
+0.9|1.0|1.02|1.04 189|170|162|161
+1.06 | 1.08 | 1.1 155 | 151 | 150
+
+(b) For COCOMO’81 dataset
+
+classification ( α ). It can be noticed that the accuracy of the RBFN is better when α is
+lower than 0.5 (MMRE=73.88 and Pred(25)=73.58). When α is higher than 0.5, the
+MMRE and pred(25) become not acceptable. Fig. 3-b corresponding to the COCOMO’81 dataset shows the MMRE and Pred as functions of the classification ( α ). It
+can be noticed that the accuracy of the RBFN is better when α is lower than 1.04
+(MMRE=29.81 and Pred(25)=73.81). When α is higher than 0.5, the MMRE and
+pred(25) become not acceptable.
+
+120
+
+
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+
+0,2 0,35 0,45 0,55 0,65
+
+
+250
+
+200
+
+150
+
+100
+
+50
+
+0
+
+
+0,3 0,5 0,7 0,9 1,1
+
+(a) Based on Tukutuku dataset (b) based on COCOMO’81 dataset dataset
+
+**Fig. 3.** Relationship between the accuracy of RBFN (MMRE and Pred) and the used classification of the APC-III (α ) for the Tukutuku and the COCOMO’81 datasets
+
+To conclude this Section, the accuracy of the RBFN using the C-means algorithm is
+compared with that of the RBFN when using the APC-III algorithm for the Tukutuku
+dataset (Fig. 4-a) and the COCOMO’81 dataset (Fig. 4-b). It can be noticed that the
+RBFN with C-means performs better than the RBFN with APC-III for both datasets.
+Indeed, for the Tukutuku dataset, an acceptable accuracy of the RBFN-C-Means is still
+achieved until the number of clusters is equal to 34; by contrast, it was acceptable only
+
+30 A. Idri et al.
+
+until the number of clusters is equal to 41 in the case of the RBFN-APC-III. For the COCOMO’81 dataset, an acceptable accuracy of the RBFN-C-Means is still achieved until
+the number of clusters is equal to 120; by contrast, it was acceptable only until the number of clusters is equal to 150 in the case of the RBFN-APC-III.
+
+
+120
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+34 38 42 46 52
+
+**Number of clusters**
+
+
+120
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+
+100 150 200 250 300
+
+
+(a) Based on Web hypermedia applications (b) Based on COCO MO’81
+
+**Fig. 4.** Comparing the accuracy of RBFN using C-means (Pred_J) and RBFN using APC-III
+(Pred)
+
+**5  Conclusions and Comments on Future Work**
+
+In this paper, we have empirically studied the use of two clustering techniques when
+designing RBF neural networks for software cost estimation. The two used clustering
+algorithms are the well-known C-means and the APC-III. This comparative study is
+based on the COCOMO’81 dataset and a web hypermedia applications dataset that
+contains 53 software projects. We used the entire dataset to train and test the designed
+RBFN. We have found that the RBFN designed with the C-means algorithm performs
+better, in terms of cost estimates accuracy, than the RBFN designed with the APC-III
+algorithm for the two datasets. Hence, we recommended the use of C-means algorithm for building software cost estimation models based on RBF neural networks. To
+deal with imprecision and uncertainty in the cost estimation process based on RBF
+neural networks, we are working currently in designing an RBFN based on Fuzzy C
+means.
+
+**References**
+
+[1] Berkhin, P.: Survey Of Clustering Data Mining Techniques (2002),
+```
+  http://citeseer.nj.nec.com/berkhin02survey.html
+
+```
+[2] Boehm, B.W.: Software Engineering Economics. Prentice-Hall (1981)
+
+[3] Burgess, C.J., Lefley, M.: Can Genetic Programming Improve Software Effort Estimation? Information and Software Technology 43, 863–873 (2001)
+
+[4] Duda, R.O., Hart, P.E.: Pattern Classification and Scheme Analysis. Wiley, New York
+(1973)
+
+[5] Dunham, M.H.: Datamining: Introduction and Advanced Topics. Prentice-Hall (2003)
+
+[6] Hwang, Y.-S., Bang, S.-Y.: An Efficient Method to Construct a Radial Basis Function
+Network Classifier. Neural Networks 10(8), 1495–1503 (1997)
+
+Software Cost Estimation Models Using Radial Basis Function Neural Networks 31
+
+[7] Idri, A., Khoshgoftaar, T.M., Abran, A.: Can Neural Networks be easily Interpreted in
+Software Cost Estimation. In: FUZZ-IEEE, Hawaii, pp. 1162–1166 (2002)
+
+[8] Idri., A., Abran, A., Khoshgoftaar, T.M.: Estimating Software Project Effort by Analogy
+based on Linguistic values. In: 8th IEEE International Software Metrics Symposium, Ottawa, Canada, April 4-7, pp. 21–30 (2002)
+
+[9] Idri, A., Abran, A., Mbarki, S.: Validating and Understanding Software Cost Estimation
+Models based on Neural Networks. In: International Conference on Information and
+
+Communication Technologies: from Theory to Applications (ICTTA), Damascus, Syria,
+April 19-23, pp. 433–438 (2004)
+
+[10] Idri, A., Abran, A., Mbarki, S.: An Experiment on the Design of Radial Basis Function
+Neural Networks for Software Cost Estimation. In: International Conference on Informa
+tion and Communication Technologies: from Theory to Applications (ICTTA), Damascus, Syria, April 24-28, pp. 433–438 (2006)
+
+[11] Jang, J.S., Sun, C.T.: Functional equivalence between radial basis function networks and
+fuzzy inference systems. IEEE Trans. on Neural Networks 4, 156–158 (1992)
+
+[12] Yu, J.: General C-Means Clustering Model. IEEE Transactions on Patter Analysis and
+Machine Intelligence 27(8) (August 2005)
+
+[13] Kaufman, L., Rousseeuw, P.J.: Finding Groups in Data: An Introduction to Cluster
+Analysis. John Wiley & Sons, Inc., New York (1990)
+
+[14] Kitchenham, B.A., Mendes, E.: A Comparison of Cross-company and Within-company
+Effort Estimation Models for Web Applications. In: Proceedings of EASE Conference,
+pp. 47–56 (2004)
+
+[15] Mendes, E., Triggs, W.C., Mosley, N., Counsell, S.: A comparison of Development Effort
+Estimation Techniques for Web Hypermedia Applications. In: 8th IEEE International
+Software Metrics Symposium, Ottawa, pp. 131–140 (2002)
+
+[16] Moody, J., Darken, C.: Fast Learning in Networks of Locally-Tuned Processing Units.
+Neural Computation 1, 281–294 (1989)
+
+[17] Park, J., Sandberg, I.W.: Approximation and Radial Basis Function Networks. Neural
+Computation 5, 305–316 (1993)
+
+[18] Pedrycs, W.: Conditionnal Fuzzy Clustering in the Design of Radial Basis Function Neural Networks. IEEE Transaction on Neural Networks 9(4) (July 1998)
+
+[19] Shepperd, M., Schofield, C.: Estimating Software Project Effort Using Analogies. Transactions on Software Engineering 23(12), 736–747 (1997)
+
+[20] Srinivasan, K., Fisher, D.: Machine Learning Approaches to Estimating Software Development Effort. IEEE Transactions on Software Engineering 21(2), 126–136 (1995)
+
+[21] Wittig, G., Finnie, G.: Estimating Software Development Effort with Connectionist Models. Information and Software Technology 39, 469–476 (1997)
+

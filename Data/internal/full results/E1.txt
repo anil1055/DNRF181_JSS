@@ -1,0 +1,1514 @@
+JOURNAL OF SOFTWARE MAINTENANCE AND EVOLUTION: RESEARCH AND PRACTICE
+*J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64 (DOI: 10.1002/smr.245)
+
+**Research**
+# **Field studies using functional** **size measurement in building** **estimation models for software** **maintenance**
+
+Alain Abran [∗][,†], Ilionar Silva and Laura Primera
+
+*´Ecole de Technologie Sup´erieure, Montreal, QB, Canada*
+
+**SUMMARY**
+
+**Even though a significant number of estimation models have been proposed for development projects,**
+**few have been proposed for software maintenance. This paper reports on two field studies carried out**
+**on the use of functional size measures in building estimation models for sets of maintenance projects**
+**implementing small functional enhancements in existing software. The first field-study reports on models**
+**built with 15 projects making functional enhancements to an internet-based software program for linguistic**
+**applications. The second field study analyses 19 maintenance projects on a single real-time embedded**
+**software program in the defense industry. Both field studies collected functional size measures using version**
+**2.0 of the COSMIC-FFP functional size measurement method. Also both field studies classified projects**
+**into two classes of project difficulty in order to aid identifying subsets of projects with greater homogeneity**
+**in the relationship of project effort to functional size. This paper is the first published paper reporting**
+**on the use this second generation of functional size-measurement methods in a maintenance-estimation**
+**context. Copyright**  **2002 John Wiley & Sons, Ltd.**
+
+KEY WORDS : maintenance effort; software size; project effort; project size; COSMIC-FFP; estimating projects
+
+**1.** **INTRODUCTION**
+
+Software maintenance is often defined as the modification of a software product after delivery to
+correct faults, to improve performance or other attributes, or to adapt the product to a changed
+environment [1,2]. Alternatively, maintenance is defined as work done on a software system after it
+becomes operational [3,4]. Although software maintenance costs usually exceed software development
+costs, Ferens indicates that the attention given to these costs has not been commensurate with their
+
+∗ Correspondence to: Alain Abran, ´Ecole de Technologie Sup´erieure, 1100 Notre-Dame West St., Montreal, QB, Canada
+H3C 1K3.
+
+- E-mail: abran@ele.etsmtl.ca
+
+*Received 23 August 2001*
+Copyright  2002 John Wiley & Sons, Ltd. *Revised 5 December 2001*
+
+32 A. ABRAN, I. SILVA AND L. PRIMERA
+
+importance, and, while a significant number of estimation models have been proposed for development
+projects, few have been proposed for software maintenance [5].
+Estimation models are based on the generic concept of productivity defined as the ratio of output
+to input. In software projects, productivity is defined as the ratio of the software product developed to
+the resources required to produce it. While ‘effort’ is the generally accepted measure of the input or
+resources (often measured in person-hours, -days or -months), for output or product, software size is
+recognized as a key factor in the models for estimating project effort [6]. In the work reported here, the
+measurement concepts in functional size measurement methods were selected as the methodology for
+defining a practical measure of the software maintenance work product from a functional perspective.
+The goal of the field studies reported here is to investigate the development of estimation
+models using as input the functional size of software enhancements, specifically as one of the key
+parameters in modelling the relationship of functional size to maintenance work effort. This study
+investigates, therefore, the following expected relationship or assumption between the functional size
+of a maintenance project and the effort required to carry out the maintenance.
+
+*The effort required to deliver a functional enhancement in a maintenance context increases*
+*with the size of the enhancement (research question 1).*
+
+In homogeneous environments, the above expected relationship or assumption can be easily
+investigated with a minimum of variability of other factors. Of course, in most environments, there
+is no such homogeneity, and some important factors will vary. Thus, the following assumption must
+also be investigated.
+
+*When the relationship between the increase in effort due to an increase in size is not strong,*
+*some additional factors, in combination with functional size, contribute to the increase in*
+*effort required (research question 2).*
+
+To investigate these two research questions, two field studies were carried out in organizations which
+had no prior measurement programs in place, and were using no formal estimation models for their
+maintenance projects. In these field studies, no attempt was made to build generic estimation models
+for all types of maintenance, but only for maintenance projects adding to or modifying the functionality
+of an existing software application—i.e. enhancive maintenance [7].
+Related work and the research methodology of the field studies are presented in Section 2. Both the
+data and the estimation models from the first field study, on a Web-based application, are presented
+in Section 3, and from the second study, on a real-time software application, in Section 4. Finally,
+comparative results from these field studies are presented in Section 5, and concluding observations in
+Section 6. Section 7 looks ahead with suggestions for future research. As has been done previously [8],
+the full data set is available to encourage replication studies and for further investigation by interested
+researchers [9,10].
+
+**2.** **METHODOLOGY**
+
+**2.1.** **Related work**
+
+Ferens [11] reports that by the early 1980s few attempts had been made at software maintenance
+estimation. There was the COCOMO-M(aintenance) model [12], with a single additional maintenanceunique input, annual change traffic. In this model, it is the cost of the whole maintenance life cycle that
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 33
+
+is estimated, over a period of time; with such a model, no attempt is made to estimate one maintenance
+project at a time. Ferens [5] also reports that the model SLIM has a single maintenance-unique input,
+while the models PRICE-S, SEER-SEM and CHECKPOINT have multiple inputs. However, Ferens
+
+[11] points out that the accuracy of such maintenance estimation models in their early analyses was
+low, and that in general the performance of maintenance estimation models has yet to be demonstrated.
+Abran and Nguyenkim [13] in 1993 reported data from a field study of an organization with extensive
+data collection, as well as work effort statistics recorded by maintenance work category for very
+small maintenance work requests not managed in a project mode. The main characteristics of small
+maintenance work requests done are their limited scope, the time taken to complete them, and the
+presence of only one or two individuals on a project [13]. On average, the work effort for small
+maintenance work requests was 37 hours for all categories of maintenance work, with a minimum
+average of 27 hours for user support requests and a maximum average of 52 hours for corrective
+requests [7,13].
+Abran and Robillard [8], in 1996, reported an analysis of data from 21 projects, representing major
+functional enhancement (enhancive) projects implemented on a set of existing software applications,
+all from the management information systems (MIS) domain. The average effort for these enhancive
+projects was over 2300 hours (or 332 work-days). On this data set, from a single organization with
+a homogeneous development process unburdened by major differences in production and quality
+factors, there was a clear linear relationship between functional size and effort, with a coefficient of
+regression *(R* [2] *)* of 0.81. This data set came from an organization with a history of meeting project
+targets consistently (in terms of functions, costs, time and quality) and which, in the early 1990s, was
+already almost at level 3 in the SEI-CMM maturity model, with strong evidence of key practices at
+level 5 in quantitative management [8].
+
+**2.2.** **Empirical investigation method: the field study**
+
+Since little research has been conducted in the context of interest here—that is, estimation models
+for multiple functional enhancements to the same software application—the empirical research
+methodology of a field study was selected as the method to be used for this investigative work [14].
+Lessons learned from such an investigation can then be used to refine further research questions and
+to design experimental contexts for exploring them in more controlled environment and with a broader
+empirical basis. This permits the generalization of research findings to contexts other than the ones
+from which they were derived.
+The empirical investigation work reported here is based on field studies carried out at two industrial
+software organizations. While the research goals were the same for both organizations—i.e. the
+construction of estimation models for the maintenance environment—the specific contexts were
+different, as were the availability of data and the quality of data specific to each organization. The
+development of the estimation models, and the analysis of their results, have to take these constraints
+into consideration.
+
+The two organizations were in the process of modifying or adding functions to existing real-time
+software, respectively a Web-based application in the linguistic domain, and a real-time application
+in the defense industry. Fifteen projects in one organization were measured during the process by
+one of the staff members familiar with the organization and its software, while 21 projects were
+measured after the fact by an outside observer in the other. The measurers had been trained by the same
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+34 A. ABRAN, I. SILVA AND L. PRIMERA
+
+individual on both the size measurement method and the construction of productivity and estimation
+models. However, while in one organization functional size could be measured directly from the project
+documentation, in the other it had to be measured indirectly due to a lack of project documentation.
+Effort data for each maintenance project was collected, in person hours, from the time reporting
+
+systems.
+
+**2.3.** **Types of models investigated**
+
+Two types of models were investigated to describe the relationship between functional size and effort
+(research question 1). One type of model investigated is the *average unit cost model* defined as the ratio
+of effort to functional size:
+
+
+*Average unit cost* = [1]
+
+*n*
+
+
+*n*
+�
+
+*i* =1
+
+
+*Effort* *i*
+
+(1)
+*Size* *i*
+
+
+This gives the average effort (in hours) to produce one unit of functional size. An example of a
+productivity/estimation model built with a unit cost is *Effort* (estimated) = *Average cost* × *Size* .
+The second type of model investigated is the *regression model* (both simple and multiple regression
+models considered), with functional size units and other candidate factors as independent variables and
+effort as the dependent variable.
+The average unit cost estimation model was selected because it is easy to understand in an
+industrial context: it provides an initial understanding of the general behaviour of a data set. The
+regression estimation model was selected over more complex estimation models such as analogybased and neural-network models, which have not been proved to explain the size-effort relationship
+in software projects any better [15,16]. Also simple regression models have been selected for
+representing the estimation models in graphical form, over multiple regression models for which
+graphical representation and interpretation are more challenging for practitioners.
+In addition to size, it is recognized in the literature that other factors affect effort needed for doing
+maintenance projects, such as type of application, programming language, age of software, and quality
+of the documentation available. In the context reported here, the maintenance projects measured and
+analyzed were carried out on the same software application, in the respective organizations; this means
+therefore that these specific factors were held constant within these field studies and did not need to be
+taken into account in building the estimation models within the same application under maintenance.
+Still, many other factors can influence maintenance projects effort, in addition to size: for instance,
+whether or not a full system test is required, severe constraints on resources availability, functional
+complexity, technical complexity, low or high level of reuse, etc. In the field studies reported here,
+these individual factors were not investigated independently, but were rather represented through a
+single factor referred to as ‘project difficulty’ and expressed as a categorical variable.
+Generally, factors such as ‘project difficulty’ are represented as categorical variables which are not
+intended to represent quantitative values. Such categories are used to identify distinct groups of data
+to be analyzed. The variables, by contrast, are used when categorical factors can affect the positive
+relationship of variables in regression models. Therefore, they can be considered as explanatory
+variables in estimation models [17].
+To investigate research question 2, such a generic ‘project difficulty’ variable was collected in both
+field studies to analyze whether or not such a variable could improve the estimation model previously
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 35
+
+designed with a single independent variable, functional size. The project difficulty category for a
+maintenance project was assigned by the staff who had carried out the maintenance projects. They
+did this on the basis of project documentation and their own experience; in industry, this is referred to
+as assignment of values by subject matter experts.
+The models to be built in these field studies use a quantitative measure, functional size, and a
+categorical variable. When categorical variables are used, each of them must be represented with a
+number of classes, *c*, each *c* class being represented by *c* − 1 indicative variables. These indicative
+variables in a model are often referred to as ‘dummy’ variables or ‘binary’ variables **.**
+
+**2.4.** **Reliability criteria for estimation models**
+
+Multiple statistical criteria exist for assessing whether or not a model reflects a data set, and its ability to
+predict the behavior of the dependent variable. For example, the coefficient of determination *(R* [2] *)* and
+the coefficient of variation give an indication of the quality of the model’s fit to the data. Pred(X) also
+provides an assessment of the precision of the model. To assess the quality of the estimation models
+to be built for use in an enhancive maintenance context, the following four statistical measures were
+selected.
+
+  - *Mean relative error (MRE)* . The MRE gives an indication of the divergence between the values
+estimated by the model and the real values, as a percentage. Perfect estimates would give an
+MRE of zero [18].
+
+  - *Predictive quality of the model (PRED)* . In software engineering, an estimation model is
+generally considered good when the MRE is within ±25% for 75% of the observations, or PRED
+(0.25) = 0.75 [19].
+
+  - *Coefficient of determination (R* [2] *)* . Another measure of the quality of a model is its coefficient
+of determination *(R* [2] *)*, which describes the percentage of variability explained by the predictive
+variable in the linear regression models. This coefficient has a value between 0 and 1; when an
+*R* [2] is close to 1 it indicates that the variability in the response to the predictive variable can be
+explained by the model, i.e. there is a strong relationship between the independent and dependent
+variables.
+
+  - *P value statistical parameter* . Still further, the coefficients of the independent variables in
+estimation models are assessed using the *P* value statistical parameter, which expresses that
+the statistical significance of the coefficient. Commonly, values lower than 0.05 are considered
+statistically significant.
+
+**2.5.** **Selected sizing method: COSMIC-FFP**
+
+In the context of these field studies, functional size must be available as an input to the model, and it
+must be a relevant and representative measure of size in this context. Quantifying the size of software
+is generally recognized as one of the keys to adequate estimation of the effort, cost and scheduling of
+software projects. The number of source lines of code (LOC) was the first generally accepted measure
+for this purpose and is still used extensively, as demonstrated by the many estimation models that
+include this measure as a key parameter, e.g. [12,20]. However, LOC can be reasonably determined
+only fairly late in a project life cycle; on the other hand, functional size, determined on the basis of
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+36 A. ABRAN, I. SILVA AND L. PRIMERA
+
+functional user requirements, can be available much earlier for estimation purposes. Function Points
+Analysis [21] now referred to as the IFPUG (International Function Points Users Group) method,
+established the first generation of functional measure. It is still used today, but it, too, has some
+limitations, which have been well documented over the past 15 years. One of these limitations is the
+difficulty and relevance of applying such a method outside the MIS domain, as documented by, e.g.
+
+[22–26].
+In 1996, four major organizations doing business in Canada cooperated in the sponsorship of the
+development of an extension for real-time and embedded software, which was initially placed in the
+public domain under the name of Full Function Points [27]. Building on the strengths of this work
+and with the support of the industry, the Common Software Measurement International Consortium
+(COSMIC) was formed in 1998 to design and bring to market a new generation of functional size
+measurement methods. The COSMIC group reviewed existing methods (IFPUG, MarkII [28], NESMA
+
+[29] and version 1.0 of Full Function Points [27]), studied their commonalities and proposed the
+basic principles on which the second generation of a software functional size measurement method
+could be based [30]. In November of 1999, the group published version 2.0 of COSMIC-FFP [31], a
+measurement method implementing these principles, and published its *Measurement Manual* on the
+web for public access. Overall, close to 40 people from eight countries participated in the design of
+this measurement method, and the *Measurement Manual* describing the method is available in English,
+French, Japanese and Spanish.
+This functional sizing method was designed to work equally well for ‘data-rich’ business/MIS
+software and for ‘control-rich’ or ‘real-time’ software, as, for example, the software typically found in
+telecoms, avionics and process control, and in embedded systems and operating systems. The method
+also makes it possible to size such software in any layer or peer portion of a multi-layer and/or multitier architecture. The COSMIC-FFP measurement method explicitly defines a measurement system
+which includes a measurement principle, base functional components, a standard unit of measure and
+an aggregation function.
+
+  - *Measurement principle* . Based on the COSMIC-FFP generic software model (Figure 1), the
+method, through a defined set of rules and procedures, produces a numerical figure to represent
+the functional size of this model. These rules implement the principle that the functional size of a
+piece of software is directly proportional to the number of data movements it has. By convention,
+this figure is then extended to represent the COSMIC-FFP functional size of the software itself.
+
+  - *Base functional components* . Version 2.0 of the COSMIC-FFP measurement method uses only
+four types of data-movements (Figure 2), referred to as base functional components in ISO/IEC
+14143–1 [32]): entry, exit, read and write, all of which are clearly defined [31].
+
+  - *Standard unit of measurement* . The standard unit of measurement, i.e. one COSMIC-FFP
+functional size unit (1 *Cfsu* ), is defined by convention as equivalent to one single data movement
+type at the sub-process level. Each of the COSMIC-FFP data movement types (e.g. entry, exit,
+read and write) are assigned 1 *Cfsu* .
+
+  - *Aggregation function* . The functional size of the data movement base functional components
+can be combined to obtain the size of any higher-level functional structure, such as the size of
+functional processes, of components within layers or of whole applications. This is achieved by
+arithmetically adding the functional sizes of the constituent functional structures, in accordance
+with the purpose of the measurement.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 37
+
+|functional user<br>requirements|Col2|
+|---|---|
+|||
+|functional<br>process|functional<br>process|
+|||
+|data movement<br>types|data movement<br>types|
+
+
+
+Figure 1. The COSMIC-FFP generic software model.
+
+**USERS** « Front end » « Back end »
+
+
+
+
+
+
+**OR**
+**Engineered**
+**Devices**
+
+
+|Col1|READ<br>SOFTWARE<br>WRI|S<br>Storage<br>Hardware<br>TES|
+|---|---|---|
+|ENTRIES|ENTRIES|ENTRIES|
+|I/O<br>Hardware<br>EXITS|I/O<br>Hardware<br>EXITS|I/O<br>Hardware<br>EXITS|
+
+
+Figure 2. The COSMIC-FFP model of software data movement types.
+
+In a maintenance context, the functional size of a change to the functional user requirements within
+each piece of software is calculated by aggregating the sizes of the corresponding impacted data
+movements according to the following formula:
+
+
+*Size* *Cfsu* *(* change *)* = �
+
+
+*Size* *i* *(ADM)* + �
+*i* *i*
+
+
+*Size* *i* *(CDM)* − �
+*i* *i*
+
+
+*Size* *i* *(DDM)* (2)
+
+*i*
+
+
+where *ADM* is a count of the *i* th component’s added data movements, *CDM* is a count of the *i* th
+component’s changed data movements, and *DDM* is a count of the *i* th component’s deleted data
+
+movements.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+38 A. ABRAN, I. SILVA AND L. PRIMERA
+
+The measurement system proposed by the COSMIC-FFP measurement method offers a scalable
+result, which means that the functional size figure can be constructed at any desired level of abstraction.
+The COSMIC-FFP method is already in the process of being recognized as an international standard by
+the ISO. In addition, the COSMIC-FFP method was designed with a much more granular scale, which
+enables it to discriminate among the sizes of small functions—it uses a unitary size unit rather than the
+stepwise functions of the first generation function measurement methods. Therefore, this COSMICFFP method opens up the possibility of building estimation models for real-time software based on
+functional size, not only for development projects, but also for maintenance projects, including small
+maintenance projects.
+Although reports on the use of COSMIC-FFP in the construction of estimation models for
+development projects have already been published [33–36], nothing has yet been published on its use
+in maintenance contexts. This paper explores, through field studies in two organizations, the use of
+this new generation of functional size measure (COSMIC-FFP) in building productivity and estimation
+models for measuring the effort involved in small projects implementing functional enhancements in
+the context of the maintenance of real-time software, including Web-based software.
+
+**3.** **FIELD STUDY A**
+
+**3.1.** **Context: industrial site A**
+
+Organization A develops linguistic software for the Internet platform. It has a client–server architecture
+and a multi-platform environment which allows text editors to use services from a local or distant
+server. Its software is of the glue type, which acts as an entry point to online linguistic services.
+It deals, for example, with translation engines, dictionaries and grammatical software tools. The
+software is compatible, through the use of ‘plug-ins’, with other text software developed on Microsoft
+Outlook [TM], Microsoft Word [TM], Microsoft Excel [TM], Microsoft PowerPoint [TM], Adobe FrameMaker [TM],
+Adobe Illustrator [TM], Corel WordPerfect [TM], Eudora Light [TM], Netscape Communicator [TM], Netscape
+Navigator [TM] and ICQ [TM] . The measurement and analysis work was carried out from April 1999 to
+May 2000 [10].
+In addition to functional size and effort, other factors which could have an impact on productivity
+were collected for the analysis of the work–effort relationship, and categorical rating values assigned
+using staff assessment of such variables. The Banker *et al* . [18] classification of candidate factors was
+looked at for the selection of some additional factors. Values for these factors, for which there are
+no international data collection standards, were selected by the staff working on these maintenance
+projects. The objective was to investigate whether or not these additional variables contributed to
+improving the estimation models, i.e. whether or not they made a positive contribution to the work–
+effort relationship. Table I illustrates the definitions and ratings selected for two of these factors,
+the experience of the staff working on the maintenance projects, and the difficulty of the projects
+themselves.
+
+Due to the relative small size of the sample (and smaller sizes of the subsamples with three-level
+categorizations), the number of categorical variables for the project difficulty factor had to be simplified
+from a three-level to a two-level categorization, with an appropriate transformation. At organization A,
+the transformation was carried out by taking two dimensions into account simultaneously: the difficulty
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 39
+
+Table I. Factors and ratings selected: organization A.
+
+Factor Description Initial 3-level ratings selected
+
+Staffing Experience in industry and on the Novice
+software maintained Intermediate
+
+Advanced
+
+Difficulty of project Functional and technical difficulty Low
+Medium
+High
+
+
+
+
+
+
+
+|C1 E1|C2 E1|C3 E1|
+|---|---|---|
+|C1 E2|C2 E2|C3 E2|
+|C1 E3|C2 E3|C3 E3|
+
+
+Figure 3. Difficulty–experience class assignment: organization A.
+
+of the project and the experience of the staff assigned to the project (with the following labels for each
+category of the two dimensions)
+
+C1: Difficulty = Low; C2: Difficulty = Medium; C3: Difficulty = High
+
+E1: Experience = Novice; E2: Experience = Intermediate; E3: Experience = Advanced
+
+However, in this field study both of these variables have a potential bias. On the one hand, it must
+be taken into account that the difficulty levels were assigned by the staff members who completed
+the project. Such ratings assignments are, of course, subjective, and, furthermore, there is a strong
+possibility that such an assignment might have been affected by the experience of the staff. For
+example, a project classified as ‘highly difficult’ by a beginner might have been rated as either of
+low or medium difficulty by a more experienced staff member. On the other hand, while the variable
+experience of staff is, by itself, not directly related to the difficulty of the maintenance project, the
+assignment of a maintenance project to a specific staff member often has a definite management bias.
+For example, difficult projects may be assigned to more experienced maintainers, and simple projects
+to less experienced maintainers. There are, of course, variations due to scheduling constraints and to
+training opportunities (time permitting, of course). In this field study, it could be postulated that simple
+projects were, in general, assigned to less experienced staff, and the most difficult ones to the most
+experienced staff, with variations for projects of medium difficulty. Consequently, there is a possibility
+that the difficulty variable used up to now has some structural bias, and is not truly representative of
+the inherent difficulty of the project itself.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+40 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table II. The data set: organization A.
+
+Difficulty–
+Effort Lines of Difficulty experience
+Projects *Cfsu* (h) code rating (3-level) rating (2-level)
+
+1 111 70 770 Low Low
+
+2 379 219 1330 Low Low
+
+3 190 119 927 Medium Low
+4 157 238 820 Medium High
+5 202 216 600 Low Low
+
+6 224 167 1000 Medium Low
+7 183 460 1250 High High
+8 8 5 150 Low Low
+9 115 383 520 High High
+10 32 70.5 150 High High
+11 450 495.25 1350 High High
+12 39 15 260 Low Low
+13 172 312 1425 High High
+14 210 314.5 220 High High
+15 69 235 110 High High
+
+Average 169 221 723
+
+It was therefore recognized that the definition of the difficulty variable needed to be adjusted to
+try to capture its contribution to the relationship between size and work effort. The intent was to
+formally take into account management’s judgment of the difficulty of the project, as indicated by
+the experience of the staff assigned to it, and combine it with the assessment of the difficulty of the
+project by the staff members themselves. A two-dimensional matrix was built, and the following rule
+used for a classification into two subsamples: data points above the diagonal, and data points on or
+below the diagonal in the two-dimensional matrix. This is illustrated in a matrix format in Figure 3.
+This new two-level difficulty–experience variable subdivides the sample into two subsets. We have not
+attempted to assign a label, or an interpretation, to this new variable which combines both difficulty
+and staff experience. The end-value of the classification rule has a nominal scale type only: what is
+above the diagonal (Class A), and what is on or below the diagonal (Class B).
+
+**3.2.** **Data sample**
+
+In this organization, which develops Web-based applications, 15 maintenance projects adding to or
+modifying the same Web-based software application were measured using version 2.0 of the COSMICFFP method, and effort was collected for each of these projects. The data set collected at organization A
+is presented in Table II. Functional size varies from 8 *Cfsu* to 450 *Cfsu*, with an average of 169 *Cfsu*,
+while effort varies from 5 hours to 495 hours, with an average of 221 hours (or 1.5 person */* month).
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 41
+
+Figure 4. Graph of the data set: organization A.
+
+This data set is represented graphically in Figure 4. A visual analysis of the data set suggests that
+there is a positive correlation between an increase in functional size (research question 1) and an
+increase in effort, even though such a correlation is not necessarily strong. Furthermore, it can also
+be observed that there is some degree of heteroskedasticity in this data set (it is wedge-shaped), which
+suggests that a regression model with a single variable only would not necessarily produce a very good
+model (research question 2). Such a distribution shape provides a clue that for this organization there
+is at least one other important variable that has significant impact on maintenance project effort.
+To address these two research questions, models must be derived to estimate the variation in the effort
+variable (measured in person-hours to complete a functional enhancement project) with the variation
+in the functional size of such a project, and from there to infer the maintenance cost of a modification
+to the software of the system. Two types of estimation models are used to investigate the variation.
+
+**3.3.** **Average unit cost models**
+
+*3.3.1.* *With functional size only*
+
+The unit cost model was calculated on this sample of 15 projects carried out within organization A:
+1.47 hours */Cfsu* . The estimation model built from this average unit cost is then: *effort* = 1 *.* 47 × *Cfsu* .
+The MRE of this unit cost model is 81.28%, which is much higher than the recommended 25% [19];
+only three projects (20% of the sample) have an estimated value within 25% of the actual effort.
+
+*3.3.2.* *With functional size and subsets on the experience variable*
+
+According to the literature, the staff experience has an impact on the software development process,
+i.e. on productivity, and on estimation. The 15-project sample was divided into three subsets based on
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+42 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table III. Average unit cost models: organization A *(N* = 15 *)* .
+
+PRED *(* ±25% *)*
+Data sample Number of
+characteristics projects Equation MRE (%) No. of projects %
+
+Full sample 15 *Effort* = 1 *.* 47 × *Cfsu* 81.3 3 20
+Experience = Advanced 3 *Effort* = 2 *.* 24 × *Cfsu* 35.6 0 0
+Experience = Intermediate 6 *Effort* = 0 *.* 86 × *Cfsu* 28.7 2 33.33
+Experience = Novice 6 *Effort* = 1 *.* 69 × *Cfsu* 111.6 1 16.66
+
+the level of experience (both in industry and on the software to be maintained) of the programmer(s)
+implementing the maintenance projects: advanced, intermediate and novice. These three subsets are
+thus more homogeneous with respect to the staff experience factor, and the hypothesis is that estimation
+models should be better within each subset [18].
+
+  - Subset with *advanced* staff. This subset includes three maintenance projects, with a high level
+of difficulty, developed in C++, all by the same staff member with an advanced (i.e. very
+good) level of experience. This staff member did not know the measurement method, and
+the researcher measured the functional size himself, in cooperation with this staff member.
+Of course, with only three data points, this subsample is quite small and caution must be
+exercised in interpreting the results. The estimation model based on the average unit cost for
+this subsample is *Effort* = 2 *.* 24 × *Cfsu* . This model has an MRE of 35.57%, but no observation
+within the 25% range. Of course, the fact that there are only three projects in this subset indicates
+that these are, of course, only observations, and not statistically supported conclusions.
+
+  - Subset with *intermediate* staff. This subset includes six projects completed by the same staff
+member with an intermediate (i.e. good) level of experience; the difficulty of these six projects
+varied (high, medium, low) and they were all written in C++. This staff member had no expertise
+in measurement, and, as above, the functional size measurements were taken with the help
+of the research staff. The estimation model based on the average unit cost for this subset is
+*Effort* = 0 *.* 86 × *Cfsu* . This model has an MRE of 28.73%, which is fairly close to the 25%
+criterion, even though only one-third of the projects are within this range of the MRE.
+
+  - Subset with *novice* staff. This subset includes six projects, all of them completed by the
+same staff member with a low level of experience; the difficulty of these six projects varied
+(high, medium, low) and they were all written in C++. This staff member had no expertise in
+measurement either, and again the functional size measurements were taken with the help of
+the research staff. The estimation model based on the average unit cost for this subsample is
+*Effort* = 1 *.* 69 × *Cfsu* . This model has a very high MRE of 111.64%, and only a single project
+within the 25% range.
+
+Table III presents a summary of the results for each subset: in terms of MRE, the models with
+both advanced experience (35.6%) and intermediate experience (28.7%) are better that the models
+with novice experience (111.6%). Taking into consideration that the coefficients of the equations
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 43
+
+Figure 5. Linear regression model on functional size: organization A.
+
+represent the average unit cost, then the highest unit cost (2.24 hours */Cfsu* ) is associated with the
+advanced programmer, as against either the intermediate programmer (0.86 hours */Cfsu* ) or the novice
+programmer (1.69 hours */Cfsu* ), which is, of course, counterintuitive; this very advanced programmer
+has apparently also the worst productivity. These results show that, at least in this organization and for
+this type of maintenance work, there is at least one other important variable, in addition to functional
+size and staff experience, which has a significant impact on the project’s unit cost.
+
+**3.4.** **Regression models**
+
+*3.4.1.* *Simple linear regression model with functional size*
+
+In this subsection, the simple linear regression model with one independent variable size (research
+question 1) is presented, followed by multiple regression models taking into account additional
+variables (research question 2) that could have an influence on the productivity of software maintenance
+projects, such as staff experience and project difficulty.
+The simple linear regression model with one independent variable (functional size) was constructed
+first (Figure 5). With the full data set of 15 observations, the model yields *Effort* = 91 *.* 16+0 *.* 768× *Cfsu* .
+This model has a coefficient of determination *(R* [2] *)* of 0.38—i.e. only 38% of the total variability of
+the dependent variable (effort) is explained by the variability of the independent variable (functional
+size). This provides an initial indication that either the relationship might not be linear or that another
+variable might have a significant influence on the relationship between size and work effort (research
+question 2).
+
+*3.4.2.* *Nonlinear regression models with functional size*
+
+Various other nonlinear regression models were investigated, as illustrated in Table IV. It can be
+observed that the model with an exponential line *(Y* = *A* × *X* *[B]* *)* gives a good *R* [2] (0.716). This
+implies logarithmic transformations of the data to allow for the linearization required by simple
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+44 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table IV. Nonlinear regression models: organization A *(N* = 15 *)* .
+
+Equation *A* *B* *R* *R* [2]
+
+*Y* = *A* × *X* *[B]* 0.94 1.046 0.846 0.716
+*Y* = *A* × e *[(B]* [×] *[X)]* 45.95 0.006 0.622 0.387
+*Y* = *A* + *B* × ln *(X)* −241.20 96.792 0.664 0.442
+*Y* = *A* + *B/X* 265.16 −2570.562 0.524 0.274
+*Y* = 1 */(A* + *B* × *X)* 0.057 −0.0002 0.477 0.228
+
+linear regression. This is recognized in the literature as a ‘linearizable’ function based on appropriate
+transformations. Therefore, the exponential equation for this data set is: log *Effort* = 1 *.* 046 ×
+log *(Cfsu* [−][0] *[.]* [02687] *)* with an *R* [2] = 0 *.* 72 and a coefficient of variation of 0.31. With the antilog formula,
+the *Y* = *A* × *X* *[B]* equation can be derived, which then gives the following estimation equation, with
+an *R* [2] = 0 *.* 72. *Effort* = 0 *.* 936 × *Size* [1] *[.]* [046] . This model is fairly good, with an MRE of 26.66%, but
+it does not give a high level of prediction for individual projects (only 26.66% within a 25% range).
+Therefore, for this organization, research question 1 is not met, and further work is carried out next to
+investigate research question 2.
+
+*3.4.3.* *Multiple regression model with three-level staff experience variable*
+
+To take staff experience as a categorical variable in a multiple regression model, ‘dummy’ variables
+must be used to describe the distinct categories or values. Each of these dummy variables takes values 0
+and 1, and the number of required variables in the model is equal to the number of categories less 1 [17].
+In organization A, three levels were used for the categorical experience variable: novice, intermediate
+and advanced. Therefore, two dummy variables are defined as follows:
+
+*Experience1* = 1 if the staff experience of the programmer is novice; 0 otherwise;
+
+*Experience2* = 1 if the staff experience of the programmer is intermediate; 0 otherwise;
+
+*Effort* = 89 *.* 55 + *(* 26 *.* 08 × *Experience1)* − *(* 2 *.* 53 × *Experience2)* + *(* 0 *.* 74 × *Cfsu)* (3)
+
+The categorical value of ‘advanced’ is represented by the 0 in the previous variables. It must also
+be observed that 80% of the observations are within the first two categories of staff experience. With
+the ‘stepwise’ method in multiple linear regression, with the independent variables *Cfsu*, *Experience1*
+and *Experience2*, and the dependent variable *Effort*, the only independent variable with statistical
+significance in the model, based on its *P* value, is the size variable *Cfsu* . Such an influence had
+already been described in the simple regression model with one variable. Even though this multiple
+linear regression model *(R* [2] = 0 *.* 62 *)* takes into account staff experience, the result of the factor ‘staff
+experience of the programmer’ with three levels does not contribute *(p >* 0 *.* 05 *)* to explaining the
+relationship with effort when functional size is also taken into account. This model makes no positive
+contribution over the linear regression model with a single variable.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 45
+
+*3.4.4.* *Multiple regression model with the three-level project difficulty variable*
+
+In this subsection, the addition of a difficulty level as an additional independent variable is investigated.
+Since this is again a categorical variable, with a three-level rating, dummy variables were defined for
+each category of difficulty level:
+
+*Difficulty1* = 1 if functional difficulty is low; 0 otherwise;
+
+*Difficulty2* = 1 if functional difficulty is average; 0 otherwise.
+
+The value of the category ‘high’ is represented by the 0 values in the two previous categories. The
+results for this multiple linear regression are:
+
+*Effort* = 39 *.* 31 + *(* 5 *.* 19 × *Difficulty1)* − *(* 179 *.* 11 × *Difficulty2)* + *(* 1 *.* 20 × *Cfsu)* (4)
+
+This model with the factor ‘project difficulty’ has a coefficient of determination *R* [2] = 0 *.* 66, only
+slightly better than the model with the factor ‘staff experience’. However, the coefficients of the
+categorical variables of ‘project difficulty’ are not statistically significant with *p >* 0 *.* 05, and this
+model is not conclusive. It must also be mentioned that the sample is small for the number of variables
+in this model and the possibility of making adjustments needs to be investigated.
+
+*3.4.5.* *Multiple regression model with two-level difficulty–experience variable*
+
+Rather than divide the sample into three sub-samples with a categorical variable with three levels,
+as in the previous models, the sample was divided next into only two sub-samples using the twolevel difficulty–experience categorical variable defined in Figure 3. The model was constructed to take
+into account the interaction between the two independent variables (functional size in *Cfsu* units and
+difficulty–experience variable). This interaction is represented by the multiplicative term in the model:
+
+*Y* = *B* 0 + *B* 1 *X* 1 + *B* 2 *X* 2 + *B* 3 *(X* 1 *X* 2 *)* (5)
+
+where *X* 1 is the functional size in *Cfsu* units, *X* 2 is the difficulty–experience variable, and *B* 0, *B* 1, *B* 2,
+and *B* 3 are constant and coefficients of the independent variables respectively.
+A dummy variable was defined for the two categories of the adjusted variable, with the category
+above the diagonal represented by the 0 value in the dummy variable with 1 otherwise:
+
+Difficulty–experience *(DiffExp)* : *X* 2 = 1 if above the diagonal, 0 otherwise.
+
+By substituting into expression (5), the model derived for this data set is then:
+
+*Effort* = 8 *.* 97 + *(* 0 *.* 65 × *Cfsu)* + *(* 163 *.* 54 × *DiffExp)* + *(* 0 *.* 16 × *Cfsu* × *DiffExp)* (6)
+
+For class A of the difficulty–experience variable, that is, when *X* 2 = 1, then expression (5) reduces
+
+to
+
+*Y* = *B* 0 + *B* 2 + *(B* 1 + *B* 3 *)X* 1 (7)
+
+and expression (6) reduces to
+
+*Effort* = 8 *.* 97 + 163 *.* 54 + *(* 0 *.* 16 + 0 *.* 65 *) Cfsu* = 172 *.* 51 + 0 *.* 81 *Cfsu* (8)
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+46 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Figure 6. Multiplicative regression model: organization A.
+
+Table V. Criteria satisfaction for models on functional size and difficulty–experience: organization A *(N* = 15 *)* .
+
+PRED *(* ±25% *)* PRED *(* ±30% *)* PRED *(* ±35% *)*
+
+Equations *R* [2] MRE (%) No. of projects % No. of projects % No. of projects %
+
+See Figure 6 0.83 45 8 53 11 73.3 12 80
+
+with an *R* [2] of 0.57. For class B of the difficulty–experience level, that is, when *X* 2 = 0, then
+expression (5) reduces to
+
+*Y* = *B* 0 + *B* 1 *X* 1 (9)
+
+and expression (6) reduces to
+
+*Effort* = 8 *.* 97 + 0 *.* 65 *Cfsu* (10)
+
+with *R* [2] = 0 *.* 83.
+This expression (10) model has a fairly good coefficient of regression, *R* [2] = 0 *.* 83, which is much
+higher than for the model with one variable. The coefficient of the categorical variable linked to the
+difficulty–experienceis statistically significant, with a *p <* 0 *.* 05. The results of this model are therefore
+significant and the difficulty–experience variable has a significant impact on the relationship of size
+and work effort. Figure 6 illustrates how the impact of the difficulty-experience variable also depends
+considerably on the functional size variable. The analysis with respect to the criteria of good estimation
+models is presented in Table V; with these two models derived for each of the two difficulty–experience
+classes, 53% of the projects are within PRED (25%), and 80% within PRED (35%).
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 47
+
+Table VI. Variables available: organization B.
+
+ID Name Description
+
+1 *Effort* Number of person-hours, excluding analysis time, recorded on a software
+maintenance functional enhancement.
+2 *Cfsu* total Total functional size in *Cfsu* units. This includes the addition of the *Cfsu* s for all the
+modules included in a software maintenance functional enhancement.
+3 *Cfsu* changed Functional size of the modification or addition within a software maintenance
+functional enhancement.
+4 No. of programs Number of modules or programs impacted by a software maintenance functional
+enhancement.
+5 Difficulty Categorical evaluation of the level of difficulty of a software maintenance functional
+enhancement project.
+6 *SLOC* total Number of SLOC corresponding to all SLOC of each module taken into account in
+a software maintenance functional enhancement.
+7 *SLOC* changed Number of LOC changed, that is, only the LOC modified or added in a software
+maintenance functional enhancement.
+
+**4.** **FIELD STUDY B**
+
+**4.1.** **Context: industrial site B**
+
+Data set B comes from a for-profit organization which designs, develops and implements systems
+for the defense industry. It is a subsidiary of an international organization, and the software unit of
+this organization develops and maintains real-time embedded software. The measurement and analysis
+work was carried out between April 1999 and May 2000 [9]. All data collected were verified by subject
+matter experts from the industrial organization. Table VI provides a summary description of each of
+the variables available for this data set.
+
+For this field study, functional size was measured afterwards on completed maintenance projects.
+On the one hand, the documentation of each functional enhancement was neither complete nor up to
+date. Therefore, the precise functionality added or modified could not be identified unambiguously,
+with the result that the functional size of a specific functional size enhancement could not be measured
+directly. On the other hand, the configuration management system of the software had, for each
+functional enhancement project, an identification of the modules, the number of LOC modified and
+the total number of LOC for each of the modules. Each of these enhancive maintenance projects
+was carried out on one or multiple modules which were changed by additions or modifications to the
+functionality of the defense system. The programming language was the same within a given module.
+The following two-step procedure was therefore designed to derive, indirectly, the functional size of a
+specific functional enhancement maintenance project.
+*Step 1* . First, for each functional enhancement, every module was identified and analyzed to identify
+its functionality, which was then measured with the COSMIC-FFP measurement method. Then, the
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+48 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table VII. Difficulty transformation rules
+for two-level difficulty: organization B.
+
+Two-level difficulty assignment rule
+
+Total functional size Total functional size
+Four-level rating below median above median
+
+Not difficult (1) L L
+Difficult (3) H L
+Highly difficult (5) H H
+Extremely difficult (7) H H
+
+functional sizes of the modules worked on within a single maintenance project were added to obtain
+the total size of all the modules impacted by a specific enhancement; this variable is referred to here
+as the *Cfsu* total variable, and provided the functional size of the piece of software to which a functional
+enhancement had been applied.
+*Step 2* . With the information available from the configuration management system, the ratio of
+the LOC modified over the total number of LOC for all the modules within a specific enhancement
+(SLOC) was determined, i.e. *SLOC* changed divided by *SLOC* total . This ratio was then applied to the
+total functional size of step 1 above, to provide an indirect measure of the functionality modified. This
+adjusted variable is referred to as *Cfsu* changed . In summary
+
+
+(11)
+�
+
+
+*Cfsu* changed = *Cfsu* total
+
+
+*SLOC* changed
+� *SLOC* total
+
+
+The work effort (in person-hours) was obtained from the organization’s time reporting system. This
+corporate time reporting system allowed us to identify the effort expended on each specific functional
+maintenance project. However, for some of the projects the effort expended for the analysis phase of
+a project was not noted; therefore, only the effort expended, excluding analysis, for all projects was
+taken into account.
+
+At measurement time, four levels of project difficulty were identified on the following scale: 1, 3,
+5 and 7, corresponding to no difficulty, difficult, highly difficult and extremely difficult. The use of
+these four initial difficulty levels in a sample of this size (21 observations) was problematic, as there
+were insufficient data observations for certain difficulty values (only one or two observations), which
+means that some difficulty categories would not be representative enough when building estimation
+models. A simpler classification of a categorical variable is then desirable. To do this, the difficulty
+variable with four levels was reclassified into a two-level classification (low and high) using the initial
+classification and the transformation rule of Table VII for projects with a total functional size either
+below or above the median. This is, of course, an empirical procedure, which does not benefit from the
+support of statistics or theory.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 49
+
+Figure 7. Data set: organization B *(N* = 21 *)* .
+
+**4.2.** **Data sample**
+
+This industrial data set B includes data on 21 maintenance projects implementing functional
+enhancements to the software components of a defense system. Figure 7 presents a graphical
+representation of this data set and Table VIII presents the details of this data set, including a project
+identification number, the number of programs modified, the effort in hours and the derived functional
+size of the modification *(Cfsu* changed *)* .
+To investigate the distribution of the variables, the Kolmogorov–Smirnov test was used. When using
+this test, it is also necessary to validate the relevance of the observations, especially the values that are
+significantly far from the average of the population of the data set, i.e. the candidate outliers. When
+there are good reasons to believe that such outliers are not representative of the data set under study,
+they should be taken out of the sample being analyzed. The outliers were analyzed with the Grubbs
+method [37], also referred to as the Extreme Studentized Deviate method.
+The first statistical analysis looked into the distribution of the variables and for the presence
+of candidate outliers: the Kolmogorov–Smirnov test indicated that the *Cfsu* changed variable was not
+normally distributed. The Grubbs test was then used to identify the presence of outliers. This test
+indicates that project 2 is significantly larger than all the others, at more than three standard deviations.
+When project 2 is taken out of the sample, it can then be assumed that the size variable in the sample
+has a normal distribution, based on its Kolmogorov–Smirnov test which gives a significant *p* value.
+The Kolmogorov–Smirnov test on the other variable, effort, indicates that the frequency distribution
+of this variable conforms to a normal distribution. However, the Grubbs test indicates that project 2
+(with 956 hours) and project 21 (with 724 hours) are far from the average of the set of observations.
+From Table VIII, the distance of these two projects is two standard deviations which indicates that
+these two projects can be considered as outliers in the sample under study. Without these two outliers,
+the distribution of the sample is closer to a normal distribution, based on the Kolmogorov–Smirnov
+test: a non-significant (high) *p* -value, which allows us to assume that these variables are distributed
+normally, as summarized in Table IX. The information on the reduced data set, excluding outliers, is
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+50 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table VIII. Data set: organization B *(N* = 21 *)* .
+
+Total functional Functional size of Difficulty Difficulty rating
+Identification Effort size of programs the modification rating (two-level:
+number in hours ( *Cfsu* ) *(Cfsu* changed *)* (four-level) Low, High)
+
+1 88 360 216 1 L
+2 956 984 [∗] 618 1 —
+
+3 148 123 89 3 L
+
+4 66 40 3 3 H
+
+5 83 16 3 3 H
+
+6 34 18 7 1 L
+
+7 96 120 21 3 L
+
+8 84 88 25 3 L
+
+9 31 151 42 3 L
+
+10 409 75 46 5 H
+
+11 30 36 2 1 L
+
+12 140 7 2 3 H
+
+13 308 125 67 7 H
+
+14 244 232 173 3 L
+
+15 188 53 25 3 H
+
+16 34 44 1 1 L
+
+17 73 22 1 3 H
+
+18 27 6 1 1 L
+
+19 91 53 8 3 H
+
+20 13 37 19 3 L
+21 724 248 [∗] 157 7 —
+
+Total *(N* = 21 *)* 3867 1526
+Average *(N* = 21 *)* 184.14 72.67
+Total *(N* = 19 *)* 2187 751
+Average *(N* = 19 *)* 115.11 39.53
+
+∗ Outliers: no. 2 and 21.
+
+presented graphically in Figure 8. As indicated in Table VIII, the averages for both functional size and
+effort are significantly reduced when these two outliers are excluded: from 72 down to 39 *Cfsu*, and
+from 184 to 115 hours.
+
+A visual analysis of this data set suggests that there is a positive correlation between an increase in
+functional size and the increase in effort, even though this correlation does not appear to be strong.
+Here again, it can be observed that there is some degree of heteroskedasticity in this data set (the
+data are wedge-shaped), which suggests that regression models with a single variable only would
+not necessarily be very good models. Such a distribution shape provides a clue that there is, for
+this organization, at least one other important variable which has significant impact on enhancive
+maintenance project effort.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 51
+
+Table IX. Kolomogorov–Smirnov test of
+distribution normality: organization B.
+
+Variable
+
+*N* *D* *P*
+
+*Effort* 19 0.2564 0.1641
+*Cfsu* changed 19 0.2786 0.1047
+
+Figure 8. Scatter diagram of data set excluding two outliers: organization B *(N* = 19 *)* .
+
+**4.3.** **Average unit cost (AUC) models**
+
+*4.3.1.* *AUC model with functional size only*
+
+For this sample of 19 projects, the average unit cost is 2.92 hours per *Cfsu* . The estimation model is,
+then: *Effort* = 2 *.* 92 × *Cfsu*, as illustrated in Figure 9. For this model, the MRE is quite large at 575%
+and only one project (5% of the sample) is within the ±25% range with respect to actual effort. This
+model cannot, of course, be considered a good model.
+
+In this sample from organization B, research question 1 on functional size is not sufficient to explain
+enough of the variability of the effort variable on their maintenance projects. Then, research question 2
+must also be investigated.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+52 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Figure 9. Average unit cost model: organization B *(N* = 19 *)* .
+
+Figure 10. Average unit cost model for high-difficulty class: organization B *(N* = 8 *)* .
+
+*4.3.2.* *AUC model with functional size and subsets on difficulty variable*
+
+To investigate research question 2, the two-level generic project difficulty variable, as previously
+defined, is used to classify the data set into two subsets and then to verify whether or not, within a
+difficulty class, functional size can explain more of the variability of the effort variable.
+The subset of projects with a high difficulty classification includes eight projects, and has the
+following estimation equation (see Figure 10): *Effort* = 8 *.* 78 × *Cfsu* . This average unit cost model
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 53
+
+Figure 11. Average unit cost model for low difficulty class: organization B *(N* = 11 *)* .
+
+for this subset has a lower MRE, 220%, but there are still only two projects within 25% of the actual
+effort.
+
+The subset of projects of low difficulty includes 11 projects, and has the following estimation
+equation (see Figure 11): *Effort* = 1 *.* 35 × *Cfsu* .
+An MRE of 880% makes this model even less accurate than the initial model, and only 18% of its
+projects fall within ±25% of the actual effort.
+
+**4.4.** **Regression models**
+
+*4.4.1.* *Simple linear regression model with functional size only*
+
+The regression model with the functional size as the single independent variable is presented first,
+followed by regression models with other variables. The linear regression model with the functional
+size as the independent variable gives, for the sample of 19 observations, the following linear equation
+(see Figure 12): *Effort* = 91 *.* 29 + *(* 0 *.* 61 × *Cfsu* ). This linear model is not strongly positive, with a
+regression coefficient *R* [2] of only 0.12, which means that only 12% of the total variability of effort in
+the projects is explained by the variation in its functional size, as measured in *Cfsu* .
+
+*4.4.2.* *Nonlinear regression models with functional size*
+
+Table X summarizes the results from five nonlinear regression models, where *R* is the coefficient of
+correlation between the actual values of *Y* and the values derived from the equation. High values of *R*
+*(* maximum = 1 *.* 0 *)* would indicate a high correlation, and *R* [2] is the percentage of the variance of the
+dependent variable which can be explained by the given equation. From Table X, it can be observed that
+none of the nonlinear regression models represents a significant improvement over the linear model.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+54 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Figure 12. Linear regression model: organization B *(N* = 19 *)* .
+
+Table X. Nonlinear regression models using functional size: organization B *(N* = 19 *)* .
+
+Variable
+
+Model Equation *N* *A* *B* *R* *R* [2]
+
+Power *Y* = *A* × *X* *[B]* 19 43.808 0.245 0.50 0.245
+Exponential *Y* = *A* × e *[(B]* [×] *[X)]* 19 63.067 0.006 0.39 0.15
+Logarithmic *Y* = *A* + *B* × ln *(X)* 19 44.121 29.29 0.51 0.26
+Hyperbolic 1 *Y* = *A* + *B/X* 19 132.463 −48.330 0.32 0.10
+Hyperbolic 2 *Y* = 1 */(A* + *(B* × *X))* 19 0.022 −8 *.* 8 × 10 [−][5] 0.31 0.09
+
+*4.4.3.* *Multiple regression models with two independent variables*
+
+Regression models with multiple independent variables (functional size and another variable) were
+investigated next to analyze how this additional variable would contribute to the relationship between
+size and effort. The introduction of a second independent variable such as the total number of *Cfsu*
+for a project, the total number of LOC, the number of LOC modified and the total number of
+programs modified and the difficulty variables, did not bring about significant improvements to the
+explanatory power of the regression models of the form *y* = *ax* + *bz* + *c* . For example, when the
+generic model with two independent variables (functional size and number of programs modified) is
+*Y* = *(ax)* + *(b* × *(* number of programs changed *))* + *c*, then the model with the actual data is
+
+*Y* = 0 *.* 78 *Cfsu* − 3 *.* 62 *(* number of programs changed *)* + 98 *.* 5 (12)
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 55
+
+This multiple regression model with the number of programs changed has the same value for its *R* [2],
+0.12, which is not an improvement over the simple linear regression model.
+The use of the four initial difficulty levels did not improve the relationship between functional size
+and effort in this sample, due to both insufficient data observations for certain difficulty values (only
+one or two observations) and to the large number of independent variables generated in the regression
+models, with respect to the available number of observations in the sample (three independent variables
+to represent the four levels of difficulty, plus a fourth independent variable, the functional size). With
+a sample of only 19 observations, a simpler and more representative equation is desirable, with two
+or at most three independent variables. To achieve this, the difficulty variable with four levels was
+transformed into a two-level classification (low and high) on the basis of the initial assignment of
+difficulty levels and the total functional size (on the total number of programs affected) for each of the
+programs in a project, as indicated previously.
+
+*4.4.4.* *Multiple regression models of the additive form*
+
+The next regression model constructed takes into account the categorical factor of the low–high class:
+
+Class = 1 if in the ‘high’ class, and
+
+Class = 0 if in the ‘low’ class.
+
+Then, an additive model with the low–high class factor gives each level the same importance in the
+relationship between size and work effort. The model takes the following generic form *y* = *ax* + *bz* + *c*,
+and if *z* = 0, then *y* = *ax* + *c*, or if *z* = 1, then *y* = *ax* + *(b* + *c)* . The following results are then
+obtained with the sample of 19 observations. For this sample:
+
+*Effort* = 0 *.* 92 *Cfsu* + 126 *.* 12 *Class* + 25 *.* 9 (13)
+
+When taking the low–high class level into account, the following two models, as illustrated in
+Figure 13, are obtained: if *Class* = 0, then *Effort* = 0 *.* 92 *Cfsu* + 25 *.* 9, and if *Class* = 1 *,* then
+*Effort* = 0 *.* 92 *Cfsu* + 152 *.* 02. This model, with the difficulty class variable, has a coefficient of
+determination *R* [2] = 0 *.* 46 and a standard error of 82.7, which is better than the simple linear regression
+model, but still not good enough. It can be observed in Figure 13 that both regression lines have
+the same slope (0.92), and are represented by parallel lines with different points at the origin when
+*Cfsu* = 0.
+
+*4.4.5.* *Multiple regression model of the multiplicative form*
+
+With the additive model, the size effect is not impacted by the values of the low–high class variable,
+and hence the impact of the increase in both variables is determined by constant additive values—
+that is, the impact of the size variable is measured independently of the low–high class variable.
+To improve this regression model, as recommended in [37], a new variable is added: the interaction
+of difficulty and size, as represented by the multiplication of the two variables *Difficulty* × *Cfsu* .
+The inclusion of this variable in the model makes it possible to recognize the multiplicative impact
+of these two variables on the positive relation between size and effort. Of course, it eliminates the
+parallelism of the two lines in the additive model. The general form of the multiplicative model is
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+56 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Figure 13. Additive model: organization B *(N* = 19 *)* .
+
+*Y* = *αX* + *βZ* + *γ (X* × *Z)* + *µ*, or where *X* represents *Cfsu* and *Z* represented *Difficulty*, then
+*Effort* = *αCfsu* + *βDifficulty* + *(Cfsu* × *Difficulty)* + *µ* . Or more specifically, where *γ* represents
+*Difficulty*, if *γ* = 0, then *Effort* = *αCfsu* + *µ* . And if *γ* = 1, then *Effort* = *(α* + *γ )Cfsu* + *(µ* + *β)* .
+The difficulty variable, represented by *γ*, has an influence on the behavior of the size variable *Cfsu*,
+thereby modifying the slope and the constant of the curve during the analysis of its values of 0 and 1.
+The general multiple linear regression equation is
+
+*Effort* = 0 *.* 64 *Cfsu* + 41 *.* 94 *γ* + 3 *.* 85 *(γ Cfsu)* + 41 (14)
+
+With *N* = 19, this multiplicative model has a standard error of 57.83 and a coefficient of determination
+*R* [2] = 0 *.* 75, which is a significant improvement over both the model with one variable and the additive
+model with two independent variables. Furthermore, the coefficient of the categorical variable linked
+to both difficulty and size is statistically significant, that is, it has *p <* 0 *.* 05. The specific equations for
+each difficulty level *(γ )* are as follows: if *γ* = 0, then *Effort* = 0 *.* 64 *Cfsu* + 41, with *N* = 11 and
+resulting in an *R* [2] = 0 *.* 47; and if *γ* = 1, then *Effort* = 4 *.* 49 *Cfsu* + 82 *.* 94, with *N* = 8 and resulting in
+an *R* [2] = 0 *.* 78.
+
+Figure 14 clearly depicts that the effort level of projects depends both on their functional size and on
+their difficulty level. Hence, they are significant variables to be taken into account during estimation, at
+least for organization B. In addition, the graphical analysis in Figure 14 shows that the largest project
+in terms of size (for project 1, size = 216 *Cfsu* ), is classified in the low difficulty category, and has
+a much lower level of effort than projects of smaller size, which is not consistent with the balance of
+the data set. The behavior of project 1 could be considered to be significantly different from the others
+in terms of some unspecified factor. It could therefore be excluded from the sample and reserved for
+further analysis to verify its impact on the multiplicative model. On this reduced sample of 18 projects
+(see Figure 15), we apply the general multiplicative model given by *Y* = *αX* + *βZ* + *γ (X* × *Z)* + *µ)*,
+which gives *Effort* = 1 *.* 25 *Cfsu* + 56 *γ* + 3 *.* 24 *(γ* × *Cfsu)* + 26 *.* 94, yielding *R* [2] = 0 *.* 84. The specific
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 57
+
+Figure 14. Multiplicative model: organization B *(N* = 19 *)* .
+
+Figure 15. Multiplicative model: organization B *(N* = 18 *)* .
+
+models for each difficulty class are then as follows: if *γ* = 0, then *Effort* = 1 *.* 25 *Cfsu* + 26 *.* 94, for
+*N* = 11 and yielding *R* [2] = 0 *.* 87; and if *γ* = 1, then *Effort* = 4 *.* 49 *Cfsu* + 82 *.* 94, for *N* = 8 and
+yielding *R* [2] = 0 *.* 78. With an overall regression coefficient *R* [2] = 0 *.* 84 for *N* = 18, this multiplicative
+model is better than the previous one, and the *Cfsu* variable is statistically significant with *p <* 0 *.* 05,
+as is the multiplicative term of both variables (see Figure 15).
+Table XI presents a comparison of the results of the multiplicative models for the samples with
+*N* = 19 and with *N* = 18. In addition to the improvement in the regression coefficient, the MRE
+has moved down from 0.51 to 0.40. It is, of course, still higher than the 25% recommended, but with
+a (PRED ±25%) of 56% for 10 projects [19]. This is a significant improvement, with some other
+projects fairly close to this level. With PRED 35%, 77% of the projects are inside this interval, which
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+58 A. ABRAN, I. SILVA AND L. PRIMERA
+
+Table XI. Comparison of multiplicative model quality: organization B.
+
+PRED *(* ±25% *)* PRED *(* ±30% *)* PRED *(* ±35% *)*
+Model MRE
+(sample size) *R* [2] (%) No. of projects % No. of projects % No. of projects %
+
+Multiplicative 75 0.51 10 52.6 12 63.2 14 73.7
+*(N* = 19 *)*
+Multiplicative 84 0.40 10 55.5 12 66.7 14 77.8
+*(N* = 18 *)*
+
+is quite good in the context of software maintenance where there could be considerable variation due
+to individuals (which is not mitigated by a team balanced by management for larger development
+projects).
+
+**5.** **ANALYSIS AND RESULTS**
+
+The summary in Table XII facilitates a comparison of the data sets and of the estimation models from
+the two field studies. The two data sets are similar in some respects, and are also significantly different
+in others. The following comparisons do not include the two outliers excluded from the analysis of the
+data set from organization B.
+In terms of similarities, both data sets comprise maintenance projects modifying a single software
+application. The functional size has been measured with the COSMIC-FFP standard, by measurers
+trained by the same trainer. Both data sets also lie in the same range, in terms of project effort and
+functional size. Also, neither organization had a measurement program in place, neither had developed
+their own estimation models (either for development or for maintenance projects).
+Presenting the two data sets as scatter diagrams with functional size on the horizontal axis and effort
+in person-hours on the vertical axis, shows positive relationship between size and effort. But it also
+shows that the relationship is not strong. Both scatters have a wedge shape, which indicates that, for
+these organizations, at least one other factor has a significant influence on project effort.
+In terms of differences, the average size of the maintenance projects in the Web-based
+organization (A) is four times the average size of the maintenance projects in the defense
+organization (B), but requires on average only twice as much effort; this leads to an average unit cost
+for organization A which is only half that for organization B.
+For both data sets, most of the estimation models investigated yielded poor estimation models, either
+on the functional size variable or on the other categorical variables investigated, such as staff experience
+and project difficulty. This applies to the average unit cost models, the simple linear regression models
+and the nonlinear regression models.
+However, when both functional size and a two-level difficulty classification of projects are taken
+into account in a multiplicative regression model, then the performance of such models improves
+significantly. In particular, for organization B, projects of high difficulty have a model on size with
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 59
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+60 A. ABRAN, I. SILVA AND L. PRIMERA
+
+both a fixed cost, and a variable cost three times as great as for the subset of projects with low difficulty
+with *N* = 18.
+
+Two projects from the 21 projects studied at organization B were excluded from the analysis since
+their functional size variable was out of the two standard deviations range, and it is not prudent to
+build regression models with such outliers. As well, in the multiplicative model, another project was
+identified as an outlier in terms of its independence of effort and size relative to the other projects,
+providing an indication of the presence of yet another factor with a much greater influence on effort on
+that project. Outliers were not investigated further, since the focus of this analysis was on the general
+behavior of the data sets that were investigated. The assumption on which the presence of outliers in
+such empirical data sets was based is that there are specific instances where there are other factors, with
+extreme values, which override the influence of size on the relationship between size and work effort.
+For example, the effort entailed in a small maintenance project, which requires extensive retesting of
+the whole application, would not be related to the size of the modification itself, but to the size of
+the full application, whereas other maintenance projects may only require localized testing. Similarly,
+projects consisting of an unusually high level of reuse, might have a relationship between size and
+work effort which is much smaller than other projects involving almost no reuse.
+
+**6.** **CONCLUDING OBSERVATIONS**
+
+The goal of this study was to investigate the development of estimation models for maintenance
+projects, using as input the functional size of software enhancements as one of the key parameters
+for modeling the relationship between the size of a maintenance project and the maintenance work
+effort. In this study, we therefore investigated the following expected relationship.
+
+*The effort required to deliver a functional enhancement in a maintenance context increases*
+*with the size of the enhancement (research question 1).*
+
+In a homogeneous environment, the above assumption might be investigated, and determined
+through observation to be true, provided that other factors vary minimally at most. However, in most
+environments, there is no such homogeneity, and some important factors will vary. Thus, the following
+assumption was also investigated.
+
+*When the relationship between the increase in effort due to an increase in size is not strong,*
+*some additional factors, in combination with functional size, contribute to the increase in*
+*effort required (research question 2).*
+
+Software size is recognized as a key factor in the construction of models to estimate project effort.
+Software size can be measured from either a technical perspective, with LOC for example, or from a
+functional perspective. While functional size measures have been available for software of the MIS type
+for the past 20 years, the industry has not yet felt that it was appropriate for real-time and embedded
+software. The COSMIC-FFP new generation of functional size measures has addressed this domain
+issue. In addition, the COSMIC-FFP method was designed with a much more granular scale, that
+enables it to discriminate among the various sizes of small functions through the use of a unitary size
+unit rather than through the use of stepwise functions as in the first-generation measurement method.
+This COSMIC-FFP method thus makes it possible to build estimation models for real-time software
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 61
+
+based on functional size, and to do this not only for development projects, but for maintenance projects,
+both large and small, as well.
+This paper has reported on two field studies carried out to investigate these research questions in the
+context of small enhancive maintenance projects. The field studies were carried out in organizations
+which had no maintenance measurement programs in place, and no formal estimation models for their
+maintenance projects. Both software organizations would also be considered to be in the initial stages
+of process maturity. The two data sets shared a common characteristic: they were a set of maintenance
+projects adding to or modifying functions in a single existing application. In terms of descriptive
+statistics, the average project effort for the two organizations was respectively 115 person-hours and
+221 person-hours.
+Estimation models built with either an average unit cost or a simple regression model provided
+interesting models for both organizations, but they did not model the relationship between size and
+effort well for the individual projects. For the data sets of the two field studies reported here, even
+though there is a clear positive relationship between functional size and project effort, such a relation
+was not strong enough to derive good estimation models using this single independent variable with
+either the average unit costs models or the linear and nonlinear forms of simple regression models. Both
+data sets had wedge-shaped scatter diagrams, illustrating that the single size variable is not enough for
+building a good estimation model. Hence, the first research question did not lead to estimation models
+with a satisfactory performance at the individual project level.
+For the investigation of the second research question, we looked at the contribution of other
+categorical variables such as staff experience and project difficulty. Various estimation models were
+developed based on these variables, either using average unit costs, linear regression or nonlinear
+regression on full samples, or dividing the samples into subsets according to categorical criteria.
+In particular, a project difficulty variable was used and investigated further. Such a project difficulty
+variable was determined by subject matter experts in each organization, and in accordance with their
+own culture and understanding. Such a variable is a categorical variable; it can be used to classify the
+data points of a sample into specific subsamples which are more homogeneous with respect to their
+own categorical classification.
+The two field studies have investigated the impact of such a categorical variable in improving the
+performance of estimation models that already take into account the functional size of the maintenance
+projects. A three-level difficulty classification was initially selected in one field study, while a four-level
+classification was selected in the other. However, for the size of the samples available, there were not
+enough data points, and in both field studies the levels had to be transformed into a simpler two-level
+difficulty classification using empirical procedures.
+Two forms of regression model were then investigated: additive models and multiplicative multiple
+regression models. While regular multiple regression gives a single model, both the additive and the
+multiplicative models lead to two models, one for each class of the second independent variable. In the
+additive model, the two submodels are represented by two parallel lines, with the same slope and a
+different point of origin; in the multiplicative model, the two submodels do not need to be parallel
+lines. In both field studies, the multiplicative models graphically mapped the two classes of projects
+much better (low–high) with respect to the other independent variable, functional size, and their quality
+as good models of the relationship between size and work effort were much better.
+These results are of particular interest in the development of estimation models for maintenance
+projects: the functional size of a maintenance enhancement can be measured very early on from
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+62 A. ABRAN, I. SILVA AND L. PRIMERA
+
+the requirements themselves, and therefore this size can be obtained fairly accurately before any
+programming needs to be done (e.g. functional size does not need to be estimated with an associated
+level of uncertainty, as input to the estimation model). This is in contrast with the estimation models
+based on LOC, which is, of course, not known precisely until project completion. Naturally, LOC can
+be estimated earlier on, but this introduces a significant uncertainty factor in the estimation, all the
+more so since the potential error on this factor is usually not even known, which only compounds the
+possibility of errors and uncertainty in the estimation process.
+As seen in these field studies, the introduction of a difficulty variable as a second independent factor
+in multiplicative regression models has improved the estimation results for the individual maintenance
+projects significantly. Readers are reminded that such a variable needs to be estimated early on in
+the project, thereby introducing a certain level of uncertainty as to whether or not a project would be
+appropriately classified.
+With these two field studies, the various analyses have provided insights into maintenance work,
+which consists of small functional enhancements and their relationships with work effort. A process
+for deriving estimation models has also been illustrated, with both an objectively derived quantitative
+variable (functional size), obtainable early on in the project life cycle, and a categorical variable,
+difficulty. Once such models are derived, and their quality analyzed, then they can be quite useful in
+estimating subsequent maintenance projects involving adding or modifying functions to these software
+applications.
+
+**7.** **FUTURE RESEARCH DIRECTIONS**
+
+The limitations of the two field studies were defined by the empirical research methodology used and
+the constraints of the data sets available. Within each organization, all the data came from functional
+enhancements to the same software application, and therefore no investigation was carried out to
+explore how such results could be applied to enhancements to other software applications, within the
+same organization, or across functional domains. Also, the projects in each organization were of the
+same type, that is, either Web-based linguistic glue software or real-time embedded software. With no
+data available from other organizations of either type, it would not be prudent to extrapolate results to
+other organizations or for other types of software; however, the analytical process itself can be reused
+for building such models. Access to much larger data sets, and from many other types of real-time
+software, would make it possible to investigate whether or not these results could be generalized to
+larger contexts. Finally, further work is required to understand better the ‘project difficulty’ generic
+variable used to represent other factors of influence and to define better their categorization to avoid
+the transformations used in these field studies.
+
+**REFERENCES**
+
+1. Institute of Electrical and Electronic Engineers, Inc. *IEEE Standard for Software Maintenance, IEEE Std 1219–1998* . New
+York, 1998.
+2. International Organization for Standardization. *ISO/IEC 14764:2000—Software Engineering—Software Maintenance* .
+ISO, Geneva, Switzerland, 2000.
+3. Gill GK, Kemerer CF. Productivity impacts of software complexity and developer experience. *Working Paper Report 3–*
+*40–90*, Massachusetts Institute of Technology, Cambridge MA, 1990; 3107–3190.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+SIZE MEASUREMENT IN ESTIMATION MODELS FOR SOFTWARE MAINTENANCE 63
+
+4. Parikh G. What is software maintenance? *Techniques of Program and System Maintenance* . QED Information Sciences:
+Wellesley MA, 1988; 29–32.
+5. Ferens DV. The conundrum of software estimation models. *IEEE Aerospace and Electronic Systems Magazine* 1999;
+**14** (3):23–29.
+6. Dolado JJ. On the problem of the software cost function. *Information and Technology* 2001; **43** (1):61–72.
+7. Chapin N, Hale JE, Khan KMd, Ramil J, Tan W-G. Types of software evolution and software maintenance. *Journal of*
+*Software Maintenance and Evolution* 2001; **13** (1):3–30.
+8. Abran A, Robillard PN. Function point analysis: An empirical study of its measurement processes. *IEEE Transactions on*
+*Software Engineering* 1996; **22** (12):895–903.
+9. Silva I. *Mesurer la taille fonctionnelle du logiciel ABC et bˆatir un mod`ele de productivit´e pour les activit´es de maintenance* .
+D´epartement d’informatique, Universit´e du Qu´ebec `a Montr´eal: Montr´eal QB, 2000.
+10. Primera L. *Mesurer la taille fonctionnelle d’un ´echantillon des applications CENTREX et ´etablir un mod`ele de productivit´e*
+*pour ces activit´es de maintenance chez ABC Inc* . D´epartement d’informatique, Universit´e du Qu´ebec `a Montr´eal: Montr´eal
+QB, Canada, 2001.
+11. Ferens DV. Software support cost models: Quo vadis? *ISPA Journal of Parametrics* 1984; **4** (4):64–79.
+12. Boehm BW. *Software Engineering Economics* . Prentice-Hall: Englewood Cliffs NJ, 1981; 533–555.
+13. Abran A, Nguyenkim H. Measurement of the maintenance process from a demand based perspective. *Journal of Software*
+*Maintenance* 1993; **5** (2):63–90.
+14. Zelkowitz MV, Wallace D. Experimental validation in software engineering. *Information and Technology* 1997;
+**39** (11):735–743.
+15. Briand LC, Eman KE, Maxwell K, Surmann D, Wieczorek I. An assessment and comparison of common software
+estimation models. *Proceedings of the 1999 International Conference on Software Engineering, ICSE99* . ACM Press:
+New York NY, 1999; 313–322.
+16. Briand LC, Langley T, Wieczorek I. A replicated assessment of common software cost estimation techniques. *Proceedings*
+*of the 2000 International Conference on Software Engineering, ICSE2000* . ACM Press: New York NY, 2000; 277–386.
+17. Chatterjee S, Price B. *Regression Analysis by Example* . Wiley: New York NY, 1991; 95–96.
+18. Maya M. La technique ´etendue des points de fonction dans la construction des mod`eles de productivit´e en maintenance
+adaptative. *Rapport d’activit´e de synth`ese* . Universit´e du Qu´ebec `a Montr´eal, Montr´eal QB, 1995.
+19. Conte SD, Dunsmsore DE, Shen VY. *Software Engineering Metrics and Models* . Benjamin/Cummings: Menlo Park CA,
+1986.
+20. Cˆot´e V, Bourque P, Oligny S, Rivard N. Software metrics: An overview of recent results. *Journal of System and Software*
+1998; **8** (2):121–131.
+21. Albrecht AJ. Measuring application development productivity. *Proceedings of the Joint SHARE-GUIDE IBM Applications*
+*Development Symposium* . SHARE, Inc. and GUIDE International Corp.: Chicago IL, 1979; 88–92.
+22. Abran A, Maya M, Desharnais JM, St.-Pierre D. Adapting function points to real-time software. *American Programmer*
+1997; **10** (11):32–43.
+23. Galea S. *The Boeing Company: 3D Function Point Extensions, v. 2.0, release 1.0* . Boeing Information and Support Services,
+Research and Technology Software Engineering, Everett WA, 1995.
+24. Mukhopadhyay T, Kekre S. Software effort models for early estimation of process control applications. *IEEE Transactions*
+*on Software Engineering* 1992; **18** (10):915–924.
+25. Reifer DJ. Asset-R: A function point sizing tool for scientific and real-time systems. *Journal of Systems and Software* 1990;
+**11** (MM):159–171.
+26. Whitmire SA. 3D Function points: Scientific and real-time extensions to function points. *Proceedings of the Pacific*
+*Northwest Software Quality Conference*, 1992.
+27. Extension for real-time software—counting practices manual. *Technical Report no. 1997–04*, Software Engineering Management Research Laboratory, Universit´e du Qu´ebec `a Montr´eal: Montr´eal QB, 1997. http://www.lrgl.uqam.ca/ffp.html
+
+[December 2001].
+28. Symons CR. *Software Sizing and Estimating—MkII FPA (Function Point Analysis)* . Wiley: Chichester, UK, 1991; 47–79.
+29. Netherlands Software of Measurement Association. *Definitions and Counting Guidelines for the Application of Function*
+*Point Analysis, Version 2.0* . NESMA, The Netherlands, 1997.
+30. Abran A, Desharnais JM, Maya M, St.-Pierre D, Bourque P. Design of a functional size measurement for real-time
+software. *Research Report 13*, Software Engineering Management Research Laboratory, Universit´e du Qu´ebec `a Montr´eal:
+Montr´eal QB, 1998.
+31. Abran A, Desharnais JM, Oligny S, St.-Pierre D, Symons C. *COSMIC-FFP Measurement Manual, Version 2.0* .
+Software Engineering Management Research Laboratory, Universit´e du Qu´ebec `a Montr´eal: Montr´eal QB, 1999.
+http://www.lrgl.uqam.ca/ffp.html [December 2001].
+32. International Organization for Standardization. *ISO/IEC 14143-1:1997—Information* *technology—Software* *mea-*
+*surement—Functional size measurement—Definition of concepts*, ISO, Geneva, Switzerland, 1997.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+
+64 A. ABRAN, I. SILVA AND L. PRIMERA
+
+33. Abran A, Symons CR, Oligny S. An overview of COSMIC-FFP field trials results. *Proceedings of the 12th European*
+*Software Control and Metrics Conference—ESCOM 2001* . Shaker: The Netherlands, 2001; 277–285.
+34. Bootsma F. Applying full function points to drive strategic business improvement within the real-time software
+environment. *Proceedings of the 1999 Annual IFPUG Conference* . International Function Points Users Group: Westerville
+OH, 1999; 159–218.
+35. B¨uren G, Koll I. First experiences with an introduction of an effort estimation process. *Proceedings of the 12th International*
+*Conference on Software and System Engineering and their Applications (ICSSEA)* . CNAM: Paris, France, 1999; 14–30.
+36. Schmietendorf A, Dumke R, Foltin E. Applicability of full function points for Siemens AT. *Proceedings of the International*
+*Workshop on Software Measurement (IWSM’99)* . http://www.lrgl.uqam.ca/iwsm99/index2.html [December 2001].
+37. Neter J, Wasserman W, Kutner MH. *Applied Linear Regression Models* . Irwin, Inc.: Homewood IL, 1983; 335–339.
+38. Tietgen G, Moore R, Roger H. Some Grubbs-type statistics for the detection of several outliers. *Technometrics* 1972;
+**14** (3):583–597.
+
+**AUTHORS’ BIOGRAPHIES**
+
+**Alain Abran** is a Professor and the Director of the Software Engineering Research
+Laboratory at the Ecole de Technologie Sup´erieure (ETS), Universit´e du Qu´ebec. He [´]
+is currently co-executive editor of the Guide to the Software Engineering Body of
+Knowledge project. He is also actively involved in international software engineering
+standards and is co-chair of the Common Software Metrics International Consortium
+(COSMIC). Dr Abran has more than 20 years of industry experience in information
+systems development and software engineering. The maintenance measurement program
+he developed and implemented at Montreal Trust, Canada, received one of the 1993
+Best of the Best awards from the Quality Assurance Institute. Dr Abran holds a PhD
+in Electrical and Computer Engineering (1994) from Ecole Polytechnique de Montr´eal [´]
+(Canada) and master degrees in Management Sciences (1974) and Electrical Engineering
+(1975) from University of Ottawa. His research interests include software productivity
+and estimation models, software engineering foundations, software quality, software
+functional size measurement, software risk management and software maintenance
+management.
+
+**Ilionar Silva** holds a master’s degree in Software Engineering from the Universit´e du
+Qu´ebec `a Montr´eal, Canada (2000), and a bachelor degree in systems engineering from the
+Universidad de los Andes, Venezuela (1993). He is a programmer–analyst with additional
+experience in quality assurance and quality control for a variety of computer systems. Mr
+Silva’s diverse work history includes quality control analysis for Haptech Technologie
+Inc. (Montreal, Canada) (1998) and quality assurance at Nurun in Montr´eal (1999). He
+developed test plans, test designs, test cases, test procedures, stress tests and test reports
+for different E-commerce Web applications, all in keeping with IEEE-829 and ISO-9126
+standards. Recently (2001) he joined Eurekium as a member of the quality assurance team
+for C++.
+
+**Laura Primera** completed her bachelor degree in systems engineering at the Universidad
+de Los Andes in 1993, and her master’s degree in software engineering at Universit´e du
+Qu´ebec in Montr´eal in 2001. She has worked in industry since March 1999 as a software
+quality assurance specialist.
+
+Copyright  2002 John Wiley & Sons, Ltd. *J. Softw. Maint. Evol.: Res. Pract.* 2002; **14** :31–64
+

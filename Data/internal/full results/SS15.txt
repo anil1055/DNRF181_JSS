@@ -1,0 +1,1260 @@
+# **Realising Web Effort Estimation: a Qualitative ** **Investigation **
+
+
+Olavo Matos
+Institute of Computing
+
+Federal University of
+Amazonas
+
+olavomatos@icomp.ufam.edu.br
+
+
+Luiz Fortaleza
+Institute of Computing
+
+Federal University of
+Amazonas
+
+luizfortaleza@icomp.ufam.edu.br
+
+
+Tayana Conte
+Institute of Computing
+
+Federal University of
+Amazonas
+
+tayana@icomp.ufam.edu.br
+
+
+Emilia Mendes
+School of Computing
+
+Blekinge Institute of
+Technology
+
+emilia.mendes@bth.se
+
+
+**ABSTRACT**
+
+*Context: Reliable effort estimation is essential for better*
+*management of Web projects, hence the need to identify what are*
+*the key factors that affect effort estimates for new Web projects*
+*and how they are inter-related. Objective:* *This paper improves*
+*our understanding of Web effort estimation using as basis the*
+*knowledge of Web effort estimation experts. Method: We*
+*employed qualitative research with the participation of four*
+*different Web development companies in Manaus (Brazil) using*
+*semi-structured interviews for data collection; our data analysis*
+*was carried out using Grounded Theory-based procedures to*
+*identify and combine factors affecting the estimation effort of Web*
+*projects. Results: We identified four main groupings (categories)*
+*of factors - Web project, Web development complexity, Web*
+*development team, and Clients. Each of these groupings contains*
+*a set of factors that impact upon Web effort estimation.*
+*Conclusions: This is the first time that qualitative research is*
+*employed in the field of Web effort estimation to further*
+*understand and help improve this process. In addition, some of*
+*the factors found had never been identified in any of the previous*
+*studies in this field, thus suggesting that the use of Grounded*
+*Theory-based procedures may provide a way to enrich our*
+*understanding of the phenomenon under investigation via the*
+*identification of factors that overlap and also complement those*
+*from previous studies.*
+
+**Categories and Subject Descriptors**
+D.2.8 [ **Software Engineering** ]: Metrics – *process metrics,*
+*product metrics* ; D.2.9 [ **Software Engineering** ]: Management –
+*cost estimation*
+
+**General Terms**
+
+Management, Measurement
+
+**Keywords**
+Web effort estimation, Qualitative studies, grounded-theory, Web
+project management, Web effort predictors.
+
+**1.** **INTRODUCTION**
+
+One of the requisites of effective project management is sound
+effort estimation, the process by which the effort to develop a new
+
+Permission to make digital or hard copies of part or all of this work for
+personal or classroom use is granted without fee provided that copies are
+not made or distributed for profit or commercial advantage and that copies
+bear this notice and the full citation on the first page. Copyrights for
+components of this work owned by others than ACM must be honored.
+Abstracting with credit is permitted. To copy otherwise, to republish, to
+post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee.
+
+*EASE '13,* April 14 - 16 2013, Porto de Galinhas, Brazil
+Copyright 2013 ACM 978-1-4503-1848-8/13/04…$15.00.
+
+
+application is forecasted and used to allocate resources
+adequately, thus enabling projects to be delivered on time and
+within budget. Effort predictors are generally measures of
+‘problem size’ and other factors that have a bearing on a project’s
+
+outcome.
+
+Given that Web development is a rapidly and constantly growing
+industry [3], we believe that it is important to understand the Web
+effort estimation phenomenon given its importance to managing
+Web projects. In addition, such understanding can also help Web
+companies in their project management decisions.
+
+To understand effort estimation for Web projects, previous studies
+have developed models that use as input, factors such as the size
+of a Web application, and cost drivers (e.g. tools, developer’s
+quality, team size), and provide an effort estimate as output. The
+differences between these studies were the number and type of
+size measures used, choice of cost drivers and occasionally the
+techniques employed to build the effort estimation models.
+
+Mendes and Counsell [20] were the first, back in 2000, to
+investigate this field by building a model that used machinelearning techniques with data from student-based Web projects,
+and size measures harvested late in the project’s life cycle.
+Mendes and collaborators also carried out a series of consecutive
+studies (e.g. [20][21][22][23][24]) where models were built using
+multivariate regression and machine-learning techniques using
+data on industrial Web projects. Later they also proposed and
+validated size measures harvested early in the project’s life cycle,
+and therefore better suited to resource estimation [23].
+
+Other researchers have also investigated effort estimation for Web
+projects, and some examples are as follows: Reifer [28] proposed
+an extension of the COCOMO model, and a single size measure
+harvested late in the project’s life cycle. None were validated
+empirically. This size measure was later used by Ruhe et al. [30],
+who further extended a software engineering hybrid estimation
+technique to Web projects, using a small data set of industrial
+projects, mixing expert judgment and multivariate regression.
+Later, Baresi et al. [4], and Mangia et al. [16] investigated effort
+estimation models and size measures for Web projects based on a
+specific Web development method, namely the W2000. Finally,
+Costagliola et al. [9] compared two types of Web-based size
+measures for effort estimation. A recent systematic literature
+review on Web resource estimation [3] (see Section 2) showed
+that none of the previous studies employed qualitative research to
+understanding the Web effort estimation phenomenon. However,
+there are numerous examples in Software & Web Engineering in
+which the use of qualitative research in isolation or combined with
+quantitative research, provided a rich understanding of the
+phenomenon being investigated [7] [31] [33].
+
+
+12
+
+Therefore, this research’s aim and contribution are to further our
+understanding of Web effort estimation using qualitative research
+with the participation of effort estimation experts from four
+different Web development companies in Manaus (Brazil). We
+employed semi-structured interviews for data collection, and our
+data analysis was carried out using Grounded Theory-based
+procedures. A total of 35 factors was identified, and arranged into
+four main groupings - Web project, Web development
+complexity, Web development team, and Clients.
+
+The remaining of this paper is organised as follows: Section 2
+presents an overview of the state of the art in Web effort
+estimation, based on a recent systematic literature review [3];
+Section 3 details our research methodology, followed by our
+results in Section 4. Finally, conclusions and comments on future
+work are given in Section 5.
+
+**2.** **PREVIOUS STUDIES**
+
+This Section provides an overview of some of the results from a
+recently conducted systematic literature review (SLR) on Web
+resource estimation [3]. We will only report some of its results,
+and solely those relating to Web effort estimation. Readers
+interested in further details, please see [3].
+
+The SLR retrieved 84 primary studies, of which 78 investigated
+Web effort estimation. Figure 1 displays the number of primary
+studies published per year, showing that there have been years
+with a larger number of primary studies published; however no
+growth pattern exists. This may be due to the small number of
+researchers worldwide who investigate this area.
+
+**Figure 1. Web effort estimation papers per year**
+
+With regard to the methods and techniques that have been used
+for Web effort estimation, Figure 2 shows that CBR and Stepwise
+regression were the two techniques used the most, followed
+closely by Linear regression. However, there was no single
+technique that consistently presented the best estimation accuracy.
+
+Figure 2 summarises the various techniques that have been used
+for Web effort estimation. Certain techniques can fall into more
+than one category, for example Web-COBRA uses expert
+judgment in conjunction with an algorithmic model. Stepwise
+regression, CBR, and linear regression (both simple and multiple)
+have been those most frequently used in 40.28%, 36.11% and
+25% of studies, respectively.
+
+In relation to the predictors used, Figure 3 shows that size
+measures were the most frequently used effort predictors,
+followed by complexity measures.
+
+
+Cost drivers are any predictors that do not characterize the size or
+complexity of a Web project (e.g. development team size and
+experience), and are seen in 20.83% of the primary studies.
+Tukutuku is a database containing data on Web hypermedia and
+software projects from companies around the world [20]. Each
+project in the database is characterized by a set of 25 variables
+related to Web applications and their development, of which
+length and reusability measures and cost drivers have been used as
+predictors in effort estimation (in 37.50% of the primary studies).
+
+**Figure 2. Web effort estimation techniques**
+
+**Figure 3. Web effort predictors**
+
+Figure 4 shows that most studies used industry datasets (73.61%
+versus 34.72% for academic datasets), most probably because
+many studies have employed the Tukutuku dataset.
+
+**Figure 4. Data Sources**
+
+The summary results presented herein show that none of the
+previous studies in Web effort estimation, even those that built
+expert-driven Web effort estimation models, employed qualitative
+research principles to investigating the Web effort estimation
+
+
+13
+
+phenomenon. This is a gap that has motivated the research
+described herein.
+
+**3.** **RESEARCH METHODOLOGY**
+
+We employed a qualitative research methodology aiming to
+understand what factors contribute for better effort estimation,
+based on the expert opinion of practitioners directly involved in
+effort estimation activities.
+The data employed in our research was gathered by means of
+semi-structural interviews with four professionals from different
+Web development companies in Manaus (Brazil). Furthermore,
+we employed procedures from Grounded Theory (GT) [34] while
+analyzing the data.
+
+The subsections detailed next detail the activities relating to our
+data collection and analysis.
+
+**3.1** **Data Collection**
+
+Four experts working respectively at four different Web
+companies participated in this research. Two subjects had each 10
+years of experience; the other two had 6 and 4 years of
+experience, respectively. Moreover, all subjects participated
+actively in the estimation of effort for their companies’ new Web
+projects.
+
+We employed interviews as means to elicit those practitioners’
+tacit knowledge with regard to how they estimate effort for new
+projects, focusing on the factors they find important to determine
+estimates, how those factors are inter-related, and whenever
+applicable, whether a factor has a positive of negative influence
+upon an estimate.
+
+The following steps were carried out to accomplish our research:
+
+- Definition of goals and selection of techniques to be used as
+part of this research;
+
+- Selection of practitioners who have experience estimating
+effort for Web projects;
+
+- Conducting interviews with practitioners using semistructured and open questions. All interviews were been
+recorded;
+
+- After each interview, we performed the following activities:
+
+`o` Transcription of the interviews’ recorded content;
+`o` Coding the data from the transcripts, comprising: (a)
+the identification of relevant codes within the context
+of Web effort estimation, (b) the analysis of the
+relationships between codes, and (c) the identification
+of categories to group the codes previously found;
+
+- Data analysis, in which we listed the identified categories
+that can influence the effort estimation of Web projects;
+
+- Synthesis of categories in a list of factors that affect effort
+estimation, details of each category from the data gathered;
+selection of interviews‘ representative excerpts (quotations)
+for each category;
+
+- Data interpretation – analysis of each factor of influence;
+
+Note that each interview ranged from 27 to 105 minutes. This
+difference in duration can be related to the individual
+
+characteristics of each subject (e.g. taking longer to answer
+questions, be more verbose).
+In order to meet ethical needs, we created a consent form to notify
+the subjects about research procedures and confidentiality, and to
+ask for their consent.
+
+
+We used semi-structured and open questions to allow a detailed
+investigation about the context in which the interviewees were
+immersed. Such procedure allowed us to make explicit the
+interviewees’ tacit knowledge. During the interviews, the experts
+described their experience and approach to problem solving when
+estimating effort for Web projects.
+Before carrying out the interviews, we sent e-mails to potential
+subjects inviting them to participate in our research, and also
+disclosing that their interviews would be recorded for research
+purposes only.
+
+Table 1 shows the questions employed in the interviews. Such
+questions could also lead to further questions depending on the
+interviewees’ answers. All the interviews were carried out by the
+first author, who encouraged the participants to speak freely while
+answering the questions.
+
+**Table 1. Questions used in the Interview**
+
+Each interview had its full transcription created. By using the
+transcriptions, we were able to thoroughly analyze the
+interviewees’ knowledge. We must point out that all the observed
+data was exclusively obtained from the interviews.
+We did not characterize the interviews transcriptions in order to
+preserve participants’ identity. We present the qualitative analysis
+based on procedures of GT in the following subsection.
+
+**3.2** **Data Analysis**
+The qualitative analysis performed in this work is based on
+procedures from the Grounded Theory (GT) method. Grounded
+Theory (aka Data Grounded Theory) uses a set of systematic data
+collection and analysis procedures to generate, prepare, and
+validate substantive theories on essentially social phenomena, or
+on wide social processes [11]. Although the purpose of the
+Grounded Theory Method is the construction of substantive
+theories, its use does not necessarily need to remain restricted
+only to researchers who have this research goal. According to
+Strauss and Corbin [34], the researcher may use only some of its
+procedures to meet one’s research goals.
+
+
+14
+
+Grounded Theory is based on the coding idea which is the process
+of analyzing the data [34]. Concepts (or codes) and categories are
+identified during the coding stage. The coding process can be
+divided into three stages: open, axial, and selective coding. A
+concept name is a phenomenon that has the interest of the
+researcher; it abstracts an event, an object, an action or interaction
+that has a meaning to the researcher [34]. Categories are clusters
+of concepts joined in a higher degree of abstraction.
+
+Open coding involves the breakdown, analysis, comparison,
+conceptualization, and the categorization of the data. The created
+codes can be classified as: (a) first-order coding, which is directly
+associated to the citations (referred to as *in-vivo* coding); and (b)
+abstract or theoretical codes, which are associated to other codes
+without necessarily being connected to some citation. Finally,
+during open coding, categories are created to cluster the codes and
+reduce the number of units the researcher will work with.
+
+After the identification of conceptual categories by the open
+coding, the axial coding examines the relations between the
+categories. The relations between codes can be defined by the
+very researcher. According to Strauss and Corbin [34], these
+relations form what the authors call a paradigm: causal conditions,
+new conditions, consequences, and action strategies/interactions.
+
+Finally, the selective coding realizes all the process refinements
+by identifying the core category with which all others are related.
+The core category should be able to integrate all other categories
+and to express the social process’ essence. We decided not to elect
+a core category herein because a Grounded Theory rule is the
+circularity between the collection and analysis stages until the
+theoretical saturation is reached [34]. Therefore we decided to
+postpone the selective coding phase. For this reason, we do not
+claim that we applied the GT method, only some specific
+procedures.
+Just after the transcription of each interview, we started the
+codification process. While we analysed the data contained within
+the interview transcription, codes associated with textual parts
+were created, as shown in Figure 5. The codes related with
+citations in each interview transcription were reviewed with three
+other researchers, who verified those codes and categories in order
+to audit the coding process. This was done in order to mitigate the
+bias eventually caused by the participation of a single researcher
+in the codification process.
+
+**Figure 5. Example of open coding - Code and citation**
+
+After performing the open coding, we initiated the axial coding
+phase, in which we created the relationship codes. We identified
+four main groupings of factors that affect Web effort estimation:
+Web project, Web development complexity, Web development
+
+
+team, and Clients. These factors groups are the categories. Each
+one represents different dimensions that have impact in the Web
+effort estimation.
+
+Figure 6 shows part of the Client category and its corresponding
+sub-categories. Sub-categories are labeled as [SC] followed by
+their name. For instance, Figure 6 shows the Positive Influence
+sub-category, which contains the codes of positive factors of the
+Client category that were pointed by the interviewees. In Section
+4 we will detail each of the categories.
+
+**Figure 6.** **Associations related to positive factors in the Client**
+**category**
+
+Figure 7 shows the relations between the codes of the Web Project
+Factors category. This category shows the codes derived from the
+experts’ comments on the factors affecting the effort estimation of
+a Web Project. They indicate aspects of the Web Application that,
+according to the experts, have to be considered, such as nonfunctional requirements, integration with existing systems,
+innovation level, and technical factors of the application (e.g.:
+validation rules, access to database tables). As an example of
+analysis from the graphical representations, in relation to ‘NonFunctional Requirements’, Figure 6 shows the different codes
+related to usability: “optimization of the application usage by the
+users”, “customization level”, “visual quality of the screen”.
+These were the aspects cited by the experts as parts of the
+expected usability level that affects the effort estimation in a Web
+Application.
+
+Figure 8 presents part of the Web Development Team category,
+the codes related to “Employee’s experience”. One sees the cited
+parts of the employee’s experience that could influence the effort
+estimation, e.g.: “experience with the company's processes”,
+“working time experience in the company”, “experience in
+development”, experience in the project business area,
+professionals' maturity, and developer's skills. According to the
+experts, these aspects have to be considered in association with
+the “technical experience needed for a project”.
+
+In the next Section we will present the results from all the four
+categories identified of effort factors.
+
+
+15
+
+**Figure 7. Graphical representation with the associations related to the Web Project factors category**
+
+**Figure 8. Associations related to Employee’s experience in the Web Development team category**
+
+
+**4.** **OUR RESULTS**
+
+In this Section we detail the results of our qualitative research. We
+have identified 35 factors, which were grouped into four
+categories: *Web Project*, *Web development team*, *Clients, and Web*
+*development complexity* . All the identified factors are displayed in
+Table 2. Some of these factors had either a positive or negative
+influence towards effort depending on its conditions. For instance,
+if an employee has a high level of experience in the project
+business area, the factor “Experience in the business area” could
+be a positive influence in a Web project effort estimation in this
+context. However, we could also identify factors that the experts
+
+
+always consider as “positive factors” or “negative factors”
+inherently.
+A positive factor represents a factor that facilitates the process of
+effort estimation, and as a consequence increases the probability
+of obtaining a more accurate estimate; conversely, a negative
+factor represents a factor that hinders the effort estimation
+process, making it more difficult to obtain an accurate effort
+estimate.
+
+The factors that were identified represent those that the experts
+believed to affect effort estimates for Web projects, and therefore
+need to be taken into account during an effort estimation process.
+In the context of Web development, the identification of important
+factors is crucial, such that projects can be delivered on time and
+
+
+16
+
+within budget. In addition, it also helps with managing projects
+properly under existing constraints such as short time to market,
+and a very dynamic environment [25].
+A detailed description of our factors and their relationships are
+given in the Sub-sections that follow. Note that in order to provide
+a detailed description we also show some quotations from the
+interviewees that helped us throughout the process used to identify
+our factors.
+
+**Table 2. Factors that affect effort estimate in Web Projects**
+
+
+|Categories|Factors|
+|---|---|
+||o Time restrictions<br>o Technical restrictions<br>o Security restrictions<br>o Level of resources<br>Positive influence<br> Lessons learned from past projects<br>Negative Influence<br> Difficulty in estimating the features<br> Misinterpretation of the requirements|
+
+
+**4.1** **Web Project**
+
+We found some factors influencing an effort estimate that are
+related to the product or, in other words, the Web application
+itself. We identified, such as:
+
+**Product’s Innovation level –** according with one of the subjects,
+the innovation level of a Web project can generate a larger effort
+in the development and, therefore, it must be considered in the
+effort estimation process. This is illustrated in the following
+quotation.
+
+*“The project’s innovation level, not necessarily radical*
+*innovation, but an innovation, even if it is an incremental*
+*innovation or something, for instance… not having a ready*
+*component is a factor that we consider.” - Interviewee 3*
+
+**Integration with existing Systems –** according to two subjects, it
+is very difficult to estimate Web projects that require a lot of
+communication with devices and other applications (e.g.
+Integration with social networks).
+
+*“When you have a Web project, you have a lot of*
+*communication with devices, other applications or other*
+*databases that are external to your application. In this situation,*
+*you estimate both the time that you will spend to integrate the*
+*different applications and the time you will spend implementing it,*
+*and this can increase the cost and the effort depending of the*
+*complexity of what you have to do” - Interviewee 2*
+
+*“...the integration with existing System is a very difficult*
+*task. (...) this estimative was more like a ‘belief’, because*
+*sometimes we had no idea about how to do the integration…”-*
+
+*Interviewee 4*
+
+**Technical factors** were also cited. These factors were related to
+the Web product, such as: access to database tables, how many
+fields will be in a screen, which of such fields were essential, and
+validation rules. This can be observed in the quotation from
+Interviewee 4:
+
+*“...because what influences are the four factors that I told*
+*you: the number of fields influences in effort, having more or*
+*fewer fields does not increase difficulty but working time: if I*
+*make ten fields spending 1 hour, twenty fields must require 2*
+*hours, (…) these are the factors that I told you: the number of*
+*data that I need to get from the screen, the number of validation*
+*rules, the number of tables that I need to access, and the screens’*
+*flow. They all influence.” - Interviewee 4*
+
+
+
+
+|Categories|Factors|
+|---|---|
+|Web project| Product’s Innovation level<br> Integration with existing Systems<br> Technical factors<br> Non-functional requirements<br>o Usability<br>o Scalability<br>o Maintainability|
+|Web development team| Number of teams participating in the<br>project<br> Employee’s experience<br>o Professional maturity<br>o Developers’ skills<br>o Experience in the business area<br>o Technical experience needed for a<br>project<br>o Working time experience in the<br>company<br>o Experience with the company’s<br>processes<br>Positive influence:<br> Team collaboration;<br> Knowing the development team;<br>Negative Influence<br> Lack of commitment<br> Lack of employee’s experience<br> Team’s technical difficulties|
+|Clients| Client’s exigency level<br>o Quality of the code<br>o Architecture used<br>o Ease maintenance<br>o Evolution of the code<br>Positive influence<br> Client with mapped procedures<br> Client that keeps requirements’<br>stability<br> Availability of client who understands<br>the project’s business rules<br>Negative Influence<br> Client’s unavailability<br> Clients who do not know what they<br>want|
+|Web development<br>complexity| Definition of business rules<br> Development’s restrictions|
+
+
+17
+
+The subjects also quoted **Non-functional requirements** as factors
+that affect the effort estimation in Web projects. However,
+subjects mentioned specifically **maintainability**, **scalability**, and
+**usability** requirements. Maintainability is related to the
+maintenance and quality of the product; scalability considers the
+business rules and the interaction flow of the screens (see
+quotation from Interviewee 2). Regarding usability, one must
+consider usability as a factor related to the optimization of the
+application usage by user. Furthermore, usability is related to the
+amount of input information, the amount of clicks, the
+customization level, and the visual quality of the screen used in
+the Web project. See, for example, the following quotations:
+
+*“...it’s a matter of maintainability, it’s a matter of*
+*scalability (…) the more services levels the clients add to the*
+*proposal, I consider…”- Interviewee 2*
+
+*“Then, software scalability is very important and it is related*
+*to nonfunctional requirements ...”- Interviewee 2*
+
+*“...* *There are customers who are very demanding in terms*
+*of usability, ... and, depending on the level of the demands, this a*
+*factor that we need to take into account to estimate effort…” -*
+
+*Interviewee 2*
+
+**4.2** **Web development team**
+
+Regarding the development team, we found factors that positively
+and negatively affect the estimation accuracy: facilitating or
+hindering the process. The factors we have identified as being of
+positive influence are:
+
+**Team collaboration –** according to one of the interviewees, if the
+interaction and exchange of information and experience between
+the members of a development team increase, so will their
+productivity. Hence, this is a factor that affects the effort
+estimation. This factor was identified based on the following
+information:
+
+*“If we are in a team that exchanges more information,*
+*experiences,* *then, we'll probably have a much higher productivity*
+*and these factors are very important ”* - *Interviewee 2*
+
+**Knowing the development team** : the knowledge that a project
+manager has regarding the productivity of a development team,
+and also relating to the individual characteristics of each team
+member (with their skills) can have an effect upon an effort
+estimate. If the knowledge is high the likelihood that the effort
+estimate will be more accurate increases.
+
+*“I need to know very well my team, to know who is working*
+*with me, the characteristics of each team member, and to know*
+*how can I use this knowledge to minimize the time” - Interviewee*
+
+*1*
+
+Besides the factors that facilitate effort estimation, we have also
+identified factors related to the team that hinder the process of
+effort estimation. These factors are:
+
+**Lack of employee’s** **commitment** is a factor that represents a
+situation where an employee does not finish the task he/she was
+allocated to and responsible for:
+
+*“Another problem that we needed to face was related*
+*particularly in hiring people, because I had a lot of trouble with*
+*people who were unaccustomed to finishing their work...” -*
+
+*Interviewee 4*
+
+
+**Lack of employee’s experience** is a factor that can influence
+estimate as seen in the following quotation:
+
+*“...I need to estimate the project’s size, I need to estimate*
+*the effort based on the number of people allocated and...*
+*sometimes these people do not have experience and that is a*
+*factor” - Interviewee 2*
+
+Also related to lack of experience is the difficulty to estimate.
+When an employee has no knowledge about what should be
+developed in the project, it becomes hard to do a more accurate
+estimate, because it is only during the development that some
+points that were not observed become visible. This often leads to
+erroneous effort estimates.
+
+*“the more we used, the more we realized things we hadn’t*
+*thought about, or that we thought worked differently ... leading us*
+*to do a wrong effort estimation” - Interviewee 4.*
+
+*“... Someone doesn’t know how to solve the problem, so the*
+*effort estimation is the infinity (...) estimating something I don’t*
+*know is complicated”- Interviewee 4*
+
+The **teams’ technical difficulties** are another factor because the
+employees must have a technical knowledge for the project
+development, they must know the technologies, and they need to
+have experience with programming languages.
+
+If a developer does not have technical knowledge, the effort to
+develop an application will be larger, because the estimate will
+have to account for the developer’s learning curve relating to
+coming to speed with understanding the project and the
+technologies employed.
+
+*“Another factor is if I don’t have knowledge about an*
+*important technology that I need to use (…) if you do not know,*
+*you will have to estimate a value representing what you will spend*
+*with learning such technology” - Interviewee 1*
+
+*“So, if I do not know a programming language (...) I will*
+*need to train the team or hire an expert to train the team and that*
+*takes time (…) the effort increases and the cost too... This makes a*
+*difference in the effort estimation” - Interviewee 4*
+
+Since team's experience is dependent on each of the team
+member’s individual experience, practitioner’s experience was a
+factor identified as having great importance towards effort
+estimation.
+
+Regarding an **employee’s experience**, besides their professional
+experience, interviewees indicated the following factors:
+
+   - Professional’s maturity;
+
+   - Developer’s skills, considering their experience in
+development and experience in the project’s business
+
+area;
+
+   - Experience in the business area;
+
+   - Technical experience needed in the project;
+
+   - Working time experience in the company;
+
+   - Experience with the company’s processes.
+
+All the listed factors affect effort estimation. We can see this in
+
+the following quotations:
+*“...other factor, despite employee’s professional experience,*
+*is their knowledge about the company’s processes, because*
+*sometimes we have employees that have experience in a specific*
+
+
+18
+
+*business area, but do not master the company’s processes. So*
+*their effort estimate is very inaccurate” - Interviewee 3*
+
+*“These factors... affect our effort estimate. So, professional*
+*experience, experience in the business area, experience in the*
+*company, and other risks related to the team...” - Interviewee 3*
+
+*“We count on the experience of this person, because if you*
+*do not have experience with the project, but you master a specific*
+*programming language, you can balance those skills, those*
+
+*abilities”. - Interviewee 1*
+
+*“...depending of the professional maturity I am going to get*
+*this person engaged more, do you understand? Regardless*
+*whether he/she is a developer, tester, designer... more committed*
+*to the delivery, depending on their maturity; there is a different*
+*commitment with the quality. Furthermore, with their maturity*
+*there is different communication, so we need to know if this*
+*person is able to collaborate with other people to build the*
+*required knowledge to an advanced level more quickly” -*
+
+*Interviewee 2*
+
+The **number of teams enrolled in the project** : should also be
+taken into account, as well as the level of communication between
+them. These are internal company factors that affect effort
+estimation. We have classified this factor as dependent, since
+according to the context, it can be positive or negative.
+
+*“There are internal factors that influence, such as: the*
+*number of teams enrolled in the project. So, if I have a project*
+*with only development activities and the database team will be*
+*participating, then it is something to consider. In another project I*
+*might need the design team, business analysis team, software*
+*factory, test factory (…). So, these internal factors also affect in*
+*the effort estimation” - Interviewee 3*
+
+**4.3** **Client**
+
+Our results also identified several factors relevant for effort
+
+estimation that are related to clients. When we know the client we
+can indentify characteristics that can facilitate the effort
+estimation process:
+
+**Client that has his/her procedures mapped:** in this case, the
+effort estimate can be lower because the client knows what must
+be done and in addition provides information that can optimize the
+workflow, which also includes the estimation process.
+
+*“This maturity indicates if he has the processes mapped. If*
+*he has his processes mapped, then this is an excellent indication*
+*of a mature client” - Interviewee 2*
+
+*“...when we have a notion that the client has a very defined,*
+*very clear process and this process is that it is internally*
+*validated, this optimizes our workflow and affects our estimative”*
+
+*- Interviewee 3*
+
+**Client that keeps requirements’ stability** : are related to the
+client’s behavior concerning to the requirements changing. If the
+client has an historical representing stability in requirements, the
+effort will be less because there is no change:
+
+*“We know that some clients requires more changes in the*
+*requirements, sometimes because he does not know his problem*
+
+
+*or because his business is very dynamic, but we have an idea*
+*about how this kind of client do...” - Interview 3*
+
+**Availability of client who understands the project’s business**
+**rules** : the client knows the product that is being developed;
+therefore, if he/she is available to collaborate with the
+development team, he/she can help towards better effort
+estimations. This factor was observed based on the following
+interviewees’ assertions:
+
+*“...Client’s availability is also a factor that can*
+*influence...”- Interviewee 3*
+
+“ *If we are in an agile process I need very much the client*
+*provides someone who understands the business very well, to*
+*work closely with the team during the development of a solution”*
+
+*- Interviewee 2*
+
+There are some factors that affect the effort estimation negatively,
+such as:
+
+**Client’s unavailability** : if a project needs the client to participate,
+then the unavailability of this client hampers the effort estimation
+process. See the following quotations:
+
+*“...If you work with some clients that, for instance, that you*
+*to develop a software using the waterfall model ... the client is not*
+*available to you, so there are many risks in this process and this*
+*must be considered regarding the client”- Interviewee 2*
+
+*“...If our user for requirements elicitation is the secretary of*
+*the state we have a risk of unavailability. Then this also affects*
+*our effort estimation - Interviewee 3*
+
+**Clients who do not know what they want in the Project** :
+represents clients who do not have a clear idea about what the
+application needs to offer. It is often the case that this type of
+client does not know what exactly they want and does not
+immediately provide his/her problems, making it hard to estimate
+effort.
+
+*“... many times our estimations go wrong because the client*
+*does not know the processes in which the applications will be*
+
+*inserted...” - Interviewee 3*
+
+*“...He does not even know what his problem is. When I have*
+*this type of client I need to work hard to do the effort estimation”-*
+
+*Interviewee 3*
+
+Other factors that were identified as influential towards effort
+
+estimation are related to a **client’s exigency level** . Generally,
+technical clients demand more requirements which aggregate
+more effort and cost to the project. According to one of our
+interviewees it is important to identify the client’s exigency level.
+This is demonstrated in the following quotations:
+
+“ *First, it is important to identify, including when we are*
+*elaborating the technical proposal, what is the level of service*
+*that the client usually demands, and in which dimensions. Do you*
+
+*understand?...”- Interviewee 2*
+
+*“...depending on his demands, the effort was greater and the*
+*cost was greater” -Interviewee 4*
+
+Still related to a **client’s exigency level** is the issue about having
+clients that make demands regarding the **quality of the code**, **ease**
+**of maintenance** and **evolution of the code**, despite the demands
+they already have regarding the use of the **architecture** . See the
+following quotations below:
+
+
+19
+
+*“...there are clients who are very demanding (...) in term of*
+*the quality of the code, depending of the clients’ demanding level*
+*this is a factor that we need to considerate in effort estimation” -*
+
+*Interviewee 2*
+
+“ *Sometimes, the client informs the number of accesses. We*
+*have to consider this when developing the architecture and other*
+*things, and there… all these demands end up increasing effors in*
+*the development” - Interviewee 2*
+
+*“... there is the fact of maintenance, which is from more*
+*demanding clients, those technical clients who wants to know if*
+*they’ll be able to maintain the code… evolve it. That matters a lot*
+*to that type of client and affects estimation.” - Interviewee 2*
+
+**4.4** **Web development complexity**
+We identified some factors that influence the effort estimation
+
+relating to Web development complexity. This category of factors
+has relationships with two other categories: Web Development
+Team and Clients **(see Figure 9)**
+
+The Web development complexity factors that affect effort
+estimation are as follows: definition of business rules,
+development’s restrictions, lessons learned from past projects,
+difficulty in estimating effort for features, and misinterpretation of
+requirements.
+
+
+The following quotation illustrates the factor **definition of**
+**business rules** . According to one of the interviewees, these rules
+must be well-defined and in addition they affect effort estimation:
+
+*“...if you do not correctly define the business rules, this*
+*impairs the quality, the tests, if they do not have sufficient*
+*requirements to test the features that you implemented, and in a*
+*near future you will need time to define the business rules again.*
+*So you will lose time and you will estimate an effort that you did*
+*not have in the beginning...”- Interviewee 1*
+
+Other factors related to Web development complexity are
+**development’s restrictions**, such as: time restrictions, technology
+restrictions, security restrictions, and also the availability of
+resources: tools and human resources. The restrictions are
+
+exemplified as follows:
+
+*“...we have time restrictions that influence in effort*
+
+*estimation”- Interviewee 3*
+
+*“Time restriction is something that always exists because*
+*all clients want everything for yesterday ...”- Interviewee 4*
+
+*“... it’s a matter of resources (...) whether it is tool or*
+*human resources, many types of resources... we need to scale*
+*them. How to solve this problem here? How much effort will I*
+
+*have to use to do this?”- Interviewee 2*
+
+*“...technological restrictions..., there are clients that only*
+*want in a specific platform...” - Interviewee 4*
+
+
+**Figure 9. Graphical representation with the associations related to the Web development factors category**
+
+
+Regarding the factor **lessons learned from past projects**, this
+factor affects positively the accuracy of effort estimation, because
+the lessons learned are used as reference to new estimations. This
+is demonstrated in the following quotation:
+
+
+“.. *.We are working with lessons learned (…) These lessons*
+*learned are used as reference for future effort estimation...”-*
+
+*Interviewee 3*
+
+
+20
+
+*“When you do estimates you look where you made a*
+*mistake, so you can redo the metrics, using objective data” -*
+
+*Interviewee 4*
+
+The **difficulty in estimating effort for the features** is also
+pointed as a factor related to Web development complexity
+because it affects negatively the accuracy of the effort estimation.
+The same occurs with the factor **misinterpretation of the**
+**requirements** . These two factors are illustrated through the
+following quotations:
+
+*“...things that we considered very simple turned to be*
+*difficult and things that we thought that were difficult really were*
+*in fact easy. So this disrupted our whole vision, reduced our*
+*knowledge and lead us to do the wrong effort estimations...”* 
+*Interviewee 4*
+
+*“..the management of requirements is a very important*
+*business, because it changes at every moment (…) the*
+*requirements can be misinterpreted then this is another factor that*
+
+*we need to considerate ...”- Interviewee 2*
+
+In this Section, we observe that the qualitative research helped us
+identify categories and relationships of factors that influence the
+effort estimation in Web projects. In the next Section we present
+the threats to the validity of our study.
+
+**5.** **THREATS TO VALIDITY**
+
+As in all studies, there were various threats that could affect the
+validity of our results. The main threat to the validity of the results
+is the small number of interviewees who participated in the study.
+As there were only four interviewees (from four different
+companies), we cannot generalize our results to all contexts.
+Therefore, it is necessary to expand this research, including a
+larger number of participating professionals and companies.
+
+Additionally, because the data and the subsequent analysis are
+qualitative, there is no scope to call upon statistical arguments for
+generalization of any results. However, it is noteworthy that the
+interviewees are representative cases of effort estimation experts
+from four different Web development companies. And two of the
+experts work with globally distributed projects.
+
+Another threat to the validity of the results is the subjectivity of
+the data classification, since the qualitative analysis was
+performed by the first author. We used the Grounded Theory
+procedure in order to mitigate this threat, given that the GT
+requires the entire analysis to be grounded in the data collected.
+Additionally, the analysis process was performed along with three
+other researchers, to encourage a better validation of the
+interpretations through the mutual agreement of the researchers.
+
+**6.** **CONCLUSIONS**
+
+We have identified, via a qualitative research, factors that affect
+the estimation of effort for Web projects. These factors were
+elicited from knowledge obtained from four Web effort estimation
+experts using semi-structured interviews, and Grounded Theory
+procedures over the documents with the transcription of the
+performed interviews.
+
+The factors that were identified were grouped into four different
+categories, to facilitate the understanding of the phenomenon
+being investigated. These categories are: Web Project, Web
+development team, Client, and Web Development Complexity.
+
+
+Note that, depending on the characteristics of a Web project, it is
+possible that some categories become more relevant than others
+when estimating effort; however they all should be taken into
+account when deciding upon an effort estimate for a new Web
+project.
+
+The explicitation of the tacit knowledge from experts on the
+factors they consider important, when estimating effort for Web
+projects, enables the use of such explicit knowledge to improve
+effort estimation decision making, and ultimately the estimates
+that are prepared [18]. Mendes [18] has also explicitated the tacit
+knowledge from experts aiming to understand and improve Web
+effort estimation; however she employed quantitative research.
+Her findings showed that the explicit representation of Web effort
+prediction factors was viewed quite positively by the participating
+company given that they could use it for decision making,
+discussions with clients, and also with the development team
+whenever they needed team members to provide effort estimates.
+
+In addition, some of the factors identified herein differ from those
+in [18], thus suggesting that the use of different techniques and
+types of research may lead to a better understanding of a
+complementary differ from those identified herein, and their
+comparison and combination is the focus of our future work. We
+also plan to interview other experts from other Web companies
+using qualitative research as means to enrich our existing model
+and understanding via the identification of further factors and,
+optionally, categories.
+
+With regard to the use of Grounded-theory principles, we did not
+reach the theoretical saturation of this phenomenon, because it
+would be necessary for new rounds of experiments, to thereby
+identify the core category. Then, as future research we can
+propose the execution of new interviews within new experiments.
+Such experiments should be carried out in different contexts
+(cities or countries) to gather further information.
+
+It is noteworthy that qualitative research, such as the one
+presented here, aims at the identification of concepts and the
+relationships between them, leading to a greater understanding of
+how a phenomenon of interest occurs. Therefore, the quality of
+data collected is more important than the amount of evidence
+gathered [32].
+
+Each qualitative study contributes to advancing the state of art in a
+research area, providing evidence and hypothesis that can be later
+tested using quantitative methods [30]. Gathering further evidence
+enables us to improve the corpus of evidence on Web effort
+estimation. We also plan to conduct further research to investigate
+in what scenarios the factors from a specific category are more
+important than the others.
+
+**7.** **ACKNOWLEDGMENTS**
+
+We specially thank the experts for their participation in the study.
+This research is supported by the BESQ+ research project funded
+by the Knowledge Foundation (grant: 20100311) in Sweden, and
+Amazonas State funding agency (FAPEAM). The authors also
+thank Luis Rivero for the revisions provided during the
+preparation of this paper.
+
+
+21
+
+**8.** **REFERENCES**
+
+[1] Agusa, K. 2004. Software Engineering Evolution. *7th*
+*International Workshop on Principles of Software Evolution* .
+*Proceedings* . Page(s): 3 – 8.
+
+[2] Azhar, D. A Systematic Review of Web Resource
+Estimation. *http://www.cs.auckland.ac.nz/* *~* *damir/SLR/*,
+2012.
+
+[3] Azhar, D., Mendes, E., and Riddle, P. 2012. A Systematic
+Review of Web Resource Estimation, *Proceedings of*
+*Promise’12* .
+
+[4] Baresi, L., Morasca, S., and Paolini, P. 2002 An empirical
+study on the design effort for Web applications, *Proceedings*
+*of WISE 2002*, pp. 345-354.
+
+[5] Boehm, B.W. and Valerdi, R. 2008. Achievements and
+Challenges in Cocomo-based software resource estimation *,*
+*Software, IEEE*, Volume 25, Issue 5, Sept.-Oct. 2008
+Page(s):74 – 83
+
+[6] Conte, S. Dunsmore, H. Shen, V. Software Engineering
+Metrics and Models, Benjamin/Cummings, 1986
+
+[7] Conte, T.U., Vaz,V.T, Massolar,J., Mendes, E.,
+
+and Travassos, G. H. 2009. Improving a Web Usability
+Inspection Technique using Qualitative and Quantitative
+Data from an Observational Study. Proceedings of the 2009
+XXIII Brazilian Symposium on Software Engineering
+Page(s): 227-235
+
+[8] Corazza, A. Di Martino, S. Ferrucci, F. Gravino, C. Sarro, F.
+Mendes, E. 2011. Using tabu search to configure support
+vector regression for effort estimation. *Empirical Software*
+*Engineering* . Page(s) 1 – 41
+
+[9] Costagliola, G., Martino, S. Di, Ferrucci, F., Gravino, C.,
+Tortora, G., and Vitiello, G. 2006 Effort estimation modeling
+techniques: a case study for web applications, *Procs. Intl.*
+*Conference on Web Engineering* (ICWE’06), pp. 9-16.
+
+[10] Fenton, N. Marsh, W. Neil, M. Cates, P. Forey, S. and Tailor,
+M. 2004. Making resource decisions for software projects *.*
+*Software Engineering. ICSE 2004. Proceedings. 26th*
+*International Conference*, 23-28 May 2004 Page(s):397 –
+406
+
+[11] Glaser,B., and Strauss,A. 1967. The discovery of grounded
+theory: Strategies for Qualitative Research. New York,
+Aldine Transaction. 1967.
+
+[12] Kitchenham, B.A. 2007. Guidelines for performing
+systematic literature reviews in software engineering (version
+2.3), Software Engineering Group, School of Computer
+Science and Mathematics, Keele University and Department
+of Computer Science, University of Durham. July 2007.
+
+[13] Kitchenham, B. Mendes, E. Travassos, G.H. 2006. A
+systematic review of cross-company vs. within-company cost
+estimation studies. *Evaluation and Assessment in Software*
+*Engineering. EASE 2006* . *Proceedings.10th International*
+*Conference.* Page(s) 89 – 98
+
+[14] Kitchenham, B.A. Pickard, L.M. MacDonell, S.G. and
+Shepperd, M.J. 2001. What accuracy statistics really
+measure. *IEE Proceedings – Software*, Volume 148, Issue 3.
+Page(s):81 – 85
+
+
+
+[15] Kocaguneli, E. Menzies, T. Keung, J. 2011. On the Value of
+Ensemble Effort Estimation. *Software Engineering, IEEE*
+*Transactions on.*
+
+[16] Mangia, L., and Paiano, R. 2003. MMWA: A Software
+Sizing Model for Web Applications, *Proc. Fourth*
+*International Conference on Web Information Systems*
+*Engineering*, pp. 53-63.
+
+[17] Mendes, E. 2007. A Comparison of Techniques for Web
+Effort Estimation. *Empirical Software Engineering and*
+*Measurement. ESEM 2007. First International Symposium* .
+20-21 Sept. 2007 Page(s):334 – 343
+
+[18] Mendes, E. 2007. Predicting Web Development Effort Using
+a Bayesian Network *, Evaluation and Assessment in Software*
+*Engineering. EASE 2007* . *Proceedings. 11th International*
+*Conference.* April 2007.
+
+[19] Mendes, E. 2009. Web Cost Estimation and Productivity
+Benchmarking. In *Software Engineering*, Andrea Lucia and
+Filomena Ferrucci (Eds.). Lecture Notes In Computer
+Science, Vol. 5413. Springer-Verlag, Berlin, Heidelberg 194222.
+
+[20] Mendes, E., and Counsell, S. 2000. Web Development Effort
+Estimation using Analogy, *Proc. 2000 Australian Software*
+*Engineering Conference*, pp. 203-212.
+
+[21] Mendes, E., and Kitchenham, B.A. 2004. Further
+Comparison of Cross-company and Within-company Effort
+Estimation Models for Web Applications, *Proc. IEEE*
+*Metrics*, pp. 348-357.
+
+[22] Mendes, E., Mosley, N. and Counsell, S. 2001. Web metrics
+
+   - Metrics for estimating effort to design and author Web
+applications. *IEEE MultiMedia*, January-March, 50-57.
+
+[23] Mendes, E. Mosley, N. and Counsell, S. 2003. Investigating
+Early Web Size Measures for Web Cost Estimation.
+*Evaluation and Assessment in Software Engineering. EASE*
+*2003* . *Proceedings. 7th International Conference.* April
+2003.
+
+[24] Mendes, E. Mosley N., Counsell S. 2006. The Need for Web
+Engineering: An Introduction. In *Web Engineering,* E.
+Mendes and N. Mosley Ed. Springer Berlin Heidelberg.
+Page(s) 1 – 27.
+
+[25] Mendes, E., Mosley, N., Counsell, S. 2006, Web Effort
+Estimation, Web Engineering, Springer Berlin Heidelberg,
+2006, Page(s) 29 – 73
+
+[26] Moayed, M. J. Ghani, A. A. A. Seyedzadegan, M. 2007.
+Comparing Between Web Application Effort Estimation
+Models. *Computational Science and its Applications. ICCSA*
+*2007. International Conference on.* Page(s) 153 – 160.
+
+[27] Petticrew, M. and Roberts, H. 2006. Systematic Reviews in
+the Social Sciences: A Practical Guide, Blackwell
+Publishing.
+
+[28] Reifer, D. 2000. Web Development: Estimating Quick to
+Market Software, *Software IEEE* . Volume 17, Issue 6,
+Nov/Dec 2000. Page(s) 57 – 64.
+
+[29] Reifer, D. 2002. Estimating Web Development Costs: There
+are Differences, *Crosstalk, The Journal of Defense Software*
+*Engineering*, June 2002.
+
+[30] Ruhe, M., Jeffery, R., and Wieczorek, I. 2003. Cost
+estimation for Web applications, *Proceedings ICSE 2003*,
+285-294.
+
+
+22
+
+[31] Santos, D.V., Conte, T., Vilela, D.C.J., Souza, C.R.B. and
+Prikladnicki, R. 2012. The Influence of Human Aspects on
+Software Process Improvement: Qualitative Research
+Findings and Comparison to Previous Studies. *Evaluation*
+*and Assessment in Software Engineering. EASE 2012* .
+*Proceedings.16th International Conference.* May 2012
+
+[32] Seaman, C. B. 1999. Qualitative Methods in Empirical
+
+Studies of Software Engineering. IEEE Transactions on
+Software Engineering, 25(4), 557–572.
+
+[33] Seaman, C.B. 2008. Qualitative Methods.. In: SHULL *et al* .
+
+(eds.), Guide to Advanced Empirical Software Engineering,
+Chapter 2, Springer, 2008
+
+
+
+[34] Strauss, A., and Corbin, J. 1998 . Basics of Qualitative
+Research: Techniques and Procedures for Developing
+Grounded Theory. Thousand Oaks, CA, SAGE publications.
+1998.
+
+[35] Umbers, P. and Miles, G. 2004. Resource estimation for Web
+applications *. Software Metrics. Proceedings.10th*
+*International Symposium*, 14-16 Sept. 2004 Page(s):370 –
+381
+
+
+23
+

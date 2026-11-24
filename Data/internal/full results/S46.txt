@@ -1,0 +1,758 @@
+# **A Model-Driven Measurement Procedure for Sizing Web ** **Applications: Design, Automation and Validation [*]**
+
+Silvia Abrahão [1], Emilia Mendes [2], Jaime Gomez [3], and Emilio Insfran [1]
+
+1 Department of Computer Science and Computation
+Valencia University of Technology
+Camino de Vera, s/n, 46022, Valencia, Spain
+{sabrahao, einsfran}@dsic.upv.es
+2 Department of Computer Science, University of Auckland
+Private Bag 92019, Auckland, New Zealand
+
+e.mendes@auckland.ac.nz
+3 Department of Information Systems and Languages
+University of Alicante
+Campus de San Vicente del Raspeig. Apartado 99. 03080 Alicante, Spain
+jaime.gomez@ua.es
+
+**Abstract.** This paper introduces the Object-Oriented Hypermedia Function
+Points (OO-HFP), which is a functional size measurement procedure for Web
+projects developed using the Object-Oriented Hypermedia (OO-H) method.
+This method provides model-driven and transformation-based support for the
+development of Web applications. Using OO-HFP, a size measure is obtained
+once a Web application’s conceptual model is completed. We follow the steps
+of a process model for software measurement in order to detail the design and
+automation of OO-HFP. Finally, we present the validation of OO-HFP for Web
+effort estimation by comparing the prediction accuracy that it provides to the
+accuracy provided by another set of validated size measures (the Tukutuku
+measures) that was found to be a good effort predictor. The results of a study
+using industrial data show that the effort estimates obtained for projects that are
+sized using OO-HFP were similar to those using the Tukutuku measures, thus
+suggesting that the OO-HFP is a suitable effort predictor.
+
+**Keywords:** Model-driven development, Web Engineering, Functional Size
+Measurement, Web Effort Estimation, OO-H.
+
+**1  Introduction**
+
+Developing Web applications is significantly different from traditional software
+development. The nature of Web development forces project managers to focus
+primarily on the time variable in order to achieve the required short cycle times.
+In this context, Model-Driven Architecture (MDA) approaches [16] seem to be
+very promising since Web development can be viewed as a process of transforming a
+
+This research is supported by the META project (TIN2006-15175-C05-01), and by the FEDER.
+
+G. Engels et al. (Eds.): MoDELS 2007, LNCS 4735, pp. 467–481, 2007.
+© Springer-Verlag Berlin Heidelberg 2007
+
+468 S. Abrahão et al.
+
+model into another model until it can be executed in a development environment.
+Over the last few years, several Web development methods that provide some support
+to MDA have been proposed (i.e., OOHDM [[18]](https://www.researchgate.net/publication/220421574_The_Object-Oriented_Hypermedia_Design_Model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==), WebML [[2]](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==), and OO-H [[5]](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) ).
+Adopting such methods, however, poses new challenges to the Web project manager,
+in particular with respect to resource estimation and project planning.
+A fundamental problem in this context is the size estimation of the future Web
+application based on its conceptual model. The functional size measurement (FSM)
+methods used in industry (mainly Function Point Analysis (FPA) [7]) date from a preWeb era. None of the ISO-standardized FSM methods (e.g., FPA, COSMIC [4]) were
+designed taking the particular features of Web applications into account. Hence,
+existing FSM methods need to be adapted or extended to cope with Web projects.
+Some approaches for sizing Web sites and applications [6] [[3]](https://www.researchgate.net/publication/228931010_Web-based_development_and_functional_size_measurement?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [17] have been
+proposed. The main limitation of these approaches is that they cannot be used early in
+the Web development lifecycle as they rely on implementation decisions. In addition,
+for project estimation purposes, measurements of this type come too late. Also, some
+approaches are not automated [[1]](https://www.researchgate.net/publication/4099195_Estimating_the_size_of_Web_applications_by_using_a_simplified_function_point_method?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [[3]](https://www.researchgate.net/publication/228931010_Web-based_development_and_functional_size_measurement?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [6] [17], which limit their use and adoption.
+To address these limitations, this paper introduces a model-driven *measurement*
+*procedure* *[2]* for Web applications called Object-Oriented Hypermedia Function Points
+(OO-HFP). The aim of OO-HFP is to size Web projects that are developed or
+maintained using the Object-Oriented Hypermedia (OO-H) method [[5]](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) .
+We present the definition and automation of OO-HFP using a process model for
+software measurement (see Fig. 1) [[10]](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) . According to this process, a measurement
+method is designed, that is, the concept to be measured is defined and the
+measurement rules are devised. Then, the measurement method is applied. The results
+of the method are then presented and verified. Such verification includes determining
+whether the value that is produced is the result of a correct application and
+interpretation of the measurement rules. Finally, the results are used to build different
+types of models (e.g, productivity analysis models, effort estimation models).
+
+
+Design of the
+measurement
+
+method
+
+
+Application of the
+measurement
+
+method rules
+
+
+Measurement
+
+method results
+
+
+Exploitation of the
+measurement
+
+results
+
+
+**Fig. 1.** Measurement process steps (Source: [[10]](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) )
+
+We detail how the four steps of the process model were conducted to design and
+automate OO-HFP. The verification of the measurement results (e.g, evaluation of the
+reproducibility and accuracy of the results) is out of the scope of this work. This kind
+of validation is less relevant for automated measurement procedures. More important
+is the conformity evaluation and the validity of the results for building productivity or
+effort estimation models. Thus, we analyze the validation of OO-HFP for Web effort
+estimation by comparing the prediction accuracy that it provides to the accuracy
+provided by another set of Web size measures (the Tukutuku measures) [[12]](https://www.researchgate.net/publication/223190350_Investigating_Web_size_metrics_for_early_Web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [[13]](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) that
+has already been validated in the past and that was found to be a good effort predictor.
+
+2 It is defined as a *“set of operations, described specifically, used in the performance of*
+*particular measurements according to a given method of measurement”* [9].
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 469
+
+The reason to validate OO-HFP lies in the need to provide an accurate size
+measure that is automatically obtained once the Web application conceptual model is
+completed. Different from the Tukutuku measures, OO-HFP is compliant to a widely
+used ISO-standard FSM method. Hence, the size obtained is directly comparable to a
+large amount of projects existing in industry (e.g., ISBSG repository, www.isbsg.org).
+This paper is organized as follows. Section 2 presents an overview of the OO-H
+development process. Section 3 presents the design of OO-HFP followed by its
+automation in Section 4. Section 5 shows the validation of OO-HFP against the
+Tukutuku measures. Finally, section 6 presents the conclusions and further work.
+
+**2  The OO-H Development Process**
+
+The OO-H (Object-Oriented Hypermedia) method [[5]](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) provides designers with the
+semantics and notation for developing Web applications. The method includes: a
+design process, a pattern catalog, a Navigation Access Diagram (NAD), and an
+Abstract Presentation Diagram (APD). The VisualWADE tool automates the entire
+OO-H development process.
+The OO-H design process defines the phases that must be carried out to build a
+functional interface that fulfills user requirements. The main feature of the OO-H
+method is the model-driven and transformation–based support for the development of
+Web applications. Following the approach presented in [[11]](https://www.researchgate.net/publication/220940578_Model_transformations_from_requirements_to_Web_system_design?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==), Fig. 2 depicts the OO-H
+development process as a stereotyped UML activity diagram. Models are represented
+with object flow states, and transformations are represented as stereotyped activities
+(circular icon). The control flow is defined by a set of transformations. The process
+starts by defining a *Requirements Model* to represent the system’s functionality.
+Platform-independent models (PIMs) are then obtained from these requirements.
+
+
+
+PIM
+<<CIM to PIM>> <<CIM to PIM>>
+Req2Domain Req2Navigation
+
+<<PIM to PIM>>
+
+Domain&Navigation2Integration
+
+
+
+
+
+
+**Fig. 2.** The OO-H development process
+
+470 S. Abrahão et al.
+
+The set of conceptual models represents the different concerns of a Web
+application: the specification of content requirements (Class Model) and the
+specification of functional requirements in terms of navigation needs (Navigation
+Model, NAD). A merge between the class and navigation models results in an
+integrated PIM model (APD), which covers the relevant aspects of a Web application.
+Finally, platform-specific models (PSMs) are automatically obtained from the
+Integration Model (APD), from which source code can be generated. The aim of such
+a process is to automate model transformations based on a set of transformation rules.
+The approach follows a *translationist* MDA approach (i.e., the code is generated from
+PIM models using model compilers).
+
+**2.1  The OO-H Metamodel**
+
+Fig. 3 shows an excerpt of the OO-H Metamodel [[5]](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) including the main concepts used
+to represent navigational properties. The navigation model of a Web application is
+defined by a set of navigational maps.
+
+**Fig. 3.** A portion of the OO-H metamodel
+
+Each *navigational map* structures the navigational view of the system for a specific
+kind of *user* and has a unique *entry point* that indicates the starting point of the
+navigation process. A navigational map is made up of a set of *navigational elements*
+that can be specialized as navigational nodes and/or navigational links. A
+*navigational node* represents a view over the class diagram. A navigational node can
+be a navigational_target, a navigational_class, or a collection. A *navigational target*
+groups elements of the model (i.e. navigational classes, navigational links,
+collections) that collaborate in the coverage of a user navigational requirement. A
+*navigational class* represents a view over a set of attributes ( *navigational_attribute* )
+and operations ( *navigational_operation* ) of a class from the class diagram. A
+*collection* is a hierarchical structure that groups a set of navigational links. A
+*navigational link* defines valid node attainability inside the navigational map.
+Navigational links define the navigation paths that the user can follow through the
+user interface. Each navigational link has an origin (org) node and its corresponding
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 471
+
+destination (dst) node. There are two types of links: *internal links* to define the
+navigation path inside a navigational map, and *service links* to show the services
+available to the user associated to that navigational map.
+In addition, OO-H allows the use of the Object Constraint Language (OCL) to
+define constraints over the class diagram and the NAD. In the NAD, such constraints
+are expressed by means of *filters* defined upon links.
+
+**3  The Design of OO-HFP**
+
+In the first step of the process model described in Fig. 1, four activities are suggested
+for a complete design of a measurement method [[10]](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) : definition of the objectives,
+characterization of the concept to be measured, definition or selection of the
+metamodel, and definition of the numerical assignment rules.
+The goal of this work is: to **design** a FSM procedure **for the purpose of**
+automatically sizing OO-H conceptual models **with respect to their** functional size
+**from the point of view of** the researcher. The **context** is that this procedure should
+conform to the IFPUG method version 4.1 (ISO/IEC 20926 [7]).
+The **entity** to be measured consists of an OO-H conceptual model. It is composed
+of a *UML Class diagram* and a *Navigation Access Diagram (NAD)* that capture the
+structural and the navigational views of a Web application, respectively. These views
+contain all the elements that contribute to the functional size of a Web application.
+The **attribute** to be measured is *functional size*, which is defined in ISO/IEC 14143-1
+
+[8] as the size of the software derived by quantifying the functional user requirements.
+The selection of the metamodel and the definition of the numerical assignment
+rules are described in the following sections.
+
+**3.1  Selection of the Metamodel**
+
+Metamodeling is a key concept of the MDA paradigm and is used in Software
+Engineering to describe the basic abstractions that define the models and their
+relationships. The metamodel of a FSM method provides a precise basis to design the
+measurement rules that identify and measure these concepts.
+As OO-HFP is intended to conform to the IFPUG method [7], it assumes the same
+metamodel as FPA. Fig. 4 shows the FPA metamodel for the IFPUG method. It
+illustrates the information that must be captured in order to size a software project.
+Measuring a project basically includes the following activities: i) the determination
+of the type of count (new project, enhanced project or running application), ii) the
+identification of the counting scope and application boundary, iii) the identification of
+data and transactional functions (FunctionType), and iv) the determination of the
+complexity of each identified function type. The IFPUG method [7] provides several
+tables to determine the complexity levels of each function type. The *counting scope*
+defines the functionality that is included in a particular function point count. It defines
+a (sub) set of the project being sized.
+The *boundary* separates the software system being measured from its environment,
+which contains the users of the system and may include external systems.
+
+472 S. Abrahão et al.
+
+**Fig. 4.** The FPA metamodel for the IFPUG method
+
+A *data function* consists of both internal logical files (ILF) that are maintained by
+the system and external interface files (EIF) that are referenced by the system. A
+*transactional function* consists of external input functions (EI), external output
+functions (EO), and external inquiry functions (EQ) that use or modify data functions.
+The complexity of a data function is a function of the number of Data Element
+Types ( *DET_Data* ) and the number of Record Element Types ( *RET* ). A DET is a
+unique, user recognizable, non-repeated field. Note that only the functions that have at
+least one DET must be identified. The complexity of a transactional function is a
+function of the number of Data Element Types ( *DET_Transaction* ) and the number of
+File Types Referenced ( *FTR* ). A FTR is a data function that is referenced during the
+execution of a transactional function. The amount and complexity of data and
+transactional functions determine the amount of functionality that this piece of
+software delivers, hence its *functional size* .
+
+**3.1.1  Definition of the Mapping Rules**
+The mapping rules help identify the elements in an OO-H conceptual model that
+contribute to the functional size of the Web application. These rules (see Table 1) are
+defined as a mapping between the concepts of the FPA metamodel onto the concepts
+in the UML/OO-H metamodel [[5]](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [15].
+First, Rules 1 to 4 are applied to establish the counting scope and the boundary of
+the Web application. Then, the data (ILF and EIF) and transactional (EI, EO, and EQ)
+functions are identified by applying Rules 5 to 11.
+An ILF *is a user identifiable group of logically related data or control information*
+*maintained within the boundary of the system* . In OO-H, this corresponds to a *class* .
+that encapsulates a set of data items (attributes). Aggregation and composition
+hierarchies can also be considered an ILF since they represents a unique group of
+logically related data.
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 473
+
+**Table 1.** Mapping rules
+
+FPA UML/OO-H Metamodels
+
+Metamodel
+
+Counting **Rule 1.** The scope corresponds to an OO-H conceptual model including a UML class
+scope diagram and a Navigation Access Diagram (NAD).
+Boundary **Rule 2.** Accept each *class* with the «actor» stereotype as a user of the application.
+**Rule 3.** Accept each *class* with the «legacy» stereotype as an external application. This
+class contains the expected object behavior or the connection with existing applications.
+**Rule 4.** The *boundary* corresponds to an imaginary line traced in the UML class
+diagram. The «actor» and «legacy» classes are considered to be outside the boundary,
+whereas the other classes are considered to be inside the boundary.
+ILF **Rule 5.** Accept each *aggregation hierarchy* as an ILF, since aggregation represents “is
+part of” relationships.
+**Rule 6** Accept each *composition hierarchy* as an ILF. Composition is stronger than
+aggregation since the whole and the parts have coincident lifetimes.
+**Rule 7.** Accept each *class* of the class diagram that does not participate in an
+aggregation or composition hierarchy as an ILF.
+EIF **Rule 8:** Accept each *class with the «legacy» stereotype* of the class diagram as an EIF.
+EI **Rule 9:** Accept each method of a class in the class diagram as an EI.
+EQ **Rule 10:** Accept each *navigational target* of a NAD (and each abstract page derived
+from it) as an EQ.
+EO **Rule 11:** Accept each *navigational target* of a NAD (and each abstract page derived
+from it ) as an EO. It must contain a class with a derived attribute or method.
+
+An EIF is *a user identifiable group of logically related data or control information*
+*referenced by the system, but maintained within the boundary of another system* . In
+OO-H, this is a special type of *class with the «legacy» stereotype* that allows the
+connection with existing application logic modules.
+An EI *is an elementary process that manipulates data or control information that*
+*comes from outside the system boundary* . Its goal is to maintain one or more ILFs
+and/or to alter the behavior of the system. In OO-H, this corresponds to a *method*
+class since it always changes the state of the objects of the class. A method must be
+identified only once (in the declared class), even if it is inherited.
+An EQ *is an elementary process that sends data or control information outside the*
+*system boundary* . Its goal is to present information to a user through the retrieval of
+data. In OO-H, this corresponds to a *navigational target* defined in the NAD. A
+navigational target may derive one or several *abstract pages* depending on the value
+of the property ‘effect’ of a navigational link. The value *source* (a light arrow)
+indicates that the information specified in the navigational target will be presented in
+the current abstract page, while the value *target* (a dark arrow) indicates that the
+information will be presented in a different abstract page.
+Finally, an EO has the same definition as an EQ, but its processing logic must
+contain at least one mathematical formula or calculation, or it has to create derived
+data. In OO-H, this also corresponds to the concept of *navigational target* . However,
+a class in the navigational target must include at least one derived attribute or method.
+
+**3.2  Definition of the Numerical Assignment Rules**
+
+The purpose of this phase is to produce a quantitative value that represents the Web
+application functional size. This is accomplished by applying two sets of rules that are
+introduced in the following subsections.
+
+474 S. Abrahão et al.
+
+**3.2.1  Definition of the Measurement Rules**
+According to the FPA metamodel, the complexity of a class (ILF) or «legacy» class
+(EIF) is determined by counting the number of data element types (DET) and record
+element types (RET). Table 2 describes the measurement rules proposed to identify
+the DETs and RETs of a class.
+
+A DET is identified for each single attribute of a class, and a RET is identified for
+the class itself. In addition, we consider both aggregations/compositions and
+generalization/specialization relationships as contributing to the complexity of a class.
+This is because the IFPUG method suggests counting a DET for each piece of data
+that indicates a relationship with another ILF or EIF.
+Associations, aggregations, and compositions are measured according to the
+multiplicity property of the relationship. This property specifies the lower/upper
+number of objects that can be associated to a single object of the class. If the number
+of instances in the target relationship is one, a DET is counted. Otherwise, if the
+number of instances in the target relationship is greater than one, a RET is identified.
+
+**Table 2.** Measurement rules for the complexity of a class and class hierarchies
+
+Rules for DET Rules for RET
+
+**Rule 12.** Count 1 DET for each *single attribute* **Rule 17.** Count 1 RET for the *class* .
+type of the class (i.e., String, Integer).
+
+**Rule 13.** Count 1 DET for each *association* with a **Rule 18.** Count 1 RET for each *association*
+
+class or «legacy» class having a maximum relationship with a class or «legacy» class having a
+multiplicity of 1. maximum multiplicity of *.
+
+**Rule 14.** Count 1 DET for each *aggregation* with **Rule 19.** Count 1 RET for each *aggregation*
+a class having a maximum multiplicity of 1. relationship with a class having a maximum
+multiplicity of *.
+**Rule 15.** Count 1 DET for each *composition* with **Rule 20.** Count 1 RET for each *composition*
+a class having a maximum multiplicity of 1. relationship with a class having a maximum
+multiplicity of *.
+**Rule 16.** Count 1 DET for each super class in an **Rule 21.** Count 1 RET for each class in an
+*inheritance* relationshi p . a gg re g ation, com p osition or inheritance *hierarch* *y* .
+
+Specialization relationships are measured in the subclasses by counting a DET for
+each super class. Finally, the complexity of aggregation, composition, or inheritance
+hierarchies is measured by counting a RET for each class in the hierarchy.
+The complexity of a method (EI) or navigational target (EO and EQ) is determined
+by counting the number of data element types (DET) and file types referenced (FTR).
+Table 3 shows some representative measurement rules for the complexity of a class
+method. Each single argument of a method is counted as a DET, and each objectvalued argument is counted as a FTR. Two DETs are counted in order to be compliant
+to the IFPUG method: one DET for the capability of the application to send a
+response message outside the boundary (error, confirmation, control), and another
+DET for the ability to specify an action to be taken. An FTR is also counted for the
+class where the method is declared. Other FTRs are also counted for the classes that
+
+appear in the OCL formula (e.g., precondition, postcondition) specified in the method
+class.
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 475
+
+**Table 3.** Some representative measurement rules for the complexity of a class method
+
+Rules for DET Rules for FTR
+
+**Rule 30.** Count 1 DET for each *single* **Rule 33.** Count 1 FTR for the *class* in which the method
+*argument* of the method. is declared.
+**Rule 31.** Count 1 DET for the capability of **Rule 34.** Count 1 FTR for each *complex argument*
+the application to send a *message* outside the (object of a class*).
+boundary.
+
+**Rule 32.** Count 1 DET for the ability of the **Rule 35.** Count 1 FTR for each class* in the OCL
+application to specify an *action* to be taken. formula of a *precondition* .
+**Rule 36.** Count 1 FTR for each new class* in the OCL
+
+formula of a *postcondition* .
+(  - ) Onl y if the class has not been counted y et.
+
+Table 4 shows some representative measurement rules for the complexity of a
+navigational target. A navigational target groups elements (navigational classes,
+navigational links, and collections) to fulfill a user navigational requirement.
+A DET is counted for each element in a collection that implies navigating to
+another collection. Additional DETs are counted for each visible attribute or
+
+method of a navigational class. A DET is counted for each link between
+navigational classes. This is because the IFPUG method suggests counting a DET
+for each piece of data that indicates a relationship with another group of data. Two
+other DETs are counted to be compliant to the IFPUG method: one DET for the
+capability of the application to send a response message and another for the ability
+to specify an action to be taken.
+A FTR is counted for each navigational class of the navigational target.
+Additional FTRs are counted for the classes that appear in the OCL formula of a
+navigational class or navigational link (precondition, filter). There are also other
+measurement rules for navigational patterns (e.g., index, guided tour) that can be
+specified in a navigational link. The complete set of rules is described in the OO-H
+measurement guideline available at: www.dsic.upv.es/~sabrahao/OO-HFP.
+
+**Table 4.** Some representative measurement rules for the complexity of a navigational target
+
+Rules for DETs Rules for RETs
+
+**Rule 46.** Count 1 DET for each element (link) of a **Rule 58.** Count 1 FTR for each *navigational class* .
+*collection* that implies navigating to a collection.
+
+**Rule 47.** Count 1 DET for each *visible* *attribute* of **Rule 59.** Count 1 FTR for each class* in the OCL
+a navigational class. formula of a *filter* defined upon navigational links.
+**Rule 48.** Count 1 DET for each *method* of a **Rule 60.** Count 1 FTR for each class* in the OCL
+navigational class. formula of a *precondition* defined upon links.
+**Rule 50.** Count 1 DET for each *navigational link* **Rule 61.** Count 1 FTR for each class* in the OCL
+between two navigational classes. formula of a navigational class.
+**Rule 56.** Count 1 DET for the capability of the
+application to send a message.
+
+**Rule 57.** Count 1 DET for the ability of the
+application to specify an action to be taken.
+
+(  - ) Onl y if the class has not been counted y et.
+
+476 S. Abrahão et al.
+
+**3.2.2  FPA Counting Rules**
+Once the DETs, RETs and FTRs have been counted, the FPA counting rules are
+applied to do the following: to classify the function complexity (low, average, high);
+to assign weights to the functions; and to aggregate the assigned values into an overall
+functional size value for the Web application.
+The IFPUG method [7] provides several tables to determine the complexity levels
+of a function type. Table 5 shows the table to determine the complexity of an EO.
+
+**Table 5.** Complexity weights for EO (navigational target)
+
+FTRs 1-5 DETs 6-19 DETs 20 or more DETs
+
+0-1 Low Low Average
+2-3 Low Average High
+4 or more Avera g e Hi g h Hi g h
+
+Then, a value in Function Points (FP) is assigned to each function depending on its
+type and complexity level. The IFPUG method also provides several tables to assign
+FP values for the identified functions. For instance, the values assigned to an EO are
+the following: **low = 4 FP**, **average = 5 FP**, and **high = 7 FP** .
+The function points assigned to each ILF (class or class hierarchy) and EIF (legacy
+class) are summed to obtain the functional size for the data functions (OO-HFP D ). The
+function points assigned to each EI (class method), EO and EQ (navigational target)
+are summed to obtain the functional size for the transactional functions (OO-HFP T ).
+Finally, the values are summed to produce the functional size of the Web
+application in unadjusted function points: OO-HFP = OO-HFP D + OO-HFP T
+
+**3.3  A Measurement Example**
+
+Fig. 5 shows an example of a navigational target ( *Concerts* ) that is part of an ecommerce application for concert ticket sales. It allows the user to see a list of
+concerts including information about their sessions, artists, and the room where the
+concert will be held. It also allows navigation to three other navigational targets.
+By applying the OO-H mapping rules (see section 3.1.1), the *Concerts*
+navigational target is classified as an EO since the *Room* class includes the *capacity*
+derived attribute. As all the navigational links end in light arrows, only one EO is
+identified.
+Then, the OO-H measurement rules (see section 3.2.1) are applied to determine the
+complexity of the navigational target. All the attributes of the navigational classes and
+the relationships among them (dotted arrows) are counted as DETs. Since the
+relationship between classes and navigational targets (dark arrows) indicates
+navigation among navigational targets (allows the user to access another EQ), one
+DET for each link is also counted. Finally, two additional DETs are counted in order
+to be compliant to the FPA counting rules. A FTR for each class in the navigational
+target is counted. In total, the *Concerts* navigational target has **16 DETs** and **4 FTRs** .
+Once the DETs and FTRs have been counted, the FPA counting rules (see section
+3.2.2) are applied to classify the function complexity (low, average or high) and to
+assign a function point value. According to Table 5, the *Concert* navigational target
+has a **high complexity**, which corresponds to **7 FP** .
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 477
+
+**Fig. 5.** *Concerts* Navigational Target
+
+**4  The Automation of OO-HFP in VisualWADE**
+
+In the second step of the process model described in Fig. 1, three activities are
+suggested for the manual application of a measurement method or procedure:
+software documentation gathering, construction of the software model, and
+application of the numerical assignment rules. The automation of OO-HFP was
+conducted in VisualWADE by automating these three activities. VisualWADE is
+extensible by means of plug-ins, which allow the analyst to package the customization
+and automation of several features through the OO-H metamodel.
+
+**Fig. 6.** The OO-HFP plug-in in the VisualWADE tool suite
+
+In the *software documentation gathering* activity, a conceptual model is specified
+using the OO-H method. The tool stores “on the fly” all the relevant information that
+is needed to get the functional size. In the *construction of the software model* activity,
+the OO-HFP mapping rules (see section 3.1.1) are used to obtain the FPA view on the
+functional size for the conceptual model. This step consists in identifying the elements
+in the OO-H conceptual model that contribute to functional size. Since the metamodel
+is expressed in python language, the tool can access the stored metamodel. Finally, in
+the *application of the numerical assignment rules* activity, a functional size value is
+
+478 S. Abrahão et al.
+
+obtained through the application of the OO-HFP measurement rules (see section
+3.2.1) and the FPA counting rules (see section 3.2.2). The plug-in performs the
+queries to the metamodel to get the values to calculate the functional size.
+A running example of an OO-H conceptual model being sized with OO-HFP is
+shown in Fig. 6. The plug-in can be activated from the GUI of VisualWADE, giving
+the analyst a real-time detailed report of both the number of function points per
+function type and the number of function points for the overall Web application.
+
+**5  The Validation of OO-HFP for Effort Estimation**
+
+The validation of OO-HFP for Web effort estimation is done by comparing the
+prediction accuracy that it provides to the accuracy provided by another set of
+validated size measures (the Tukutuku measures) [[13]](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) . This corresponds to the
+“Exploitation of the measurement result” step of the process model shown in Fig. 1.
+The Tukutuku size measures (see Table 6) can be used early on in a Web
+development life cycle whenever needed, or during the requirements gathering phase.
+
+**Table 6.** Tukutuku Size measures
+
+Variable name Scale Descri p tion
+TotWP Ratio Number of Web pages (new and reused).
+NewWP Ratio Number of new Web pages.
+TotImg Ratio Number of images (new and reused).
+NewImg Ratio Number of new images created.
+Fots Ratio Number of features reused without any adaptation.
+HFotsA Ratio Number of reused high-effort features/functions adapted.
+Hnew Ratio Number of new high-effort features/functions.
+totHigh Ratio Number of high-effort features/functions
+FotsA Ratio Number of reused low-effort features adapted.
+New Ratio Number of new low-effort features/functions.
+
+totNHi g h Ratio Number of low-effort features/functions
+
+The measures were based on the results of a survey investigation [[12]](https://www.researchgate.net/publication/223190350_Investigating_Web_size_metrics_for_early_Web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [[13]](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==), using
+data from 133 on-line Web forms aimed at giving quotes on Web development
+projects. In addition, these measures were also confirmed by an established Web
+company and a second survey involving 33 Web companies in New Zealand. These
+Web size measures are part of the Tukutuku project, which aims to collect data about
+Web projects, to be used to develop Web cost estimation models and to benchmark
+productivity across and within Web Companies. These Web size measures are a
+subset of those described in Mendes et al. [[13]](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) . These measures have been empirically
+validated as good Web effort predictors (see e.g. [[12]](https://www.researchgate.net/publication/223190350_Investigating_Web_size_metrics_for_early_Web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) ).
+
+**5.1  Selecting the Estimation Technique**
+
+Case-Based Reasoning (CBR) was the technique chosen to obtain effort estimates
+because it has provided good effort estimates in the past. The results presented here
+were obtained using the commercial tool CBR-Works. CBR is a branch of Artificial
+Intelligence where knowledge of similar past cases is used to solve new cases [[19]](https://www.researchgate.net/publication/220902878_Using_Simulation_to_Evaluate_Prediction_Techniques?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) .
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 479
+
+CBR predicts the effort of a new project by considering similar projects that were
+previously developed. Specifically, completed projects are characterized in terms of a
+set of *p* size features (e.g. *totWP* ) and make up the case base. The new project is also
+characterized in terms of the same *p* size attributes and is referred to as the target case.
+Then, the similarity between the target case and the other cases in the p-dimensional
+feature space is measured. The most similar cases are used (possibly with adaptations)
+to obtain a prediction for the target case. To apply the method, the following were
+selected: the relevant project features, the appropriate similarity function, the number
+of analogies to select the similar projects to be estimated, and the analogy adaptation
+strategy for generating the estimation. Our effort estimates were based on the effort of
+the most similar project in the case base, which was identified using the Euclidean
+distance, with no different weights for attributes or adaptations of the estimated effort.
+This seemed to provide the best results when applying different CBR combinations
+
+[[14]](https://www.researchgate.net/publication/220277620_A_Comparative_Study_of_Cost_Estimation_Models_for_Web_Hypermedia_Applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) .
+
+**5.2  Results**
+
+The analysis presented in this paper was based on data coming from 12 Web projects
+volunteered by a Spanish Web development company. All the projects were
+developed using the OO-H method. Projects had their size measured using OO-HFP
+and the Tukutuku size measures. Their descriptive statistics are presented in Table 7.
+They also include the OO-HFP and the Tukutuku size measures. This dataset size has
+also been previously used in other Web cost estimation studies.
+
+**Table 7.** Descriptive statistics for the 12 Web Projects
+
+Variable name Mean Median Std. Dev. Min. Max.
+
+**OO-HFP** 675.25 200.50 788.853 24 2400
+
+TotEff 1304.33 132 1557.00 16 3644
+
+TotWP 71.08 23.5 76.25 3 200
+
+NewWP 6.83 3.5 9.50 0 30
+TotImg 63.17 12.5 118.94 1 405
+NewImg 6.67 0 12.31 0 40
+Fots 7.50 7.5 2.61 5 10
+
+HFotsA 148.50 28 196.09 2 611
+
+Hnew 0.00 0 0.00 0 0
+totHigh 148.50 28 196.09 2 611
+FotsA 3.00 0 5.72 0 20
+
+New 6.08 4.5 5.48 0 15
+totNHi g h 9.08 5 10.28 0 35
+
+The statistics for OO-HFP show that the functional size of the projects ranges from
+24 FP to 2400 FP. The medians for *TotEff*, *TotWP*, *TotImg* and *totNHigh* suggest that
+most projects were small with regard to the number of pages and images and their
+duration. However, despite being small with short durations, they reused (with
+adaptation) a comparatively large number of high effort features/functions. This trend
+is of no surprise given that many of the Web applications developed today reuse
+components and are focused on functionality. Note that these applications were
+automatically generated using VisualWADE, hence their short duration.
+
+480 S. Abrahão et al.
+
+Next, the effort estimation models were built using CBR. The prediction **accuracy**
+of models was checked by omitting a group of projects (8 projects) and predicting the
+effort for the group of omitted projects (4 projects). The rationale was to use different
+sets of projects to build and to validate a model. Finally the prediction accuracy of
+each model was measured using the Mean MRE (MMRE), Median MRE (MdMRE),
+and Pred(25). We also compared each model with predictions obtained using the
+mean and median efforts of the training set in order to have a benchmark. Statistical
+significance was checked using the Wilcoxon Signed Ranks test, with α = 0.05.
+Our case base contained the eight projects in our training set, and used the *11*
+*Tukutuku size measures* and *TotEff* as attributes. Each of the four projects in the
+validation set was used in turn to obtain its equivalent most similar project, which was
+measured using the Euclidean distance. The prediction accuracy measures for CBR
+(see Table 8) indicated that the CBR-based predictions were poor. CBR-based
+accuracy was not significantly better than predictions based on the median (p = 0.461)
+or mean (p = 0.461) of the data set.
+
+**Table 8.** Accuracy statistics for Tukutuku size measures and the OO-HFP
+
+Accuracy Tukutuku size measures OO-HFP
+measures ( % ) CBR Mean Effort Median Effort CBR Mean Effort Median Effort
+MMRE 3,614.4 1,532.5 156.51 3,514.4 1,532.5 156.51
+MdMRE 1,864.2 786.4 94.8 1,763.2 786.4 94.8
+Pred ( 25 ) 25 0 0 25 0 0
+
+When CBR was applied to OO-HFP, the same procedure as described above was
+used. However, the attributes used were *OO-HFP* and *TotEff* . The prediction accuracy
+measures for CBR (see Table 8) indicated a very similar pattern to those obtained
+using the Tukutuku size measures. CBR-based accuracy was not significantly better
+than predictions based on the median or mean of the data set. What these results
+suggest is that using effort estimates based on early Web size measures (OO-HFP or
+Tukutuku size measures) provides similar accuracy to using estimates based on the
+mean or median of past projects.
+
+**6  Conclusions and Further Work**
+
+This paper has introduced a model-driven measurement procedure for sizing Web
+applications (OO-HFP). The procedure is compliant to the IFPUG method, which is a
+widely used FSM method in industry. Since the OO-HFP was designed as a mapping
+between the IFPUG and the OO-H metamodels, a conformity evaluation was made
+during the design stage assuring that all the concepts were properly dealt with.
+OO-HFP was also automated in VisualWADE. Thus, a size measure of a Web
+project can be easily calculated when the OO-H conceptual model is specified. This
+avoids the ambiguity of interpreting the FPA counting rules and the need for special
+training to count function points in an accurate and repeatable way. In addition,
+MDA-based methods provide good support for size estimation given the explicit
+traceability between model elements. Therefore, the size estimated at the PIM level
+can be representative of the size of the final system obtained. Finally, we validated
+
+A Model-Driven Measurement Procedure for Sizing Web Applications 481
+
+the use of OO-HFP for Web effort estimation by comparing the prediction accuracy
+that it provides to the accuracy provided by the Tukutuku size measures. The results
+showed that both measures presented similar accuracy, which was also not different
+from the predictions obtained using the mean and median effort of past projects. The
+main limitation of the study was the small data set used (only 20 projects). We plan to
+replicate this study using a broad data set and other effort estimation techniques (e.g.,
+Stepwise regression) and size measures.
+
+**References**
+
+1. [Cândido, E.J.D., Sanchez, R.: Estimating the size of web applications by using a simplified](https://www.researchgate.net/publication/4099195_Estimating_the_size_of_Web_applications_by_using_a_simplified_function_point_method?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+                                    - –
+[function point method. In: Proc. of the WebMedia/LA](https://www.researchgate.net/publication/4099195_Estimating_the_size_of_Web_applications_by_using_a_simplified_function_point_method?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) WEB 2004, pp. 98 105 (2004)
+2. [Ceri, S., Fraternali, P., Bongio, A.: Web Modeling Language (WebML): a modeling](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[language for designing Web sites. In: WWW 2000. Proc. of the](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) ~~9~~ [[th]](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [Word Wide Web](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+–
+[Conference, Amsterdam, The Netherlands, pp. 137](https://www.researchgate.net/publication/222829568_Web_Modeling_Language_WebML_A_modeling_language_for_designing_Web_sites?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 157 (2000)
+3. Cleary, D.: Web - [Based Development and Functional Size Measurement. In: Proceedings](https://www.researchgate.net/publication/228931010_Web-based_development_and_functional_size_measurement?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[of IFPUG Annual Conference, San Diego, USA (2000)](https://www.researchgate.net/publication/228931010_Web-based_development_and_functional_size_measurement?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+4. COSMIC-FFP Measurement Manual version 2.2 (2003)
+5. [Gomez, J., Cachero, C., Pastor, O.: Conceptual Modeling of Device](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) - Independent Web
+
+–
+[Applications. IEEE MultiMedia 8(2), 26](https://www.researchgate.net/publication/3338617_Conceptual_modeling_of_device-independent_Web_applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 39 (2001)
+6. IFPUG: Hints to Counting Web Sites: IFPUG White Paper (1998)
+7. ISO: ISO/IEC 20926: Software engineering - IFPUG 4.1. Unadjusted functional size
+measurement method - Counting practices manual (2003)
+8. ISO, ISO/IEC 14143-1- Information Technology - Software measurement - Functional
+Size Measurement. Part 1: Definition of Concepts (1998)
+9. ISO: International Vocabulary of Basic and General Terms in Metrology, 2nd edn. (1993)
+10. [Jacquet, J.P., Abran, A.: From Software Metrics to Software Measurement Methods: A](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[Process Model. In: ISESS](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) ’ 97. 3 [[rd]](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) [International Standard Symposium and Forum on](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[Software Engineering Standards, Walnut Creek, USA (1997)](https://www.researchgate.net/publication/3695965_From_software_metrics_to_software_measurement_methods_A_process_model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+11. [Koch, N., Zhang, G., Escalona, M.J: Model transformations from requirements to web](https://www.researchgate.net/publication/220940578_Model_transformations_from_requirements_to_Web_system_design?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[system design. In: ICWE 2006. Proc. of the 6th International Conference on Web](https://www.researchgate.net/publication/220940578_Model_transformations_from_requirements_to_Web_system_design?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+                 - –
+Engineering, Palo Alto [CA, USA, pp. 281](https://www.researchgate.net/publication/220940578_Model_transformations_from_requirements_to_Web_system_design?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 288 (2006)
+12. [Mendes, E., Mosley, N., Counsell, S.: Investigating Web Size Metrics for Early Web Cost](https://www.researchgate.net/publication/223190350_Investigating_Web_size_metrics_for_early_Web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+–
+[Estimation. Journal of Systems and Software 77(2), 157](https://www.researchgate.net/publication/223190350_Investigating_Web_size_metrics_for_early_Web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 172 (2005)
+13. [Mendes, E., Mosley, N., Counsell, S.: Investigating Early Web Size Measures for Web](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+[Cost Estimation. In: EASE 2003. Proc. of the 7th Conference on Evaluation & Assessment](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+[in Software Engineering, Keele, UK (2003)](https://www.researchgate.net/publication/228994752_Investigating_early_web_size_measures_for_web_cost_estimation?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+14. [Mendes, E., Watson, I., Triggs, C., Mosley, N., Counsell, S.: A Comparative Study of Cost](https://www.researchgate.net/publication/220277620_A_Comparative_Study_of_Cost_Estimation_Models_for_Web_Hypermedia_Applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+Estimation Models for Web [Hypermedia](https://www.researchgate.net/publication/220277620_A_Comparative_Study_of_Cost_Estimation_Models_for_Web_Hypermedia_Applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) Applications. Empirical Software
+
+–
+[Engineering 8(2), 163](https://www.researchgate.net/publication/220277620_A_Comparative_Study_of_Cost_Estimation_Models_for_Web_Hypermedia_Applications?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 196 (2003)
+15. OMG: UML 2.1 Unified Modeling Language [TM ] (2006)
+16. OMG: MDA Guide, Version 1.0.1 (2003), http://www.omg.org/docs/omg/03-06-01.pdf
+17. Reifer, D.: Web Development: Estimating Quick-to-Market Software. IEEE
+Software 17(6), 57–64 (2000)
+18. Schwabe, D., Rossi, G.: The [Object](https://www.researchgate.net/publication/220421574_The_Object-Oriented_Hypermedia_Design_Model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) - Oriented Hypermedia Design Model.
+
+–
+[Communications of the ACM 38(8), 45](https://www.researchgate.net/publication/220421574_The_Object-Oriented_Hypermedia_Design_Model?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 46 (1995)
+19. [Shepperd, M.J., Kadoda, G.: Using Simulation to Evaluate Prediction Techniques. In:](https://www.researchgate.net/publication/220902878_Using_Simulation_to_Evaluate_Prediction_Techniques?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+
+–
+[Proceedings IEEE Metrics Symposium, pp. 349](https://www.researchgate.net/publication/220902878_Using_Simulation_to_Evaluate_Prediction_Techniques?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==) 358. IEEE Computer Society Press, Los
+[Alamitos (2001)](https://www.researchgate.net/publication/220902878_Using_Simulation_to_Evaluate_Prediction_Techniques?el=1_x_8&enrichId=rgreq-df5477eb5143fc75b4eafd4adef6213f-XXX&enrichSource=Y292ZXJQYWdlOzIyMTIyMzg2NTtBUzoxNzY5MTUxMjYxNjk2MDBAMTQxOTE5MTI2MTM2Mw==)
+

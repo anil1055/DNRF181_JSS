@@ -1,0 +1,1592 @@
+# **Web Cost Estimation and Productivity Benchmarking **
+
+Emilia Mendes
+
+The University of Auckland, Private Bag 92019
+Auckland, New Zealand, 0064 9 3737599 ext. 86137
+
+emilia@cs.auckland.ac.nz
+
+**Abstract.** Web cost estimation models and productivity analysis reports help
+project managers allocate resources more adequately, control costs, schedule
+and improve current practices, leading to projects that are finished on time and
+within budget. Therefore this chapter has two main objectives. The first is to introduce the concepts related to Web cost estimation & Web applications’ sizing
+and present a case study where a real Web cost model is built; the second is to
+introduce the concepts of productivity measurement & benchmarking, and to
+also present a case study on productivity benchmarking.
+
+**Keywords:** Web cost estimation, Effort accuracy, Multivariate Regression,
+Case-based reasoning, Classification and Regression Trees, Bayesian Networks,
+Web productivity measurement, Web productivity benchmarking.
+
+**1  Introduction**
+
+The distributed nature of the Web and the use of a simple hypertext-based mechanism
+and protocol allows for its use as a delivery platform for numerous types of Web applications, ranging from complex e-commerce solutions with large back-end databases to on-line personal static Web applications. Such flexibility led to a growing
+number of companies willing to have a Web presence, and as a consequence a growing number of Web companies bidding for as many Web projects as they can accommodate and often using technological solutions they are unfamiliar with. As usual, in
+order to win the bid, companies estimate unrealistic schedules, leading to applications
+that are rarely developed within time and budget.
+Realistic effort estimates are fundamental for the successful management of software projects; the Web is no exception. Having realistic effort estimates at an
+early stage in a project's life cycle allows project managers and development organisations to manage their resources effectively. In addition, hand in hand with effort
+estimation is productivity assessment, which enables a company to benchmark its
+efficiency across its own projects, and also in comparison to projects developed by its
+competitors.
+Prediction is a necessary part of an effective process, whether this process is authoring, design, testing, or Web development as a whole. In general a prediction process involves the following parts:
+
+A. De Lucia and F. Ferrucci (Eds.): ISSSE 2006–2008, LNCS 5413, pp. 194–222, 2009.
+© Springer-Verlag Berlin Heidelberg 2009
+
+Web Cost Estimation and Productivity Benchmarking 195
+
+  - The identification of application and project attributes (measures) (e.g. number
+of new Web pages, number of new images, team’s previous experience, development tools used) that are believed to influence the effort required to develop a
+new Web application.
+
+  - The formulation of assumptions about the inter-relationship between the selected attributes and the effort required to develop a new Web application (e.g.
+the greater the number of new static Web pages, the greater the development effort for a new application, the greater the development team the greater the development effort).
+
+  - The capturing of historical data (e.g. number of new Web pages, actual effort)
+and/or expertise about past Web projects or even past development phases
+within the same project.
+
+  - The use of this historical data and/or expertise to build models, or as input to estimation techniques, for use in predicting effort for new Web projects.
+
+  - The assessment of how effective those effort estimation models/techniques are,
+i.e. the assessment of their prediction accuracy.
+
+Cost and effort are often used interchangeably within the context of software and
+Web effort estimation (prediction) since effort is taken as the main component of project costs. However, given that project costs also take into account other factors such
+as contingency and profit [22] we will use the word “effort” and not “cost” throughout this chapter.
+Numerous effort estimation techniques have been proposed and compared over the
+last 20 years. A classification and description of such techniques is introduced in Section 2 to help provide readers with a broader overview. One of the main predictors of
+effort is application size, so Section 3 discusses issues related to sizing Web applications. Section 4 briefly introduces a case study where real data on Web projects is
+used to build an effort estimation model. Once these three Sections are detailed, we
+move on to discuss productivity measurement. Section 5 introduces a productivity
+measurement method proposed by Kitchenham and Mendes [20], and detailed in [27],
+followed by Section 6 where a case study using the productivity measurement method
+is detailed. Finally, our conclusions are given in Section 7.
+This Chapter uses reference material from a book on Web cost estimation written
+by this author [26] and a book on Web engineering, edited by this author and Dr. N.
+Mosley [28].
+
+**2  Effort Estimation Techniques**
+
+**2.1  Overview**
+
+The prediction of the amount of effort necessary to produce a given deliverable is
+called effort estimation. This process requires as input data and/or knowledge of project characteristics that are believed to affect the amount of effort necessary to produce a deliverable. Note that a deliverable can be simple (e.g. a Web application’s
+navigational model), or complex (e.g. a complete Web application). Project characteristics are the input to the estimation process (see Fig. 1), and estimated effort is the
+output of this process.
+
+196 E. Mendes
+
+For example, a given Web company may find that in order to estimate the effort
+necessary to produce a new Web application *w* – the deliverable, it will need to estimate the following: estimated number of new Web pages the new application is likely
+to have, total number of developers who will help develop the new Web application,
+developers’ average number of years of experience with the development tools employed, and the number of functions/features (e.g. shopping cart) to be offered by the
+new Web application. The effort estimation literature differentiates the input to an
+estimation process into two types: size and cost drivers. Size represents the attributes
+that characterise the size of the “problem” to be delivered. Typical size attributes
+(measures) are the number of new Web pages, number of new images, number of
+features/functions that the application will have. Conversely, cost drivers are any attributes that do not characterise the size of an application, such as developers’ average
+Web development experience, number of tools employed in the development, development team size.
+
+
+**+** estimate
+
+
+**Step ?** **Step ?**
+
+
+
+
+Cost
+
+drivers
+
+
+**Step ?**
+
+
+
+**Step ?**
+
+Data/knowledge
+from past finished
+Web projects
+
+**Fig. 1.** Components of an effort model [26]
+
+Fig. 1 shows that, in addition to the input attributes, data/knowledge from past finished Web projects can also be of use when estimating effort for a new project. However, the sequence in which they (input, data/knowledge from past projects) are used
+depends on the effort estimation technique being applied.
+Several effort estimation techniques have been proposed over the past 30 years,
+falling into three general categories [43]: expert opinion, algorithmic techniques and
+artificial intelligence techniques. Each is going to be detailed next.
+
+Web Cost Estimation and Productivity Benchmarking 197
+
+**2.2  Expert Opinion**
+
+Expert opinion represents the process of estimating effort based on experts’ judgment,
+and is often based on previous experience from developing/managing similar projects.
+Although this technique is still widely used by software and Web companies, it has a
+clear drawback: it is very difficult to quantify and to determine those attributes that
+have been used to derive an estimate, making it difficult to repeat.
+However, studies show that this technique can be an effective estimating tool when
+used in combination with other less subjective techniques (e.g. algorithmic techniques) [11],[36],[37].
+Fig. 2 shows a similar diagram to the one presented in Fig. 1, and outlines the sequence of steps used with expert opinion when estimating effort for a new project:
+
+
+an effort
+
+**+** estimate
+
+
+**Step 1** **Step 3**
+
+
+
+
+Cost
+
+drivers
+
+**Step 2**
+
+Data/knowledge
+from past finished
+Web projects
+
+**Fig. 2.** Sequence used when estimating effort based on expert opinion [26]
+
+**Step 1)** An expert estimates size and cost drivers related to a new Web application for
+which effort needs to be estimated.
+
+**Step 2)** Based on the estimates obtained in Step 1, the expert uses his/her own knowledge from past finished similar projects and/or data on past finished projects for
+which actual effort is known.
+
+**Step 3)** Based on the data/knowledge retrieved in Step 2, and the input from Step 1, the
+expert now subjectively estimates effort for the new project. Deriving an accurate effort
+estimate is more likely to occur when there are completed projects similar to the one
+having its effort estimated. The knowledge regarding the characteristics of a new project
+is necessary to retrieve, from memory and/or a database, knowledge/data on finished
+similar projects. Once this data/knowledge is retrieved, effort can be estimated.
+
+**2.3  Algorithmic Techniques**
+
+To date, the most popular techniques described in the effort estimation literature are
+algorithmic techniques. Such techniques attempt to formalise the relationship between
+effort and one or more project characteristics by creating an algorithmic model. This
+formalisation is often translated as an equation such as that shown by Equations 1 and 2.
+
+198 E. Mendes
+
+Equations such as these are commonly obtained by applying regression analysis techniques [39] on datasets of past completed projects. Equation 1 assumes a linear relationship between effort and its size/cost drivers whereas Equation 2 assumes a non-linear
+relationship. In Equation 2, when the exponent is < 1 we have economies of scale, i.e.,
+larger projects use less effort comparatively to smaller projects. The opposite situation
+(exponent > 1) gives diseconomies of scale, i.e. larger projects use more effort comparatively to smaller projects.
+
+*EstimatedEffort* = *C* + *a* 0 *EstSizeNewproj* + *a* 1 *CD* 1 + L + *a* *n* *[CD]* *n* (1)
+
+*EstimatedEffort* = *C* *EstSizeNewproj* *a* 0 *CD* 1 *a* 1 L *CD* *n* *a* *n* (2)
+
+where:
+*C* is a constant denoting the initial estimated effort (assuming size and cost drivers
+to be zero) derived from past data.
+*a* 0 ... *a* *n* are parameters derived from past data.
+*CD* 1 … *CD* *n* are other project characteristics, other than size, that have an impact on
+effort.
+Regression-based algorithmic models are most suitable to local circumstances such
+as “in-house” analysis as they are derived from past data that often represents projects
+from the company itself. Regression analysis, used to generate regression-based algorithmic models, provides a procedure for determining the “best” straight-line fit to a
+set of project data that represents the relationship between effort and project characteristics (e.g. size, experience, tools) [39]. The regression line (see Fig. 3) is
+
+**Fig. 3.** Example of a Regression line [26]
+
+Web Cost Estimation and Productivity Benchmarking 199
+
+represented as an equation, such as those given by Equations 1 and 2. The effort estimation model to be detailed in the case study falls into this category.
+Regarding the regression analysis itself, two of the most widely used techniques are
+multiple regression (MR) and stepwise regression (SWR). The difference between both
+is that MR obtains a regression line using all the input variables (size measures and cost
+drivers) at the same time, whereas SWR is a technique that examines different combinations of input variables, looking for the best grouping to explain the greatest amount of
+variation in effort. Both use least squares regression, where the regression line selected
+is the one that minimises the sum of the squared errors. Errors are calculated as the difference between actual and estimated effort and are known as the residuals [39].
+The Equation corresponding to the Regression line in Fig. 3 is shown below:
+
+Effort = *a* + *b* totalWebPages (3)
+
+where *a* is called the intercept, obtained when *b* totalWebPages = 0; and *b* is called
+the slope of the regression line.
+Fig. 4 shows the diagram presented in Fig. 1 and outlines the sequence of steps used
+with a regression-based algorithmic technique when estimating effort for a new project:
+
+Step 1) Data on past finished projects is retrieved.
+Step 2) The data retrieved in Step 1 is used to build a regression-based effort estimation Equation (model).
+Step 3) The estimated size and cost drivers are used as input to the Equation built
+from Step 2)
+Step 4) The output of the Equation is the estimated effort for the new Web project.
+
+
+**+** estimate
+
+
+**Step 3** **Step 4**
+
+
+
+
+Cost
+
+drivers
+
+
+**Step 2**
+
+
+
+**Step 1**
+
+Data from past
+finished Web
+
+projects
+
+**Fig. 4.** Sequence used when estimating effort using an algorithmic technique [26]
+
+200 E. Mendes
+
+A detailed description of regression analysis and how to build an effort estimation
+model using regression analysis is give in [26].
+
+**2.4  Artificial Intelligence Techniques**
+
+Artificial intelligence techniques have, in the last 12 to 13 years, been used as a complement to, or as an alternative to, the previous two categories. Examples include
+fuzzy logic [24], regression trees [40], neural networks [44], case-based reasoning
+
+[43], and Bayesian Networks [15]. We will briefly introduce case-based reasoning
+(CBR), regression trees (CART) and Bayesian Networks (BNs) in more detail as they
+are currently the most popular machine learning techniques employed for Web cost
+estimation. A useful summary of numerous machine learning techniques can also be
+found in [10].
+
+**Case-Based Reasoning**
+Case-based reasoning (CBR) provides estimates by comparing the current project to
+be estimated against a library of historical information from completed projects with a
+known effort (case base). It involves [1]:
+
+i. Characterising a new project *p*, for which an estimate is required, with attributes
+common to those completed projects stored in the case base. In terms of effort estimation, attributes represent size measures and cost drivers which have a bearing
+on effort. Attribute values are normally standardized (between 0 and 1) such that
+they have the same degree of influence on the result.
+ii. Use of this characterisation as a basis for finding similar (analogous) completed
+projects, for which effort is known. This process can be achieved by measuring the
+“distance” between two projects, based on the values of the number of attributes ( *k* )
+for these projects. Although numerous techniques can be used to measure similarity, nearest neighbour algorithms using the unweighted Euclidean distance measure
+have been the most widely used to date in both software and Web engineering.
+iii. Generation of a predicted value of effort for project *p* based on the effort for
+those completed projects that are similar to *p* . The number of similar projects will
+depend on the size of the case base. For small case bases (e.g. up to 90 cases),
+typical values are 1, 2, and 3 closest neighbours (analogies). For larger case bases
+no conclusions have been reached regarding the best number of similar projects
+to use. The calculation of estimated effort is obtained using the same effort value
+as the closest neighbour, or the mean effort for two or more analogies. This is the
+common choice in both Web and software engineering.
+
+When using CBR there are six parameters to consider, each to be briefly introduced
+below [41]:
+
+   - Feature Subset Selection
+
+   - Similarity Measure
+
+   - Scaling
+
+   - Number of Analogies
+
+   - Analogy Adaptation
+
+   - Adaptation Rules
+
+Web Cost Estimation and Productivity Benchmarking 201
+
+*Feature Subset Selection*
+
+Feature subset selection involves determining the optimum subset of attributes that
+yield the most accurate estimation. Some existing CBR tools, e.g. ANGEL [42] optionally offer this functionality using a brute force algorithm, searching for all possible feature subsets. Other CBR tools (e.g. CBR-Works) have no such functionality,
+and therefore to obtain estimated effort, we must use all of the known attributes of a
+project to retrieve the most similar cases.
+
+*Similarity Measure*
+The similarity measure measures the level of similarity between different cases, with
+several similarity measures proposed in the literature. The most popular similarity
+measure in the current Web/software engineering literature [1],[29],[41] is the unweighted Euclidean distance. Other similarity measures are presented in [1].
+
+Unweighted Euclidean distance : The unweighted Euclidean distance measures the
+Euclidean (straight-line) distance *d* between the points ( *x* 0 *,y* 0 ) and ( *x* 1 *,y* 1 ), given by the
+equation:
+
+*d* = ( *x* 0 − *x* 1 ) 2 + ( *y* 0 − *y* 1 ) 2 (4)
+
+*Scaling*
+Scaling (also known as standardisation) represents the transformation of attribute values according to a defined rule, such that all attributes present values within the same
+range and hence have the same degree of influence on the results [1]. A common
+method of scaling is to assign zero to the minimum observed value and one to the
+maximum observed value [16].
+
+*Number of Analogies*
+The number of analogies refers to the number of most similar cases that will be used
+to generate the estimation. With small sets of data it is reasonable to consider only a
+small number of analogies [1]. Several studies have restricted their analysis to the
+closest analogy ( = *k* 0.1) [3],[36], while others have used two and three analogies
+
+[1],[13],[14],[29],[30],[32],[38].
+
+*Analogy Adaptation*
+Once the similar cases have been selected the next step is to decide how to generate
+the estimation for project *P* *new* . Choices of analogy adaptation techniques presented in
+the literature vary from the nearest neighbour [3],[14], the mean of the closest analogies [42], the median [1], inverse distance weighted mean and inverse rank weighted
+mean [16], to illustrate just a few. The adaptations used to date for Web engineering
+are the nearest neighbour, mean of the closest analogies [29],[30], and the inverse
+rank weighted mean [31],[32].
+
+*Adaptation Rules*
+Adaptation rules are used to adapt estimated effort, according to a given criterion, such
+that it reflects the characteristics of the target project more closely. For example, in the
+context of effort prediction, the estimated effort to develop an application would be
+adapted such that it would also take into consideration the application’s size values.
+
+202 E. Mendes
+
+Fig. 5 shows a similar diagram to that presented in Fig. 1, and outlines the sequence
+of steps used with the CBR technique when estimating effort for a new project:
+
+Step 1) The estimated size and cost drivers relating to a new project are used to retrieve similar projects from the case base, for which actual effort is known.
+Step 2) Using the input from Step 1) a suitable CBR tool retrieves similar projects to
+the one represented by the input.
+Step 3) Once similar projects were retrieved, they are used to obtain the estimated
+effort for a new project.
+
+
+an effort
+
+**+** estimate
+
+
+**Step 1** **Step 3**
+
+
+
+
+Cost
+
+drivers
+
+**Step 2**
+
+Data from past
+finished Web
+
+projects
+
+**Fig. 5.** Sequence used when estimating effort using CBR [26]
+
+***Classification and Regression Trees***
+The objective of a Classification and Regression Tree (CART) model within this context is to develop a simple binary tree-structured decision process for describing the
+distribution of values of effort given a set of size measures and cost drivers [5]. For
+example, assume the estimated effort to develop a Web application can be determined
+by an estimated number of pages (WP), number of images (IM), and number of functions (FN). A regression tree such as the one shown in Fig. 6 is generated from data
+obtained from past finished Web applications, taking into account their existing values of effort, WP, IM, and FN.
+Once the tree has been built, it is used to estimate effort for a new project. So, to
+estimate effort for a new project where the estimated WP = 25, estimated IM = 15,
+and estimated FN = 4 we would navigate down the tree structure to find the estimated
+effort, which would be 45 person hours.
+Whenever size and cost drivers are numerical the CART tree is called a *regression*
+*tree* and whenever size and cost drivers are categorical the CART tree is called a *clas-*
+*sification tree* . Details on how CART models are built are found in [26].
+Fig. 7 shows the diagram presented in Fig. 1 and outlines the sequence of steps
+used with a CART technique when estimating effort for a new project:
+
+Web Cost Estimation and Productivity Benchmarking 203
+
+WP
+
+WP < = 40 WP > 40
+
+IM IM
+
+
+
+
+
+**Fig. 6.** Example of a regression tree for Web cost estimation
+
+
+**+** estimate
+
+
+**Step 3** **Step 4**
+
+
+
+
+Cost
+
+drivers
+
+
+**Step 2**
+
+
+
+**Step 1**
+
+Data from past
+finished Web
+
+projects
+
+**Fig. 7.** Sequence used when estimating effort using CART [26]
+
+Step 1) Past data is used to generate a CART model.
+Step 2) A CART model is built using the past data obtained in Step 1).
+Step 3) Estimates values for size and cost drivers are used to traverse the CART tree
+(model) built in Step 2).
+Step 4) Estimated effort for a new project is obtained after traversing the model built
+in Step 2) using the estimated values from Step 3).
+
+204 E. Mendes
+
+**3  Sizing a Web Application**
+
+To date numerous Web size measures have been proposed in the literature, and a detailed
+survey is presented in [26]. However, in this Chapter we are only going to discuss one of
+these proposals, corresponding to the set of measures used in the Tukutuku Benchmarking project [34]. This is an ongoing project (http://www.cs.auckland.ac.nz/tukutuku),
+which collects data on Web projects, for the development of effort estimation models and
+to benchmark productivity across and within Web companies. The size measures and
+cost drivers were obtained from the results of a survey investigation, using data from 133
+on-line Web forms that provided quotes on Web development projects [34][35]. They
+were also confirmed by an established Web company and a second survey involving 33
+Web companies in New Zealand. Consequently, it is our belief that the variables identified are suitable for Web effort estimation, and are meaningful to Web companies. The
+set of Tukutuku size measures is detailed below:
+
+Web application
+
+  - *Web Pages* : measures the total number of Web pages contained in a Web application.
+
+  - *New Web Pages* : measures the total number of Web pages contained in a Web
+application that were created from scratch.
+
+  - *New Images* : measures the total number of new images/photos/icons/buttons
+created from scratch for a given Web application.
+
+  - *Total Images* : measures the total number of images (reused and new) contained in a given Web application.
+
+  - *Fots* : measures the total number of features off-the-shelf (FOTS) contained in
+a given Web application. Features off-the-shelf are features that have been reused as they are, without any adaptation.
+
+  - *High FotsA* : measures the total number of High-effort FOTS contained in a
+Web application, which were reused and adapted to local circumstances. High
+effort here represents the minimum number of hours to adapt a single function/feature by one experienced developer that is considered high (above average). This number is currently set to 4 hours based on collected data from
+industrial Web projects.
+
+  - *High New* : measures the total number of new High-effort Feature / Functionality contained in a Web application, which were developed from scratch. High
+effort represents the minimum number of hours necessary to develop a single
+function/feature by one experienced developer that is considered high (above
+average). This number is currently set to 15 hours based on collected data
+from industrial Web projects.
+
+  - *FotsA* : measures the total number of Low-effort FOTS contained in a Web application, which were adapted to local circumstances.
+
+  - *New* : measures the total number of Low-effort Feature/Functionality contained
+in a Web application, which were developed from scratch.
+
+Examples of feature/functionality are listed below:
+
+  - Auction/Bid utility
+
+  - Bulletin Boards
+
+Web Cost Estimation and Productivity Benchmarking 205
+
+  - Discussion Forum/Newsgroups
+
+  - Chat Rooms
+
+  - Database creation
+
+  - Database integration
+
+  - Other persistent storage integration (e.g. flat files)
+
+  - Credit Card Authorization
+
+  - Member login
+
+  - Online Secure Order Form
+
+  - Charts
+
+  - File upload/download
+
+  - Traffic Statistics
+
+  - Search Engine
+
+  - User Guest book
+
+  - Visitor statistics
+
+The next Section will briefly introduce a case study where a regression-based algorithmic model was built and employed for effort estimation using data on 87 Web
+projects from the Tukutuku database. This case study is fully detailed in [28].
+
+**4  Web Effort Estimation Case Study**
+
+The case study briefly introduced in this Chapter provides an overview of the necessary steps required to build a regression-based effort estimation model. This model is
+built using data on industrial Web projects, developed by Web companies worldwide,
+from the Tukutuku database.
+
+The dataset used in this chapter contains data on 87 Web projects: 34 and 13
+are from 2 single Web companies respectively and the remaining 40 projects come
+from another 23 companies. The Tukutuku database uses 25 variables to store specifics about each company that volunteered projects, particulars about each project, and
+data about each Web application (see Table 1). Company data is obtained once, and
+both project and application data are gathered for each project a Web company
+volunteers.
+All results presented were obtained using the statistical software package SPSS
+12.0 for Windows produced and sold by SPSS Inc. Further details on the statistical
+methods used throughout this case study are given in [26]. Finally, all the statistical
+tests set the significance level at 95% (α = 0.05).
+The data analysis procedure presented herein is adapted from [25], and
+consists of:
+
+1. Data validation
+
+2. Variables and model selection
+
+3. Model inspection
+4. Extraction of effort equation
+5. Model validation
+
+206 E. Mendes
+
+**Table 1.** Variables for the Tukutuku database
+
+|NAME|DESCRIPTION|
+|---|---|
+|COMPANY DATA|COMPANY DATA|
+|COUNTRY|Country company belongs to.|
+|ESTABLISHED|Year when company was established.|
+|SERVICES|Type of services company provides.|
+|NPEOPLEWD|Number of people who work on Web design and development.|
+|CLIENTIND|Industry representative of those clients to whom applications are<br>provided.|
+|PROJECT DATA|PROJECT DATA|
+|TYPEPROJ|Type of project (new or enhancement).|
+|LANGS|Implementation languages used.|
+|DOCPROC|If project followed defined and documented process.|
+|PROIMPR|If project team involved in a process improvement programme.|
+|METRICS|If project team part of a software metrics programme.|
+|DEVTEAM|Size of a project’s development team.|
+|TEAMEXP|Average team experience with the development language(s) employed.|
+|TOTEFF|Actual total effort in person hours used to develop the Web<br>application.|
+|ESTEFF|Estimated total effort in person hours necessary to develop the Web<br>application.|
+|ACCURACY|Procedure used to record effort data.|
+|WEB APPLICATION|WEB APPLICATION|
+|TYPEAPP|Type of Web application developed.|
+|TOTWP|Total number of Web pages (new and reused).|
+|NEWWP|Total number of new Web pages.|
+|TOTIMG|Total number of images (new and reused).|
+|NEWIMG|Total number of new images created.|
+|FOTS|Number of reused features/functions without adaptation.|
+|HFOTSA|Number of reused high-effort features/functions adapted.|
+|HNEW|Number of new high-effort features/functions.|
+|FOTSA|Number of reused low-effort features adapted.|
+|NEW|Number of new low-effort features/functions.|
+
+
+
+Each of these steps is described below, and examples are given accordingly.
+
+Data Validation
+The Data validation (DV) step is used to perform the first screening of the data that
+has been collected. In general, this involves understanding what the variables are (e.g.
+their purpose, scale type) and also includes the use of descriptive statistics (e.g. mean,
+median, minimum, maximum) to help identify any missing or unusual cases.
+Table 2 shows an example of descriptive statistics for some of the variables in the
+Tukutuku database (only the numerical variables). Here the objective is to check if
+there are any strange patterns in the data, which would require further investigation.
+For example, the maximum number of Web pages has a value of 2000 Web pages.
+Although it does not seem possible at first to have such large number of pages, we
+cannot simply assume this has been a data entry error. When a situation such as this
+one arises, the first step is to contact the company that provided the data and to
+
+Web Cost Estimation and Productivity Benchmarking 207
+
+confirm the data is correct. Unfortunately, in our case, we were unable to obtain confirmation from the source company. However, further investigation revealed that in
+relation to the Web project that contains 2000 Web pages, 1980 pages were developed
+from scratch, and numerous new functions/features (five high-effort and seven loweffort) were also implemented. In addition, the development team consisted of two
+people who had very little experience with the six programming languages used. The
+total effort was 947 person hours, which corresponds to a three-month project assuming both developers worked at the same time. If we only consider number of pages
+and effort, the ratio of number of minutes per page is 27:1, which seems reasonable
+given the lack of experience of the development team and the number of different
+languages they had to use [26].
+
+**Table 2.** Descriptive statistics for numerical variables [26]
+
+**Variables** **Minimum** **Maximum** **Mean** **Median** **Std. dev.**
+
+DEVTEAM 1 8 2.37 2 1.35
+
+TEAMEXP 1 10 3.40 2 1.93
+
+TOTWP 1 2000 92.40 25 273.09
+
+NEWWP 0 1980 82.92 7 262.98
+
+TOTIMG 0 1820 122.54 40 284.48
+
+NEWIMG 0 800 51.90 0 143.25
+
+HFOTSA 0 4 .29 0 .75
+
+HNEW 0 10 1.24 0 2.35
+
+FOTS 0 15 1.07 0 2.57
+
+FOTSA 0 10 1.89 1 2.41
+
+NEW 0 13 1.87 0 2.84
+
+TOTEFF 1 5000 261.73 43 670.36
+
+**Table 3.** Frequency table for type of project [26]
+
+|Type of project|Frequency|%|Cumulative %|
+|---|---|---|---|
+|New|39|44.8|44.8|
+|Enhancement|48|55.2|100.0|
+|Total|87|100.0||
+
+
+
+Once we have checked the numerical variables, our next step is to check the categorical variables using their frequency tables as a tool. One example of a frequency
+table is shown in Table 3, and suggests that no unusual trends are apparent.
+Once the data validation is complete, we are ready to move on to the next step,
+namely variables and model selection.
+
+Variables and Model Selection
+
+The second step part of the data analysis methodology is sub-divided into two separate and distinct phases: preliminary analysis and model building.
+Preliminary analysis allows us to choose which variables to use, discard, modify,
+and, where necessary, sometimes create. Model building is used to construct an effort
+estimation model based on our data set and variables.
+
+208 E. Mendes
+
+The Preliminary analysis phase is used to create new variables based on existing
+variables, discard unnecessary variables, and modify existing variables (e.g. joining
+categories). The net result of this phase is to obtain a set of variables that are ready to
+use in the next phase, model building. Since this phase will construct an effort model
+using stepwise regression we need to ensure that the variables comply with the assumptions underlying regression analysis, which are as follows [25][28][26]:
+
+1. The input variables (size measures and cost drivers) are measured without error.
+If this cannot be guaranteed then these variables need to be normalised using a
+transformation.
+
+2. The relationship between size measures & cost drivers and effort is linear.
+3. No important input variables have been omitted. This ensures that there is no
+specification error associated with the dataset. The use of a prior assumptionbased model justifying the choice of input variables ensures this assumption is
+not violated.
+
+4. The variance of the residuals is the same for all combinations of input variables
+(i.e. the residuals are homoscedastic rather than heteroscedastic). A residual
+within the context of this book is the difference between actual and estimated ef
+fort.
+5. The residuals must be normally distributed.
+6. The residuals must be independent, i.e. not correlated.
+7. The size measures & cost drivers are not linearly dependent, i.e. there are no linear dependencies between these variables.
+
+The first task within the preliminary analysis phase is to examine the entire set of
+variables and check if there are any variables containing a significant amount of missing values (> 40%). If yes, they should be automatically discarded as they prohibit the
+use of imputation methods, which are methods used to replace missing values with
+estimated values, and will further prevent the identification of useful trends in the
+data.
+Our next step is to look for symptoms (e.g. skewness, heteroscedasticity, and outliers) that may suggest the need for variables to be normalised, i.e. having their values
+transformed such that they more closely resemble a normal distribution. This step
+uses histograms, boxplots, and scatter plots.
+Skewness measures to what extent the distribution of data values is symmetrical
+about a central value; heteroscedasticity represents unstable variance of values; finally, outliers are unusual values.
+Histograms, or bar charts, provide a graphical display, where each bar summarises
+the frequency of a single value or range of values for a given variable. They are often
+used to check if a variable is normally distributed, in which case the bars are displayed in the shape of a bell-shaped curve. Some of the Histograms for the numerical
+variables are shown in Figure 8, and suggest that variables present skewed distributions, i.e. values not symmetrical about a central value.
+Next, boxplots are used to check the existence of outliers.
+The boxplots for some of the numerical variables (see Fig. 9) indicate that they
+present a large number of outliers and peaked distributions that are not symmetric.
+Whenever outliers are present they should be investigated further, since they may be a
+result of data entry error. In our analysis we looked at all cases, in particular in
+
+Web Cost Estimation and Productivity Benchmarking 209
+
+relation to projects that exhibited very large effort values, but did not find anything in
+the data to suggest they should be removed from the data set. Note that when there are
+doubts about the correctness of the data, the best solution is to contact the data source
+for confirmation. An assessment should only be based on consistency with other variables if the source is not available.
+
+
+NEWWP
+
+120.0 560.0 1000.0 1440.0 1880.0
+
+NEWWP
+
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+TOTWP
+
+120.0 560.0 1000.0 1440.0 1880.0
+
+TOTWP
+
+
+Std. Dev = 271.04
+
+Mean = 101.3
+
+N = 87.00
+
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+
+Std. Dev = 262.98
+
+Mean = 82.9
+
+N = 87.00
+
+
+**Fig. 8.** Examples of Histograms [26]
+
+2250
+
+2000
+
+1750
+
+1500
+
+1250
+
+1000
+
+750
+
+500
+
+250
+
+0
+-250
+
+N = 87 87 87 87
+
+
+TOTWP
+
+
+TOTIMG
+
+
+NEWWP
+
+
+IMGNEW
+
+
+**Fig. 9.** Examples of Boxplots [26]
+
+In terms of the Tukutuku data used in this Section, both histograms and boxplots
+indicated symptoms of skewness and outliers. When this situation arises it is common
+practice to normalise the data, i.e. to transform the data trying to approximate the values to a normal distribution. A common transformation is to take the natural log (ln),
+which makes larger values smaller and brings the data values closer to each other
+
+[25]. However, before transforming the data a statistical test can be used to confirm if
+the data is not normally distributed. If the dataset is small the test to use is the
+Shapiro-Wilk test of normality; otherwise it is the One-Sample Kolmogorov-Smirnov
+Test (K-S test). Both tests compare an observed distribution to a theoretical distribution. The K-S test found that none of the variables had distributions that matched the
+
+normal distribution. Therefore all variables had to be transformed. The transformation
+
+210 E. Mendes
+
+applied in our case to all numerical variables was the natural log transformation. For
+consistency, all variables with a value of zero had one added to their values prior to
+being transformed, as there is no natural log of zero.
+The last part of the preliminary analysis is to check if the relationship between the
+effort and the size measures & cost drivers is linear. The tool used to check such relationships is a scatter plot. Scatter plots are used to explore possible relationships between numerical variables. They also help to identify strong and weak relationships
+between two numerical variables. A strong relationship is represented by observations
+(data points) falling very close to or on the trend line. A weak relationship is shown
+by observations that do not form a clear pattern, which in our case is a straight line.
+Examples of scatter plots for the Tukutuku dataset are shown in Fig. 10.
+
+
+10
+
+8
+
+6
+
+4
+
+2
+
+0
+
+-2
+
+-2 0 2 4 6 8
+
+LTOTWP
+
+
+10
+
+8
+
+6
+
+4
+
+2
+
+0
+
+-2
+
+-.5 0.0 .5 1.0 1.5 2.0 2.5 3.0
+
+LTOTHIGH
+
+
+**Fig. 10.** Examples of Scatter plots [26]
+
+Whenever a size measure or cost driver exhibits a large number of zero values (e.g.
+LTOTHIGH in Fig. 10), it causes the dependent variable to exhibit more variability at
+the zero point, i.e. when size measures & cost drivers have zero values, compared
+with non-zero values. This behaviour violates the fourth assumption underlying linear
+regression. Therefore, whenever this happens, the variable that exhibits a large number of zero values needs to be excluded from any subsequent analysis.
+Our next step is to build the regression-based effort model using a two-step process. The first step is to use a manual stepwise regression based on residuals to select
+the categorical and numerical variables that jointly have a statistically significant effect on effort. The second step is to use these selected variables to build the final
+effort model using multivariate regression, which is a linear regression that uses more
+than one predictor variable.
+
+                    Building the Model Using a Two Step Process
+The manual stepwise procedure uses data on the residuals to select the best predictor
+variables. This procedure, proposed by Kitchenham [19], enables the use of information on residuals to handle relationships amongst predictor variables (size measures
+and cost drivers). In addition, it only selects the input variables that jointly have a statistically significant effect on effort, thus avoiding any multi-collinearity problems. A
+detailed example explaining the use of this procedure is presented in [26]. Once the
+
+Web Cost Estimation and Productivity Benchmarking 211
+
+best predictor variables have been selected, the next step is to construct the full regression-based algorithmic effort estimation model, by applying a multivariate regression
+using only the variables that have been selected from the manual stepwise procedure.
+At each stage of the stepwise process we also need to verify the stability of the
+model. This involves identifying if there are high–influence data points that could be
+responsible for driving all the observed patterns in the model. In addition, we also
+check if residuals are homoscedastic and normally distributed. Several types of plots
+(e.g. residual, leverage, probability) and statistics are available in most statistics tools
+to accomplish such tasks, and several examples are given in [26].
+Based on the dataset used in this Chapter, the manual stepwise procedure selected
+the variables LNEWWP, LTOTHIGH and LDEVTEAM. When they are used together as input to a regression-based algorithmic technique (multivariate regression),
+they provide the results shown in Table 4. The model’s adjusted R [2] is 0.765 suggesting that LNEWWP, LTOTHIGH and LDEVTEAM can explain 76.5% of the variation in LTOTEFF.
+
+**Table 4.** Coefficients of the regression-based effort model [26]
+
+|Variable|Coeff.|Std. error|t|P>|t||[95% conf. interval]|Col7|
+|---|---|---|---|---|---|---|
+|(Constant)|1.544|0.185|8.368|0.000|1.177|1.912|
+|LNEWWP|0.523|0.056|9.270|0.000|0.411|0.635|
+|LTOTHIGH|0.797|0.157|5.076|0.000|0.485|1.110|
+|LDEVTEAM|0.860|0.201|4.274|0.000|0.460|1.260|
+
+
+
+Extraction of the Effort Equation
+The Equation obtained from Table 4 is shown to be:
+
+*LTOTEFF* = .1544 + .0523 *LNEWWP* + .0797 *LTOTHIGH* + .0860 *LDEVTEAM* [(5) ]
+
+This equation uses four variables that had been previously transformed; therefore
+we need to transform them back to their original states, which gives the following
+Equation:
+
+.0523 .0797 .0860
+*TOTEFF* = .4683( *NEWWP* +)1 ( *TOTHIGH* +)1 ( *DEVTEAM* ) (6)
+
+In Equation 6, the multiplicative value 4.683 can be interpreted as the effort required developing a single Web page.
+Obtaining a model that has a good fit to the data and alone can explain a large degree of the variation in effort is not enough to assume this model will provide good
+effort predictions for new projects. To confirm this, this model also needs to be validated. This is the procedure explained in the next Section.
+
+Model Validation
+
+In order to validate an effort estimation model, we need to use data from completed
+Web projects as input to the model, in order to check, for each of the projects used as
+input, if the estimated effort suggested by the model matches the project’s actual effort. To simulate this situation the following steps are followed:
+
+212 E. Mendes
+
+1. The original dataset *d* is split into a training set *t* and a validation set *v* . Here
+we may use several training and validation sets; however within the context of
+this chapter we will only employ a single training & validation set.
+2. Use *t* to produce an effort estimation model *te* .
+3. Use *te* to predict effort for each of the projects in *v*, as if these projects were
+new projects for which effort was unknown.
+
+This process is known as cross-validation. For an *n* -fold cross-validation, *n* different training/validation sets are used. In this section we will show the cross-validation
+procedure using a one-fold cross-validation, with a 66% split. This split means that
+66% of our project data will be used as training set for model building, the remaining
+34% to validate the model, i.e. the training set will have 66% of the total number of
+projects and the validation set will have the remaining 34%.
+As previously mentioned the initial data set had 87 projects, which were split into
+training and validation sets containing 58 and 29 projects, respectively. Generally
+projects are allocated to training/validation sets randomly.
+We created a regression-based algorithmic effort model using the 58 projects in the
+training set. Here we do not need to repeat the manual stepwise procedure. We simply
+use as predictor variables the only three variables that have been previously selected
+using the manual stepwise procedure: LNEWWP, LTOTHIGH and LDEVTEAM.
+The model’s coefficients are presented in Table 5, and the transformed equation is
+presented as Equation 7. The model’s adjusted R [2] was 0.668.
+
+*TOTEFF* = 10.935 ( *NEWWP* +)1 .0391 ( *TOTHIGH* +)1 .0714 ( *DEVTEAM* ) .0677 (7)
+
+**Table 5.** Coefficients of the regression-based training set effort model [26]
+
+|Variable|Coeff.|Std. error|t|P>|t||[95% conf. interval]|Col7|
+|---|---|---|---|---|---|---|
+|(Constant)|2.392|0.268|8.908|0.000|1.853|2.930|
+|LNEWWP|0.391|0.069|5.677|0.000|0.253|0.529|
+|LTOTHIGH|0.714|0.157|4.549|0.000|0.399|1.029|
+|LDEVTEAM|0.677|0.225|3.013|0.004|0.227|1.127|
+
+
+
+To measure this model’s prediction accuracy we used the following measures [6]:
+
+   - Mean Magnitude of Relative Error (MMRE), which is the mean MRE.
+
+   - Median Magnitude of Relative Error (MdMRE), which is the median
+MRE.
+
+   - Prediction at 25% (Pred(25)), which measures the percentage of projects
+with MRE <= 0.25
+
+MRE is the basis for calculating MMRE and MdMRE, and defined as:
+
+
+*MRE* =
+
+
+e − eˆ
+(8)
+
+e
+
+
+where *e* represents actual effort and *ê* estimated effort.
+
+Web Cost Estimation and Productivity Benchmarking 213
+
+
+**(1)**
+
+
+**E stimated effort,**
+**Actual effort**
+
+**MRE,**
+**Residual**
+
+**(5)**
+
+**MMRE,**
+**MdMRE,**
+**Pred(25)**
+
+
+**(1)**
+
+
+**(4)**
+
+**(3)**
+**(2)**
+
+**Model in Equation 7**
+
+
+**Fig. 11.** Steps used in the cross-validation process [26]
+
+**Table 6.** Accuracy of training set-based model [26]
+
+|Measure|%|
+|---|---|
+|MMRE|129|
+|MdMRE|73|
+|Pred(25)|17.24|
+
+
+
+MRE is gathered for each of the projects in the validation set (see Fig. 11)
+How do we know if the prediction obtained for our model is reasonable?
+If we were to use, instead of the effort model, the average actual effort (average =
+261) or the median actual effort for the 58 projects (median = 43) as the estimated
+effort for each of the projects in the validation set, then prediction accuracy would be
+considerably worse (see Table 7). This means that, although the accuracy obtained
+using MMRE, MdMRE and Pred(25) does not seem wonderful, it would still be advantageous for a Web company to have used our effort model rather than to simply
+use as estimated effort the mean or median effort for past finished Web projects.
+We suggest that a viable approach for a Web company would be to use the effort
+model described above to obtain an estimated effort, and to revisit the effort suggested by the model taking into account factors such as previous experience with
+similar projects and the skills of the developers. This means that the estimated effort
+provided by our model could still be calibrated to local circumstances, which would
+dictate the final estimate to be used for a new Web project.
+
+**Table 7.** Prediction accuracy measures based on average and median effort [26]
+
+|Col1|Average effort as estimated effort|Median effort as estimated effort|
+|---|---|---|
+|MMRE|4314%|663%|
+|MdMRE|1413%|149%|
+|Pred(25)|6.89%|3.44%|
+
+214 E. Mendes
+
+**5  Web Productivity Measurement**
+
+Productivity is commonly measured as the ratio of output to input. The more output
+per unit of input, the more productive a project is assumed to be. Within the context
+of software development the output of the software production process is often taken
+to be product size and the input to the process to be effort. Therefore, productivity is
+represented by the following equation [20]:
+
+*Productivity = Size/Effort* (9)
+
+Equation 9 can be used whenever product size is represented by a single dominant
+size measure (e.g. product size measured in lines of code or function points). However, there are circumstances when there are several different effort-related size
+measures and there is no standard model for aggregating these measures. When we
+have more than one size measure related to effort and no theoretical model for aggregating those measures, it is difficult to construct a single size measure. In these circumstances, Equation 9 cannot be used to measure productivity. This is exactly the
+problem we face when attempting to measure Web application productivity. The majority of studies published in the Web sizing literature have identified the need to use
+a variety of different measures to adequately characterise the size of a Web application, but there is no widely accepted method for aggregating the measures into a single size measure. In order to provide a solution to this problem, Kitchenham and
+Mendes [20] proposed a productivity measurement method that allows for the use of
+multiple effort-related size measures. It is based on the idea that any *size-based effort*
+*estimation model* constructed using the stepwise regression technique is *by definition*
+a function of effort-related size measures. Thus the *size-based effort estimation model*
+can be regarded as an *AdjustedSize* *measure*, and used in the following equation to
+represent productivity [20]:
+
+*Productivity = AdjustedSize/Effort* (10)
+
+The *AdjustedSize* measure contains only size measures that *together* are strongly
+associated with effort. In addition, the relationship between these size measures and
+
+effort does not need to be linear.
+
+The benefits of using this method for measuring productivity are as follows [20]:
+
+  - The standard value of productivity is one, since it is obtained using the ratio of
+
+estimated to actual effort.
+
+  - A productivity value greater than one suggests above-average productivity.
+
+  - A productivity value smaller than one suggests below-average productivity.
+
+  - The stepwise regression technique used to build a regression model that represents the *AdjustedSize* measure can also be employed to construct upper and
+lower bounds on the productivity measure. These bounds can be used to assess
+whether the productivity achieved by a specific project is significantly better or
+worse than expected.
+
+  - The productivity measure automatically allows for diseconomies (or economies) of
+scale before being used in a productivity analysis. This means that an investigation
+
+Web Cost Estimation and Productivity Benchmarking 215
+
+of factors that affect productivity will only select factors that affect the productivity
+of all projects. If we ignore the impact of diseconomies (or economies) or scale, we
+run the risk of detecting factors that differ between large and small projects rather
+than factors that affect the productivity of all projects.
+
+**6  Web Productivity Measurement Case Study**
+
+The analysis presented in this Section was based on six datasets of Web projects from
+the Tukutuku database [35]. As shown in Table 8, the data comprises 111 Web projects contributed by six companies. These projects represent industrial Web applications developed by Web companies from four different countries. In Table 8 ‘Enh’
+means Enhancement projects; ‘Co’ means Company.
+All single-company datasets available as part of the Tukutuku database were used
+in this study because the productivity method used automatically accounts for economies and diseconomies of scale, therefore contrasting application sizes and effort will
+not have a bearing upon the results of our productivity analysis.
+Table 8 shows that all six companies presented similar team experience with the
+development languages employed in their projects, and provided carefully collected &
+validated data. Five companies follow a defined and documented process, and three
+have development teams that are involved in a process improvement programme &
+software metrics programmes. Four companies were formed over 10 years ago, and
+only one company does not follow a defined and documented development process.
+In terms of the amount of project data volunteered, except for Co-5, all companies
+volunteered a very similar number of projects.
+
+**Table 8.** Comparison amongst companies’ datasets
+
+Criterion Co-1 Co-2 Co-3 Co-4 Co-5 Co-6
+
+Number of projects used 13 14 20 15 31 18
+Average team experience 7 5 5 4 6 5
+(number of years) with the
+development language(s)
+employed
+
+Average team size 3 3 2 7 1 1
+Follows a defined and Yes Yes No Yes Yes Yes
+documented development process
+
+
+Its development team is involved
+in a process improvement
+
+programme
+
+
+Yes Yes No Yes No Yes
+
+
+Its development team is part of a Yes Yes No Yes No No
+software metrics programme
+
+Type of projects All 13 Enh All Enh All All 1 Enh
+New 1 New New New 17 New
+Was the data carefully collected Yes Yes Yes Yes Yes Yes
+and validated?
+
+Company’s age >10 <10 <10 >10 >10 >10
+
+y ears y ears y ears y ears y ears y ears
+
+216 E. Mendes
+
+AdjustedSize Models
+For each of the six datasets the following steps were carried out to obtain the AdjustedSize Model:
+The Manual Stepwise procedure proposed by Kitchenham [19] was used to identify the size variables that were strongly related with effort. While applying this procedure, we also verified the stability of each partial regression model generated. This
+involved identifying large residual and high-influence data points (i.e. projects), and
+also checking whether residuals were homoscedastic and normally distributed. Several types of plots (e.g. residual, leverage, probability) and statistics are available in
+most statistics tools to accomplish such task. The ones we have employed, all available in SPSS v15, were the following:
+
+  - A residual plot showing residuals vs. fitted values, to check if the residuals are
+random and normally distributed (data points distributed randomly about zero).
+
+  - A normal P–P plot (probability plots) for the residuals. Normal P–P plots are
+generally employed to verify whether the distribution of a variable is consistent with the normal distribution. If the distribution is Normal, the data
+points are close to linear.
+
+  - Cook’s D statistic to identify projects that exhibited jointly a large influence
+and large residual. Any projects with D greater than 4/ *n*, where *n* represents
+the total number of projects, are considered to have high influence on the results. When there are high-influence projects the stability of the model needs
+to be tested by removing these projects, and observing the effect their removal has on the model. If the coefficients remain stable and the adjusted R [2]
+increases, this indicates that the high-influence projects are not destabilising
+the model and therefore do not need to be removed.
+
+We also obtained upper and lower bounds of the *AdjustedSize* model to construct upper and lower bounds for the productivity values. This mechanism allows us to check the
+existence of productivity values significantly different from one (the baseline productivity). A detailed description on how to obtain upper and lower bounds is described in [28].
+Once each size-based effort model, i.e. size-based effort Equation, was obtained,
+they were used as the *AdjustedSize* models, and, by applying Equation 10, productivity values were obtained for each of the six datasets used in this investigation. *Ad-*
+*justedSize* models and corresponding adjusted R [2] are presented below:
+
+*AdjustedSize* model for Co-1 (adjusted R [2] = 0.540)
+
+.0964
+*TotEff* = .2307 *TotWP* (11)
+
+*AdjustedSize* model for Co-2 (adjusted R [2] = 0.376)
+*TotEff* = .9944 ( *Tot* Im *g* +)1 .0407 (12)
+
+*AdjustedSize* model for Co-3 (adjusted R [2] = 0.467)
+*TotEff* = .2529 *New* Im *g* .1124 (13)
+
+*AdjustedSize* model for Co-4 (adjusted R [2] = 0.693)
+*TotEff* = 886.953 +114.80 *Hnew* (14)
+
+Web Cost Estimation and Productivity Benchmarking 217
+
+*AdjustedSize* model for Co-5 (adjusted R [2] = 0.939)
+*TotEff* = .5818( *TotHigh* +)1 .0939 (15)
+
+*AdjustedSize* model for Co-6 (adjusted R [2] = 0.694)
+*TotEff* = 12.244 *TotWP* .0715 (16)
+
+The adjusted R [2] is a measure that indicates what percentage of variation in the dependent variable is explained by the independent variable(s). The closer it is to 1, the
+higher the explanatory power of the independent variable(s) selected by the model.
+For example *TotHigh* + 1 (see Equation 15) explains 93.9% of the variation in *TotEff*,
+which is remarkable. A low adjusted R [2] suggests that there are other variables that
+may also contribute to explain the variation in the dependent variable. These variables
+are very likely environmental (e.g. team’s experience), and removed from our analysis for not being size measures.
+
+Productivity Comparison
+Once the *AdjustedSize* models were obtained, our next step was to use Equation 10 to
+calculate productivity for each of the six datasets. Their descriptive statistics are shown
+in Table 9, where Co_1_p, Co_2_p, Co_3_p, Co_4_p, Co_5_p, and Co_6_p correspond
+to productivities for companies Co-1, Co-2, Co-3, Co-4, Co-5, and Co-6, respectively.
+
+**Table 9.** Descriptive statistics for Productivity values
+
+Statistics Co _ 1 _p Co _ 2 _p Co _ 3 _p Co _ 4 _p Co _ 5 _p Co _ 6 _p
+Mean 1.37 1.34 0.42 1.04 0.81 1.01
+
+Median 0.97 0.75 0.33 0.99 0.84 0.98
+
+Std. Deviation 1.05 1.23 0.46 0.20 0.35 0.36
+
+Minimum 0.11 0.44 0.00 0.82 0.30 0.40
+
+Maximum 3.80 4.27 1.45 1.44 2.26 1.57
+
+**Fig. 12.** Boxplots of productivity values for all six Companies
+
+218 E. Mendes
+
+Table 9 shows that three companies (Co-6, Co-1, Co-4) had their median productivity very close to the productivity baseline of 1, indicating that half of their projects
+presented above average productivity and the other half presented below average productivity. Companies Co-5 and Co-2 presented median productivity slightly smaller
+than 1, indicating that more than half of their projects presented below average productivity. Finally, company Co-3 presented median productivity well below 1, thus
+indicating that most of its projects presented below average productivity. Companies
+Co-1 and Co-2 presented productivity values with a larger spread than the other companies, as indicated by their standard deviation.
+A visual complement to descriptive statistics is boxplots of productivity values.
+Fig. 12 shows boxplots of the productivity distributions for the six different companies. These boxplots suggest that the productivity values for companies Co_6, Co_1
+and Co_4 are normally distributed, confirmed by the Shapiro-Wilk normality test
+(α = 0.05). Company Co_4 presents a very peaked distribution showing that most of
+its productivity values lay around the baseline of 1; conversely, companies Co_1 and
+Co_2 present flatter distributions with a wider spread of values. Company Co_3
+presented 19 of its productivity values below the baseline, indicating very poor productivity. The number of projects (and percentages) above 1, equal to 1 and below 1,
+per company, are detailed in Table 10.
+
+**Table 10.** Productivity values < 1, = 1, > 1
+
+|Col1|Number and (Percentage) of Projects|Col3|Col4|
+|---|---|---|---|
+|Companies|Above 1|Equal to 1|Below 1|
+|Co-1|6 (46%)|0 (0%)|7 (54%)|
+|Co-2|6 (43%)|0 (0%)|8 (57%)|
+|Co-3|3 (15%)|0 (0%)|17 (85%)|
+|Co-4|7 (47%)|0 (0%)|8 (53%)|
+|Co-5|5 (16%)|1 (3%)|25 (81%)|
+|Co-6|9 (50%)|0 (0%)|9 (50%)|
+
+
+
+
+
+
+
+
+
+
+p=0.054
+
+**Fig. 13.** Findings for the Statistical Significance test
+
+36
+34
+32
+30
+28
+26
+24
+22
+20
+18
+16
+~~14~~
+12
+10
+0 [2468]
+
+14
+
+12
+
+10
+
+8
+
+6
+
+4
+
+2
+
+0
+
+
+LICI_p Prod UICI_p LICI_p Prod UICI_p
+
+(c) (d)
+
+
+Web Cost Estimation and Productivity Benchmarking 219
+
+30
+
+25
+
+20
+
+15
+
+~~10~~
+
+5
+
+0
+
+
+1 2 3 4 5 6 7 8 9 10 11 12 13
+
+LICI_p Prod UICI_p
+
+(a)
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+
+
+2.5
+
+2.0
+
+1.5
+
+~~1~~ . ~~0~~
+
+0.5
+
+0.0
+
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14
+
+LICI_p Prod UICI_p
+
+(b)
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+
+
+
+1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31
+
+
+
+|Col1|7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>11 12 13 14 15 16 17 18 1 3 5 7 9 11 13 15<br>d UICI_p LICI_p|
+|---|---|
+|4.5<br>4<br>3.5<br>3<br>2.5<br>2<br>1.5<br>1<br>0.5<br>0<br>1 2 3 4 5 6 7 8 9 10<br>LICI_p Pro|4.5<br>4<br>3.5<br>3<br>2.5<br>2<br>1.5<br>1<br>0.5<br>0<br>1 2 3 4 5 6 7 8 9 10<br>LICI_p Pro|
+
+
+(e) (f)
+
+
+(f)
+
+
+**Fig. 14.** Productivity and confidence intervals for all six Companies
+
+These overall trends suggest that the companies that presented the best productivity
+were Co-6, followed by Co-4, Co-1 and Co-2. However, we still need to conduct a
+statistical significance test to ensure that the observed productivity differences between companies are legitimate, rather than having occurred due to chance. Statistical
+significance tests are used to check if different groups of data present similar distributions. If they do, this means that any observed differences between groups are due to
+chance alone. The statistical significance test used was the Mann-Whitney U test because the samples being compared were independent, and productivity values were
+not randomly distributed, confirmed using the Shapiro-Wilk normality test. Statistical
+significance was set at 95%.
+
+220 E. Mendes
+
+The results of the Mann-Whitney U test are presented in Fig. 13, where an arrow
+from Company A to Company B indicates that Company A presented significantly
+superior productivity than Company B. A single line between two Companies indicates that there were no real differences between these Companies’ productivity.
+These results show that Company Co_3 presented statistically worse productivity
+than Co_5 and Co_6, and that Co_4 presented significantly superior productivity
+to Co_5. Overall Co_1, Co_2, Co_5 and Co_6 all presented similar productivity; Co_4
+presented similar productivity to Co_6 and significantly better productivity
+than Co_5.
+We have also obtained confidence intervals that were used to check if productivity
+values were significantly different from 1 (see Fig. 14).
+In Fig. 14 productivity is identified as ‘Prod’, lower individual confidence interval
+as ‘LICI_p’, and upper individual confidence interval as ‘UICI_p’. The productivity
+for companies Co_1, Co_2, Co_3, Co_4, Co_5, and Co_6 are displayed in Fig. 3(a),
+Fig. 3(b), Fig. 3(c), Fig. 3(d), Fig. 3(e), and Fig. 3(f), respectively. What we would
+normally expect is to see the productivity line always in between the lower (LICI_p)
+and upper (UICI_p) confidence interval lines, as this is an indication that all productivity values are not drastically low or high. This was clearly the pattern observed for
+all Companies, except for Co_3, which presented productivity values below the
+LICI_p threshold for seven of its 20 projects, indicating extremely poor productivity
+for those projects.
+
+**7  Conclusions**
+
+This Chapter presented an introduction to Web effort estimation and Web productivity measurement, and in addition it also presented two case studies, one on Web effort
+estimation, and another on Web productivity benchmarking. Both case studies used
+data on Web projects from the Tukutuku database.
+
+**References**
+
+[1] Angelis, L., Stamelos, I.: A Simulation Tool for Efficient Analogy Based Cost Estimation.
+Empirical Software Engineering 5, 35–68 (2000)
+
+[2] Boehm, B.: Software Engineering Economics. Prentice-Hall, Englewood Cliffs (1981)
+
+[3] Briand, L.C., El-Emam, K., Surmann, D., Wieczorek, I., Maxwell, K.D.: An Assessment
+and Comparison of Common Cost Estimation Modeling Techniques. In: Proceedings of
+ICSE 1999, Los Angeles, USA, pp. 313–322 (1999)
+
+[4] Briand, L.C., Langley, T., Wieczorek, I.: A Replicated Assessment and Comparison of
+Common Software Cost Modeling Techniques. In: Proceedings of ICSE 2000, Limerick,
+Ireland, pp. 377–386 (2000)
+
+[5] Brieman, L., Friedman, J., Olshen, R., Stone, C.: Classification and Regression Trees.
+Wadsworth, Belmont (1984)
+
+[6] Conte, S., Dunsmore, H., Shen, V.: Software Engineering Metrics and Models. Benjamin/
+Cummings, Menlo Park (1986)
+
+Web Cost Estimation and Productivity Benchmarking 221
+
+[7] DeMarco, T.: Controlling Software Projects: Management, Measurement and Estimation.
+Yourdon, New York (1982)
+
+[8] Finnie, G.R., Wittig, G.E., Desharnais, J.-M.: A Comparison of Software Effort Estimation Techniques: Using Function Points with Neural Networks, Case-Based Reasoning
+and Regression Models. Journal of Systems and Software 39, 281–289 (1997)
+
+[9] Gray, A., MacDonell, S.: Applications of Fuzzy Logic to Software Metric Models for Development Effort Estimation. In: Proceedings of IEEE Annual Meeting of the North
+American Fuzzy Information Processing Society - NAFIPS, Syracuse, NY, USA, pp.
+394–399 (1997)
+
+[10] Gray, A., MacDonell, S.: A comparison of model building techniques to develop predictive equations for software metrics. Information and Software Technology 39, 425–437
+(1997)
+
+[11] Gray, R., MacDonell, S.G., Shepperd, M.J.: Factors Systematically associated with errors
+in subjective estimates of software development effort: the stability of expert judgement.
+In: Proceedings of the 6th IEEE Metrics Symposium (1999)
+
+[12] Hughes, R.T.: An Empirical investigation into the estimation of software development effort. PhD thesis, Dept. of Computing, University of Brighton (1997)
+
+[13] Jeffery, R., Ruhe, M., Wieczorek, I.: A Comparative study of two software development
+cost modelling techniques using multi-organizational and company-specific data. Information and Software Technology 42, 1009–1016 (2000)
+
+[14] Jeffery, R., Ruhe, M., Wieczorek, I.: Using Public Domain Metrics to Estimate Software
+Development Effort. In: Proceedings of the 7th IEEE Metrics Symposium, London, UK,
+pp. 16–27 (2001)
+
+[15] Jensen, F.V.: An introduction to Bayesian networks. UCL Press, London (1996)
+
+[16] Kadoda, G., Cartwright, M., Chen, L., Shepperd, M.J.: Experiences Using Case-Based
+Reasoning to Predict Software Project Effort. In: Proceedings of the EASE 2000 Conference, Keele, UK (2000)
+
+[17] Kemerer, C.F.: An Empirical Validation of Software Cost Estimation Models. Communications of the ACM 30(5), 416–429 (1987)
+
+[18] Kirsopp, C., Shepperd, M.J.: Making Inferences with Small Numbers of Training Sets,
+January, TR02-01, Bournemouth University (2001)
+
+[19] Kitchenham, B.A.: A Procedure for Analyzing Unbalanced Datasets. IEEE Transactions
+on Software Engineering 24(4), 278–301 (1998)
+
+[20] Kitchenham, B.A., Mendes, E.: Software Productivity Measurement Using Multiple Size
+Measures. IEEE Transactions on Software Engineering 30(12), 1023–1035 (2004)
+
+[21] Kitchenham, B.A., MacDonell, S.G., Pickard, L.M., Shepperd, M.J.: What accuracy statistics really measure. IEEE Proceedings Software 148(3), 81–85 (2001)
+
+[22] Kitchenham, B.A., Pickard, L.M., Linkman, S., Jones, P.: Modelling Software Bidding
+Risks. IEEE Transactions on Software Engineering 29(6), 54–554 (2003)
+
+[23] Kok, P., Kitchenham, B.A., Kirakowski, J.: The MERMAID Approach to software cost
+estimation. In: Proceedings of the ESPRIT Annual Conference, Brussels, pp. 296–314
+(1990)
+
+[24] Kumar, S., Krishna, B.A., Satsangi, P.S.: Fuzzy systems and neural networks in software
+engineering project management. Journal of Applied Intelligence 4, 31–52 (1994)
+
+[25] Maxwell, K.: Applied Statistics for Software Managers. Prentice Hall PTR, Englewood
+Cliffs (2002)
+
+[26] Mendes, E.: Cost Estimation Techniques for Web Projects. IGI Publishing (2007)
+
+[27] Mendes, E., Kitchenham, B.A.: Web Productivity Measurement and Benchmarking. In:
+Mendes, E., Mosley, N. (eds.) Web Engineering, pp. 75–105. Springer, Heidelberg (2005)
+
+222 E. Mendes
+
+[28] Mendes, E., Mosley, N. (eds.): Web Engineering. Springer, Heidelberg (2005)
+
+[29] Mendes, E., Counsell, S., Mosley, N.: Measurement and Effort Prediction of Web Applications. In: Murugesan, S., Desphande, Y. (eds.) Web Engineering. LNCS, vol. 2016, pp.
+57–74. Springer, Heidelberg (2001)
+
+[30] Mendes, E., Mosley, N., Counsell, S.: Web Metrics – Estimating Design and Authoring
+Effort. IEEE Multimedia, Special Issue on Web Engineering, 50–57 (January/March
+2001)
+
+[31] Mendes, E., Mosley, N., Counsell, S.: The Application of Case-Based Reasoning to Early
+Web Project Cost Estimation. In: Proceedings of COMPSAC 2002, Oxford, UK (2002)
+
+[32] Mendes, E., Mosley, N., Counsell, S.: Do Adaptation Rules Improve Web Cost Estimation? In: Proceedings of the ACM Hypertext conference 2003, Nottingham, UK (2003)
+
+[33] Mendes, E., Mosley, N., Counsell, S.: A Replicated Assessment of the Use of Adaptation
+Rules to Improve Web Cost Estimation. In: Proceedings of the ACM and IEEE International Symposium on Empirical Software Engineering, Rome, Italy, pp. 100–109 (2003)
+
+[34] Mendes, E., Mosley, N., Counsell, S.: Early Web Size Measures and Effort Prediction for
+Web Costimation. In: Proceedings of the IEEE Metrics Symposium, Sydney, Australia,
+pp. 18–29 (September 2003)
+
+[35] Mendes, E., Mosley, N., Counsell, S.: Investigating Web Size Metrics for Early Web Cost
+Estimation. Journal of Systems and Software 77(2), 157–172 (2005)
+
+[36] Myrtveit, I., Stensrud, E.: A Controlled Experiment to Assess the Benefits of Estimating
+with Analogy and Regression Models. IEEE Transactions on Software Engineering 25(4),
+510–525 (1999)
+
+[37] Ruhe, M., Jeffery, R., Wieczorek, I.: Cost Estimation for Web Applications. In: Proceedings of ICSE 2003, Portland, USA (2003)
+
+[38] Schofield, C.: An empirical investigation into software estimation by analogy. PhD thesis,
+Dept. of Computing, Bournemouth University (1998)
+
+[39] Schroeder, L., Sjoquist, D., Stephan, P.: Understanding Regression Analysis: An Introductory Guide, No. 57. In: Quantitative Applications in the Social Sciences. Sage Publications, Newbury Park (1986)
+
+[40] Selby, R.W., Porter, A.A.: Learning from examples: generation and evaluation of decision
+trees for software resource analysis. IEEE Transactions on Software Engineering 14,
+1743–1757 (1998)
+
+[41] Shepperd, M.J., Kadoda, G.: Using Simulation to Evaluate Prediction Techniques. In:
+Proceedings of the IEEE 7th International Software Metrics Symposium, London, UK,
+pp. 349–358 (2001)
+
+[42] Shepperd, M.J., Schofield, C.: Estimating Software Project Effort Using Analogies. IEEE
+Transactions on Software Engineering 23(11), 736–743 (1997)
+
+[43] Shepperd, M.J., Schofield, C., Kitchenham, B.: Effort Estimation Using Analogy. In: Proceedings of ICSE-18, Berlin (1996)
+
+[44] Srinivasan, K., Fisher, D.: Machine Learning approaches to estimating software development effort. IEEE Transactions on Software Engineering 21, 126–137 (1995)
+
+[45] Stensrud, E., Foss, T., Kitchenham, B.A., Myrtveit, I.: An Empirical validation of the relationship between the magnitude of relative error and project size. In: Proceedings of the
+IEEE 8th Metrics Symposium, Ottawa, pp. 3–12 (2002)
+

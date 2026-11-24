@@ -1,0 +1,1154 @@
+**First International Symposium on Empirical Software Engineering and Measurement**
+# **A Comparison of Techniques for Web Effort Estimation **
+
+Emilia Mendes
+
+*Computer Science Department*
+*University of Auckland*
+*Private Bag 92019, Auckland, New Zealand*
+*+64 9 373 7599 86137*
+*emilia@cs.auckland.ac.nz*
+
+
+**Abstract**
+
+*OBJECTIVE – The objective of this paper is to*
+*extend the work by Mendes [15], and to compare four*
+*techniques for Web effort estimation to identify which*
+*one provides best prediction accuracy.*
+*METHOD – We employed four effort estimation*
+*techniques – Bayesian networks (BN), forward*
+*stepwise regression (SWR), case-based reasoning*
+*(CBR) and Classification and regression trees (CART)*
+*to obtain effort estimates. The dataset employed was of*
+*150 Web projects from the Tukutuku dataset.*
+*RESULTS – Results showed that predictions*
+*obtained using a BN were significantly superior to*
+*those using other techniques.*
+*CONCLUSIONS – A model that incorporates the*
+*uncertainty* *inherent* *in* *effort* *estimation,* *can*
+*outperform other commonly used techniques, such as*
+*those used in this study.*
+
+**1. Introduction**
+
+A cornerstone of Web project management is sound
+resource estimation, the process by which resources
+are estimated and allocated effectively, enabling
+projects to be delivered on time and within budget.
+Resources are factors, such as cost, effort, quality,
+‘problem size’, that have a bearing on a project’s
+outcome. Within the scope of resource estimation, the
+causal relationship between factors is not deterministic
+and has an inherently uncertain nature. E.g. assuming
+there is a relationship between development effort and
+an application’s quality, it is not necessarily true that
+increased effort will lead to improved quality.
+However, as effort increases so does the *probability* of
+improved quality. Resource estimation is a complex
+domain where corresponding decisions and predictions
+require reasoning with uncertainty.
+In Web project management the complete
+understanding of which factors affect a project’s
+
+
+outcome and the causal relationships between factors
+is unknown. In addition, as Web development differs
+substantially from software development [19], there is
+currently little research on resource estimation for
+software projects that can be readily reused.
+Web development, despite being a relatively young
+industry, initiated just 13 years ago, currently
+represents an increasing market at a rate of 20% per
+year, with Web e-commerce sales alone surpassing 95
+billion USD in 2004 (three times the revenue from the
+world’s aerospace industry) [1] [26]. Unfortunately, in
+contrast, most Web development projects suffer from
+unrealistic project schedules, leading to applications
+that are rarely developed on time and within budget
+
+[26].
+There have been numerous attempts to model
+resource estimation of Web projects, but none yielded
+a complete causal model incorporating all the
+necessary component parts. Mendes and Counsell [17]
+were the first to investigate this field by building a
+model that used machine-learning techniques with data
+from student-based Web projects, and size measures
+harvested late in the project’s life cycle. Mendes and
+collaborators also carried out a series of consecutive
+
+studies [7],[16],[17]-[23] where models were built
+using multivariate regression and machine-learning
+techniques using data on industrial Web projects.
+Recently they also proposed and validated size
+measures harvested early in the project’s life cycle,
+and therefore better suited to resource estimation [18].
+Other researchers have also investigated resource
+estimation for Web projects. Reifer [27] proposed an
+extension of an existing software engineering resource
+model, and a single size measure harvested late in the
+project’s life cycle. None were validated empirically.
+
+1 http://www.aia-erospace.org/stats/aero_stats/stat08.pdf
+http://www.tchidagraphics.com/website_ecommerce.htm
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+This size measure was later used by Ruhe et al. [28],
+who further extended a software engineering hybrid
+estimation technique to Web projects, using a small
+data set of industrial projects, mixing expert judgement
+and multivariate regression. Later, Baresi et al. [1], and
+Mangia et al. [14] investigated effort estimation
+models and size measures for Web projects based on a
+specific Web development method. Finally,
+Costagliola et al. [4] compared two types of Webbased size measures for effort estimation.
+
+Mendes [15] recently investigated the use of a
+Bayesian network (BN) [8] for Web effort estimation
+and benchmarked its prediction accuracy against a
+multivariate regression-based model. Both models
+were employed to estimate effort for 30 Web projects
+using as training set data on 120 Web projects from the
+Tukutuku database [18]. Mendes’ results were
+encouraging and showed that the BN provided
+superior predictions to those from a regression-based
+model. This study’s contribution is to extend Mendes’
+work by adding another two estimation techniques to
+the comparison, namely Case-based reasoning (CBR)
+and Classification and Regression Trees (CART).
+These techniques were chosen as they have, in addition
+to multivariate regression, been previously used for
+Web effort estimation [23].
+Prediction accuracy was measured using commonly
+used measures such as MMRE, Pred(25), and Median
+MRE.
+
+The remainder of the paper is organised as follows:
+Section 2 describes the dataset used in this
+
+investigation. Sections 3 to 6 describe the techniques
+used and how they were employed in this study, and a
+comparison of their predictive accuracy is given in
+Section 7. Finally, conclusions and comments on
+future work are given in Section 8.
+
+**2. Data set Description**
+The analysis presented in this paper was based on
+data from 150 Web projects from the Tukutuku
+database [18], which aims to collect data from
+completed Web projects to develop Web cost
+estimation models and to benchmark productivity
+across and within Web Companies. The Tukutuku
+includes Web hypermedia and Web software
+applications [3], which represent static and dynamic
+applications, respectively.
+The Tukutuku database has data on 150 projects
+where:
+
+� Projects come from 10 different countries, mainly
+New Zealand (56%), Brazil (12.7%), Italy (10%),
+Spain (8%), United States (4.7%), England (2.7%),
+and Canada (2%).
+
+
+� Project types are new developments (56%) or
+enhancement projects (44%).
+� The applications are mainly Legacy integration
+(27%), Intranet and eCommerce (15%).
+� The languages used are mainly HTML (88%),
+Javascript (DHTML/DOM) (76%), PHP (50%),
+Various Graphics Tools (39%), ASP (VBScript,
+.Net) (18%), and Perl (15%).
+
+Each Web project in the database was characterized
+by 25 variables, related to the application and its
+development process (see Table 1).
+
+**Table 1 - Variables for the Tukutuku database**
+
+|Variable<br>Name|Scale|Description|
+|---|---|---|
+|COMPANY DATA|COMPANY DATA|COMPANY DATA|
+|Country|Categorical|Country company belongs to.|
+|Established|Ordinal|Year when company was established.|
+|nPeople|Ratio|Number of people who work on Web<br>design and development.|
+|PROJECT DATA|PROJECT DATA|PROJECT DATA|
+|TypeProj|Categorical|Type of project (new or enhancement).|
+|nLang|Ratio|Number of different development<br>languages used|
+|DocProc|Categorical|If project followed defined and<br>documented process.|
+|ProImpr|Categorical|If project team involved in a process<br>improvement programme.|
+|Metrics|Categorical|If project team part of a software<br>metrics programme.|
+|DevTeam|Ratio|Size of a project’s development team.|
+|TeamExp|Ratio|Average team experience with the<br>development language(s) employed.|
+|TotEff|Ratio|Actual total effort used to develop the<br>Web application.|
+|EstEff|Ratio|Estimated total effort necessary to<br>develop the Web application.|
+|Accuracy|Categorical|Procedure used to record effort data.|
+|WEB APPLICATION|WEB APPLICATION|WEB APPLICATION|
+|TypeApp|Categorical|Type of Web application developed.|
+|TotWP|Ratio|Total number of Web pages (new and<br>reused).|
+|NewWP|Ratio|Total number of new Web pages.|
+|TotImg|Ratio|Total number of images (new and<br>reused).|
+|NewImg|Ratio|Total number of new images created.|
+|Fots|Ratio|Number of features reused without any<br>adaptation.|
+|HFotsA|Ratio|Number of reused high-effort<br>features/functions adapted.|
+|Hnew|Ratio|Number of new high-effort<br>features/functions.|
+|TotHigh|Ratio|Total number of high-effort<br>features/functions|
+|FotsA|Ratio|Number of reused low-effort features<br>adapted.|
+|New|Ratio|Number of new low-effort<br>features/functions.|
+|TotNHigh|Ratio|Total number of low-effort<br>features/functions|
+
+
+**335**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+The Tukutuku size measures and cost drivers were
+
+obtained from the results of a survey investigation
+
+[18]. In addition, these measures and cost drivers were
+also confirmed by an established Web company and by
+a second survey involving 33 Web companies in New
+Zealand. Consequently, it is our belief the 25 variables
+identified are measures that are meaningful to Web
+companies and are constructed from information their
+customers can provide at a very early stage in project
+development.
+Within the context of the Tukutuku project, a new
+high-effort feature/function requires at least 15 hours
+to be developed by one experienced developer, and a
+high-effort adapted feature/function requires at least 4
+hours to be adapted by one experienced developer.
+These values are based on collected data.
+
+Summary statistics for the numerical variables from
+the Tukutuku database are given in Table 2, and Table
+3 summarises the number and percentages of projects
+for the categorical variables:
+
+**Table 2 – Summary Statistics for numerical variables**
+
+|Col1|Mean|Median|Std.<br>Dev.|Min.|Max.|
+|---|---|---|---|---|---|
+|nlang|3.75|3.00|1.58|1|8|
+|DevTeam|2.97|2.00|2.57|1|23|
+|TeamExp|3.57|3.00|2.16|1|10|
+|TotEff|564.22|78.00|1048.94|1|5000|
+|TotWP|81.53|30.00|209.82|1|2000|
+|NewWP|61.43|14.00|202.78|0|1980|
+|TotImg|117.58|43.50|244.71|0|1820|
+|NewImg|47.62|3.00|141.67|0|1000|
+|Fots|2.05|0.00|3.64|0|19|
+|HFotsA|12.11|0.00|66.84|0|611|
+|Hnew|2.53|0.00|5.21|0|27|
+|totHigh|14.64|1.00|66.59|0|611|
+|FotsA|1.91|1.00|3.07|0|20|
+|New|2.91|1.00|4.07|0|19|
+|totNHigh|4.82|4.00|4.98|0|35|
+
+
+
+**Table 3 – Summary for categorical variables**
+
+|Variable|Level|Num. Projects|% Projects|
+|---|---|---|---|
+|TypeProj|Enhancement|66|44|
+||New|84|56|
+|DocProc|No|53|35.3|
+||Yes|97|64.7|
+|ProImpr|No|77|51.3|
+||Yes|73|48.7|
+|Metrics|No|85|56.7|
+||Yes|65|43.3|
+
+
+
+As for data quality, Web companies that
+volunteered data for the Tukutuku database did not use
+
+any automated measurement tools for effort data
+collection. Therefore in order to identify guesstimates
+from more accurate effort data, we asked companies
+how their effort data was collected (see Table 4).
+
+
+**Table 4 - How effort data was collected**
+
+|Data Collection Method|# of Projs|% of Projs|
+|---|---|---|
+|Hours worked per project task per day|93|62|
+|Hours worked per project per day/week|32|21.3|
+|Total hours worked each day or week|13|8.7|
+|No timesheets (guesstimates)|12|8|
+
+
+
+At least for 83% of Web projects in the Tukutuku
+database effort values were based on more than
+
+guesstimates.
+
+**3. The Web Effort Bayesian Network**
+A BN is a model that embodies existing knowledge
+of a complex domain in a way that supports reasoning
+with uncertainty [8][24]. It is a representation of a joint
+probability distribution over a set of variables, and is
+made up of two parts. The first, the qualitative part,
+represents the structure of a BN as depicted by a
+directed acyclic graph (digraph) (see Figure 1). The
+digraph’s nodes represent the relevant variables
+(factors) from the domain being modelled, which can
+be of different types (e.g. observable or latent,
+categorical, numerical). A digraph’s arcs represent
+probabilistic relationships, i.e. they represent the
+causal relationships between variables [8][35]. The
+second, the quantitative part, associates a node
+probability table (NPT) to each node, its probability
+distribution. A parent node’s NPT describes the
+relative probability of each state (value) (Figure 1
+“NPT for node Total Effort”); a child node’s NPT
+describes the relative probability of each state
+conditional on every combination of states of its
+parents (Figure 1 “NPT for node Quality  delivered”).
+So, for example, the relative probability of Quality
+delivered (QD) being ‘Low’ conditional on Total
+effort (TE) being ‘Low’ is 0.8, and is represented as:
+� *p* (QD = ‘Low’ | TE = ‘Low’) = 0.8.
+
+Each column in a NPT represents a conditional
+probability distribution and therefore its values sum up
+to 1 [8].
+
+
+
+**Parent node**
+
+**Child node**
+
+
+|NPT for node Total Effort (TE)|Col2|
+|---|---|
+|Low|0.2|
+|Medium|0.3|
+|High|0.5|
+
+
+|NPT for node Quality Delivered (QD)|Col2|Col3|Col4|
+|---|---|---|---|
+|Total Effort|Low|Medium|High|
+|Low|0.8|0.2|0.1|
+|Medium|0.1|0.6|0.2|
+|High|0.1|0.2|0.7|
+
+
+**Figure 1 – A small BN model and two NPTs**
+
+
+**336**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+Formally, the relationship between two nodes is
+based on Bayes’ rule [8][24]:
+
+*p* ( *X* | *E* ) � *p* ( *E* | *X* ) *p* ( *X* ) (1)
+*p* ( *E* )
+
+where:
+� *p* ( *X* | *E* ) is called the *posterior* distribution and
+
+represents the probability of *X* given evidence *E* ;
+
+� *p* ( *X* ) is called the *prior* distribution and
+
+represents the probability of *X* before evidence *E*
+is given;
+
+� *p* ( *E* | *X* ) is called the *likelihood* function and
+
+denotes the probability of *E* assuming *X* is true.
+
+Once a BN is specified, evidence (e.g. values) can
+be entered onto any node, and probabilities for the
+remaining nodes are automatically calculated using
+Bayes’ rule [24]. Therefore BNs can be used for
+different types of reasoning, such as predictive and
+“what-if” analyses to investigate the impact that
+changes on some nodes have upon others [31].
+The BN described and validated in this paper
+focuses on Web effort estimation, and was built from
+data on Web projects, as opposed to being elicited
+from interviews with domain experts. To compare the
+estimates given by the BN to those from the other three
+techniques, we computed point forecasts for the BN
+using the method detailed in [25].
+
+***3.1 Procedure Used to Build the BN***
+
+The BN presented in this paper was built and
+validated using an adapted process for Knowledge
+Engineering of Bayesian Networks (KEBN)
+
+[5][13][35] (see Figure 2). Arrows represent flows
+through the different processes, depicted by rectangles.
+Processes are executed either by people – the
+Knowledge Engineer (KE) and the Domain Experts
+(DEs) [35] (white rectangles), or automatic algorithms
+(dark grey rectangles). Within the context of this work,
+the author is the knowledge engineer, and a Web
+project manager who works in a well-established Web
+company in Rio de Janeiro (Brazil) is the domain
+expert.
+
+
+The KEBN process iterates over the following three
+steps until a complete BN is built and validated:
+Structural Development : represents the qualitative
+component of a BN, resulting in a graphical structure
+comprising factors (nodes, variables) and causal
+relationships. This model construction process has
+been validated in previous studies [5][6][13][35] and
+uses the principles of problem solving employed in
+data modelling and software development [33]. Data
+from the Tukutuku database and current knowledge
+from a DE were used to elicit the BN’s structure. The
+
+identification of nodes, values and relationships was
+initially obtained automatically using the Hugin Expert
+tool (Hugin), and later modified once feedback was
+obtained from the DE and the conditional
+
+independences were checked. In practice, continuous
+variables are discretised by converting them into
+multinomial variables [11]. Hugin offers two
+discretisation algorithms – equal-width intervals [30],
+whereby all intervals have equal size, and equalfrequency intervals, whereby each interval contains
+n/N data points where n is the number of data points
+and N is the number of intervals (this is also called
+maximal entropy discretisation [34]). We used equalfrequency intervals as suggested in [10], and five
+intervals. We changed the BN’s original graphical
+structure to maintain the conditional independence of
+the nodes (see Section 3.2), however divorcing [8] was
+not employed as we wanted to keep only nodes that
+had been elicited from the Tukutuku data.
+
+Parameter Estimation : This step represents the
+quantitative component of a BN, which results in
+conditional probabilities, obtained either using Expert
+Elicitation or automatically, which quantify the
+relationships between variables [8][11]. For the Web
+effort BN, they were obtained using two steps: first, by
+automatically fitting a sub-network to a subset of the
+Tukutuku dataset containing 120 projects (Automated
+learning); second, by obtaining feedback from the
+domain expert regarding the suitability of priors and
+conditional probabilities that were automatically fitted.
+No previous literature was used in this step since none
+reported probabilistic information. The same training
+set was used with stepwise regression, CBR and
+CART.
+
+
+**337**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+Begin
+
+|Evaluation|Col2|Col3|Col4|
+|---|---|---|---|
+|Identify<br>nodes/variables|Identify<br>values/states||Identify<br>relationships|
+
+
+
+
+
+
+
+
+
+
+
+Next Stage
+
+**Figure 2 – Knowledge Engineering Methodology,**
+**adapted from [35]**
+
+Model Validation : This step validates the BN
+resulting from the two previous steps, and determines
+whether it is necessary to re-visit any of those steps.
+Two different validation methods are used - Model
+
+Walkthrough and Predictive Accuracy [35]. Both
+verify if predictions provided by a BN are suitable,
+however Model Walkthrough is carried out by DEs,
+whereas Predictive Accuracy is normally carried out
+using quantitative data. The latter was the validation
+approach employed to validate the Web effort BN.
+Estimated effort, for each of the 30 projects in the
+validation set, was obtained using a point forecast,
+computed using a method that calculates the joint
+probability distribution of effort using the belief
+distribution [24], and computes estimated effort as the
+sum of the probability of a given effort scale point
+multiplied by its related mean effort [25].
+
+***3.2 The Web Effort BN***
+The BN’s structure was obtained using the
+Necessary Path Condition (NPC) algorithm [32], and
+
+
+validated with a DE, resulting in the structure
+presented in Figure 3. This structure is based on the
+entire Tukutuku database of 150 projects.
+
+Note that for parameter estimation only the 120
+projects in the training set were used.
+The main changes to the original structure were
+related to node *TypeProj*, from which all causal
+relationships, except for *TotalEffort*, were removed.
+There were also several changes relating to the three
+categorical variables *Documented Process*, *Process*
+*Improvement* and *Use Metrics* . For the BN structure
+shown in Figure 3, *Process Improvement* presents a
+relationship with both *Use Metrics* and *Documented*
+*Process*, indicating it to be an important factor
+determining if a Web company adheres to the use of
+metrics and to the use of a documented process. This
+structure also relates *Use Metrics* to *Documented*
+
+*Process*, indicating that companies that measure
+attributes to some extent document their processes.
+The number of languages to be used in a project
+( *numLanguages* ) and the average number of years of
+experience of a team ( *Team Experience* ) are also
+related with the size of the development team
+( *sizeDevTeam* ). The nodes relative to Web size
+measures (e.g. *NewWP* ) remained unchanged as the
+data already captured the strong relationship between
+size and effort.
+Once the structure was validated, our next step was
+to ensure that the conditionally independent variables
+(nodes) in the BN were really independent of each
+other [24]. Whenever two variables were significantly
+associated we also measured their association with
+
+effort, and the one with the strongest association was
+kept. This was an iterative process given that, once
+nodes are removed (e.g. *FotsA*, *New* ), other nodes
+become conditionally independent (e.g. *totNHigh* ) and
+so need to be checked as well. The associations
+
+between the numerical variables were assessed using a
+non-parametric test - Spearman’s rank correlation test;
+the associations between numerical and categorical
+variables were checked using the one-way ANOVA
+test, and the associations between categorical variables
+were checked using the Chi-square test. All tests were
+carried out using SPSS 12.0.1 and � = 0.05.
+Figure 4 shows the Web effort BN after all
+conditional independences were checked. This was the
+Web effort BN used as input to the *Parameter*
+*estimation* step, where prior and conditional
+probabilities were automatically generated using the
+EM-learning algorithm [12], and later validated by the
+DE. Note that the data set was not large enough to
+compute all possible conditional probabilities, thus the
+unknown probabilities are represented by “�” (see
+Tables 6 and 8).
+
+
+**338**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+**Figure 3 – BN after evaluation with DE**
+
+
+**Figure 4 – BN after conditional independences were**
+**checked**
+
+The NPTs for the seven nodes used in the Web
+
+effort BN are presented in Tables 6 to 12.
+Effort was discretised into five discrete
+
+approximations, described in Table 5.
+
+**Table 5 – Effort discrete approximations**
+
+|Categories|Range (person hours)|Mean Effort|
+|---|---|---|
+|Very low|<= 12.55|5.2|
+|Low|> 12.55 and <= 33.8|22.9|
+|Medium|> 33.8 and <= 101|63.1|
+|High|> 101 and <= 612.5|314.9|
+|Very High|> 612.5|2,238.9|
+
+
+**Table 6 – NPT for TotalEffort**
+
+|Total Effort|Col2|Col3|Col4|Col5|Col6|Col7|Col8|Col9|Col10|Col11|Col12|Col13|Col14|Col15|Col16|Col17|Col18|Col19|Col20|Col21|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|TypeProject|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|Enhancement|New|New|New|New|New|New|New|New|New|New|
+|Documented Process|Yes|Yes|Yes|Yes|Yes|No|No|No|No|No|Yes|Yes|Yes|Yes|Yes|No|No|No|No|No|
+|New WP|V. Low|Low|Med.|High|V. Hig|h V. Low|Low|Med.|High|V. High|V. Low|Low|Med.|High|V. High|V. Low|Low|Med.|High|V. High|
+|Very Low|0.6|0.6|0.3|0.25|³|³|0.2|³|0.2|0.2|³|0.2|³|³|0.2|0.2|0.2|³|³|0.2|
+|Low|0.3|0.3|³|³|³|1|0.2|³|0.2|0.2|³|0.2|0.34|³|0.2|0.2|0.2|³|³|0.2|
+|Medium|0.1|0.1|³|0.25|0.5|³|0.2|³|0.2|0.2|³|0.2|0.34|³|0.2|0.2|0.2|³|³|0.2|
+|High|³|³|0.7|³|0.5|³|0.2|1|0.2|0.2|1|0.2|³|1|0.2|0.2|0.2|1|1|0.2|
+|Very High|³|³|³|³|³|³|0.2|³|0.2|0.2|³|0.2|0.34|³|0.2|0.2|0.2|³|³|0.2|
+
+
+
+**Tables 7, 8 and 9 – NPTs for NewWP, TotWP and TypeProject**
+
+|NewWP|Col2|
+|---|---|
+|Very Low|0.51|
+|Low|0.1|
+|Medium|0.2|
+|High|0.09|
+|Very High|0.1|
+
+
+|TotWP|Col2|Col3|Col4|Col5|Col6|
+|---|---|---|---|---|---|
+|NewWP|Very Low|Low|Medium|High|Very High|
+|Very Low|0.6|³|³|³|0.2|
+|Low|0.4|0.5|0.5|1|0.2|
+|Medium|³|0.25|0.5|³|0.2|
+|High|³|³|³|³|0.2|
+|Very High|³|0.25|³|³|0.2|
+
+
+|TypeProject|Col2|
+|---|---|
+|Enhancement|0.79|
+|New|0.21|
+
+
+
+**Tables 10, 11 and 12 – NPTs for Documented Process, Use Metrics and Process Improvement**
+
+**Documented Process** **Use Metrics** **Process Improvement**
+**Process Improvement** **Yes** **No** **Process Improvement** **Yes** **No** **Yes** **0.5**
+**Use Metrics** **Yes** **No** **Yes** **No** **Yes** **0.8** **0.1** **No** **0.5**
+
+|Process Improvement|Col2|
+|---|---|
+|Yes|0.5|
+|No|0.5|
+
+|Use Metrics|Col2|Col3|
+|---|---|---|
+|Process Improvement|Yes|No|
+|Yes|0.8|0.1|
+|No|0.2|0.9|
+
+|Documented Process|Col2|Col3|Col4|Col5|
+|---|---|---|---|---|
+|Process Improvement|Yes No|Yes No|Yes No|Yes No|
+|Use Metrics|Yes|No|Yes|No|
+|Yes|0.98|0.8|0.5|0.47|
+|No|0.02|0.2|0.5|0.53|
+
+
+TotWP and NewWP were also discretised into five
+
+discrete approximations. There are no strict rules as to
+how many discrete approximations should be used.
+Some studies have employed three [25], others five
+
+[6], and others eight [31]. We chose five. However,
+further studies are necessary to determine if different
+number of approximations leads to significantly
+different results
+
+
+**4. Regression-based Web Effort Model**
+Stepwise regression (SWR) [9] is a statistical
+technique whereby a prediction model (Equation) is
+built to represent the relationship between independent
+and dependent variables. This technique builds the
+model by adding, at each stage, the independent
+variable with the highest association to the dependent
+variable, taking into account all variables currently in
+the model. It aims to find the set of independent
+variables (predictors) that best explains the variation in
+
+
+**339**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+the dependent variable (response). Before building a
+model it is important to ensure assumptions related to
+using such technique are not violated [9]. The OneSample Kolmogorov-Smirnov Test (K-S test)
+confirmed that none of the numerical variables were
+
+distributed, and so were transformed into a natural
+logarithmic scale to approximate a normal distribution.
+Several variables were clearly related to each other
+(e.g. *TotWP* and *NewWP* ; *TotImg* and *NewImg* ;
+*totNHigh*, *FotsA* and *New* ) thus we did not use the
+following variables in the stepwise regression
+procedure:
+� *TotWP* – associated to *NewWP* .
+
+� *TotImg* – associated to *NewImg* .
+� *Hnew* and *HFotsA* – associated to *TotHigh* ; both
+present a large number of zero values, which leads
+to residuals that are heteroscedastic.
+
+� *New* and *FotsA* - associated to *TotNHigh* ; both
+also present a large number of zero values.
+
+We created four dummy variables, one for each of
+the categorical variables *TypeProj*, *DocProc*, *ProImpr*,
+and *Metrics* . Table 13 shows the final set of variables
+
+used in the stepwise regression procedure.
+
+**Table 13 – Final set of variables used in the Stepwise**
+**regression procedure**
+
+|Variable|Meaning|
+|---|---|
+|Lnlang|Natural logarithm of nlang|
+|LDevTeam|Natural logarithm of LDevTeam|
+|LTeamExp|Natural logarithm of TeamExp|
+|LTotEff|Natural logarithm of TotEff|
+|LNewWP|Natural logarithm of NewWP + 1|
+|LNewImg|Natural logarithm of NewImg + 1|
+|LFots|Natural logarithm of Fots + 1|
+|LtotHigh|Natural logarithm of totHigh + 1|
+|LtotNHigh|Natural logarithm of totNHigh + 1|
+|TypeEnh|Dummy variable created from TypeProj where<br>‘enhancement’ is coded as 1 and ‘new’ is coded as 0|
+|DocProcY|Dummy variable created from DocProc where ‘yes’<br>is coded as 1 and ‘no’ is coded as 0|
+|ProImprY|Dummy variable created from ProImpr where ‘yes’<br>is coded as 1 and ‘no’ is coded as 0|
+|MetricsN|Dummy variable created from Metrics where ‘no’<br>type is coded as 1 and ‘yes’ is coded as 0|
+
+
+
+To verify the **stability** of the effort model the
+following steps were used [9]:
+� Residual plot showing residuals vs. fitted values to
+check if residuals are random and normal.
+
+� Cook’s distance values to identify influential
+projects. Those with distances higher than 4/n are
+removed to test the model stability. If the model
+coefficients remain stable and the goodness of fit
+improves, the influential projects are retained in the
+data analysis.
+
+
+The prediction **accuracy** of the regression model
+was checked using the 30 projects from the validation
+set, based on the raw data (not log-transformed data).
+The regression model selected six significant
+independent variables: *LTotHigh*, *LNewWP*, *LDevTeam*,
+*ProImprY*, *LNewImg*, and *Lnlang* . Its adjusted R [2] was
+0.80. The residual plot showed several projects that
+seemed to have very large residuals, also confirmed
+using Cook’s distance. Nine projects had their Cook’s
+distance above the cut-off point (4/120). To check the
+model’s stability, a new model was generated without
+the nine projects that presented high Cook’s distance,
+giving an adjusted R [2] of 0.857. In the new model the
+independent variables remained significant and the
+coefficients had similar values to those in the previous
+model. Therefore, the nine high influence data points
+were not permanently removed. The final equation for
+the regression model is described in Table 14.
+
+**Table 14 – Best Model to calculate LTotEff**
+
+|Independent<br>Variables|Coeff.|Std.<br>Error|t|p>|t||
+|---|---|---|---|---|
+|(Constant)|1.636|.293|5.575|.00|
+|LTotHigh|.731|.119|6.134|.00|
+|LNewWP|.259|.068|3.784|.00|
+|LDevTeam|.859|.162|5.294|.00|
+|ProImprY|-.942|.208|-4.530|.00|
+|LNewImg|.193|.052|3.723|.00|
+|Lnlang|.612|.192|3.187|.002|
+
+
+
+When transformed back to the raw data scale, we
+get the Equation:
+
+.0731 .0259
+*TotEfft* � .51345 *TotHigh* *NewWP* (2)
+
+*DevTeam* .0859 *e* �.0942 Pr *o* Im *prY* *New* Im *g* .0193 *nlang* .0612
+
+The residual plot and the P-P plot for the final
+model are presented in Figures 5 and 6, respectively,
+and both suggest that the residuals are normally
+distributed .
+
+**Figure 5 – Residuals for best regression model**
+
+
+**340**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+**Figure 6 – Normal P-P plot for best regression model**
+
+**5. CBR-based Web effort estimation**
+
+Case-based Reasoning (CBR) is a branch of
+Artificial Intelligence where knowledge of similar past
+cases is used to solve new cases [29]. Herein
+completed projects are characterized in terms of a set
+of *p* features (e.g. *TotWP* ) and form the case base. The
+new project is also characterized in terms of the same *p*
+attributes and it is referred as the target case. Next, the
+similarity between the target case and the other cases
+in the *p* -dimensional feature space is measured, and the
+most similar cases are used, possibly with adaptations
+to obtain a prediction for the target case. To apply the
+method, we have to select: the relevant project
+features, the appropriate similarity function, the
+number of analogies to select the similar projects to
+consider for estimation, and the analogy adaptation
+strategy for generating the estimation. The similarity
+measure used in this study is the Euclidean distance,
+and effort estimates were obtained using the effort for
+the most similar project in the case base (CBR1), and
+the average of the two (CBR2) and three (CBR3) most
+similar projects. In addition, all the project attributes
+considered by the similarity function had equal
+influence upon the selection of the most similar
+project(s). We used the commercial CBR tool CBRWorks to obtain effort estimates, and, since it does not
+provide a feature subset selection mechanism [29], we
+decided to use only those attributes significantly
+associated with *TotEff* . Associations between
+numerical variables and *TotEff* were measured using
+Spearman’s rank correlation test; and the associations
+between numerical and categorical variables were
+checked using the one-way ANOVA test. All tests
+were carried out using SPSS 12.0.1 and � = 0.05. All
+attributes, except *TeamExp*, *HFotsA* and *DocProc*,
+were significantly associated with *TotEff* .
+The training set used to obtain effort estimates was
+the same one used with SWR and BN.
+
+
+where *node-error* is calculated as the within-node
+
+variance about the mean of the node. *Explained-*
+*variance* is calculated as the within-node (error)
+variance plus the between-node (explained) variance.
+By setting the SRE to a minimum of 90% we believe
+that we have captured the most important variables.
+Our regression trees were generated using SPSS
+Answer Tree version 2.1.1, and our final regression
+tree is shown in Figure 7.
+
+**7. Comparing Prediction Techniques**
+The same 30 Web projects in the validation set
+were used to measure the prediction accuracy of the
+four different techniques presented in this paper. Table
+15 shows their MMRE, MdMRE and Pred(25),
+indicating that accuracy provided using the BN model
+was superior to the accuracy obtained using any of the
+remaining techniques, and that the accuracy of the
+remaining techniques was similar. This result was also
+confirmed using the non-parametric Friedman and
+Kendall’s W related samples tests.
+
+**Table 15** **–** **Accuracy measures (%) for models**
+
+
+**6. CART-based Web effort Model**
+
+The objective of CART [2] models is to build a
+binary tree by recursively partitioning the predictor
+space into subsets where the distribution of the
+response variable is successively more homogeneous.
+The partition is determined by splitting rules
+associated with each of the internal nodes. Each
+
+observation is assigned to a unique leaf node, where
+the conditional distribution of the response variable is
+determined. The best splitting for each node is
+searched based on a "purity" function calculated from
+the data. The data is considered to be pure when it
+contains data samples from only one class. The least
+squared deviation (LSD) measure of impurity was
+applied to our dataset. This index is computed as the
+within-node variance, adjusted for frequency or case
+weights (if any). In this study we used all the variables
+described in Tables 2 and 3.
+
+We set the maximum tree depth to 10, the minimum
+number of cases in a parent node to 5 and the
+minimum number of cases in child nodes to 2. We
+
+looked to trees that gave the small risk estimates
+(SRE), which were set at a minimum of 90%, and
+calculated as:
+
+
+100 - �1 � *node* � *error* � (3)
+
+� [�] � exp *lained* � var *iance* � [�] �
+
+
+� *node* � *error* �
+
+� [�] �1 � exp *lained* � var *iance* � [�] �
+
+
+SRE = 100 - � [�] �1 � exp *lained* �� var *iance* � [�] �
+
+|Accuracy|BN|SWR|A1|A2|A3|CART|
+|---|---|---|---|---|---|---|
+|MMRE|34.3|94.8|138.1|134.7|203|690.4|
+|MdMRE|27.4|100|85.1|85.|91.7|83.2|
+|Pred(25)|33.3|6.7|13.3|13.3|13.3|20|
+
+
+**341**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+**Figure 7 – CART Tree used to obtain effort estimates**
+
+Figure 8 shows boxplots of absolute residuals for
+all techniques. The median for the BN-based residuals
+was the smallest and the boxplot also presented a
+distribution more compact than that for the remaining
+techniques. However, the boxes did not seem to vary
+widely, and all had the same three outliers in common:
+22, 23 and 27. We temporarily removed these outliers
+to have a better idea of what the distributions would
+
+look like (see Figure 9). Figure 9 shows that the
+smallest residuals were obtained using BN. These
+results suggest that a model that incorporates the
+uncertainty that is inherent in effort estimation, can
+outperform other commonly used techniques, such as
+those used in this study.
+The Web effort BN model is a very simple model,
+built using a dataset that does not represent a random
+sample of projects, therefore these results have to be
+interpreted with care. In addition, we chose to use only
+the nodes identified using the Tukutuku dataset, i.e.,
+other nodes that could have been identified by the DE
+were not included. We also wanted to investigate to
+what extent a BN model and probabilities generated
+using automated algorithms available in Hugin would
+provide predictions comparable to those obtained
+using well-known techniques.
+
+
+**Figure 8 – Absolute residuals for BN (ResBN), SWR**
+**(ResSWR), CBR1 (ResA1), CBR2 (ResA2), CBR3**
+**(ResA3), and CART (ResCART) models**
+
+**Figure 9 – Absolute residuals without outliers 22, 23**
+**and 27**
+
+There are several issues regarding the validity of
+our results: i) the choice of discretisation, structure
+learning, parameter estimation algorithm, and the
+number of categories used in the discretisation all
+affect the results and there are no clear-cut guidelines
+on the best combination to use. This means that further
+
+investigation is paramount; ii) the Web effort BN
+presented in this study might have been quite different
+had it been entirely elicited from DEs, and this is part
+of our future work; iii) the decision as to what
+conditional independent nodes to retain was based on
+their strength of association with TotalEffort, however
+other solutions could have been used, e.g. ask a DE to
+decide; iv) obtaining feedback from more than one DE
+could also have influenced the BN structure in Figure
+3, and this is also part of our future work .
+
+**8. Conclusions**
+
+This paper has presented the results of an
+investigation where a dataset containing data on 120
+Web projects was used to build a Bayesian model, and
+the predictions obtained using this model were
+compared to those obtained using another three
+
+
+**342**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+
+techniques (SWR, CBR and CART), based on a
+validation set with 30 projects.
+The predictions obtained using the Web effort BN
+was significantly superior to the predictions using the
+other techniques, despite the use of a simple BN
+model. Future work entails: the building of a second
+Web effort BN based solely on domain experts’
+knowledge, to be compared to the BN presented in this
+paper; aggregation of this BN to a larger Web resource
+BN, to obtain a more complete causal model for Web
+resource estimation.
+
+**9. Acknowledgements**
+We thank: Dr. N. Mosley for his comments; the DE
+who validated our BN model and all companies that
+volunteered data to the Tukutuku database; A/Prof. F.
+Ferrucci for the 15 projects volunteered to Tukutuku.
+This work is sponsored by the RSNZ, under the
+Marsden Fund research grant 06-UOA-201 MIS.
+
+**10. References**
+
+[1] L. Baresi, S. Morasca, and P. Paolini, “Estimating the design
+effort for Web applications”, in *Proc. Metrics*, pp. 62-72, 2003.
+
+[2] L. Brieman, J. Friedman, R. Olshen, and C. Stone,
+*Classification and Regression Trees* . Wadsworth Inc.,
+Belmont, 1984.
+
+[3] S.P. Christodoulou, P.A. Zafiris, and T.S. Papatheodorou,
+“WWW2000: The Developer's view and a practitioner's
+approach to Web Engineering”, in *Proc. ICSE Workshop on*
+*Web Engineering*, Limerick, Ireland, 2000, pp. 75-92.
+
+[4] G. Costagliola, S. Di Martino, F. Ferrucci, C. Gravino, G.
+Tortora, G. Vitiello, “Effort estimation modeling techniques: a
+case study for web applications”, in *Procs. Intl. Conference on*
+*Web Engineering* (ICWE’06), 2006, pp. 9-16.
+
+[5] M.J. Druzdzel, A. Onisko, D. Schwartz, J.N. Dowling, and H.
+Wasyluk, “Knowledge engineering for very large decisionanalytic medical models”, in *Proc. Annual Meeting of the AMI*
+*Association*, pp. 1049-1054, 1999.
+
+[6] N. Fenton, W. Marsh, M. Neil, P. Cates, S. Forey, and M.
+Tailor, “Making Resource Decisions for Software Projects”, in
+*Proc. ICSE’04*, pp. 397-406, 2004.
+
+[7] R. Fewster, and E. Mendes, “Measurement, Prediction and
+Risk Analysis for Web Applications”, in *Proceedings of IEEE*
+*Metrics Symposium*, pp. 338 – 348, 2001.
+
+[8] F. V. Jensen, *An introduction to Bayesian networks* . UCL
+Press, London, 1996.
+
+[9] B.A. Kitchenham, and E. Mendes. “A Comparison of Crosscompany and Single-company Effort Estimation Models for
+Web Applications”, in *Proc. EASE 2004*, 2004, pp 47-55.
+
+[10] A.J. Knobbe, and E.K.Y Ho, “Numbers in Multi-Relational
+Data Mining”, in *Proc. PKDD 2005*, Porto, Portugal, 2005
+
+[11] K.B. Korb, and A.E. Nicholson, *Bayesian* *Artificial*
+*Intelligence*, CRC Press, USA, 2004.
+
+[12] S. L. Lauritzen “The EM algorithm for graphical association
+models with missing data”. *Computational Statistics & Data*
+*Analysis*, Vol. 19, 191-201, 1995.
+
+[13] S.M. Mahoney, and K.B. Laskey, “Network Engineering for
+Complex Belief Networks”, in Proc. *TACUAI*, pp. 389-396,
+1996.
+
+
+
+[14] L. Mangia, and R. Paiano, “MMWA: A Software Sizing Model
+for Web Applications”, in *Proc. Fourth International Conf. on*
+*Web Information Systems Engineering*, pp. 53-63, 2003.
+
+[15] E. Mendes, “A Probabilistic Model for Predicting Web
+Development Effort”, in *Proc. EASE’07* (accepted).
+
+[16] E. Mendes, and B.A. Kitchenham, “Further Comparison of
+Cross-company and Within-company Effort Estimation Models
+for Web Applications”, in *Proc. IEEE Metrics*, pp. 348-357,
+2004.
+
+[17] E. Mendes, and S. Counsell, “Web Development Effort
+Estimation using Analogy”, in *Proc. 2000 Australian Software*
+*Engineering Conference*, pp. 203-212, 2000.
+
+[18] E. Mendes, N. Mosley, and S. Counsell, “Investigating Web
+Size Metrics for Early Web Cost Estimation”, Journal of
+Systems and Software, Vol. 77, No. 2, 157-172, 2005.
+
+[19] E. Mendes, N. Mosley, and S. Counsell, “Web Effort
+Estimation”, *Web Engineering*, Springer-Verlag, Mendes, E.
+and Mosley, N. (Eds.) ISBN: 3-540-28196-7, pp. 29-73, 2005.
+
+[20] E. Mendes, N. Mosley, and S. Counsell, “Early Web Size
+Measures and Effort Prediction for Web Costimation”, in
+Proceedings of the IEEE Metrics Symposium, pp. 18-29, 2003.
+
+[21] E. Mendes, N. Mosley, and S. Counsell, “Comparison of
+Length, complexity and functionality as size measures for
+predicting Web design and authoring effort”, *IEE Proc.*
+*Software,* Vol. 149, No. 3, June, 86-92, 2002.
+
+[22] E. Mendes, N. Mosley, and S. Counsell, “Web metrics Metrics for estimating effort to design and author Web
+applications”. *IEEE MultiMedia*, January-March, 50-57, 2001.
+
+[23] E. Mendes, I. Watson, C. Triggs, N. Mosley, and S. Counsell,
+“A Comparative Study of Cost Estimation Models for Web
+Hypermedia Applications”, ESE, Vol. 8, No 2, 163-196, 2003.
+
+[24] J. Pearl Probabilistic Reasoning in Intelligent Systems, Morgan
+Kaufmann, San Mateo, CA, 1988.
+
+[25] P.C. Pendharkar, G.H. Subramanian, and J.A. Rodger, “A
+Probabilistic Model for Predicting Software Development
+Effort”, *IEEE TSE* . Vol. 31, No. 7, 615-624, 2005.
+
+[26] D.J. Reifer, “Web Development: Estimating Quick-to-Market
+Software”, *IEEE Software*, Nov.-Dec., 57-64, 2000.
+
+[27] D.J. Reifer, “Ten deadly risks in Internet and intranet software
+development”, *IEEE Software*, Mar-Apr, 12-14, 2002.
+
+[28] M. Ruhe, R. Jeffery, and I. Wieczorek, “Cost estimation for
+Web applications”, in *Proc. ICSE 2003*, pp. 285-294, 2003.
+
+[29] M.J. Shepperd, and G. Kadoda, “Using Simulation to Evaluate
+Prediction Techniques”, in *Proceedings IEEE Metrics’01*,
+London, UK, 2001, pp. 349-358.
+
+[30] B. W. Silverman, *Density Estimation for Statistics and Data*
+*Analysis*, Chapman and Hall, 1986.
+
+[31] I. Stamelos, L.Angelis, P. Dimou, and E. Sakellaris, “On the
+use of Bayesian belief networks for the prediction of software
+productivity”, *Information and Software Technology*, Vol.
+45, No. 1, 1 January 2003, pp. 51-60(10), 2003.
+
+[32] H. Steck, and V. Tresp, “Bayesian Belief Networks for Data
+Mining”, in *Proc. of The 2nd Workshop on Data Mining und*
+*Data Warehousing*, Sammelband, September 1999.
+
+[33] R. Studer, V.R. Benjamins, and D. Fensel, “Knowledge
+engineering: principles and methods”, *Data & Knowledge*
+*Engineering*, vol. 25, 161-197, 1998.
+
+[34] A.K.C Wong, and D.K.Y. Chiu, “Synthesizing Statistical
+Knowledge from Incomplete Mixed-mode Data, *IEEE*
+*Transactions on Pattern Analysis and Machine Intelligence*,
+Vol. PAMI-9,No. 6, 796-805.
+
+[35] O. Woodberry, A. Nicholson, K. Korb, and C. Pollino,
+“Parameterising Bayesian Networks”, in *Proc. Australian*
+*Conference on Artificial Intelligence*, pp. 1101-1107, 2004.
+
+
+**343**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:36:03 UTC from IEEE Xplore. Restrictions apply.
+

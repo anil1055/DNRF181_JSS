@@ -1,0 +1,1642 @@
+Empir Software Eng (2011) 16:211–243
+DOI 10.1007/s10664-010-9138-4
+# Investigating the use of Support Vector Regression for web effort estimation
+
+Anna Corazza & Sergio Di Martino & Filomena Ferrucci &
+Carmine Gravino & Emilia Mendes
+
+Published online: 29 July 2010
+# Springer Science+Business Media, LLC 2010
+Editor: James Miller
+
+Abstract Support Vector Regression (SVR) is a new generation of Machine Learning
+algorithms, suitable for predictive data modeling problems. The objective of this paper is
+twofold: first, to investigate the effectiveness of SVR for Web effort estimation using a
+cross-company dataset; second, to compare different SVR configurations looking at the one
+that presents the best performance. In particular, we took into account three variables’
+preprocessing strategies (no-preprocessing, normalization, and logarithmic), in combination
+with two different dependent variables (effort and inverse effort). As a result, SVR was
+applied using six different data configurations. Moreover, to understand the suitability of
+kernel functions to handle non-linear problems, SVR was applied without a kernel, and in
+combination with the Radial Basis Function (RBF) and the Polynomial kernels, thus
+obtaining 18 different SVR configurations. To identify, for each configuration, which were
+the best values for each of the parameters we defined a procedure based on a leave-one-out
+cross-validation approach. The dataset employed was the Tukutuku database, which has
+been adopted in many previous Web effort estimation studies. Three different training and
+test set splits were used, including respectively 130 and 65 projects. The SVR-based
+predictions were also benchmarked against predictions obtained using Manual StepWise
+
+A. Corazza [:] S. Di Martino
+University of Napoli “Federico II”, Via Cinthia, 80126 Naples, Italy
+
+A. Corazza
+e-mail: corazza@na.infn.it
+
+S. Di Martino
+e-mail: dimartino@na.infn.it
+
+F. Ferrucci (*) [:] C. Gravino
+University of Salerno, Via Ponte Don Melillo, 84084 Fisciano, SA, Italy
+e-mail: fferrucci@unisa.it
+
+C. Gravino
+e-mail: gravino@unisa.it
+
+E. Mendes
+The University of Auckland, Private Bag, 92019 Auckland, New Zealand
+e-mail: emilia@cs.auckland.ac.nz
+
+212 Empir Software Eng (2011) 16:211–243
+
+Regression and Case-Based Reasoning. Our results showed that the configuration
+corresponding to the logarithmic features’ preprocessing, in combination with the RBF
+kernel provided the best results for all three data splits. In addition, SVR provided
+significantly superior prediction accuracy than all the considered benchmarking techniques.
+
+Keywords Effort estimation [. ] Support Vector Regression
+
+1 Introduction
+
+In this paper, we analyze the use of Support Vector Regression (SVR) for Web development
+effort estimation using a cross-company dataset. SVR is an approach based on Support Vector
+Machines, which are a new generation of Machine Learning algorithms (Vapnik and Lerner
+1963). To the best of our knowledge, only four previous studies (Braga et al. 2007, 2008;
+Corazza et al. 2009; Oliveira 2006) have investigated the application of SVR for effort
+estimation all reporting encouraging results. In particular, (Braga et al. 2007, 2008; Oliveira
+2006) focused on software effort estimation using single company datasets and showed that
+SVR performed very well also with respect to other techniques, such as linear regression and
+various AI-based prediction techniques. The use of SVR for Web effort estimation using a
+cross-company dataset was investigated in (Corazza et al. 2009), where predictions given by
+SVR were compared to predictions obtained using Manual Stepwise Regression, Case-Based
+Reasoning, Bayesian Networks, median and mean effort. Here the results were mixed as SVR
+presented overall significantly superior predictions when based on one of the training sets;
+however the trend was not the same when using a different training set, thus suggesting for
+further analysis. In this paper, we extend the research presented in (Corazza et al. 2009) by:
+
+1. Improving the approach to identify the parameters’ settings used with SVR;
+2. Assessing the proposed SVR framework using a third dataset split;
+3. Detailing further the description of the SVR framework investigated, the empirical
+investigation; and the related work discussion.
+
+As in (Corazza et al. 2009), we employed data on 195 Web projects from the Tukutuku
+database, which has been used in numerous Web effort estimation studies (Kitchenham and
+Mendes 2004; Kitchenham et al. 2006, 2007; Mendes 2008; Mendes and Kitchenham
+2004; Mendes et al. 2002, 2008). The data has been volunteered by Web companies
+worldwide, using different technologies, methodologies, and application size. Each project
+in the Tukutuku database is characterized using 25 features.
+Since we were applying SVR to a cross-company dataset, there were some issues that we
+had to take into account. For example, to reduce the risk that large differences in the features’
+value ranges in the dataset (usual of cross-company ones) could have unwanted effects on the
+predictions, two preprocessing strategies were applied to the features, namely normalization
+and logarithmic. In addition, based on the observation that SVR chooses the flattest solution
+amongst all the possible ones fitting some constraints, we were interested in assessing whether
+or not SVR’s performance could be affected by considering as dependent variables effort or its
+inverse. The problems considered in these two cases are equivalent; however the flattest
+solution of one case corresponds to the steepest one of the other, and vice-versa.
+Summarizing, SVR was applied using six different data configurations, obtained by the
+Cartesian product of three different strategies for input data (no preprocessing,
+normalization of the features, logarithmic transformation of the features), with two different
+dependent variables, namely effort and inverse effort.
+
+Empir Software Eng (2011) 16:211–243 213
+
+Moreover, we analyzed if and how the SVR performance could be improved by
+manipulating the project characteristics through the use of kernel functions, which allow for
+a mapping from non-linear input data to a new feature space, where the regression
+algorithm was used. Among the existing ones, we applied the Polynomial and the Radial
+Basis Function (RBF) kernels, which are the most widely adopted in the literature
+(Schölkopf and Smola 2002), and compared the results with the ones obtained without
+using kernels. These three strategies were applied for each of the six data configurations
+previously described, leading to a total of 18 different configurations for SVR. These
+configurations were also used in (Corazza et al. 2009). In the present paper we deepened the
+analysis by addressing also another key point, namely the setting of the parameters. Indeed, the
+application of SVR requires that user provides values for some of the parameters, where some
+of them relate to the method and others relate to the specific kernel (if used). Since the choice of
+values can have a significant impact on the effectiveness of the technique, herein we searched
+for the best parameters’ settings for each configuration using a semi-automatic approach based
+on an inner leave-one out cross-validation on the training set.
+In conclusion, in this research the effectiveness of SVR for Web effort estimation was
+assessed by performing an empirical study, whose research goals were to:
+
+1. investigate how the choice of data preprocessing and kernel used in conjunction with
+SVR affects the accuracy of the produced estimates, when employing cross-company
+datasets of Web projects;
+2. compare the accuracy of the estimates provided by the proposed SVR framework with
+the accuracy of the estimates supplied by widely used estimation methods, when
+employing cross-company datasets of Web projects.
+
+To address these research goals we performed a hold-out cross-validation, using three
+different training sets, each containing data on 130 projects randomly selected from the Tukutuku
+database, and test sets, each containing the remaining 65 projects. Thus, for the first research goal
+we compared the SVR predictions obtained by all the considered SVR configurations.
+As for the second research goal, the best predictions of SVR were compared with the
+ones obtained by Manual StepWise Regression (MSWR) and Case-Based Reasoning
+(CBR), due to their frequent use in Web and software effort estimation studies, and with the
+Mean effort and the Median effort of the training sets.
+Prediction accuracy was measured using the Mean Magnitude of Relative Error
+(MMRE) (Conte et al. 1986), the Median Magnitude of Relative Error (MdMRE),
+Prediction at level l, where l=25 (Pred(25)) (Conte et al. 1986), the Mean Magnitude of
+Relative Error relative to the Estimate (MEMRE) (Kitchenham and Mendes 2004), the
+Median Magnitude of Relative Error relative to the Estimate (MdEMRE) (Kitchenham and
+Mendes 2004), boxplots of absolute residuals (actual effort – estimated effort) and finally
+boxplots of z (estimated effort/actual effort). Accuracy of estimates was also assessed by
+statistical significance tests, in order to verify if the predictions obtained with one technique
+significantly outperformed those of the others.
+The remainder of the paper is organized as follows: Section 2 describes the dataset
+we used for our empirical study. Section 3 details the main features of the SVR approach,
+highlighting the main issues that were addressed in this paper in order to apply this
+approach in the context of Web effort estimation using a cross-company dataset; in
+addition we also detail how the parameters were set. In Section 4 we provide the other
+aspects of our empirical study, in particular present the null hypotheses, the validation
+method and the evaluation criteria employed. Section 5 discusses our results and
+compares them with the ones obtained with other widely adopted estimation techniques.
+
+214 Empir Software Eng (2011) 16:211–243
+
+Threats to the validity of this study are discussed in Section 6, while related work is
+presented in Section 7. Finally, in Section 8 there are some concluding remarks and
+comments on future work.
+
+2 Dataset Description
+
+The data used in this paper came from the Tukutuku database (Mendes et al. 2002). This
+database is part of the Tukutuku project, which aims to gather data from completed Web
+projects, to develop Web cost estimation models and to benchmark productivity across and
+within Web Companies. The Tukutuku database includes information on Web hypermedia
+systems and Web applications (Christodoulou et al. 2000). The former are characterized by
+the authoring of information using nodes (chunks of information), links (relations between
+nodes), anchors, access structures (for navigation) and its delivery over the Web. In
+addition, typical developers are writers, artists, and organizations that wish to publish
+information on the Web and/or CD-ROMs without the need to use programming languages
+such as Java. Conversely, the latter represent software applications that depend on the Web
+or use the Web's infrastructure for execution and are characterized by functionality affecting
+the state of the underlying business logic. Web applications usually include tools suited to
+handle persistent data, such as local file system, (remote) databases, or Web Services.
+Typical developers are young programmers fresh from a Computer Science or Software
+Engineering degree, managed by more senior staff.
+The Tukutuku database has data on 195 projects, where:
+
+& Projects came mostly from 10 different countries, mainly New Zealand (47%), Italy (17%),
+Spain (16%), Brazil (10%), United States (4%), England (2%), and Canada (2%).
+& Project types are new developments (65.6%) or enhancement projects (34.4%).
+& About dynamic technologies, PHP is used in 42.6% of the projects, ASP (VBScript or
+.Net) in 13.8%, Perl in 11.8%, J2EE in 9.2%, while 9.2% of the projects used other
+solutions. The remaining projects used only HTML and/or Javascript.
+& Each Web project in the database was characterized by process and product variables
+(Mendes et al. 2002), as described in Table 1.
+
+Within the context of the Tukutuku project, a new high-effort feature/function requires at
+least 15 h to be developed by one experienced developer, and a high-effort adapted feature/
+function requires at least 4 h to be adapted by one experienced developer. These values are
+based on collected data.
+
+Summary statistics for the numerical variables are given in Table 2, while Table 3
+summarizes the number and percentages of projects for the categorical variables. Note
+that all categorical variables are binary, and for our analysis their values have been
+coded using positive integers, namely 1 (for “new” and “no”) and 2 (for “enhancement”
+and “yes”).
+
+3 Support Vector Regression
+
+In this section, we first present Support Vector Machines and Support Vector Regression
+(SVR). Then, we describe the issues relating to data configuration and parameters setting
+that we addressed.
+
+Empir Software Eng (2011) 16:211–243 215
+
+Table 1 The Tukutuku variables
+
+Variable Name Scale Description
+
+COMPANY DATA
+
+Country Categorical Country company belongs to.
+
+Established Ordinal Year when company was established.
+
+nPeopleWD Ratio Number of people who work on Web design and development.
+
+PROJECT DATA
+
+TypeProj Categorical Type of project (new or enhancement).
+
+nLang Ratio Number of different development languages used.
+
+DocProc Categorical If project followed defined and documented process.
+
+ProImpr Categorical If project team involved in a process improvement programme.
+
+Metrics Categorical If project team part of a software metrics programme.
+
+DevTeam Ratio Size of a project’s development team.
+
+TeamExp Ratio Average team experience with the development language(s) employed.
+
+TotEffort Ratio Actual total effort in person hours used to develop an application.
+
+EstEffort Ratio Estimated total effort in person hours to develop an application.
+
+Accuracy Categorical Procedure used to record effort data.
+
+WEB APPLICATION
+
+TypeApp Categorical Type of Web application developed.
+
+TotWP Ratio Total number of Web pages (new and reused).
+
+NewWP Ratio Total number of new Web pages.
+
+TotImg Ratio Total number of images (new and reused).
+
+ImgNew Ratio Total number of new images created.
+
+Fots Ratio Number of features reused without any adaptation.
+
+HFotsA Ratio Number of reused high-effort features/functions adapted.
+
+Hnew Ratio Number of new high-effort features/functions.
+
+TotHigh Ratio Total number of high-effort features/functions.
+
+FotsA Ratio Number of reused low-effort features adapted.
+
+New Ratio Number of new low-effort features/functions.
+
+TotNHigh Ratio Total number of low-effort features/functions.
+
+3.1 Background
+
+SVR is a regression technique based on Support Vector Machines (SVMs) (Vapnik
+1998), a very effective and mathematically well founded machine learning approach.
+While the SVMs idea can be connected to the Generalized Portrait algorithm developed in
+Russia in the sixties, the actual mathematical formulation is inserted in the statistical
+machine learning theory developed by Vapnik and Chervonenkis (Vapnik and Chervonenkis 1964).
+One of the first applications of SVMs was in the ‘90s at the AT&T Bell Laboratories, for
+OCR (Optical Character Recognition) applications. Since then, SVMs have been
+successfully applied to a number of different learning problems. In general, when SVM
+is used for binary classification, it looks for the hyperplane which separates the elements of
+the two considered classes with the largest margin. This goal is attained by solving a
+problem of constrained optimization, where a different constraint is introduced for each of
+the labeled training set points. However, in some cases, it is not possible to find a
+
+216 Empir Software Eng (2011) 16:211–243
+
+
+Table 2 Summary statistics
+for numerical variables of the
+
+Tukutuku database
+
+
+Variable Mean Median Std. Dev Min Max
+
+nlang 3.9 4 1.4 1 8
+
+DevTeam 2.6 2 2.4 1 23
+
+TeamExp 3.8 4 2.0 1 10
+
+TotEff 468.1 88 938.5 1.1 5,000
+
+TotWP 69.5 26 185.7 1 2,000
+
+NewWP 49.5 10 179.1 0 1,980
+
+TotImg 98.6 40 218.4 0 1,820
+
+NewImg 38.3 1 125.5 0 1,000
+
+Fots 3.2 1 6.2 0 63
+
+HFotsA 12.0 0 59.9 0 611
+
+Hnew 2.1 0 4.7 0 27
+
+totHigh 1 59.6 0.0 611 611
+
+FotsA 2.2 0 4.5 0 38
+
+New 4.2 1 9.7 0 99
+
+totNHigh 6.5 4 13.2 0 137
+
+
+hyperplane satisfying all constraints. In 1995, Cortes and Vapnik (Cortes and Vapnik 1995)
+defined a modified version of the approach, able to deal with this case, thanks to the
+introduction of slack variables ζ aimed at relaxing the constraint for some of the points.
+Indeed, each constraint is “softened” by a slack variable ζ i while a cost C weights the sum
+of these constraint violations: this version is usually referred to as soft margin SVM. In
+conclusion, a constant C (cost) is introduced to account for the tradeoff between the
+optimality of the function and the amount of error introduced by slack variables. The
+solution of this optimization problem can be done in the primary or in the dual space,
+depending on whether the number of dimensions is smaller or larger than the number of
+training examples. The solution of the dual problem, with the introduction of Lagrange
+multipliers, shows how the solution can be expressed as a linear combination of some of the
+training examples, namely the support vectors; the complexity of the function representation
+only depends on their number.
+At the same time, the introduction of Lagrange multipliers and dual space solution
+makes also the adoption of kernel functions (Hofmann et al. 2008) particularly smooth,
+offering a very effective way to face non-linearity. Indeed, a kernel function corresponds to
+a dot product in the feature space, where the number of features can be much larger than the
+
+
+Table 3 Summary of number
+of projects and percentages for
+categorical variables of the
+Tukutuku database
+
+
+Variable Level Num. Projects % Projects
+
+TypeProj Enhancement 128 65.6
+
+New 67 34.4
+
+DocProc No 104 53.3
+
+Yes 91 46.7
+
+ProImpr No 105 53.8
+
+Yes 90 46.2
+
+Metrics No 130 66.7
+
+Yes 65 33.3
+
+Empir Software Eng (2011) 16:211–243 217
+
+number of dimensions of the input space (in principle even infinite), and when the number
+of features increases, the problem is more likely to be linearly separable. Therefore, with the
+kernel trick, a linear classifier such as those based on SVMs can be applied also to nonlinear problems.
+About the kernel functions, there are two possible solutions: to define an ad-hoc function,
+suitable for a specific dataset/problem, or to use kernels of more general application. Among
+these latter, the Polynomial and the Radial Basis Function (RBF) such as the Gaussian, and
+Sigmoid, such as the Hyperbolic Tangent, are the most widely adopted.
+When dealing with a regression problem rather than a classification one, we consider the
+application of the support vector approach to function estimation. In this case, the technique
+is known as Support Vector Regression (SVR). Indeed, SVR aims at using an approach
+based on support vectors to find a function which emulates the training set points with an
+error on each point lower than a constant, usually known as ε. Among all possible functions
+satisfying such a constraint, usually SVR implementations (including the one we used)
+select the flattest one. As SVM used for classification, a soft margin version of the
+algorithm can be used, where a constant C weights the errors larger than ε. A graphical
+representation is shown in Fig. 1.
+A good introduction to SVM/R’s mathematical background, some extensions,
+implementations, and a list of references are given in (Schölkopf and Smola 2002).
+Pointers to papers about SVR’s history can also be found in the References Section of the
+cited tutorial.
+
+3.2 SVR for Effort Estimation
+
+To apply support vector techniques in the field of effort estimation, some preliminary
+considerations are needed. To avoid confusion, henceforth we will adopt the terms “feature
+space” to identify the kernel functions’ co-domain and “input space” for the original training set.
+First of all, in effort estimation the input space consists of the attributes quantifying the
+cost drivers for software projects and the target function is an effort estimate. Thus, it turns
+out to be a regression problem, and we will deal with SVR and not with SVM.
+To apply SVR to effort estimation, the two aspects detailed below had to be carefully
+considered:
+
+1) Large differences in the ranges of the features’ values can have the unwanted effect of
+giving greater importance to some characteristics than to others. To address this issue, a
+data preprocessing step could be applied.
+
+Fig. 1 The soft margin loss setting for a linear SVR (Schölkopf 1997)
+
+218 Empir Software Eng (2011) 16:211–243
+
+2) Usually data in the input space are non-linear, and thus kernel functions should be
+considered to map a problem in a feature space where the target function consists of a
+line.
+
+Given these two aspects, they can be addressed using many different solutions. Herein
+we considered several strategies and analyzed them to understand the better option in the
+specific field of effort estimation with cross-company datasets. In the following
+subsections, we describe these strategies.
+
+3.2.1 Data preprocessing
+
+Regarding the ranges of features’ values in the input space, we considered two possible
+strategies:
+
+1) features normalization;
+2) logarithmic preprocessing.
+
+The first approach consists in considering each feature vector separately and dividing
+each of its elements by the vectors’ Euclidian norm, in order to force all vectors to have
+norm equal to one [1] .
+In relation to the second approach, logarithmic preprocessing, it is usually adopted to
+reduce ranges, since it compresses all the values. This transformation can be helpful also
+to tackle the linearity issue. Indeed, when a linearity test gives a negative outcome,
+meaning that a linear regression cannot be applied, the logarithm is usually the one
+applied to raise the probability that the transformed data will fit a linear function (Briand
+et al. 2000; Costagliola et al. 2006; Di Martino et al. 2007; Kitchenham and Mendes 2004).
+However, note that the attributes describing cost drivers for a software project are greater or
+equal to zero. Thus, to obtain positive or null transformed data, we must add 1 to all inputs
+before the application of the natural logarithm. In this way, all the quantities that were null
+before the transformation are null also afterwards, and all the non null quantities are greater than
+zero. Both operations only require the knowledge of the vector describing a single project. This
+means that the transformation can be easily applied also to a new project for which effort is to be
+estimated.
+
+Another aspect that needed caution was the fact that, among all the different
+solutions, SVR chooses the flattest. This could not be necessarily the best choice when
+dealing with effort estimation, since, from a managerial point of view, the flattest
+solution is the one that underestimates effort the most. To test whether the opposite
+choice, i.e., selecting the steepest option, could better suit the estimation problem, we
+considered also another preprocessing choice, where the goal function is the inverse of
+effort (1/EFH). Indeed, the problems considered with and without the inverse are totally
+equivalent, except that the flattest solution of one case corresponds to the steepest one of
+the other, and vice-versa.
+Summarizing, SVR was applied using six different arrangements of data (named data
+configurations in the following), namely normalized features and both unprocessed and
+inverse effort; features in logarithmic scale with unprocessed effort, inverse effort,
+logarithm of effort and inverse of its logarithm. They are summarized in Table 4.
+
+1 The norm was computed basing on all the input information available in the test set, thus all the attributes
+except the Effort.
+
+Empir Software Eng (2011) 16:211–243 219
+
+
+Table 4 The considered data
+configurations
+
+
+Data Dependent Variable transformation
+Configuration variable
+
+C1 EFH No transformation of the features
+
+C2 EFH Normalization of the features
+
+C3 EFH Log transformation of the features
+
+C4 1/ EFH No transformation of the features
+
+C5 1/ EFH Normalization of the features
+
+C6 1/ EFH Log transformation of the features
+
+
+3.2.2 Kernel Application and Parameters Setting
+
+Within the context of this work we were also interested in understanding the effect of the
+application of kernel functions upon each of the previously described data configurations.
+Kernel functions can be introduced when, in the expression used to evaluate the output, the
+vector u, representing the input, only appears in dot products with some other vector v. In
+this case, the kernel K(u,v) is used in place of the dot product u · v. As stated before, a
+kernel function K(u,v) allows to face the non-linearity of the data (further details can be
+found in (Smola and Schölkopf 2004)). We chose to apply the Polynomial and the RBF
+kernels as follows, since they are widely used and are implemented in the SVM-light
+software [2] (Joachims 1999), which was the software used in all the SVR analyses:
+
+1) Polynomial K uð ; vÞ ¼ sð [»] u [&] v þ c0Þ [degree] ;
+2) RBF K uð ; vÞ ¼ exp� �g [»] ju � vj [2] �;
+
+where s, c0, degree and γ are some scalar parameters specific for each kind of kernel.
+To understand if the application of one of these kernel functions to the input space could
+improve SVR’s prediction accuracy, we also considered SVR without a kernel transformation,
+also known as Linear kernel. Thus, a total of 18 SVR configurations were analyzed,
+representing all the combinations of data configurations and kernels that were adopted.
+Finally, the actual application of SVR requires also the choice of values for the
+parameters, which are of two different types:
+
+1) parameters of the support vector algorithm, namely ε and C, and
+2) kernel parameters, which are specific of each kernel, namely s, c0 and degree for the
+Polynomial and γ for the RBF.
+
+The choice of parameters can have a strong impact on the application of the SVR
+technique. Therefore, in our study we searched for the best parameter settings using a semiautomatic approach that allowed us to explore a wide range of variables’ values (employing
+various nested cycles with small incremental steps). For each run, depending on the kernel,
+the number of executions ranged from a few dozens to about 4,000 executions.
+To evaluate the goodness of the parameter settings, in each of these executions we
+performed an inner leave-one-out cross validation [3] on the training set (so each cycle of
+
+2 [SVM-light is freely available in http://svmlight.joachims.org/ for scientific use.](http://dx.doi.org/http://svmlight.joachims.org/)
+3 In a leave-one-out cross-validation, a single observation from the original sample is used to evaluate the
+model that is trained using the remaining observations. This is repeated until each observation in the sample
+is used once as validation data. The application of a leave-one-out cross validation on the training set has
+allowed us to prevent problems of model overfitting that could hinder the model having good prediction
+accuracy on an out dataset.
+
+220 Empir Software Eng (2011) 16:211–243
+
+execution required a number of iterations corresponding to the cardinality of the training
+set) and for each iteration we calculated error summary indicators, i.e.: Mean Magnitude of
+Relative Error (MMRE), Mean Magnitude of Relative Error relative to the Estimate
+(MEMRE), Median Magnitude of Relative Error (MdMRE) and Median Magnitude of
+Relative Error relative to the Estimate (MdEMRE), which are all detailed in the next
+section. This step was followed by computing the mean value of MMRE and MEMRE and
+the mean value of MdMRE and MdEMRE obtained at each iteration. Thus we sorted all
+
+results on the mean of MdMRE and MdEMRE, picking the setting presenting the lowest
+value. Whenever multiple settings presented the same value, we selected the one with the
+lowest mean of MMRE and MEMRE.
+
+Thus, given a training set, the process to identify the best parameters’ setting was applied
+for each of the 18 SVR configurations adopted. Then, the 18 best parameter settings were
+used to learn the models on the training set.
+
+4 Null Hypotheses, Validation Method, and Evaluation Criteria
+
+In this section, we present other aspects of the design of our empirical study. In particular,
+we formulate the null hypotheses to address the research goals pointed out in the
+introduction Section, describe the validation method adopted and the applied evaluation
+criteria.
+
+4.1 Null Hypotheses
+
+To address the first research goal, we took into account all the 18 configurations for SVR,
+as described in the previous Section. In particular, we formulated the following null
+hypothesis:
+
+Hn0: All the SVR data configurations and kernels provide estimates that are not
+significantly different.
+
+When the null hypothesis can be rejected with relatively high confidence it is possible to
+formulate an alternative hypothesis:
+
+Ha0: Among the considered combinations of data configurations and kernels there is
+one that allows SVR to provide estimates (significantly) better than the others.
+
+To address our second research goal, we compared the best predictions achieved by SVR
+with the (best) ones obtained by two widely used estimation methods, i.e., the Manual
+StepWise Regression (MSWR) (Mendes and Kitchenham 2004) and the Case-Based
+Reasoning (CBR) (Shepperd and Kadoda 2001). This allowed us to understand if SVR
+performed better than these two widely used prediction techniques. In the Appendix, we
+will summarize the key aspects of these methods.
+Moreover, we also checked whether the estimates obtained with SVR were significantly
+better than predictions obtained by simply using the mean and median of efforts of the
+projects in the training sets. This was done because, as suggested by Mendes and
+Kitchenham in (Kitchenham and Mendes 2004; Mendes and Kitchenham 2004), if an
+estimation technique does not outperform the results achieved by using the mean or median
+effort, it cannot be transferred to industry since there would be no value in dealing with
+complex computations of estimation methods to predict development effort compared to
+simply using as estimate the mean or the median effort of its own past projects.
+
+Empir Software Eng (2011) 16:211–243 221
+
+Thus, regarding our second research goal we formulated the other four null hypotheses:
+
+Hn1: SVR (using the best combination of data configuration and kernel) does not
+provide better estimations than MSWR;
+Hn2: SVR (using the best combination of data configuration and kernel) does not
+provide better estimations than CBR;
+Hn3: SVR (using the best combination of data configuration and kernel) does not
+provide better estimations than mean of effort of past projects.
+Hn4: SVR (using the best combination of data configuration and kernel) does not
+provide better estimations than median of effort of past projects.
+
+The related alternative hypotheses can be easily derived.
+
+4.2 Validation Method
+
+To assess the effectiveness of the considered estimation techniques in predicting
+development effort, we adopted a hold-out cross-validation method. According to this
+approach, the original sample is randomly split into two distinct sets, namely training
+and test sets. The model learned/constructed using the training set is used to predict the
+dependent variable of the elements in the test set. The errors from applying this model
+are accumulated using summary statistic measures (described in the following
+subsection).
+Let us note that using only a single training and test set split, even if randomly selected,
+can provide misleading results, since by chance it could correspond to either an extremely
+advantageous or disadvantageous splitting of data for a particular model. Therefore, in our
+analysis, we used three random splits, to reduce the probability of having such extreme
+cases in the experiments.
+In order to compare the results obtained using SVR with other effort estimation
+techniques, such as MSWR and CBR, two of the three splits used herein were the same
+ones previously employed in (Mendes 2008) and in our previous study (Corazza et al.
+2009). In particular, each training set included 130 observations from the original 195
+projects contained in the Tukutuku database, while the corresponding test set included the
+remaining 65 observations. The third split (not used in (Corazza et al. 2009; Mendes 2008))
+was obtained with the same procedure by randomly selecting 130 observations for the
+training set and retaining the corresponding 65 observations in the test set.
+
+4.3 Evaluation Criteria
+
+To assess the accuracy of the obtained estimations, we employed some commonly used
+measures for effort estimation, such as the Mean of Magnitude of Relative Error (MMRE),
+Median of MRE (MdMRE), and Prediction at level 25% (Pred(25)) (Conte et al. 1986). Let
+us recall that Pred(l) measures the percentage of estimates that are within l% of the actual
+values, and l is usually set at 25. MRE is the basis for calculating MMRE and MdMRE, and
+is defined as:
+
+j j
+MRE ¼ [e][ �] [b][e] ð1Þ
+e
+
+where e represents actual effort and ê estimated effort. The difference between MMRE and
+MdMRE is that the former is sensitive to predictions containing extreme MRE values.
+
+222 Empir Software Eng (2011) 16:211–243
+
+Note that Kitchenham et al. (Kitchenham et al. 2001) showed that MMRE and Pred(l)
+are respectively measures of the spread and kurtosis of zb, where (z ¼ [b] [e] e [). They suggest the]
+use of boxplots of z and boxplots of the residuals (e�e) as useful complement to simple
+summary measures since they can give a good indication of the distribution of residuals and
+z, and can help gathering insight on summary statistics such as MMRE and Pred(l). Indeed,
+boxplots are widely employed in exploratory data analysis since they provide a quick visual
+representation to summarize the data, using five values: median, upper and lower quartiles,
+minimum and maximum values, and outliers (Kitchenham et al. 2001). In development
+effort estimation, boxplots are used to visually represent the amount of the error for a given
+prediction technique.
+The same authors suggest also the use of the Magnitude of Relative Error relative to the
+Estimate (EMRE) as a comparative measure as well (Kitchenham et al. 2001). The EMRE
+has the same form of MRE, but the denominator is the estimate, giving thus a stronger
+penalty to under-estimates.
+
+j j
+EMRE ¼ [e][�] b [b][e] ð2Þ
+e
+
+As with the MRE, we can also calculate the mean EMRE (MEMRE) and Median EMRE
+(MdEMRE).
+Finally, to verify if the differences observed using the above measures were legitimate or
+due to chance, we checked if the absolute residuals obtained with the application of the
+various estimation techniques come from the same population (i.e., to verify the following
+null hypothesis: “the two considered populations have identical distributions”) (Kitchenham
+et al. 2001; Mendes et al. 2003c). If they do, it means that there are no significant
+differences between the data values being compared. We accomplished the statistical
+significance test using the nonparametric Wilcoxon Signed Ranks one (Conover 1998). A
+one-tailed paired t-test can be used as alternative to the Wilcoxon test (Conover 1998).
+However, we used the Wilcoxon test since it is resilient to strong departures from the t-test
+assumptions (Briand et al. 2005). The achieved results were intended as statistically
+significant at α=0.05. This means that if the derived p-value is less than 0.05, it can be
+concluded that the null hypothesis can be rejected.
+
+5 Results and Discussion
+
+In this section we report on and discuss the results of the empirical analysis. Section 5.1
+addresses the first research goal and compares the estimation accuracy obtained with the
+different SVR configurations. Section 5.2 focuses on the second research goal and
+benchmarks the best results provided by SVR against estimates obtained using other
+prediction techniques traditionally employed in the field of effort estimation, thus allowing
+us to understand if SVR can bring benefits in this domain.
+
+5.1 Comparison among Different Combinations of SVR Data Configurations and Kernels
+
+As described in Section 3.2.2, our approach for applying SVR is based on the identification
+of the best parameter settings for each training set and each SVR configuration. Such
+parameters are related to the SVR technique (namely C and ε), and to the specific kernel
+(namely s, c0 and degree for the Polynomial kernel and γ for the RBF kernel). A leave-oneout cross-validation was applied on each of the three training sets for each of the 18
+
+Empir Software Eng (2011) 16:211–243 223
+
+configurations, leading to the identification of the values of the parameters reported in
+Table 5, 6 and 7 for the Linear, Polynomial, and RBF kernels, respectively.
+Using the above settings we applied SVR to train the models that were later applied to
+the corresponding test sets. Table 8 shows the results in terms of MMRE, MdMRE, Pred
+(25), MEMRE, and MdEMRE for each configuration adopted and each split.
+We can observe that when variables are not transformed (i.e., configuration C1), the best
+results in terms of summary measures were obtained by Linear and Polynomial kernels for
+the first test set, while Polynomial kernel provided the best results for the second and third
+test sets. In order to verify if the differences observed using these measures were legitimate
+or due to chance we needed to check the statistical significance of the results. To this end,
+we compared the absolute residuals obtained with the different settings by using the
+nonparametric test Wilcoxon Signed Ranks test (α =0.05). Results showed that the
+Polynomial kernel provided significant better results than RBF and Linear kernels for
+the first and second test sets, respectively. Linear and RBF kernels were comparable for
+all test sets.
+
+As for the normalization-based configurations (i.e., C2), the results obtained with Linear
+kernel seem to be better than those obtained using the other two kernels for the first test set.
+On the other hand, Polynomial and RBF kernels, respectively, provided better results than
+the others in the second and third test sets. The Wilcoxon test revealed that Linear kernel
+
+provided significant better results than Polynomial kernel for the second test set, while
+Linear, RBF, and Polynomial kernels were comparable for the first and third test sets.
+With regards to the Log transformation-based configurations (i.e., C3), we can
+observe that the best results in terms of summary measures were obtained using the
+RBF kernel. In this case, the results were confirmed by the Wilcoxon test for the first
+and second test sets, while no statistically significant difference was found in the case
+of the third validation test.
+
+By applying SVR with configuration C4, the best results were obtained using the RBF
+kernel. As for the statistical significance between the absolute residuals obtained with the
+three kernels, the Wilcoxon test showed that there was no statistical difference for the first
+and third test sets, while for the second test set RBF performed significantly better than the
+other two kernels.
+
+With regards to configuration C5, RBF and Polynomial provided slightly better results in
+terms of summary measures for the first and second test sets, respectively. As for the third
+test sets, although MMRE obtained with RBF was worse than the others, the other
+summary measures suggested us that RBF performed better than Linear and Polynomial
+
+Table 5 Parameter setting obtained on the three training sets with Linear Kernel
+
+First training set Second training set Third training set
+
+Conf. C EPS C EPS C EPS
+
+C1 51 0.01 151 0.01 6 0.01
+
+C2 7 0.001 15 0.001 12 0.001
+
+C3 63 0.0001 0.02 0.0001 2 0.0001
+
+C4 0.2 0.001 0.005 0.0001 0.9 0.001
+
+C5 3 0.01 0.9 0.001 10 0.01
+
+C6 97 0.0001 3 0.0001 12 0,0001
+
+224 Empir Software Eng (2011) 16:211–243
+
+Empir Software Eng (2011) 16:211–243 225
+
+Table 7 Parameter setting obtained on the three training sets with RBF Kernel
+
+First training set Second training set Third training set
+
+Conf. C EPS Gamma C EPS Gamma C EPS Gamma
+
+C1 50 0.01 0.01 63 0.01 0.01 51 0.01 0.01
+
+C2 22 0.01 14 15 0.001 3 121 0.001 0.9
+
+C3 2 0.001 0.01 2 0.001 0.2 12 0.001 0.1
+
+C4 0.1 0.01 0.01 0.05 0.01 0.02 0.05 0.01 0.01
+
+C5 3 0.001 8 151 0.001 0.6 63 0.001 0.9
+
+C6 0.2 0.0001 0.02 0.001 0.0001 0.02 0.1 0.0001 0.09
+
+kernels. This choice is confirmed by the Wilcoxon test since RBF provided significant
+better results than Linear kernel for the first and third test sets, while Polynomial provided
+significant better results than RBF kernel for the second test set.
+As for configuration C6, the best results were given by the RBF kernel. The Wilcoxon
+test revealed that the absolute residuals based on the RBF kernel were significantly smaller
+than those obtained with the Linear and Polynomial kernels for the first two test sets, while
+no difference was found between kernels for the third test sets.
+
+Once we investigated how the various configurations performed, we were interested in
+understanding which configuration provided the best results overall. Again we took into
+account the same summary measures and the boxplots of absolute residuals.
+The analysis of summary statistics suggested that the best results were achieved with C3
+employing the RBF kernel for the first two test sets. All these results were confirmed by the
+boxplots in Figs. 2 [4], 3, and 4 [5] (where Ci(L) represents configuration Ci with Linear Kernel,
+Ci(R) represents configuration Ci with RBF Kernel, and Ci(P) represents configuration Ci
+with Polynomial Kernel, with i in {1,..,6},).
+In particular, for the first two test sets, the boxplot of C3(R) has the box length and the
+tails less skewed than those of the other boxplots. Furthermore, the median of the boxplot
+of C3(R) was closer to zero than all the others and the outliers of C3(R) were less far from
+the upper tail than the others. As for the third test set, we can observe that boxplots of C2
+(L) and C5(R) had the box length and the tails slightly less skewed than the other boxplots.
+However, the boxplots of C2(R), C3(L), and C3(R) had the medians very close to the one
+of C2(L). Moreover, C4(R) had outliers further from the upper tails than those of C2(R), C3
+(L), and C3(R). It is also important to note that C3(R) had less outliers with respect to the
+boxplot of C2(L), C2(R), and C3(L). We can conclude that also for the third test set C3(R)
+provided the best results even if there were other configurations that provided comparable
+results.
+
+In order to verify whether the differences observed using summary measures and
+boxplots of absolute residuals were legitimate or due to chance, we also checked the
+statistical significance of the results by applying the Wilcoxon test on the absolute residuals.
+The results are reported in Tables 9, 10, and 11 where “Yes” in a cell means that the
+technique indicated on the row is significantly superior to the one indicated on the column.
+Notice that we avoided to compare all the 18 configurations, but for each split we took into
+
+4 Observe that we removed an outlier for the boxplot of C6(L) and an outlier for the boxplot of C6(R) to
+improve the readability of the plots.
+5 Observe that we removed an outlier for the boxplot of C6(L) to improve the readability of the plots.
+
+226 Empir Software Eng (2011) 16:211–243
+
+Table 8 Accuracy measures obtained by using the parameters settings given in Table 5, 6 and 7
+
+Config. Kernel MMRE MdMRE Pred(25) MEMRE MdEMRE
+
+First splits of data
+
+C1 Lin 1.984 0.583 0.234 1.355 0.735
+
+Poly 1.501 0.749 0.234 1.944 0.570
+
+RBF 1.422 0.777 0.203 2.979 0.733
+
+C2 Lin 1.014 0.514 0.266 1.144 0.534
+
+Poly 1.254 0.617 0.219 1.219 0.61
+
+RBF 2.423 0.621 0.25 0.771 0.61
+
+C3 Lin 1.151 0.555 0.281 1.118 0.555
+
+Poly 1.006 0.503 0.297 1.068 0.554
+
+RBF 0.591 0.411 0.344 0.603 0.467
+
+C4 Lin 1.297 0.702 0.188 4.49 0.779
+
+Poly 1.298 0.74 0.188 4.452 0.781
+
+RBF 1.272 0.574 0.234 1.738 0.595
+
+C5 Lin 1.234 0.568 0.203 1.164 0.523
+
+Poly 0.983 0.547 0.219 1.299 0.581
+
+RBF 0.878 0.544 0.234 1.426 0.53
+
+C6 Lin 1.443 0.648 0.25 1.432 0.685
+
+Poly 1.398 0.637 0.25 1.455 0.695
+
+RBF 0.928 0.454 0.344 0.694 0.495
+
+Second split of data
+
+C1 Lin 2.298 0.826 0.077 2.137 0.754
+
+Poly 2.331 0.779 0.231 2.96 0.758
+
+RBF 2.723 0.751 0.108 7.804 0.886
+
+C2 Lin 0.978 0.562 0.277 1.3 0.525
+
+Poly 0.972 0.511 0.277 1.095 0.525
+
+RBF 2.037 0.602 0.277 1.091 0.58
+
+C3 Lin 1.215 0.45 0.338 0.68 0.542
+
+Poly 1.097 0.491 0.277 0.699 0.527
+
+RBF 0.91 0.36 0.415 0.506 0.413
+
+C4 Lin 1.873 0.793 0.215 8.609 0.84
+
+Poly 1.501 0.795 0.185 8.456 0.79
+
+RBF 1.191 0.508 0.323 1.288 0.507
+
+C5 Lin 0.909 0.505 0.215 0.997 0.535
+
+Poly 0.678 0.46 0.231 1.002 0.494
+
+RBF 0.964 0.543 0.262 1.215 0.68
+
+C6 Lin 231.177 0.649 0.185 0.85 0.633
+
+Poly 4,38E+05 0.65 0.169 1.089 0.673
+
+RBF 0.997 0.46 0.338 0.527 0.41
+
+Third split of data
+
+C1 Lin 3.076 0.844 0.169 2.731 0.674
+
+Poly 1.135 0.617 0.169 2.403 0.513
+
+RBF 1.681 0.751 0.138 4.265 0.798
+
+C2 Lin 0.823 0.419 0.415 1.172 0.442
+
+Poly 0.791 0.384 0.415 1.151 0.427
+
+Empir Software Eng (2011) 16:211–243 227
+
+Table 8 (continued)
+
+Config. Kernel MMRE MdMRE Pred(25) MEMRE MdEMRE
+
+RBF 0.645 0.319 0.415 0.824 0.392
+
+C3 Lin 1.092 0.433 0.385 1.070 0.411
+
+Poly 1.203 0.416 0.4 1.482 0.433
+
+RBF 1.096 0.334 0.415 0.997 0.348
+
+C4 Lin 19.388 0.722 0.262 5.606 0.953
+
+Poly 1.946 0.763 0.138 5.778 1.051
+
+RBF 1.323 0.685 0.2 2.866 0.724
+
+C5 Lin 0.961 0.545 0.323 1.092 0.42
+
+Poly 1.379 0.47 0.246 1.037 0.657
+
+RBF 2.595 0.366 0.385 0.848 0.326
+
+C6 Lin 1.30E+5 0.571 0.262 2.604 0.588
+
+Poly 1,70E+05 0.579 0.262 2.092 0.593
+
+RBF 1.311 0.447 0.354 1.302 0.561
+
+account for each preprocessing strategy the kernel that provided the best results. The
+analysis of the results reported in the Tables showed that for all test sets, the absolute
+residuals achieved with C3 using the RBF kernel were significantly smaller than those
+obtained using C1 and C4 (p-values<0.05). The comparison with configurations C2, C5
+and C6 showed that C3 performed significantly better only in the case of the first test set.
+The analysis abovementioned shows that different preprocessing strategies and kernels
+can significantly affect the prediction effectiveness of the SVR approach. In particular, for
+the first test set we can for sure reject the null hypothesis regarding the first research goal
+presented in Section 4, both in terms of summary indicators and statistical significance
+(with a confidence of 95%), highlighting that there is a SVR configuration (i.e., C3 with
+RBF kernel) that provided estimates significantly better than all the other considered SVR
+configurations. As for the second and third test sets, we cannot reject the null hypothesis
+since C3(R) provided results significantly better only than C1 and C4. Nevertheless, in
+
+Fig. 2 Boxplots of absolute residuals obtained with the SVR configurations for the first test set
+
+228 Empir Software Eng (2011) 16:211–243
+
+Fig. 3 Boxplots of absolute residuals obtained with the SVR configurations for the second test set
+
+terms of summary measures the results provided by C3(R) are better than those of the other
+configurations, except for C2 configuration on the third test set.
+Moreover, it is important to observe that for all the three splits the Logarithmic
+preprocessing in combination with the RBF kernel was able to significantly outperform the
+configurations characterized by no data preprocessing (configurations C1 and C4).
+
+5.2 Comparison with Other Techniques
+
+In this section, we compare the results achieved using SVR with those obtained with
+MSWR and CBR. A description of these techniques is provided in the Appendix. We took
+into account for the comparison configuration C3 with RBF kernel, since the analysis
+provided in the previous section has revealed that this configuration has provided better
+results with respect to the others. Moreover, for splits 1 and 2 we used the results obtained
+
+Fig. 4 Boxplots of absolute residuals obtained with the SVR configurations for the third test set
+
+Empir Software Eng (2011) 16:211–243 229
+
+Table 9 Comparison of the absolute residuals obtained with the different SVR settings using Wilcoxon test
+(p-value between brackets) for the first test set
+
+< C1(P) C2(L) C3(R) C4(R) C5(R) C6(R)
+
+        -         C1(P) No (0.224) No (0.333) No (0.467) No (0.882)
+
+        -         -         -         C2(L) No (0.145) No (0.874)
+
+                              C3(R) Yes (0.013) Yes (0.000) Yes (0.000) Yes (0.001) Yes (0.006)
+
+        -         -         -         -         C4(R)
+
+        -         -         -         C5(R) No (0.201)
+
+        -         -         C6(R) Yes (0.020) Yes (0.000) Yes (0.043)
+
+in (Mendes 2008). The summary measures for all the three splits we considered are reported
+in Tables 12, 13, and 14, where we adopted the following acronyms:
+
+–
+MSWR: Manual Stepwise Regression
+
+–
+CBR1: Case-based reasoning using one analogy
+
+–
+CBR2: Case-based reasoning using two analogies;
+
+–
+CBR3: Case-based reasoning using three analogies;
+
+–
+MeanEffort: Mean value of the effort in the dataset;
+
+–
+MedianEffort: Median value of the effort in the dataset;
+
+The summary measures MMRE, MdMRE, Pred(25), MEMRE, and MdEMRE suggest
+that, for both test sets, SVR provided better results than the other techniques, even though
+they do not fit the thresholds suggested by Conte et al. (Conte et al. 1986). Moreover, even
+if all the techniques outperform MeanEffort, only SVR and MSWR are characterized by
+better predictions than MedianEffort.
+Figure 5 shows respectively the boxplots of absolute residuals and of z, obtained for the
+first test set. The analysis of these boxplots confirmed the patterns abovementioned. Indeed,
+the SVR’s distribution was less skewed than the other distributions. Furthermore, the
+outliers of SVR’s boxplot were closer to the tails than the outliers for the other techniques,
+and the median of SVR boxplot was closer to zero. Similar considerations can be done for
+the boxplots of z. The boxplots of absolute residuals and z also suggest that the estimations
+provided by CBR were slightly worse than those obtained by using SVR and MSWR. As
+for the second test set, the boxplots of absolute residuals and z are shown in Fig. 6, which
+confirm the results provided above. Indeed, the median of the boxplots of absolute residuals
+
+Table 10 Comparison of the absolute residuals obtained with the different SVR settings using Wilcoxon test
+(p-value between brackets) for the second test set
+
+< C1(P) C2(P) C3(R) C4(R) C5(P) C6(R)
+
+        -         -         -         -         -         C1(P)
+
+C2(P) Yes (0.029) No (0.927) No (0.808) No (0.885) No (0.909)
+
+                    -                    C3(R) Yes (0.000) Yes (0.026) No (0.074) No (0.508)
+
+                    -                    -                    -                    C4(R) Yes (0.019) No (0.292)
+
+                    -                    -                    C5(P) Yes (0.009) No (0.948) No (0.152)
+
+                    -                    -                    -                    C6(R) Yes (0.002) Yes (0.005)
+
+230 Empir Software Eng (2011) 16:211–243
+
+Table 11 Comparison of the absolute residuals obtained with the different SVR settings using Wilcoxon test
+(p-value between brackets) for the third test set
+
+< C1(P) C2(R) C3(R) C4(R) C5(R) C6(R)
+
+        -        -        C1(P) No (0.841) No (0.082) No (0.813)
+
+                   C2(R) Yes (0.004) No (0.301) No (0.165) No (0.432) No (0.201)
+
+                   -                   C3(R) Yes (0.001) Yes (0.000) No (0.865) No (0.050)
+
+        -        -        -        C4(R) No (0.942) No (0.878)
+
+                   -                   -                   -                   C5(R) Yes (0.044) No (0.088)
+
+        -        -        -        -        -        C6(R)
+
+for SVR was closer to zero than the other boxplots. The boxplot of MedianEffort was very
+similar to the one of SVR, however, the outliers of the boxplot of SVR were closer to the
+tails with respect to the one of MedianEffort. On the other hand, the boxplots of z suggested
+that SVR provided better results than MedianEffort. The boxplots of SVR and MSWR were
+very similar. Indeed, the median of the SVR and MSWR boxplots were closer to zero and
+these boxplots were less skewed than the other boxplots. Furthermore, the outliers of the
+SVR and MSWR were closer to the tails with respect to those of the others.
+Figure 7 shows the boxplots of absolute residuals and of z, respectively, obtained for the
+third test set. We can observe that SVR and MSWR boxplots had the median closer to zero
+than the others. Even if the boxplots of MedianEffort had box length and tails less skewed
+than SVR boxplots it had more outliers. In general, SVR and MSWR boxplots had less
+outliers than the other boxplots. Similar considerations can be done for the boxplots of z.
+The boxplots of absolute residuals and z also suggest that the estimations provided by CBR
+were worse than those obtained by using SVR and MSWR.
+In order to verify if the differences observed using summary accuracy measures and
+boxplots were legitimate or due to chance, we checked whether the absolute residuals for the
+techniques used came from the same population. Again, we applied the Wilcoxon test (α=
+0.05). The results, reported in Tables 15, 16, and 17 led us to the following observations:
+
+1. The predictions obtained with SVR were significantly superior than those obtained
+with all the other techniques, using all three test sets.
+2. All the estimations obtained using the analyzed techniques were significantly superior
+to those using MeanEffort. Only SVR and MSWR provided significantly superior
+accuracy to MedianEffort. Thus, results suggest that for a software company that
+developes Web applications, it is worth to use one of these prediction techniques
+instead of using the simple mean or median effort of the previous projects.
+
+
+Table 12 Accuracy related to the
+first test set
+
+
+MMRE MdMRE Pred(25) MEMRE MdEMRE
+
+SVR with C3(R) 0.59 0.41 0.34 0.60 0.47
+
+MSWR 1.50 0.64 0.23 1.36 0.64
+
+CBR1 5.27 0.97 0.08 31.70 3.43
+
+CBR2 5.06 0.87 0.11 3.59 0.81
+
+CBR3 5.63 0.97 0.09 4.17 0.88
+
+Median Effort 4.84 0.92 0.09 4.48 0.94
+
+Mean Effort 29.28 3.94 0.08 1.07 0.91
+
+Empir Software Eng (2011) 16:211–243 231
+
+
+Table 13 Accuracy related to the
+second test set
+
+
+MMRE MdMRE Pred(25) MEMRE MdEMRE
+
+SVR with C3(R) 0.91 0.36 0.42 0.51 0.41
+
+MSWR 0.73 0.66 0.11 2.86 1.21
+
+CBR1 4.46 0.92 0.08 21.81 0.95
+
+CBR2 6.73 0.89 0.15 15.65 0.90
+
+CBR3 6.09 0.84 0.09 13.26 0.89
+
+Median Effort 4.21 0.85 0.14 5.57 0.86
+
+Mean Effort 26.21 4.71 0.05 1.39 0.90
+
+
+3. MSWR significantly outperformed the three CBR configurations.
+4. No difference has been found between the three CBR configurations.
+
+From all these considerations, we can for sure reject all the null hypotheses regarding the
+second research goal presented in Section 4, both in terms of summary indicators and
+statistical significance (with a confidence of 95%), highlighting that:
+
+–
+The SVR configuration based on C3 and RBF kernel provided significantly better
+estimations than MSWR;
+
+–
+The SVR configuration based on C3 and RBF kernel provided significantly better
+estimations than CBR;
+
+–
+The SVR configuration based on C3 and RBF kernel provided significantly better
+estimations than mean of effort of past projects;
+
+–
+The SVR configuration based on C3 and RBF kernel provided significantly better
+estimations than mean of effort of past projects.
+
+In particular, we want to stress that, regarding the second research goal, the analysis
+revealed that SVR outperformed all the techniques that were to date the most widely and
+successfully employed prediction techniques in Software Engineering (Briand et al. 2000;
+Costagliola et al. 2006; Di Martino et al. 2007; Kitchenham and Mendes 2004; Mendes et al.
+2005b; Shepperd and Kadoda 2001), both in terms of summary indicators and statistical
+significance (with a confidence of 95%).
+However, it is worth noting that SVR produced still significant differences between
+actual and estimated values. Indeed, Pred(25) is 0.34 on the first test set (see Table 12)
+meaning that 34% of estimation results included less than 25% error and is 0.42 on the
+other test sets(see Tables 13 and 14). Moreover, in the Chaos report by Standish(Standish
+Group International), 20% is used as a threshold of minimum cost overrun. Thus, SVR did
+not yet exhibit on the cross-company dataset employed in our analysis an estimation
+
+
+Table 14 Accuracy related to the
+third test set
+
+
+MMRE MdMRE Pred(25) MEMRE MdEMRE
+
+SVR with C3(R) 1.10 0.33 0.42 1.00 0.35
+
+MSWR 1.24 0.51 0.26 1.50 0.54
+
+CBR1 9.68 0.95 0.08 12.76 0.96
+
+CBR2 7.06 0.91 0.08 5.13 0.88
+
+CBR3 16.41 1.90 0.14 2.33 0.93
+
+Median Effort 2.63 0.91 0.19 6.24 0.86
+
+Mean Effort 14.45 3.74 0.03 1.47 0.91
+
+232 Empir Software Eng (2011) 16:211–243
+
+Fig. 5 Boxplots of absolute
+residuals (a) and of z (b) for the
+first test set
+
+accuracy enough to be successfully used in industry. Nevertheless, for the first time on this
+dataset we got predictions whose median error is less than 50%. This definitely encourages
+for further investigations also taking into account the versatility of SVR and the possibility
+of using different kernel functions.
+
+6 Threats to Validity
+
+Several factors can bias the validity of empirical studies. Here we consider three types of
+validity threats: Construct validity, related to the agreement between a theoretical concept
+and a specific measuring device or procedure; Conclusion validity, related to the ability to
+draw statistically correct conclusions; External validity, related to the ability to generalise
+the achieved results.
+
+As highlighted by Kitchenham et al. (Kitchenham et al. 1995), in order to satisfy
+construct validity a study has “to establish correct operational measures for the concepts
+being studied”. The size measures and cost drivers used in the Tukutuku database and
+therefore in our study have been obtained from the results of a survey investigation
+
+Empir Software Eng (2011) 16:211–243 233
+
+Fig. 6 Boxplots of absolute
+residuals (a) and of z (b) for the
+second test set
+
+(Mendes et al. 2003b), using data from 133 on-line Web forms aimed at giving quotes on
+Web development projects. In addition, these measures and cost drivers have also been
+confirmed by an established Web company and a second survey involving 33 Web
+companies in New Zealand. Consequently, it is our belief that the variables identified are
+measures that are meaningful to Web companies and are constructed from information their
+customers can provide at a very early stage in the project development.
+As for data quality, in order to identify effort guesstimates from more accurate effort
+data, companies were asked on how their effort data was collected (see Table 18). At least
+for 93.8% of Web projects in the Tukutuku database, effort values were based on more than
+just guesstimates.
+In relation to the conclusion validity we carefully applied the statistical tests, verifying
+all the required assumptions. Moreover, we used a medium size dataset in order to mitigate
+the threats related to the number of observations composing the dataset.
+About external validity, the dataset used in this investigation comprises data on projects
+volunteered by individual companies, and therefore it does not represent a random sample
+of projects from a defined population. This means that we cannot conclude that the results
+of this study promptly apply to other companies different from the ones that volunteered the
+
+234 Empir Software Eng (2011) 16:211–243
+
+Fig. 7 Boxplots of absolute
+residuals (a) and of z (b) for the
+third test set
+
+data used here). This represents an important external validity threat that can be mitigated
+only replicating the study taking into account data from other companies. Indeed, this is the
+only way to get a generalisation of the results. However, we believe that Web companies
+that develop projects with similar characteristics to those used in this paper may be able to
+apply our results to their Web projects.
+
+Table 15 Comparison of the absolute residuals obtained for the first test set, using the Wilcoxon test
+(p-values are reported between brackets)
+
+< MSWR CBR1 CBR2 CBR3 Mean Effort Median Effort
+
+SVR with C3(R) Yes (0.010) Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000)
+
+MSWR - Yes (0.000) Yes (0.002) Yes (0.000) Yes (0.000) Yes (0.000)
+
+CBR2 - No (0.052) No (0.398) Yes (0.022) 
+CBR2 - No (0.227) Yes (0.000) No (0.335)
+
+CBR3 - Yes (0.000) No (0.422)
+
+Mean Effort - 
+Median Effort Yes (0.003) Yes (0.002) 
+Empir Software Eng (2011) 16:211–243 235
+
+Table 16 Comparison of the absolute residuals obtained for the second test set, using the Wilcoxon test
+(p-values are reported between brackets)
+
+< MSWR CBR1 CBR2 CBR3 Mean Effort Median Effort
+
+SVR with C3(R) Yes (0.040) Yes (0.000) Yes (0.001) Yes (0.001) Yes (0.000) Yes (0.014)
+
+MSWR - Yes (0.000) Yes (0.000) Yes (0.001) Yes (0.000) Yes (0.009)
+
+CBR1 - No (909) No (893) Yes (0.009) 
+CBR2 - - Yes (0.000) 
+CBR3 Yes (0.000) - Yes (0.000) 
+Mean Effort 
+Median Effort Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000) 
+7 Related Work
+
+Regarding the use of SVR for effort estimation, we are aware of only few previous studies
+that investigated the application of this technique for effort estimation. Oliveira (Oliveira
+2006), who was the first to apply SVR to this field, used data from 18 applications from the
+well-known NASA software project dataset (Bailey and Basili 1981). By using a leave-oneout cross-validation, the author reported that SVR significantly outperformed both linear
+regression and Radial Basis Function Networks (RBFNs), in terms of the indicators MMRE
+and Pred (25). In a second study (Braga et al. 2007), the authors proposed a method based
+on machine learning that provided an effort estimate and corresponding confidence interval.
+In particular, they employed robust confidence intervals, which are not associated with the
+probability distributions of the errors in the training set. To assess the method, they
+performed a case study using the Desharnais (Desharnais 1989) and NASA (Bailey and
+Basili 1981) datasets. The results of this empirical analysis showed that the proposed
+method was characterized by better performance with respect to the previous study. More
+recently the same authors combined the use of genetic algorithms with Support Vector
+Regression (SVR), building a regression model employed to predict effort of novel projects
+on the basis of historical data (Braga et al. 2008). In particular, they exploited a Genetic
+Algorithm (GA) previously used to solve classification problems (Huang and Wang 2006)
+to address the problems of feature selection and SVR parameters optimization aiming to
+obtain better software effort estimations. The Desharnais and NASA datasets were also
+
+Table 17 Comparison of the absolute residuals obtained for the third test set, using the Wilcoxon test
+(p-values are reported between brackets)
+
+< MSWR CBR1 CBR2 CBR3 Mean Effort Median Effort
+
+SVR with C3(R) Yes (0.022) Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000)
+
+MSWR - Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000) Yes (0.000)
+
+CBR1 - No (0.913) No (0.397) No (0.051) 
+CBR2 - - Yes (0.002) No (0.908)
+
+CBR3 Yes (0.000) - No (0.666) 
+Mean Effort 
+Median Effort Yes (0.019) - Yes (0.025) Yes (0.000) 
+236 Empir Software Eng (2011) 16:211–243
+
+
+Table 18 How effort data was
+
+collected
+
+
+Data Collection Method # Projects % Projects
+
+Hours worked per project task per day 81 41.5
+
+Hours worked per project per day/week 40 20.5
+
+Total hours worked each day or week 62 31.8
+
+No timesheets (guesstimates) 12 6.2
+
+
+employed in this study and the results showed that the proposed GA-based approach was
+able to improve the performance of SVR and outperformed the previous results (Braga et al.
+2007; Oliveira 2006). As in our case study, they exploited a leave-one-out cross validation
+on the training set to obtain the parameter settings. As evaluation criteria the above
+approaches used MMRE and Pred(25), while we employed more summary measures (i.e.,
+MdMRE, MEMRE, and MdEMRE), boxplots of absolute residuals, and tests to verify the
+statistical significance of the results. Moreover, differently from the proposals described
+above (Braga et al. 2007, 2008, Huang and Wang 2006, Oliveira 2006) we investigated
+different configurations of SVR by considering two different dependent variables, i.e., EFH
+and 1/EFH, and two preprocessing strategies, i.e., Normalization and Log Transformation.
+Furthermore, we analyzed the use of three kernels, i.e., Linear, Polynomial, and RBF while
+they used only Linear and RBF kernels. Finally, none of the above studies used data from
+Web projects, or cross-company datasets, thus setting the motivation for and contribution of
+our work. In particular, this paper extends the research presented in (Corazza et al. 2009),
+where we provided a preliminary analysis on the effectiveness of SVR for Web effort
+estimation using a cross-company dataset and compared its predictions with those obtaining
+with Manual Stepwise Regression, Case-Based Reasoning, Bayesian Networks, median and
+mean effort. Here the results were mixed as SVR presented overall significantly superior
+predictions when based on one of the training sets; however the trend was not the same
+when using a different training set, thus suggesting for further analysis. In this paper, we
+have more carefully considered the issue of parameters’ setting and showed that it can
+strongly affect the performance of the method. The proposed approach has been assessed
+using another dataset split besides the two splits employed in (Corazza et al. 2009) showing
+that the predictions obtained with SVR were significantly better than those obtained with all
+the other techniques on the three test sets. It is worth noting that with respect to (Conte et al.
+1986), in this paper we did not report on the use of the Sigmoid kernel since it provided
+always the worse results and for the same reason we did not employ the Bayesian Networks
+as benchmarking technique.
+In the field of Web effort estimation, several studies have been conducted so far to
+investigate and compare the effectiveness of size measures and techniques such as linear
+regression (LR), stepwise regression (SWR), case-based reasoning (CBR), and regression
+trees (RT) (Cortes and Vapnik 1995; Di Martino et al. 2007; Mendes et al. 2002). In
+particular, some length measures (e.g., number of Web pages, number of media, number of
+link, etc.) were compared with COSMIC in (Mendes et al. 2002). However, the empirical
+results revealed that “none of the obtained models produced reasonable accurate estimates
+of the effort”, and “the models did not produce significantly different residual values”. Two
+sets of size measures were compared in (Cortes and Vapnik 1995), the first included some
+length measures (e.g., number of Web pages, number of server-side script and applications,
+etc.) while the second contained the components used to evaluate the Web Objects measure.
+The results reported in (Cortes and Vapnik 1995) revealed that the first set provided better
+
+Empir Software Eng (2011) 16:211–243 237
+
+estimates when using CBR while the second set provided better estimates when using LR.
+However, the analysis also suggested that there were no significant differences in the
+estimations and the residuals obtained with the two sets of measures. In (Di Martino et al.
+2007) the following sets of measures were compared: the two sets used in (Cortes and
+Vapnik 1995), and the Tukutuku measures (Mendes et al. 2005a). The empirical results
+showed that all the measures provided good estimations in terms of MMRE, MdMRE, and
+Pred(25) statistics and the study largely confirmed the results of previous works. It is worth
+noting that the study presented in (Mendes et al. 2002) employed 37 Web applications
+developed by postgraduate students while the studies reported in (Cortes and Vapnik 1995;
+Di Martino et al. 2007) were based on 15 industrial Web applications. Recently, Mendes
+and Mosley investigated the use of Bayesian Networks (BNs) for Web effort estimation
+using the Web applications of the Tukutuku database (Mendes 2008; Mendes and Mosley
+2008). In particular, they built eight BNs by exploiting both automatic tools, such as Hugin
+and PowerSoft, and a causal graph elicited by a domain expert with parameters
+automatically fit using the same training sets used in the automated elicitation (thus
+working as composite models ) (Chulani et al. 1999). As in our study, they employed the
+Tukutuku database containing data on 195 Web projects and compared the accuracy of the
+obtained estimates with those obtained using MSWR, CBR, median and mean effort. That
+analysis revealed that MSWR provided significantly better estimations than any of the
+models obtained using BNs and was the only approach that provided significantly better
+results than the median effort model. Furthermore, the results showed that simpler models,
+such as the median effort, can provide better estimates than more complex models, such as
+those obtained with BNs (Mendes and Mosley 2008). For these reasons, in the current study
+we did not consider BNs. Moreover, to assess the effectiveness of SVR we used also the
+two training sets and tests employed in (Mendes and Mosley 2008) thus allowing us to
+compare the achieved results with those obtained with MSWR, CBR, median and mean
+effort and given in (Mendes and Mosley 2008).
+
+8 Conclusions
+
+In the paper, we investigated the effectiveness of Support Vector Regression for Web effort
+estimation using a cross-company dataset. In particular, we explored and compared
+different configurations of the method given by the combination of three data preprocessing, two dependent variables, and three kernels (Linear, Polynomial, and RBF). For the
+empirical analysis we exploited three different splits of the Tukutuku database into training
+and test sets.
+
+The analysis showed that different preprocessing strategies and kernels can significantly
+affect the prediction effectiveness of the SVR approach. Moreover, it showed that
+configuration C3(R) consisting in Logarithmic preprocessing in combination with the
+RBF kernel, provided the best results.
+Finally, the predictions obtained with SVR were significantly better than those obtained
+with all the other techniques (Manual StepWise Regression and Case-Based Reasoning) on
+the three test sets and we can affirm that SVR has proven to be the best technique, among
+the ones we considered, for predicting the development effort on the considered crosscompany dataset.
+Of course, the experimental results here presented hold only with respect to the
+Tukutuku database and they should be assessed on further data as soon as they are
+available. However, they are surely interesting enough to suggest the use of SVR among the
+
+238 Empir Software Eng (2011) 16:211–243
+
+techniques that are suitable for Web development effort estimation using a cross-company
+dataset.
+
+Another key point to be investigated is related to the parameters’ setting that can have a
+significant impact on the effectiveness of the technique. The results reported in the paper
+rely on an approach that searched for the best parameters’ settings for each configuration
+using a semi-automatic approach based on an inner leave-one out cross-validation on the
+training set. Such an approach is characterized by huge computational needs. The use of
+suitable heuristics could be investigated to address this issue. Moreover, other evaluation
+criteria could be exploited to select the best parameters’ setting in combination with the
+other summary measures already adopted.
+It would be also useful to understand if the better performance of configuration C3(R)
+with respect to the others we have investigated depends on the characteristics of the
+employed dataset. In that case, it would be worth to identify the characteristics of the
+datasets that make them more suitable for a specific configuration with the aim to design a
+Recommender System that could adopt the best configurations for SVR based on the
+features of the specific dataset.
+
+Acknowledgments Authors wish to thank all companies that volunteered data to the Tukutuku database.
+
+Appendix
+
+Manual Stepwise Regression
+
+Stepwise Regression (Maxwell 2002) is a statistical technique whereby a prediction model
+(Equation) is built and represents the relationship between independent (e.g. number of
+Web pages) and dependent variables (e.g. total Effort). This technique builds the model by
+adding, at each stage, the independent variable with the highest association to the dependent
+variable, taking into account all variables currently in the model. It aims to find the set of
+independent variables (predictors) that best explains the variation in the dependent variable
+(response). In particular, we applied a Manual Stepwise Regression using the technique
+proposed by Kitchenham (Kitchenham 1998). Basically the idea is to use this technique to
+select the important independent variables, and then to use linear regression to obtain the
+final model.
+
+In our study we employed the variables shown in Table 1 with Manual Stepwise
+Regression in order to select the most important size measures. Once selected they were the
+ones used for cross-validation on each split, i.e. we did not perform a separate Manual
+Stepwise Regression for each split; we simply performed a regression using the variables
+previously selected using the manual stepwise procedure.
+Whenever variables were highly skewed they were transformed before being used in the
+forward stepwise procedure. This was done in order to comply with the assumptions
+underlying stepwise regression (Maxwell 2002) (i.e. residuals should be independent and
+normally distributed; relationship between dependent and independent variables should be
+linear). The transformation employed was to take the natural log (Ln), which makes larger
+values smaller and brings the data values closer to each other (Maxwell 2002). A new
+variable containing the transformed values was created for each original variable that
+needed to be transformed.
+
+In addition, whenever a variable needed to be transformed but had zero values, the
+natural logarithmic transformation was applied to the variable’s value after adding 1.
+
+Empir Software Eng (2011) 16:211–243 239
+
+To verify the stability of each effort model built using forward stepwise regression, the
+following steps were employed (Kitchenham and Mendes 2004):
+
+–
+Use of a residual plot showing residuals vs. fitted values to investigate if the residuals
+are randomly and normally distributed.
+– Calculate Cook’s distance values (Cook 1977) for all projects to identify influential
+data points. Any projects with distances higher than 3×(4/n), where n represents the
+total number of projects, are immediately removed from the data analysis (Maxwell
+2002). Those with distances higher than 4/n but smaller than (3×(4/n)) are removed in
+order to test the model stability, by observing the effect of their removal on the model.
+If the model coefficients remain stable and the adjusted R [2] (goodness of fit) improves,
+the highly influential projects are retained in the data analysis.
+
+Case-Based Reasoning
+
+Case-Based Reasoning (CBR) is a branch of Artificial Intelligence where knowledge of
+similar past cases is used to solve new cases (Shepperd & Kadoda 2001). Within the
+context of our investigation, the idea behind the use of the CBR technique is to predict the
+effort of a new project by considering similar projects previously developed. In particular,
+the completed projects are characterized in terms of a set of p features and form the case
+base. The new project is also characterized in terms of the same p features and it is referred
+as the target case. Then, the similarity between the target case and the other cases in the pdimensional feature space is measured, and the most similar cases are used, possibly with
+adaptations to obtain a prediction for the target case. To apply the method, we have to select
+the relevant project features, the appropriate similarity function, the number of analogies to
+choose the similar projects to consider for estimation, and the analogy adaptation strategy
+for generating the estimation. The selection of the similarity function and the number of
+analogies are crucial decisions. The similarity measure used in this study is the Euclidean
+distance as this has been the measure used in the literature with the best results (Mendes et al.
+2003c). In addition, all the project attributes considered by the similarity function had equal
+influence upon the selection of the most similar project(s).
+Estimates were based on the average effort of the most similar projects in the case base,
+with no different weights for attributes or adaptation of the estimated effort.
+
+References
+
+Bailey JW, Basili VR (1981) A meta model for software development resource expenditure. Procs. Fifth
+International Conference on Software Engineering, San Diego, California, USA, pp. 107–116
+Braga PL, Oliveira ALI, Meira SRL (2007) Software Effort Estimation using Machine Learning Techniques
+with Robust Confidence Intervals. HIS :352-357
+Braga PL, Oliveira ALI, Meira SRL (2008) A GA-based Feature Selection and Parameters Optimization for
+Support Vector Regression Applied to Software Effort Estimation. Proceedings of the ACM symposium
+on Applied computing :1788-1792
+Briand L, Langley T, Wiekzorek I (2000) A Replicated Assessment and Comparison of Common Software
+Cost Modeling Techniques. In Proceedings of International Conference on Software Engineering, IEEE
+press, pp 377–386
+Briand L, Labiche Y, PentaM D, Yan-Bondoc H (2005) An experimental investigation of formality in UMLbased development. IEEE TSE 31(10):833–849
+Christodoulou SP, Zafiris PA, Papatheodorou TS (2000) WWW2000: The Developer's view and a
+practitioner's approach to Web Engineering. Procs. ICSE Workshop on Web Engineering, Limerick,
+Ireland, pp 75–92
+
+240 Empir Software Eng (2011) 16:211–243
+
+Chulani S, Boehm B, Steece B (1999) Bayesian Analysis of Empirical Software Engineering Cost Models.
+IEEE TSE 25:573–583
+Conover WJ (1998) Practical nonparametric statistics, 3rd edn. Wiley, New York
+Conte SD, Dunsmore HE, Shen VY (1986) Software Engineering Metrics and Models. Benjamin-Cummins
+Cook RD (1977) “Detection of influential observations in linear regression. Technometrics 19:15–18
+Corazza A, Di Martino S, Ferrucci F, Gravino C, Mendes E (2009) Applying Support Vector Regression for
+Web Effort Estimation using a Cross-Company Dataset. In Proceedings of Empirical Software
+Engineering and Measurement (ESEM’09), Lake Buena Vista Florida, pp 17-19, Ottobre
+Cortes C, Vapnik V (1995) Support-Vector Networks. Mach Learn 20
+Costagliola G, Di Martino S, Ferrucci F, Gravino C, Tortora G, Vitiello G (2006) Effort estimation modeling
+techniques: a case study for web applications. Procs. Intl. Conference on Web Engineering (ICWE’06), 9-16
+Desharnais JM (1989) Analyse statistique de la productivitie des projets in834 formatique a partie de la
+technique des point des fonction, Ph.D. thesis, 835 Unpublished Masters Thesis, University of Montreal
+Di Martino S, Ferrucci F, Gravino C, Mendes E (2007) Comparing Size Measures for Predicting Web
+Application Development Effort: A Case Study. Procs. Empirical Software Engineering and
+Measurement, IEEE press, pp. 324–333
+Hofmann T, Schölkopf B, Smola AJ (2008) Kernel methods in machine learning. Ann Stat 36(3):1171–1220
+Huang C-L, Wang C-J (2006) A GA-based feature selection and parameters optimization for support vector
+machines. Expert Syst Appl 31(2):231–240
+Joachims T (1999) Making large-Scale SVM Learning Practical. In: Schölkopf B, Burges CJC, Smola AJ
+
+—
+(eds) Advances in Kernel Methods Support Vector Learning. MIT Press, Cambridge, MA
+Kitchenham BA (1998) A Procedure for Analyzing Unbalanced Datasets. IEEE TSE 24(4):278–301
+Kitchenham BA, Mendes E (2004) A Comparison of Cross-company and Single-company Effort Estimation
+Models for Web Applications. Proc EASE 2004:47–55
+Kitchenham B, Pickard L, Peeger S (1995) Case studies for method and tool evaluation. IEEE Softw 12(4):52–62
+Kitchenham B, Pickard LM, MacDonell SG, Shepperd MJ (2001) What accuracy statistics really measure.
+IEE Proc Softw 148(3):81–85
+Kitchenham BA, Mendes E, Travassos G (2006) A Systematic Review of Cross- and Within-company Cost
+Estimation Studies”, Procs. Empirical Assessment in Software Engineering, pp 89-98
+Kitchenham B, Mendes E, Travassos G (2007) Cross versus Within-Company Cost Estimation Studies: A
+systematic Review. IEEE TSE 33(5):316–329
+Maxwell K (2002) Applied Statistics for Software Managers. Software Quality Institute Series, Prentice Hall
+Mendes E (2008) The Use of Bayesian Networks for Web Effort Estimation: Further Investigation. Procs.
+International Conference on Web Engineering
+Mendes E, Kitchenham BA (2004) Further Comparison of Cross-company and Within-company Effort
+Estimation Models for Web Applications. Procs. IEEE Metrics, pp 348-357
+Mendes E, Mosley N (2008) Bayesian Network Models for Web Effort Prediction: A Comparative Study.
+IEEE TSE 34(6):723–737
+Mendes E, Mosley N, Counsell S (2002) Comparison of Length, complexity and functionality as size
+measures for predicting Web design and authoring effort. IEE Proc Softw 149(3):86–92
+Mendes E, Counsell S, Mosley N, Triggs C, Watson I (2003c) A Comparative Study of Cost Estimation
+Models for Web Hypermedia Applications. Empir Software Eng 8(23):163–196
+Mendes E, Mosley N, Counsell S (2005a) Investigating Web Size Metrics for Early Web Cost Estimation. J
+Syst Softw 77(2):157–172
+Mendes E, Mosley N, Counsell S (2005) Web Effort Estimation. In: Mendes E, Mosley N (eds)Web
+Engineering, Springer-Verlag, ISBN: 3-540-28196-7
+Mendes E, Martino SD, Ferrucci F, Gravino C (2008) Cross-company vs. single-company web effort models
+using the Tukutuku database: An extended study. J Syst Softw 81(5):673–690
+Oliveira ALI (2006) Estimation of software project effort with support vector regression. Neurocomputing 69
+(13–15):1749–1753
+Schölkopf B (1997) Support Vector Learning. R. Oldenbourg Verlag, Munchen. Doktorarbeit, TU Berlin.
+[Download: http://www.kernel-machines.org](http://www.kernel-machines.org)
+Schölkopf B, Smola AJ (2002) Learning with Kernels. MIT Press
+Shepperd MJ, Kadoda G (2001) Using Simulation to Evaluate Prediction Techniques. Procs IEEE
+Metrics’01, London, UK, pp 349-358
+Smola AJ, Schölkopf B (2004) A tutorial on support vector regression. Stat Comput 14(3):199–222
+[Standish Group International. The Chaos Report; www.standishgroup.com/sample_research/PDFpages/](http://www.standishgroup.com/sample_research/PDFpages/Chaos1994.pdf)
+[Chaos1994.pdf](http://www.standishgroup.com/sample_research/PDFpages/Chaos1994.pdf)
+
+Empir Software Eng (2011) 16:211–243 241
+
+Vapnik V (1998) Statistical Learning Theory. Wiley
+Vapnik V, Chervonenkis A (1964) A note on one class of perceptrons. Automatics and Remote Control 25
+Vapnik V, Lerner A (1963) Pattern recognition using generalized portrait method. Autom Remote Control
+24:774–780
+
+Anna Corazza received the Laurea Degree in Electronic Engineering in 1989 and the PhD in 1996 at the
+University of Padua, Italy. Since 1989 to 2000, she worked as researcher at the ITC-irst (now FBK) in
+Trento, and afterwards for three years at the University of Milan. Since 2003, she is assistant professor at the
+University “Federico II” in Naples, Italy. Her research interests focus on statistical models and machine
+learning applied to speech and natural language processing, bioinformatics, and information retrieval.
+
+Sergio Di Martino received PhD in Computer Science from the University of Salerno (Italy) in 2005. Since
+2007 he is Assistant Professor at University “Federico II” in Naples, Italy. He has worked for many years as
+consultant for e-government solutions and for research centres. His research interests focus on knowledge
+discovery and visualization from complex datasets such as software repositories. He has published more than
+50 papers on these topics in international journals, books, and conference proceedings.
+
+242 Empir Software Eng (2011) 16:211–243
+
+Filomena Ferrucci is Associate Professor of Computer Science at the University of Salerno, Italy. She is
+Program co-chair of the International Summer School on Software Engineering and she was Program cochair of the 14th International Conference on Software Engineering and Knowledge Engineering. Her main
+research interests include empirical software engineering, software development effort estimation for OO
+systems and Web applications, software-development environments, and Human-Computer Interaction. On
+these topics she has published about 150 refereed papers in international journals, books, and conference
+proceedings. She was co-editor of two books and guest editor of two special issues.
+
+Gravino Carmine received the Laurea degree in Computer Science (cum laude) in 1999, and his PhD in
+Computer Science from the University of Salerno (Italy) in 2003. Since march 2006 he is assistant professor
+in the Department of Mathematics and Informatics at the University of Salerno. His research interests include
+software metrics and techniques to estimate web application development effort, software-development
+environments, design pattern recovery from object-oriented code, evaluation and comparison of notations,
+methods, and tools supporting software development and maintenance. He has published more than 50
+papers on these topics in international journals, books, and conference proceedings.
+
+Empir Software Eng (2011) 16:211–243 243
+
+Emilia Mendes is Associate Professor in Computer Science at the University of Auckland (New Zealand).
+She has active research interests in the areas of Empirical Web & Software Engineering, Evidence-based
+research, Hypermedia, Computer Science & Software Engineering education, in which areas she has
+published widely and over 130 refereed publications, which include two books (one edited (2005) and one
+authored (2007)). A/Prof. Mendes is on the editorial board of the International Journal of Web Engineering
+and Technology, the Journal of Web Engineering, the Journal of Software Measurement, the International
+Journal of Software Engineering and Its Applications, the Empirical Software Engineering Journal, the
+Advances in Software Engineering Journal.
+

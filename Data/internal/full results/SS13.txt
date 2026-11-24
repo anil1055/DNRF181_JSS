@@ -1,0 +1,1049 @@
+2013 39th Euromicro Conference Series on Software Engineering and Advanced Applications
+# **Approximate COSMIC size to early estimate Web application development effort**
+
+Lucia De Marco, Filomena Ferrucci, Carmine Gravino
+*Department of Management and Information Technology, DISTRA - MIT*
+
+*University of Salerno, Italy*
+*Email: {fferrrucci,gravino}@unisa.it*
+
+
+***Abstract*** **—The aim of the paper is to investigate to what**
+**extend some COSMIC-based approximate countings can be**
+**useful for project managers to early estimate effort of Web ap-**
+**plications. We considered the number of COSMIC Functional**
+**Processes and the Average Functional Process approach pro-**
+**posed by the COSMIC method documentation. We carried out**
+**an empirical analysis employing data from 25 Web applications**
+**to assess whether the two approximate sizes can be exploited**
+**to get accurate effort estimations. We compared the obtained**
+**estimations with those achieved with baseline benchmarks and**
+**employing the standard COSMIC method. The analysis high-**
+**lights that the considered approximate countings provide good**
+**early estimations, significantly better than those obtained with**
+**baseline benchmarks. Moreover, the first counting provides**
+**results better than the Average Functional Process approach.**
+**The use of COSMIC-based approximate countings is a suitable**
+**approach for early effort estimations.**
+
+***Keywords*** **-COSMIC,** **Early** **effort** **estimation,** **Empirical**
+**study, Linear regression**
+
+I. I NTRODUCTION
+
+Software development effort estimation concerns estimating the amount of human effort needed to realize a
+software system. It is crucial to have accurate effort estimations that can help project managers to plan and monitor
+software projects for delivering the product on time and
+within budget. Significant over or under-estimations can be
+very expensive and deleterious for a company [1]. Thus,
+several approaches have been proposed to carry out such an
+estimation. Many of them exploit an estimation model that,
+given data about project characteristics, are able to derive
+an effort estimation. One of the most important data input
+into these models is the application size.
+
+Functional Size Measurement (FSM) methods have been
+widely applied in software engineering for estimating the
+size of software systems [2] [3]. In the context of Web
+applications, a few investigations have been performed to
+analyze the application of 1 *[st]* generation of FSM method,
+i.e., Function Point Analysis (FPA) (e.g., [4] [5] [6]). Some
+of them have highlighted difficulties in the application
+of FPA suggesting the use other FSM methods for Web
+applications, such as COSMIC [6].
+
+COSMIC raised the 2 *[nd]* generation of FSM methods,
+due to several distinguishing characteristics: it was the first
+FSM method conform to the ISO/IEC14143/1 standard; it is
+based on fundamental principles of software engineering and
+
+
+measurement theory; it is suitable to a wide set of different
+software types; and it poses the accent on the movements
+of data. Encouraging results in the use of COSMIC for
+estimating Web application development effort have been
+reported in [8] [9] [10] [11] [12].
+
+In this paper we investigate to what extend some
+COSMIC-based approximate countings can be useful for
+project managers to early estimate effort of Web applications. Indeed, such approximate counting can be useful it
+can happen either early in the life of a project before the
+Functional User Requirements (FURs) have been specified
+in detail (“early sizing”), or when a measurement is needed
+but there is insufficient time or resources to apply the
+standard detailed method (“rapid sizing”). These motivations are not mutually exclusive and contribute to reach
+a trade-off between a correct measurement and time and
+
+budget available. In particular, we analyze two approximate
+countings. The first one is based on the use of the number
+of COSMIC Functional Processes while the second one is
+
+the Average Functional Process approach proposed in the
+COSMIC documentation [7].
+
+We have carried out an empirical analysis employing
+data from 25 Web applications to assess whether the two
+COSMIC-based approximate sizes can be exploited to get
+accurate effort estimations. To this end, linear regression
+analysis is used to build effort estimation models based
+on those size measures and the accuracy of the obtained
+estimations is assessed by employing leave-one-out cross
+validation and widely used summary measures. The obtained
+estimations are also compared with those achieved with
+baseline benchmarks and the standard COSMIC method.
+
+The rest of the paper is organized as follows. Section
+II reports on related work, while Section III illustrates the
+main aspects of COSMIC. The design of the performed
+empirical analysis is described in Section IV. The results
+of the analysis and their discussion are presented in Section
+V. Threats to validity are discussed in Section VI, while
+conclusion and future work conclude the paper.
+
+II. R ELATED WORK
+
+Some few works have analyzed the use of COSMIC to
+predict the Web application development effort (e.g., [8] [9]
+
+[10] [11] [12]). To the best to our knowledge no study have
+been presented on the application of approximate versions
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+of COSMIC, i.e., Average Functional Process, Fixed Size
+Classification, Equal Size Bands, and Average Use Case [7].
+Nevertheless, researches that can be related to our work are
+those proposing and/or investigating the use of approximate
+or simplified sizing approaches for other FSM methods.
+
+Two approaches for simplifying the application of Function Points Analysis are the Early & Quick Function Points
+(EQFP) [13] and the simplified versions of NESMA [14].
+The idea behind the application of EQFP is to allow a size
+estimation before the requirements analysis is completed.
+The idea of the approach is that different parts of the
+software can be measured at the different level of details.
+
+Thus, exploiting functional components more coarse-grained
+than the BFCs (i.e., EI, EO, EQ, ILF, EIF) of FPA, EQFP
+approach produces an approximation of the size in terms
+of Function Points. In particular, EQFP classifies data and
+processes of an application in several groups according
+to a hierarchy [13], where some groups contain the Base
+Functional Components (BFCs) of FPA and other groups
+are aggregation of Base Functional Processes (e.g., Macro
+Process, General Process) or Data Groups (e.g., Multiple
+Data Group).
+
+The first approximation suggested by NESMA (named
+Indicative NESMA) is based on the identification of Internal
+Logical Files (ILF) and External Interface Files (EIF),
+i.e., without using the contribution of Transactions Functions (i.e., EI, EQ, and EO) of FPA, and applying predefined weights [14]. The second approximation proposed by
+NESMA (named Estimated NESMA) exploits all the BFCs
+of FPA, but the complexity of the identified components are
+not determined. By default, a low complexity is associated
+to ILF and EIF elements while a medium complexity is
+considered for EI, EQ, and EO.
+
+EQFP and the two simplified NESMA approaches have
+been also applied to size both traditional and real-time
+applications for evaluating their accuracy with respect to
+FPA [15]. The results of the performed analysis show that
+EQFP produced more accurate size estimations for non realtime applications, while NESMA approaches turned out to
+be quite good for both applications types.
+
+Related work can also be considered those that have
+
+analyzed the different contribution of BFCs against the
+overall fsu value (e.g., UFP for IFPUG [16] or CFP for
+COSMIC [17]) in estimating software development effort.
+In particular, Abran *et al.* were the first to analyze the
+contribution of single BFCs to the development effort of
+a project [18]. The results of the performed analysis reveal
+that correlation with development effort was different for the
+individual BFC types within a data set. Other two empirical
+studies based on ISBSG samples [19] showed that linear
+regression models employing two or more BFCs (e.g., EI,
+EO, EQ, ILF, EIF for the IFPUG method and Entry, eXit,
+and Read, Write for the COSMIC method) as independent
+variables instead of the whole single fsu value (e.g., UFP for
+
+
+the IFPUG method or CFP for the COSMIC method) were
+characterized by more accurate estimations [20] [21]. The
+study presented in [22] and its replication described in [23]
+are further applications of the idea proposed in [20] [21],
+by exploiting a data set of Web applications developed by
+a single company operating in Italy. The results confirmed
+that the use of a subset of BFC types provide estimations
+of development effort close (i.e., no statistical significant
+difference) to the ones achieved the total functional size.
+
+III. COSMIC
+
+COSMIC is a widely adopted method for measuring
+software functional size and has been approved as an international standard by ISO (ISO/IEC 19761:2003) [17]. It was
+originally conceived for business and real-time applications,
+but it can be successfully applied in any other context,
+where software is mainly dominated by large amounts of
+data movements [24]. Indeed, the basic idea underlying the
+COSMIC approach is that, for these kinds of software, the
+most of development efforts are devoted to handle data
+movements from/to persistent storage and users. Thus, the
+number of these movements can provide a meaningful sight
+of the system size [24].
+
+COSMIC is composed of a set of models, principles, rules,
+and processes applicable to the FURs of a given piece of
+software. The first step to obtain the COSMIC measure is
+to define the COSMIC Software Context Model. This model
+introduces the principles and concepts needed for identifying
+the FURs of the piece of software to be measured. Then, the
+COSMIC Generic Software Model is applied to the FURs
+to identify the components of the functionality that will be
+measured. In particular, the Software Context Model allows
+us to define why a measurement is required (Purpose) and to
+select the set of FURs to be included in a specific functional
+size measurement exercise (Scope). Furthermore, Functional
+User and Boundary concepts can be specified. A Functional
+User is a (type of) user that is a sender and/or an intended
+recipient of data in the FURs of a piece of software, while
+the Boundary is defined as a conceptual interface between
+the software being measured and its functional users. Then,
+the concepts of the Generic Software Model are applied to
+the FURs, to identify the set of “features” provided by the
+software. This model is the key of the COSMIC method,
+assuming that ( *i* ) each FUR can be mapped into a unique
+functional process, ( *ii* ) each functional process consists of
+sub-processes, and ( *iii* ) each sub-process may be either a
+data movement or a data manipulation.
+
+A Functional Process is an elementary component of a set
+of FURs comprising a unique, cohesive, and independently
+executable set of data movements. It is triggered by a data
+movement from a functional user that informs the piece of
+software that the functional user has identified a triggering
+event. A Functional Sub-Process may be a data movement or
+a data manipulation. As an approximation for measurement
+
+
+350
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+purposes, data manipulation sub-processes are not separately
+measured; the functionality of any data manipulation is
+assumed to be accounted for by the data movement with
+which it is associated [24]. To identify and measure data
+movements other three concepts have to be specified. A
+Triggering Event is an event (something that happens) that
+causes a functional user of the piece of software to initiate
+(trigger) one or more functional processes. A Data Group is
+a distinct, non empty, non ordered, and non redundant set
+of data attributes describing a complementary aspect of the
+same object of interest. A Data Attribute is the smallest piece
+of information, within an identified data group, carrying a
+meaning from the perspective of the software FURs.
+
+Data movements can be of four types. An Entry (E) moves
+a data group from a functional user across the boundary
+into the functional process where it is required. An Exit (X)
+moves a data group from a functional process across the
+boundary to the functional user that requires it. A Read (R)
+moves a data group from persistent storage within each of
+the functional process that requires it. A Write (W) moves
+a data group lying inside a functional process to persistent
+
+storage.
+
+In the measurement phase, the data movements of each
+functional process have to be identified and used to obtain a
+size measure of the software. Each data movement is counted
+
+as 1 COSMIC Function Point (CFP) that is the COSMIC
+measurement standard. Thus, the size of an application
+within a defined scope is obtained by summing the sizes of
+all the functional processes identified. For more details about
+the COSMIC method, readers are referred to the COSMIC
+Measurement Manual [24].
+
+IV. E MPIRICAL ANALYSIS : D ESIGN
+
+This section presents the design of the empirical study
+we carried out to assess the effectiveness of two COSMIC
+based approximate countings for the early estimation of Web
+application development effort. It is worth noting that the
+assessment of a size measure for effort estimation requires
+the use of an estimation technique to build a model relying
+on the selected size measure. In our empirical analysis
+we applied COSMIC in combination with simple linear
+regression (SLR), that is a model based approach, since it
+has been widely and successfully employed in the industrial
+context and in several researches to estimate development
+effort (see e.g., [25], [26], [27], [28]).
+
+In our analysis we considered the number of COSMIC
+Functional Processes (CFunP) and the Average Functional
+Process (AFP) approach proposed by the COSMIC method
+documentation [7]. CFunP consists of determining the number of Function Processes by applying the standard COSMIC
+method described in Section III. AFP is the first of the four
+approaches suggested by the COSMIC community to obtain
+
+
+early size estimations of the software [1] . It consists of two
+steps. In the first step the functional processes of previously
+developed applications are identified. Then, the size for
+each functional process is measured in terms of COSMIC
+Function Points using the standard COSMIC method. In the
+second step, the functional processes for the new application
+are determined. Then, the approximate size is calculated
+by multiplying the number of functional processes and the
+average size obtained in previous step.
+
+Thus, in the case of the first approximate counting CFunP
+we build a linear model based on the number of COSMIC
+
+Functional Processes, while in the case of the second approximate counting AFP we build a linear model based on
+the number of COSMIC Function Points.
+
+In particular, the research questions we addressed are:
+
+RQ1 Can CFunP and AFP provide good early size estima
+tions for Web effort prediction?
+RQ2 Are the early effort estimations obtained using CFunP
+
+and AFP statistically better than the estimations obtained using baseline benchmarks?
+RQ3 Are the early effort estimations obtained using CFunP
+
+and AFP comparable to the estimations obtained using
+the standard COSMIC method?
+
+As done in [29] [30], we employed as baseline benchmarks the estimations obtained by employing the mean of
+effort (MeanEFF) and the median of effort (MedEFF) as
+predictor of the effort. The aim is to assess whether the
+estimations obtained with COSMIC Functional Processes as
+
+size measure are significant better than estimations simply
+based on the mean and median effort of the past projects
+developed by a software company. Indeed, if the estimations
+obtained with mean or median effort are similar to those
+
+obtained with the employed measures, then for a software
+company it could be more useful to simply use the mean or
+the median effort of the past developed applications to have
+an early estimation rather than dealing with more complex
+computations of software sizes.
+
+*A. Estimation method*
+
+We applied simple linear regression (SLR) which is a
+statistical technique that explores the relationship between
+a dependent variable and one independent variables [31],
+providing a prediction model described by an equation
+
+*y* = *bx* + *c* (1)
+
+where *y* is the dependent variable, *x* is the independent
+variable, *b* is the coefficient that represents the amount
+the variable *y* changes when the variables *x* changes 1
+unit, and *c* is the intercept. In our empirical study we
+exploited SLR to obtain linear regression models that use the
+
+1 It is worth noting that the documentation the company provided us
+allowed to apply only this first method. We are asking further information
+to apply in the future the remaining three approaches
+
+
+351
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+variable representing the effort as dependent and the variable
+denoting the number of COSMIC functional processes (or
+COSMIC Function Points) as independent. Once the prediction model was constructed, the effort estimation for a
+new Web application was obtained by sizing the application
+in terms of the COSMIC functional processes (or COSMIC
+Function Points) and using this value in the obtained model.
+
+*B. Dataset*
+
+Data for our empirical study were provided by an Italian
+medium-sized software company, whose core business is the
+development of enterprise information systems, mainly for
+local and central government. Among its clients, there are
+health organizations, research centers, industries, and other
+public institutions. The company is specialized in the design,
+development, and management of solutions for Web portals,
+enterprise intranet/extranet applications (such as Content
+Management Systems, e-commerce, work-flow managers,
+etc.), and Geographical Information Systems. It has about
+fifty employees, it is certified ISO 9001:2000, and it is also
+a certified partner of Microsoft, Oracle, and ESRI.
+
+This company provided us detailed information on 25
+Web applications they developed. In particular, this set
+includes e-government, e-banking, Web portals, and Intranet
+applications, developed between 2003 and 2008. All the
+projects have been developed by exploiting SUN J2EE or
+Microsoft .NET technologies. Oracle has been the most
+commonly adopted DBMS, but also SQL Server, Access
+and MySQL have been employed in some of these projects.
+
+As for the collection of the information, the software
+company used timesheets to keep track of the Web application development effort. In particular, each team member
+annotated the information about his/her development effort
+every day, and weekly each project manager stored the sum
+of the efforts for the team. Furthermore, to collect all the
+significant information to calculate the values of the size
+measure (i.e., Functional Processes, Data movements, and
+so on), we prepared a questionnaire to be filled in by the
+project managers. All the project managers were trained on
+the use of the questionnaires. They took into account the
+COSMIC Measurement Manual (version 2.2.) [24] to apply
+COSMIC. One of the authors analyzed the filled templates
+and the analysis and design documents, in order to crosscheck the provided information. The same author calculated
+the values of the size measure.
+
+Table I reports on some summary statistics related to the
+25 Web applications employed in our study. The variables
+are EFF, i.e. the actual effort, expressed in terms of personhours, CFP, expressed in terms of number of COSMIC
+Function Points obtained by applying the standard COSMIC
+method, CFPafp, expressed in terms of number of COSMIC Function Points obtained by applying the approximate
+counting AFP, and nCFunP, expressed in terms of number
+of COSMIC Functional Processes obtained by applying the
+
+
+Table I
+
+D ESCRIPTIVE STATISTICS OF EFF, CFP, CFP AFP, AND CF UN P
+
+|Var|Obs|Min|Max|Mean|Median|Std. Dev.|
+|---|---|---|---|---|---|---|
+|EFF<br>CFP<br>CFPafp<br>nCFunP|25<br>25<br>25<br>25|1176<br>163<br>183<br>23|3712<br>1090<br>1417<br>177|2577<br>602<br>610.8<br>77|2686<br>611<br>545<br>69|988.14<br>268.47<br>299.68<br>37.56|
+
+
+
+approximate counting CFunP. Further details on how these
+data have been collected are discussed in Section VI.
+
+*C. Validation method and evaluation criteria*
+
+In our analysis, we carried out a validation to verify
+whether or not the obtained effort predictions are useful
+estimations of the actual development effort. To this end, we
+applied a cross-validation, that is the splitting of a dataset
+into training and validation sets. Training sets are used to
+build models with SLR and validation sets are used to
+
+validate the obtained models. In particular, we exploited a
+leave-one-out cross validation, which means that the original
+dataset is divided into *n=25* different subsets (25 is the size
+of the original dataset) of training and validation sets, where
+each validation set has one project. This validation method
+is widely used in empirical studies when dealing with small
+datasets [32].
+
+Regarding the evaluation criteria, we decided to use several accuracy measures to assess the achieved estimations.
+We used some summary measures [33], namely MMRE,
+MdMRE, Prediction at level 25% (Pred(25)), that have
+been and are widely employed by researchers investigating
+measures and techniques for effort estimation. This can be
+useful to allow for the comparison with other researches
+that have been published in this context. Moreover, based
+on the observation that some criticisms have been moved to
+
+those summary measures [34], we also decided to employ
+Mean of Absolute Residuals (MAR) and Median of Absolute
+Residuals (MdAR). These measures are described in the
+following.
+
+The Magnitude of Relative Error (MRE) is defined as [33]
+
+*MRE* = *[|]* *[Actual][ −]* *[Predicted]* *[|]* (2)
+
+*Actual*
+
+where *Predicted* and *Actual* are the predicted and the actual
+efforts/size, respectively. MRE has to be calculated for each
+observation in the test set. The MRE values are aggregated
+across all the observations using the mean and the median,
+giving rise to the Mean of MRE (MMRE), and Median of
+MRE (MdMRE), where the latter is less sensitive to extreme
+values [28]. According to [33], a good effort prediction
+model should have a MMRE *≤* 0.25, to denote that the mean
+
+estimation error should be less than 25%.
+
+The Prediction at level *l* is another useful indicator that
+
+measures the percentage of the estimations whose error is
+less than *l* % and *l* is usually set at 25%. It can be defined
+
+
+352
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+as [33]
+
+
+*Pred* (25) = *[k]* (3)
+
+*N*
+
+
+Table II
+
+T HE RESULTS OF THE LINEAR REGRESSION ANALYSIS WITH N CF UN P
+
+|Variable|Value|Std.Err|t-value|p-value|
+|---|---|---|---|---|
+|Coefficient<br>Intercept|23.66<br>755.46|204.83<br>2.4|3.69<br>9.86|<0.01<br><0.01|
+
+
+|R2|Adjusted R2|Std. Err|F|Sign. F|
+|---|---|---|---|---|
+|0.81|0.8|441.6|97.15|<0.01|
+
+
+
+Table III
+
+T HE RESULTS OF THE LINEAR REGRESSION ANALYSIS WITH CFP AFP
+
+|Variable|Value|Std. Err|t-value|p-value|
+|---|---|---|---|---|
+|Coefficient<br>Intercept|2.96<br>771.8|0.31<br>206.63|9.69<br>3.74|< 0.01<br>< 0.01|
+
+
+|R2|Adjusted R2|Std. Err|F|Sign. F|
+|---|---|---|---|---|
+|0.803|0.79|448|94|< 0.01|
+
+
+
+counting AFP) and CFP (i.e., the size in terms of the
+number of COSMIC Function Points obtained by using the
+standard COSMIC method), respectively. A high *R* [2] value
+(and corresponding adjusted *R* [2] value) is an indication of
+the goodness of the model, since it measures the percentage
+of variation in the dependent variable explained by the
+independent variable. Other useful indicators are the *F* value
+and the corresponding p-value (denoted by Sign F), whose
+high and low values, respectively, denote a high degree of
+confidence for the prediction. Moreover, we performed a
+t-statistic and determined the p-value and the t-value of
+the coefficient and the intercept in order to evaluate its
+statistical significance. p-value provides the probability that
+a coefficient of a variable is zero, while t-value can be used
+to evaluate the importance of the variable for the generated
+model. A p-value less than 0.05 indicates that we can reject
+the null hypothesis and the variable is a significant predictor
+with a confidence of 95%. As for the t-value, a variable is
+significant if the corresponding t-value is greater than 1.5.
+
+We can observe that the three models are characterized
+by a high *R* [2] value, a high *F* value, and a low p-value,
+indicating that the prediction is indeed possible with a high
+degree of confidence. The t-values and p-values for the
+corresponding coefficient and the intercept present values
+greater than 1.5 and less than 0.05, respectively. Moreover,
+the coefficient and the intercept are significant at level 0.05.
+
+Table IV
+
+T HE RESULTS OF THE LINEAR REGRESSION ANALYSIS WITH CFP
+
+
+*N* is the total number of observations and *k* is the number
+
+of observations whose MRE is less than or equal to 0.25.
+Again, according to [33], a good prediction approach should
+present a Pred(25) *≥* 0.75, meaning that at least 75% of
+the predicted values should fall within 25% of their actual
+values.
+
+MAR and MdAR are defined as the mean and the median
+of absolute residuals (i.e., *|Actual* - *Predicted|* ), respectively,
+which are cumulative measures suggested in [34].
+
+Moreover, we tested the statistical significance of the
+obtained results, by using absolute residuals, to compare
+prediction obtained with different approaches (e.g., to establish if COSMIC Functional Processes provided significantly
+better effort estimations than those achieved using MeanEFF
+and MedEFF) [35] [36]. In particular, we performed the
+T-test (and the Wilcoxon signed rank test when absolute
+residuals were not normally distributed) [37] to verify the
+following null hypothesis “the two considered population of
+absolute residuals have identical distributions”. This kind of
+
+test is used to verify the hypothesis that the mean of the
+differences in the pairs is zero.
+
+In order to have also an indication of the practical/managerial significance of the results we analyzed the
+effect size [38]. Effect size is a simple way of quantifying
+the standardized difference between two groups. It has many
+advantages over using only the tests of statistical significance, since “whereas p-values reveal whether a finding is
+statistically significant, effect size indicates practical significance” [38]. In particular, we employed the point-biserial
+correlation *r* because it is suitable to compute the magnitude
+of the difference when a non parametric test (e.g., Wilcoxon)
+is used [39]. In the empirical software engineering field
+
+[38], the magnitude of the effect sizes measured using the
+point-biserial correlation is classified as follows: small (0 to
+0.193), medium (0.193 to 0.456), and large (0.456 to 0.868).
+
+V. E MPIRICAL ANALYSIS : R ESULTS
+
+We performed the linear regression analysis [2] to build the
+effort estimation models by using the dataset of 25 Web
+applications of Table I.
+
+Table II shows some statistics about the linear model
+
+obtained by employing nCFunP as independent variable (i.e.,
+the size obtained by using the approximate counting CFunP).
+Similarly, Table III and IV show the statistics for the models
+based on CFPafp (i.e., the size in terms of the number of
+COSMIC Function Points obtained by using the approximate
+
+2 We first verified the linear regression assumptions, i.e., the existence of
+a linear relationship between the independent variable and the dependent
+variable (linearity), the constant variance of the error terms for all the values
+of the independent variable (homoscedasticity), the normal distribution of
+the error terms (normality).
+
+|Variable|Value|Std. Err|t-value|p-value|
+|---|---|---|---|---|
+|Coefficient<br>Intercept|3.43<br>512.43|0.28<br>183.14|12.3<br>2.8|< 0.01<br>0.01|
+
+|R2|Adjusted R2|Std. Err|F|Sign. F|
+|---|---|---|---|---|
+|0.87|0.86|366.6|151.3|< 0.01|
+
+
+353
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+The equations of the built regression models are:
+
+*Effort* = 23 *.* 66 *∗* *nCFunP* + 755 *.* 46 (4)
+
+*Effort* = 2 *.* 96 *∗* *CFPafp* + 771 *.* 8 (5)
+
+*Effort* = 3 *.* 43 *∗* *CFP* + 512 *.* 43 (6)
+
+To evaluate the prediction accuracy of the estimation
+models built with the linear regression, we performed the
+leave-one-out cross validation, whose results are reported in
+Table V. We also report the results achieved by employing
+baseline benchmarks MeanEFF and MedEFF.
+
+Based on the commonly accepted thresholds provided in
+
+[33], we can conclude that nCFunP and CFPafp are good
+indicators of Web application development effort, when used
+in combination with linear repression, since MMRE and
+MdMRE values are less than 0.25 and Pred(25) value is
+greater than 0.75.
+
+Thus, we can positively answer the first research question,
+i.e., “ *CFunP and AFP provide good early size estimations*
+*for Web effort estimation* ”.
+
+As for the comparison with the considered baseline benchmarks, we can observe that the MAR and MdAR values
+achieved with nCFunP and CFPafp based models are about
+two times less than those obtained with MeanEFF and Med
+EFF. Moreover, concerning the statistical significance of the
+results by using absolute residuals [35] [36], the Wilcoxon
+test revealed that the estimations obtained with nCFunP and
+
+CFPafp are significantly better than those obtained with
+MeanEFF and MedEFF (with p-values *<* 0.01). Observe that
+we applied the Wilcoxon test since the absolute residuals
+were not normally distributed as suggested by the Shapiro
+test (p-values *<* 0.01). In order to have an indication of
+the practical/managerial significance of this result we also
+analyzed the effect size and the analysis revealed a large
+effect size, i.e., r=0.58 for nCFunP vs MeanEFF and r=0.64
+for nCFunP vs MedEFF. Similarly results were achieved for
+the estimations obtained in terms of CFPafp, i.e., r=0.57 for
+CFPafp vs MeanEFF and r=0.64 for CFPafp vs MedEFF).
+
+Thus, we can positively answer to the second research
+question: i.e., *the early effort estimations obtained using*
+*CFunP and AFP are statistically better than the estimations*
+*obtained using baseline benchmarks.*
+
+We also compared the estimations achieved with nCFunP
+and CFPafp. The results in terms of summary measures
+reported in Table V suggests that MMRE, MdMRE, and
+Pred(25) values are quite close. Moreover, the MAR and
+MdAR values obtained with nCFunP are slightly better than
+those achieved with CFPafp. Nevertheless, the results of the
+Wilcoxon test revealed that this difference is statistically
+significant, i.e., the absolute residuals obtained with nCFunP
+are significant less than those achieved with CFPafp (p-value
+*<* 0.01) with a large effect size (i.e., r=0.52). This is quite
+interesting since the CFunP is simpler than AFP since it
+
+
+Table V
+
+A CCURACY OF EFFORT ESTIMATIONS IN TERMS OF SUMMARY
+
+MEASURES
+
+|Approach|MMRE|MdMRE|Pred(25)|MAR|MdAR|
+|---|---|---|---|---|---|
+|nCFunP<br>CFPafp<br>CFP<br>MeanEFF<br>MedEFF|0.17<br>0.19<br>0.13<br>0.45<br>0.47|0.15<br>0.17<br>0.07<br>0.31<br>0.31|0.8<br>0.8<br>0.88<br>0.44<br>0.44|379.79<br>386.6<br>275.64<br>842.89<br>904.44|374<br>393<br>198<br>934<br>1010|
+
+
+
+does not require to determine the scaling factor used in the
+AFP approach to obtain the size in terms of CFP.
+
+As for the third research question, from Table V we
+can observe that the MAR and MdAR values obtained
+
+with the CFP based model are less than those achieved
+
+with the nCFuncP and CFPafp based models. The use of
+the size obtained with the standard COSMIC method also
+
+allowed us to obtain better values for the summary measures
+MMRE, MdMRE, and Pred(25). Furthermore, the results
+of the performed statistical test revealed that the difference
+is statistically significant (p-values = 0.02) with a medium
+effective size (r=0.41 for CFP vs nCFuncP and r=0.42 for
+CFP vs CFPafp).
+
+Thus, we cannot positively answer the third research
+question.
+
+In conclusion, the analysis reported above suggests that
+COSMIC Functional Processes can be profitably exploited to
+obtain early estimations of effort for the Web applications
+considered in our study. In particular, both the COSMICbased approximate countings analyzed in the paper allowed
+us to obtain good estimations. It is also worth to noting that
+the nCFunP based approach provided better estimates than
+the AFP based approach.
+
+Moreover, as expected, the size obtained with the standard
+COSMIC method allowed us to obtain significant better
+effort estimations than those of the two considered approximate countings. This means that the software company
+involved in our study can start to employ COSMIC Functional Processes to obtain effort estimations to be employed
+in the management of the Web applications in the early
+phase of the development process. However, it has to adopt
+the standard COSMIC size measurement method to achieve
+
+more accurate effort estimations to be employed in the later
+phases of the development process.
+
+VI. T HREATS TO VALIDITY
+
+It is widely recognized that several factors can bias
+the construct, internal, external, and conclusion validity of
+empirical studies [40] [28].
+
+As for the construct validity, the collection of the information to determine size measures and actual effort represents
+a crucial aspect. Often, this is the main issue to conduct this
+kind of study [41]. As described in Section IV-B we have
+supervised the procedure employed by the involved software
+company to carefully collect the information we needed for
+
+
+354
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+the empirical analysis. In particular, we tried to perform the
+data collection task in a controlled and uniform fashion. Of
+
+course we have to take into account that empirical studies do
+not ensure the level of confidence achieved with controlled
+experiments.
+
+Some factors should be taken into account for the internal
+
+validity: subjects’ authoring and designing experience, and
+reliability of the data and lack of standardization [28] [35]
+
+[40]. The managers involved in the study were professionals who worked in the software company. No initial
+selection of the subjects was carried out, so no bias has
+been apparently introduced. Moreover, the Web applications
+were developed with technologies and methods that subjects
+had experienced. Consequently, confounding effects from
+the employed methods and tools can be excluded. As for
+the reliability of the data and lack of standardization, the
+questionnaires used were the same for all the Web applications and the project managers were instructed on how
+to use the questionnaires, to correctly provide the required
+information. Instrumentation effects in general did not occur
+in this kind of studies. As for the conclusion validity we
+carefully applied the estimation methods and the statistical
+tests, verifying all the required assumptions.
+
+With regard to the external validity, the applications
+involved in our empirical analysis are representative samples
+of modern Web applications, taking into account their type,
+functionality, target platforms, and complexity. Thus, we
+are confident that the type of analyzed Web applications
+did not bias the validity of the achieved results. On the
+other hand, it is recognized that the results obtained in an
+industrial context might not hold in other contexts. Indeed,
+each context might be characterized by some specific project
+and human factors, such as development process, developer
+experience, application domain, tools, technologies used,
+time, and budget constraints [42].
+
+VII. C ONCLUSION
+
+The empirical analysis have highlighted that the considered COSMIC-based approximate countings provide good
+early estimations, significantly better than those obtained
+with baseline benchmarks. Moreover, the first counting
+provides results better than the Average Functional Process
+approach. Thus, we can conclude that the use of COSMICbased approximate countings resulted to be a suitable approach for early effort estimations. As expected the estimations obtained with the approximate sizes are worse
+than those achieved employing the size resulted from the
+application of the standard COSMIC method.
+
+Since replications of a study, in different setting and
+with larger datasets, are always required in this field, as
+future work, we plan to collect and analyze data from other
+companies. Furthermore, we intend to investigate the other
+approximate sizing approaches proposed in the COSMIC
+documentation [7]. In particular, we would like to analyze
+
+
+pros and cons of the different approaches not only with
+respect to the accuracy of the estimation but also with respect
+to the information required to apply the methods and then
+the time needed to carry out the measurement.
+
+We are also planning to investigate whether the kind of
+applications considered can influence the obtained estimation models.
+
+R EFERENCES
+
+[1] I. Sommerville, *Software* *Engineering* *(8th* *Edition)* .
+Addison-Wesley, 2007.
+
+[2] A. Albrecht, “Measuring Application Development Produc
+tivity,” in *Proceedings of the Joint SHARE/GUIDE/IBM Ap-*
+*plication Development Symposium*, 1979, pp. 83–92.
+
+[3] IFPUG, “International Function Point Users Group www.ifpug.org.”
+
+[4] P. Fraternali, M. Tisi, and A. Bongio, “Automating function
+
+point analysis with model driven development,” in *In procs*
+*of conference of the Center for Advanced Studies on Collab-*
+*orative research*, pp. 233–247.
+
+[5] M. Morisio, I. Stamelos, V. Spahos, and D. Romano, “Mea
+suring Functionality and Productivity in Web-based applications: a Case Study,” in *In procs of the International Software*
+*Metrics Symposium* . IEEE press, 1999, pp. 111–118.
+
+[6] T. Rollo, “Sizing E-Commerce,” in *Proceedings of Australian*
+
+*Conference on Software Measurement* . IEEE press, 2000.
+
+[7] “COSMIC Method v3.0 Advanced & Related Topics,” 2008.
+
+[Online]. Available: http://www.cosmicon.com/dl manager4.
+asp?id=60
+
+[8] E. Mendes, S. Counsell, and N. Mosley, “Comparison of
+
+Web Size Measures for Predicting Web Design and Authoring
+Effort,” *IEE Proceedings-Software*, vol. 149, no. 3, pp. 86–92,
+2002.
+
+[9] G. Costagliola, S. Di Martino, F. Ferrucci, C. Gravino, G. Tor
+tora, and G. Vitiello, “A cosmic-ffp approach to predict web
+application development effort,” *Journal of Web Engineering*,
+vol. 5, no. 2, pp. 93–120, 2006.
+
+[10] S. Di Martino, F. Ferrucci, and C. Gravino, “Estimating
+
+Web Application Development Effort Using Web-COBRA
+and COSMIC: An Empirical Study,” in *In procs. of Euromicro*
+*Conference on Software Engineering and Advanced Applica-*
+*tions* . ACM press, 2009, pp. 306–312.
+
+[11] S. Abrah˜ao, L. De Marco, F. Ferrucci, C. Gravino, and
+
+F. Sarro, “A cosmic measurement procedure for sizing web
+applications developed using the oo-h method,” in *In procs. of*
+*the Workshop on Advances in Functional Size Measurement*
+*and Effort Estimation*, 2010, pp. 2:1–2:8.
+
+[12] F. Ferrucci, C. Gravino, and S. Di Martino, “A Case Study
+
+Using Web Objects and COSMIC for Effort Estimation of
+Web Applications,” in *In procs. of Euromicro Conference on*
+*Software Engineering and Advanced Applications* . IEEE
+press, 2008, pp. 441–448.
+
+
+355
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+
+[13] L. Santillo, M. Conte, and R. Meli, “Early & quick function
+
+point: Sizing more with less,” in *In prods of the 11th IEEE*
+*International Software Metrics Symposium*, ser. METRICS
+’05, 2005, pp. 41–.
+
+[14] NESMA, “Definitions and Counting Guidelines for the
+
+Application of Function Point Analysis,” 1997. [Online].
+Available: www.nesma.org
+
+[15] R. Meli, “Report on using simplified function point mea
+surement processes,” in *International Conference on Software*
+*Engineering Advances*, pp. 367–372.
+
+[16] I. 14143-1:2007, “Information technology – Software
+measurement – Functional size measurement – Part 1:
+Definition of concepts,” 2007. [Online]. Available: http:
+//www.iso.org
+
+[17] COSMIC, “Web site,” 2007. [Online]. Available: http:
+
+//www.cosmicon.com
+
+[18] A. Abran, B. Gil, and E. Lefebvre, “Estimation models based
+
+on functional profiles,” in *In procs. International Workshop*
+*on Software Measurement, Shaker Verlag*, pp. 195–211.
+
+[19] ISBSG, “ISBSG Data Repository r10, January 2007, URL:
+
+www.isbsg.org,” 2007. [Online]. Available: www.isbsg.org
+
+[20] L. Buglione and C. Gencel, “Impact of Base Functional
+
+Component Types on Software Functional Size Based Effort
+Estimation,” in *In prods. of Software Process and Prod-*
+*uct Measurement, International Conferences, LNCS 5891*
+*Springer*, 2008, pp. 75–89.
+
+[21] C. Gencel and L. Buglione, “Do base functional component
+
+types affect the relationship between software functional size
+and effort?” in *In procs. of the Software Process and Product*
+*Measurement*, 2008.
+
+[22] F. Ferrucci, C. Gravino, and L. Buglione, “Estimating web
+
+application development effort using COSMIC: Impact of the
+base functional component types,” in *In procs. of the Sof.*
+*Measurement European Forum*, 2010, pp. 103–116.
+
+[23] L. Buglione, F. Ferrucci, C. Gencel, C. Gravino, and F. Sarro,
+
+“Which cosmic base functional components are significant in
+estimating web application development? - a case study,” in *In*
+*prods. of the IWSM/MetriKon/Mensura 2010* . Alain Abran,
+Gnter Bren, Juan J. Cuadrado-Gallego, Reiner R. Dumke.,
+Shaker Verlag, 2010, pp. 205–224.
+
+[24] “COSMIC Measurement manuals and documents,” 2007.
+
+[Online]. Available: http://www.cosmicon.com
+
+[25] T. Menzies, Z. Chen, J. Hihn, and K. Lum, “Selecting
+
+Best Practices for Effort Estimation,” *IEEE Transaction on*
+*Software Engineering*, vol. 32, no. 11, pp. 883–895, 2006.
+
+[26] B. Kitchenham, E. Mendes, and Travassos, “Cross versus
+
+Within-Company Cost Estimation Studies: A systematic Review,” *IEEE Transaction on Software Engineering*, vol. 33,
+no. 5, pp. 316–329, 2007.
+
+
+
+[27] E. Mendes, S. Di Martino, F. Ferrucci, and C. Gravino, “Effort
+
+estimation: how valuable is it for a Web company to use a
+cross-company data set, compared to using its own singlecompany data Set?” in *In procs. of the 6th International World*
+*Wide Web Conference* . ACM press, 2007, pp. 83–93.
+
+[28] E. Mendes, S. Counsell, N. Mosley, C. Triggs, and I. Watson,
+
+“A Comparative Study of Cost Estimation Models for Web
+Hypermedia Applications,” *Empirical Software Engineering*,
+vol. 8, no. 23, pp. 163–196, 2003.
+
+[29] E. Mendes and B. Kitchenham, “Further Comparison of
+
+Cross-company and Within-company Effort Estimation Models for Web Applications,” in *In procs. of Intern. Software*
+*Metrics Symposium* . IEEE press, 2004, pp. 348–357.
+
+[30] ——, “A Comparison of Cross-company and Withincompany Effort Estimation Models for Web Applications,”
+in *In prods. of Conference on Evaluation and Assessment in*
+*Software Engineering*, 2004, pp. 47–55.
+
+[31] D. Montgomery, E. Peck, and G. Vining, *Introduction to*
+
+*Linear Regression Analysis* . John Wiley and Sons, Inc., 1986.
+
+[32] L. C. Briand and I. Wieczorek, “Software resource estima
+tion,” *Encyclopedia of Soft. Eng.*, pp. 1160–1196, 2002.
+
+[33] D. Conte, H. Dunsmore, and V. Shen, *Software engineering*
+
+*metrics and models* . The Benjamin/Cummings Publishing
+Company, Inc., 1986.
+
+[34] M. J. Shepperd and S. G. MacDonell, “Evaluating predic
+tion systems in software project estimation,” *Information &*
+*Software Technology*, vol. 54, no. 8, pp. 820–827, 2012.
+
+[35] B. Kitchenham, L. Pickard, S. MacDonell, and M. Shepperd,
+
+“What accuracy statistics really measure,” *IEE Proceedings*
+*Software*, vol. 148, no. 3, pp. 81–85, 2001.
+
+[36] E. Stensrud and I. Myrtveit, “Human performance estimating
+
+with analogy and regression models: an empirical validation,”
+in *In prods. of International Software Metrics Symposium* .
+IEEE press, 1996, pp. 205–.
+
+[37] W. J. Conover, *Practical Nonparametric Statistics*, 3rd ed.
+
+Wiley, 1998.
+
+[38] V. Kampenes, T. Dyba, J. Hannay, and I. Sjberg, “A sys
+tematic review of effect size in software engineering experiments,” *Information and Software Technology*, vol. 4, no.
+11-12, pp. 1073–1086, 2007.
+
+[39] A. Field and G. Hole, *How* *to* *Design* *and* *Report*
+*Experiments* . Sage publications Limited, 2003. [Online].
+Available: http://books.google.at/books?id=72BsZFZmosoC
+
+[40] B. Kitchenham, L. Pickard, and S. Pfleeger, “Case studies for
+
+method and tool evaluation,” *IEEE Software*, vol. 12, no. 4,
+pp. 52–62, 1995.
+
+[41] C. Kaner and W. Bond, “Software Engineering Metrics: What
+
+Do They Measure and How Do We Know?” in *In procs of*
+*the Intern. Software Metrics Symposium* . IEEE press, 2004.
+
+[42] L. Briand and J. Wust, “Modeling development effort in
+
+Object-Oriented systems using design properties,” *IEEE*
+*Transaction on Software Engineering*, vol. 27, no. 11, pp.
+936–986, 2001.
+
+
+356
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:19:23 UTC from IEEE Xplore. Restrictions apply.
+

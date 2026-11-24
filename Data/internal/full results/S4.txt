@@ -1,0 +1,792 @@
+## Web Development Effort Estimation using Analogy
+
+
+Emilia Mendes
+*Department of Computer Science*
+*The University of Auckland*
+
+*[emilia@cs.auckland.ac.nz](mailto:emilia@cs.auckland.ac.nz)*
+
+Abstract
+
+Although esttmattng the effort requtred tn developtng
+Web appltcattons ts a dtfftcult task, accurate esttmates
+of development effort have an tmportant role to play tn
+the successful management of Web development
+projects. In software development work to date,
+emphasts has focused on algortthmtc cost models such
+as COCOMO and Functton Potnts. Two
+dtsadvantages of these models are, ftrstly, the need for
+caltbratton of a model for each tndtvtdual
+
+measurement envtronment and, secondly, the vartable
+accuracy levels achteved even after caltbratton.
+Thts paper descrtbes the use of esttmatton by analogy
+to calculate the development effort of Web
+appltcattons. Two datasets contatntng emptrtcal Web
+development data were used tn the case study. One set
+contatned data relattng to forty one novtce developers,
+the other to twenty ntne expertenced developers. The
+ANGEL tool supporttng the automattc collectton,
+storage and tdenttftcatton of the most analogous
+projects was used as a basts for esttmattng effort
+requtred for a new project. Results show esttmatton by
+analogy to be a promtstng alternattve to algortthmtc
+techntques.
+
+**1.** **Introduction**
+
+Software practitioners in general recognise the
+importance of accurate estimates of development
+effort to the successful management of major software
+projects. Project attributes as size, duration and
+complexity can also amplify the difficulties in finding
+accurate estimates. Project managers and software
+development organisations need accurate estimates at
+early stages in a project life cycle to manage resources
+properly.
+
+Existing approaches to effort prediction fall into
+three general categories [11]:
+
+� Expert judgement
+� Algorithmic models
+� Analogy
+
+
+Steve Counsell
+*Department of Computer Science*
+*Birkbeck College*
+*[steve@dcs.bbk.ac.uk](mailto:steve@dcs.bbk.ac.uk)*
+
+Expert judgement has been a widely practised
+method through the years. However, the means of
+deriving an estimate are not explicit and are not
+therefore repeatable. Expert opinion, although always
+difficult to quantify, can be an effective estimating
+tool on its own or as an adjusting factor for
+algorithmic models [7].
+
+Algorithmic models have been the most popular in
+the past, and attempt to represent the relationship
+between effort and one or more project characteristics.
+The main 'cost driver' used in such a model is usually
+taken to be some notion of the software size (e.g. the
+number of lines of source code, function points).
+Although the precise formulation of each model
+varies, at a higher level they may all be considered as
+derivatives of [11, 12]:
+
+Effort = �           - size [f3]
+
+The coefficient � is a productivity coefficient and �
+is an economies (or diseconomies) of scale coefficient.
+Algorithmic models always need to be calibrated or
+adjusted to local circumstances (this can be seen as
+disadvantage of the approach). Examples of
+algorithmic models are the COCOMO model [2], the
+SLIM model [1O] and function points [1].
+
+Estimation by analogy involves characterising the
+project for which an estimate is required and using this
+characterisation as a basis for finding similar or
+analogous completed projects, for which effort is
+known. These effort values are then used, possibly
+with adjustment, to generate a predicted value of
+effort. Finding the right analogies and assessing the
+degree of similarity are the main difficulties of this
+method.
+
+In Section 2, we present in more depth the
+technique used for estimating effort by analogy. In
+Section 3 we describe the ANGEL tool used to
+
+estimate development effort. In Section 4, the
+empirical results of applying the estimation by analogy
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+technique are presented using two datasets. Finally, in
+Section 5 we conclude with an analysis of the
+strengths and weaknesses of estimation by analogy
+and provide suggestions for further work.
+
+**2.** **Estimation by Analogy**
+
+The first step to se estimation by analogy is to
+characterise the project for which the estimate is to be
+made in terms of a number of variables (attributes).
+These variables are then used to find other similar
+
+projects (that have already been finished) and use the
+values from their variables to estimate effort. In other
+
+words, an estimate for the new project is made based
+on the known effort values for the finished projects.
+
+When applying estimation by analogy, there are a
+number of questions that we need consider >11]:
+
+- How can a project be described best? For web
+applications, examples would be the type of
+application domain, the number of documents
+contained in a hyperdocument, the number or
+links and the average of links per document. The
+range of variables must be limited to the
+information available at the point that the
+prediction is required. The variables should
+portray the project as precisely as possible. It is
+also essential to choose at least one variable that
+
+characterises the project in terms of its size. In
+this case study, projects are the Web applications
+developed or under development. Size variables
+are the number of documents, the number of links,
+the size (Mbytes) of the entire application.
+
+- How are similarities between projects detected?
+And, how much confidence is there in the
+analogies? The number of analogies to search for,
+i.e., the number of projects which best match the
+new project, also needs to be identified.
+
+- How can known effort values from the analogous
+projects be used to derive an estimate for the new
+project? Some options include using the mean of
+the known effort values or the weighted mean of
+known effort values. In the latter case higher
+weights would be placed on closer analogies.
+
+The estimation by analogy approach used does not
+determine the number of variables that should be used
+
+to characterise a project. Although in theory a greater
+number of variables are better than a smaller number,
+in practice the number of variables is determined by
+the historical data available. Exceptions are when the
+data collection is conducted with analogy in mind.
+
+
+Here the number of variables can be previously
+determined.
+
+The analogies used in our work are calculated by
+measuring the Euclidean distance in n - dimensional
+space where each dimension corresponds to a variable.
+Values are standardised so that each dimension
+
+contributes equal weight to the process of finding
+analogies >12].
+
+Although the number of analogies used to estimate
+the effort can vary from one to three, literature in the
+field of software engineering suggest that one analogy,
+followed by two analogies, are generally the most
+effective options >12]. However, it is possible that
+dissimilar datasets may reveal different characteristics.
+It all depends on the number of finished projects to
+choose from and how similar the projects in a dataset
+
+are.
+
+Once the analogous projects are identified, an
+unweighted mean of the known effort values is used to
+determine the predicted value.
+
+3. The ANGEL Software Tool
+
+Although it is possible to find analogies, using the
+Euclidean distances, without the help of a computer
+program, it can be time-consuming and error- prone as
+the number of projects or variables increase.
+Consequently, we have used an analogy effort
+estimation tool that automates the process and
+provides an environment where data can be stored,
+analogies found and estimates generated. The tool
+was developed at Bournemouth University under the
+name of ANaloGy softwarE tooL (ANGEL) >11]. One
+of the important features of ANGEL is the ability to
+determine the optimum combination of variables for
+finding analogies. This task can take a long time
+depending on the number of variables as it employs a
+brute force algorithm or exhaustive search of all
+possible permutations. This is relatively slow for a
+large number of variables [1] . Otherwise, ANGEL is
+fully operational.
+
+Figure 1 (see appendix A) shows part of a template
+for recording project data. Templates are used to
+describe the data that will be used in the estimation
+
+process. They can be configured to match the specific
+data collection environment of an organisation.
+
+1According to Shepperd et al. [11] "20 variables for 21 projects run
+
+on a Pentium 90 takes approximately 42 hours to analyse.
+
+Fortunately, 12 variables for 21 projects (a more common situation
+for our datasets) takes a mere 10 minutes as the complexity is m2 [n] -1
+
+where m is the number of projects and n the number of variables".
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+ANGEL does not impose any particular set of
+variables to be used in the analysis, giving the user
+freedom to define the best set of variables to
+
+characterise a project. Consequently, the estimation
+process can take optimal advantage of the data
+available. The user chooses the number of variables
+
+and their names. The only exceptions are the project
+number, status and actual effort which are compulsory.
+ANGEL uses the project number to uniquely identify
+each project. The Status attribute shows whether or
+not a project has been completed. Projects whose
+status is "completed" can be used as a source of
+analogy. The actual effort is mandatory for all
+completed projects as it supplies the foundation for
+prediction. Figure 2 (see Appendix A) shows the data
+collected for one of the datasets used in this work.
+
+Once the template has been created and the data has
+been entered, the next step is to select the variables
+that will be used to find analogies (see Figure 3 in
+Appendix A). Not all the variables collected will be
+useful for finding good analogies. The user can select
+either all the variables described in the template or just
+a subset of those.
+
+Once the variables to use in the estimation have
+
+been chosen, the next step is to run the estimation
+algorithm so that the estimation can be produced. The
+level of confidence that we have in using analogies
+drawn from a given dataset is also provided as part of
+the output (see Figure 4 in Appendix A).
+
+Typically, where there are only a few projects or
+where the projects differ very broadly in nature the
+results will not be as accurate as for datasets
+
+representing similar projects. The level of confidence
+is calculated by finding the mean magnitude of relative
+error (MMRE) and the Pred (25). They are computed
+by means of jack knifing >11, 12] which involves
+consecutively eliminating each project from the
+dataset and using the remaining projects to derive an
+estimate. The estimate is then compared with the
+actual value and the absolute percentage error
+computed. The mean of all absolute percentage errors
+is known as MMRE >5], defined as:
+
+
+The Pred(25) represents Predication at level n. It is
+used as a performance measure to indicate the
+percentage of projects a model predicts with a relative
+error under the threshold n.
+
+As Figure 4 shows (see Appendix A) the estimated
+effort for a selected project, in this case Proj001, was
+computed based on the completed projects from the
+dataset. The predicted effort is of 58.83 hours. The
+MMRE obtained was 43.71% and the Pred(25) was
+52%. An MMRE figure below 50% indicates a good
+model. The results for the Pred(25) means that the
+prediction applies to 52% of the projects within 25%
+of their actual effort.
+
+4. The Empirical Results
+
+In this section we describe the results that have
+
+been obtained through using ANGEL to predict Web
+development effort using the analogy method
+described in the previous sections.
+
+The two datasets used were obtained from a case
+study evaluation of 76 second-year Computer Science
+students. All were developing Web applications as part
+of a Human Computer Interaction (HCI) course unit.
+Six data points were discarded since they contained
+incomplete information. The variables collected on
+both datasets are the same. One of the datasets
+
+contained data collected from students whose Web
+
+authoring experience ranges from 0 (no experience) to
+5 (on a scale from 0 to 10) - LEL (Low Experience
+Level) group. The other dataset represents students
+whose Web authoring experience ranges from 6 to 10
+(a great deal of experience) - HEL (High Experience
+Level) group; the case study is described in detail in
+>9].
+
+The variables collected were:
+
+- The number of documents, representing the
+number of HTML files contained in the
+
+application. The Web applications considered are
+'static', where there are no pages generated "on
+the fly".
+
+
+
+                 - The number of reused documents, representing
+the number of HTML files which have not been
+i Q § E E - created from scratch.
+
+
+¸
+
+
+
+                            - The number of links contained in the Web
+
+¸
+# n [I:] [¨ ] E act application. The links considered here are either
+### i  © ) i
+
+structural or referential links >4], leaving apart
+dynamically computed links.
+Eact is the actual effort, Epred is the estimated  - The compactness >3] of the application, indicating
+effort and n is the number of projects in the dataset. how inter-connected the documents are. A
+The MMRE gives an indication of the likely accuracy
+
+completely connected application means that,
+
+that can be expected when estimating future projects.
+
+# n [I:] [¨ ]
+
+
+
+E act
+
+### ) i
+
+
+i ©
+
+
+
+- The compactness >3] of the application, indicating
+how inter-connected the documents are. A
+
+completely connected application means that,
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+from each document, there are links reaching all
+the other documents in the application.
+Compactness was measured in the case study
+evaluation by asking subjects to give an estimate
+from 1 (completely disconnected) to 5
+(completely connected). Consequently, the
+compactness measured was the perceived
+compactness.
+
+- The Stratum >3] of the application, which
+indicates to what degree the Web application is
+organised for directed reading. A sequential
+application represents an application where there
+is only one path to be followed by the reader. For
+the case study evaluation, subjects were asked to
+estimate the stratum of the application, from 1 (no
+sequential navigation) to 5 (sequential
+navigation). Consequently, the stratum measured
+was the perceived stratum. We are currently
+developing a measurement tool which will
+measure automatically compactness and stratum,
+amongst other variables.
+
+- The structure of the application - sequence,
+hierarchy, and network, representing the way in
+which the documents are linked >13]. A sequential
+structure corresponds to documents linearly
+linked; a hierarchical structure denotes documents
+linked in a tree shape and a network structure for
+documents linked in a net shape.
+
+The HEL group contains information about 29
+projects and the LEL group information for 41
+projects. The variables selected for the datasets used
+were necessarily pre-determined since the data had
+already been collected. However, the datasets had at
+least four size-related variables: hyperdocument size,
+connectivity, compactness and stratum.
+
+In order to evaluate how precise the estimations
+would be for each one of our datasets, the following
+steps were followed:
+
+- One project at a time had its status changed to
+"active".
+
+
+
+- ANGEL was used to estimate the best
+
+combination of variables (using the "best
+combination of variables" option) for 1, 2 and 3
+analogies.
+
+- Effort was estimated using 1, 2 and 3 analogies
+and the corresponding "best combination of
+variables".
+
+- The MMRE was obtained using the actual effort
+and the estimated effort closest to the actual
+
+effort.
+
+The MMRE for the LEL group was 52.23%.
+Although this figure may indicate a usable model, we
+decided to split the LEL group into two more
+homogeneous groups: LEL-G1 and LEL-G2 (see
+tables 1 and 2). The former group has 22 projects and
+the latter 19.
+
+For LEL-G1 our conclusions are as follows (see
+table 1):
+
+- The MMRE was 29.15%, indicating a usable
+estimation model.
+
+- The variables which contributed the most for the
+
+estimations were number of documents + number
+
+of reused documents (18 projects), followed by
+number of documents (2 projects).
+
+- Two and three analogies gave the greatest number
+of best effort estimations.
+
+For LEL-G2 our conclusions are as follows (see
+table 2):
+
+- The MMRE was 28%, indicating a usable
+estimation model.
+
+- The variables which contributed the most for the
+
+estimations were number of links + stratum (8
+projects), followed by Compactness (4 projects).
+
+- One and three analogies gave the greatest number
+of best effort estimations.
+
+
+**Table 1. Results for the LEL-G1 group**
+
+|PROJ|Actual Effort|1 analogy|2 analogies|3 analogies|Best combination of variables for the closest estimation|
+|---|---|---|---|---|---|
+|PROJ02|10.17|29|28.5|*8.4|Num-docs|
+|PROJ03|34|30|*32|31.67|Num-docs + Num-reused-docs|
+|PROJ05|30|13.5|21.75|*25.83|Num-docs + Num-reused-docs|
+|PROJ06|34|*31|30.5|30.33|Num-docs + Num-reused-docs|
+
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+|PROJ07|13.5|*30|*30|31.33|Num-docs + Num-reused-docs|
+|---|---|---|---|---|---|
+|PROJ08|25.58|29|*25.5|20.17|Num-docs + Num-reused-docs|
+|PROJ14|15.67|29|*17.12|21.42|Num-docs + Num-reused-docs|
+|PROJ15|4.92|*10.17|12.09|11.06|Num-docs + Num-reused-docs|
+|PROJ17|7.75|30|*21.09|24.06|Num-docs + Compactness + Stratum + Num-reused-docs|
+|PROJ18|10.5|22|*9.59|8.03|Num-docs + Num-reused-docs|
+|PROJ19|30|15.05|*21|16.58|Num-docs + Num-reused-docs|
+|PROJ22|28|*26.25|20.12|24.75|Num-docs + Num-reused-docs|
+|PROJ24|26.5|*30|22.75|17.75|Num-docs + Num-reused-docs|
+|PROJ27|9|22|16.09|*8.53|Num-docs|
+|PROJ28|28|22|18.84|*22.22|Num-docs + Num-reused-docs|
+|PROJ30|31|34|*32|26.05|Num-docs + Num-reused-docs|
+|PROJ33|26.25|28|31|*25.33|Num-docs + Num-reused-docs|
+|PROJ34|22|10.5|28.5|*22|Num-docs + structure|
+|PROJ36|15.5|30|28.25|*21.42|Num-docs + Num-reused-docs|
+|PROJ37|30|*30|32|31.67|Num-docs + Num-reused-docs|
+|PROJ39|29|15.67|23.73|*25.19|Num-docs + Num-reused-docs|
+|PROJ41|14|4.92|7.55|*8.03|Num-docs + Num-reused-docs|
+
+
+
+ - closest estimation
+
+**Table 2. Results for the LEL-G2 group**
+
+|PROJ|Actual Effort|1 analogy|2 analogies|3 analogies|Best combination of variables for the closest estimation|
+|---|---|---|---|---|---|
+|PROJ01|51|*44|78|64.17|Num-links + stratum|
+|PROJ04|42|*42|40.75|69.06|Num-links + stratum|
+|PROJ09|137|*84|46.5|61.67|Num-links + stratum|
+|PROJ10|92|51|46.5|*91.06|Num-links + stratum|
+|PROJ11|84|42|51.25|*94|Num-links + stratum|
+|PROJ12|37.5|60.5|46.5|*45.83|Num-links + stratum|
+|PROJ13|52.17|*51|46.5|81.67|Compactness|
+|PROJ16|111|44|*47.5|46.06|Structure|
+|PROJ20|42|84|72.25|*48.83|Num-links + Compactness|
+|PROJ21|53|137|114.5|*104.33|Num-links + stratum|
+|PROJ23|46|*36.5|86.25|61|Compactness|
+|PROJ25|44|111|*81.5|91.33|Num-links + Compactness + stratum|
+|PROJ26|36.75|46|*41.25|58.58|Compactness|
+|PROJ29|115|*36.75|35.62|32.5|Num-docs + Num-links + stratum|
+|PROJ31|60.5|37.5|31.38|*38.17|Num-links + stratum|
+|PROJ32|36.5|46|*31.5|64.17|Num-docs + Num-links|
+|PROJ35|112|*111|113|87.5|Num-reused-docs|
+|PROJ38|34.5|*35|40.5|39|Num-docs + Num-links + Compactness|
+
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+PROJ40 35 112 *46.5 68.33 Compactness
+
+- closest estimation
+
+
+Although the MMRE for the HEL group was
+40.68%, which indicates a usable model, we decided
+to split the group into two more homogeneous groups:
+HEL-G1 and HEL-G2 (see tables 3 and 4). The HELG1 and HEL-G2 have 15 and 14 projects respectivelly.
+
+For the HEL-G1 group our conclusions are as
+follows (see table 3):
+
+- The MMRE calculated using the actual effort and
+the closest estimated effort was 23.34%,
+indicating a good model.
+
+- The variables which contributed the most for the
+
+estimations were number of documents and
+
+number of documents reused (5 projects),
+followed by compactness + stratum + structure (3
+projects).
+
+- One and two analogies gave the greatest number
+
+
+of best effort estimations.
+
+For the HEL-G2 group our conclusions are as
+follows (see table 4):
+
+- The MMRE calculated using the actual effort and
+the closest estimated effort was 19.76%,
+indicating a good model.
+
+- The variables which contributed the most for the
+
+estimations were number of documents,
+compactness, stratum, number of reused
+documents and structure (6 projects), followed by:
+number of documents, number of links,
+compactness and structure (2 projects); number of
+documents, number of links, stratum and structure
+(2 projects).
+
+- One and three analogies gave the greatest number
+of best effort estimations.
+
+
+**Table 3. Results for the HEL-G1 group**
+
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+**Table 4. Results for the HEL-G2 group**
+
+
+
+Even though the datasets used in our work were not
+collected with analogy in mind, and therefore the
+variables are not particularly well suited to
+characterising projects, we have obtained some
+positive results, which suggests that estimation by
+analogy is a viable option for some types of datasets.
+
+5. Conclusions and Future Work
+
+Several comparisons can be drawn between the
+process of estimation by analogy and the way humans
+informally use analogies from the past to solve
+problems in the present. Consequently one can assume
+that the concepts supporting estimation by analogy are
+easily understandable.
+
+There are advantages and disadvantages associated
+with using estimation by analogy methods [12]. The
+advantages are as follows:
+i) Estimation by analogy can succeed even where
+no statistical relationships can be found [12].
+ii) It is self-calibrating as opposed to algorithmic
+models where calibration is essential.
+
+
+iii) As it is a more intuitive method it is easier to
+understand the reasoning behind a particular
+prediction. Consequently the level of confidence
+in a prediction can be enhanced or discarded if it
+appears to be based upon flawed analysis.
+
+The disadvantages are:
+i) There are no answers concerning the effect of old
+datapoints in the estimation as an organisation
+develops and successively introduces new
+technology. The question then arises: when
+should such projects be removed from the
+dataset?
+ii) It is not clear why diverse sets of variables and
+methods for generating the prediction are more or
+less successful with different datasets. Clearly
+there is a need for more investigation in this area.
+
+In terms of further work, the two datasets used in
+the work had four variables characterising in some
+sense the applications. However, as size can be
+described in terms of length, functionality and
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+complexity >6], further investigation is clearly
+necessary to identify the best combination of variables
+that give best results. We also want to investigate the
+calibration of models to the environment in which they
+are to be used, in the same way as the MERMAID
+(Metrication and Resource Modelling Approach)
+approach >8] adopts. The environments of interest are
+any organisation involved in the development of Web
+applications.
+
+Another area of further work includes the
+
+comparison between estimation by analogy and two
+algorithmic models, namely linear regression and
+stepwise multiple regression. Although literature in
+software estimation has showed that the analogy
+method outperforms or mirrors the best algorithmic
+method >11, 12] we want to investigate whether or not
+the results would be similar when applied to the
+development of Web applications.
+
+To conclude, there is an urgent need for adequate
+Web development effort prediction at an early stage in
+the development. As the use of the WWW (World
+Wide Web) as a resource delivery environment
+increases, effort estimation can contribute significantly
+to the reduction of costs and time involved in
+
+developing Web applications. In this paper we have
+shown that analogy may be a viable estimation method
+for prediction, particularly when given the necessary
+tool support.
+
+We do not, however, wish to create the impression
+that analogy based prediction should replace
+algorithmic methods. Dissimilar datasets will have
+different characteristics implying that a variety of
+techniques should be contemplated.
+
+6. Acknowledgements
+
+The authors are grateful to Dr. Chris Schofield and
+Professor Martin Shepperd for granting a copy of the
+ANGEL tool.
+
+7. References
+
+>1] Albrecht, A.J. and Gaffney, J.R. Software
+function, source lines of code, and development
+effort prediction: a software science validation,
+IEEE Transactions on Software Engineering, 9, 6
+(1983) pp. 639-648.
+
+>2] Boehm, B.W., Software Engineering Economics.
+
+Prentice-Hall: Englewood Cliffs, N.J., 1981.
+
+>3] Botafogo, R. A., Rivlin, E., and Shneiderman, B.
+Structural Analysis of Hypertexts: Identifying
+
+
+Hierarchies and Useful Metrics. ACM TOIS, 10,
+2, (1992), pp. 143-179.
+
+>4] Conklin, J. Hypertext: An Introduction and
+Survey, IEEE COMPUTER, (Sept. 1987), pp. 1737.
+
+>5] Conte, S., H. Dunsmore, and V.Y. Shen, Software
+Engineering Metrics and Models, Benjamin
+Cummings: Menlo Park, CA, (1986).
+
+>6] Fenton, N. E., and Pfleeger, S. L. Software
+Metrics, A Rigorous & Practical Approach, 2nd
+edition, PWS Publishing Company and
+International Thomson Computer Press, (1997).
+
+>7] Gray, Andrew R., MacDonell, Stephen G. and
+Shepperd, Martin J. Factors Systematically
+associated with errors in subjective estimates of
+software development effort: the stability of
+expert judgement. IEEE 6 International Metrics th
+Symposium (Boca Raton, November 5-6, 1999).
+
+>8] Kok, P., Kitchenham, B. A. The MERMAID
+Approach to Software Cost Estimation. Esprit
+Annual Conference, Brussels, (1990).
+
+>9] Mendes, M. Emilia X., Hall, Wendy and Harrison,
+Rachel Applying Measurement Principles to
+Improve Hypermedia Authoring, to be published
+at the New Review of Hypermedia and
+Multimedia, (1999).
+
+>10] Putnam, L. H. A General Empirical Solution to
+the Macro Sizing and Estimating Problem. IEEE
+Transactions on Software Engineering, SE-4, 4,
+(1978), pp: 345 - 361.
+
+>11] Shepperd, M.J., Schofield, C., and Kitchenham,
+
+B. Effort Estimation Using Analogy, ICSE-18,
+(Berlin, 1996).
+
+>12] Schofield, C. An empirical investigation into
+software estimation by analogy, Doctoral Thesis,
+Dept. of Computing, Bournemouth Univ., UK,
+(1998).
+
+>13] Whalley, P. Models of Hypertext Structure and
+Learning, In: D. H. Jonassen and H. Mandl, eds.,
+Designing Hypermedia for Learning, 61-67,
+Berlin, Heidelberg: Springer-Verlag (1990).
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+**APPENDIX A**
+
+**Figure 1. Data entry templates in ANGEL**
+
+**Figure 2. A Dataset in ANGEL**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+
+**Figure 3. Choosing an Analogy method in ANGEL**
+
+**Figure 4. Predicting Effort using ANGEL**
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:21:38 UTC from IEEE Xplore. Restrictions apply.
+

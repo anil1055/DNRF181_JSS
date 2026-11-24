@@ -1,0 +1,830 @@
+SIGSOFT Software Engineering Notes Page 1 March 2009 Volume 34 Number 2
+# **Web Hypermedia Content Management System Effort Estimation Model **
+
+Naveen Aggarwal*, Nupur Prakash**, Sanjeev Sofat***
+
+      - CSE Deptt., Univ. Instt. Of Engg. & Technology. Panjab University, Chandigarh,
+** School of Information Technology, Guru Gobind Singh Indraprastha University, Delhi
+
+***CSE Dept., Punjab Engineering. College, Chandigarh
+
+navagg@gmail.com
+
+
+**Abstract**
+
+This study aims at creation of a well defined estimation model
+which can be used to estimate the effort required for designing and
+developing the web hypermedia content management systems. The
+data from the different content management system projects are
+studied and the linear regression approach is used to finalize the
+model. This model also provides guidelines to calculate phase wise
+distribution of effort. The model is designed to help project manager to estimate effort at the very early stage of requirement analysis. A set of questionnaire is used to estimate the complexity of the
+project, which has to be filled after completing the initial requirement analysis. Final effort is estimated using the project size and
+the different adjustment factors. For better calculation of these
+adjustments factors, these are categorized into three categories
+based on their characteristics such as Production and General system characteristics. This model is proposed to be used differently
+for the different types of projects. These projects are categorized
+based on their size and total/build effort ratio. The size of the
+
+project is estimated by using the modified object point analysis
+approach. The estimated effort is further phase wise distributed for
+better scheduling of the project. Another questionnaire is used to
+refine the model and it has to be filled by the project managers
+after completing the project. The proposed model is validated by
+studying twelve completed projects taken from industry and seventy different projects completed by the students. The proposed
+model shows a great improvement as compared to the earlier models used in effort estimation of CMS projects.
+
+**Keywords** : Effort Estimation, Content Management System, Object Points Analysis, Web project Estimation.
+
+**1. Introduction**
+
+Web 2.0 comes with the challenge of efficient web design that
+gives independence to share information in a user defined way [1].
+This enhances the creativity of user to devise innovative ways to
+collaborate. The way the information is currently being accessed
+may get change drastically in the coming years. The content management system tools have already started playing this role and
+their use in developing and maintaining the web sites is increasing
+day by day. This is mainly because of their ability to enable the
+companies to build, deploy and maintain highly dynamic internet,
+intranet and extranet web sites, quickly and efficiently.
+
+Most of the web hypermedia application requires varieties of multimedia contents, which are stored as objects on the server [2-4].
+On request, the processing engine of content server construct web
+pages from the objects stored on the smart server cache and served
+to different devices, audiences and individuals without any duplication of effort. The design phase of web applications based on
+content management system is very complex. Apart from the maintenance phase, this phase requires maximum effort. The effort
+
+
+required is also more because the application requires environment
+in which data is highly coupled. Dependency of different modules
+on each other is very high. Further designing customizable screens
+which user can change for better information sharing is always
+difficult than normal screens. In a typical business environment,
+where the users’ needs keep on changing, it is difficult to think of a
+single consistent design. Improper approaches for this activity may
+lead to underestimation or overestimation of the resources [5]. The
+underestimation causes understaffing, under scoping of QA effort,
+and mismanagement of schedule. Similarly overstaffing is the main
+cause for cost increments, time increments and overuse of resources. All of these effects are just a glimpse of different possible
+consequences of improper estimation at starting of the project.
+These effects have large impact on other concurrently going on
+projects.
+
+The goal of this research is to propose the effort estimation model
+for the web hypermedia portals developed using the content management systems tools. For the size estimation of the project, the
+different techniques such as function point analysis, object point
+analysis and use case analysis are compared. An Estimation model,
+to address the estimation needs for the client in the projects that
+uses tools like CMS, ITG etc, is developed using data from the
+Subject Company and different student projects executed at Panjab
+University, Chandigarh.
+
+**2. Literature Survey**
+
+As software grew in size and importance, it also grew in its complexity, making it very difficult to accurately predict the cost of the
+software development. The better accuracy in estimation can be
+achieved by developing the domain based useful models that constructively explain the development life cycle and accurately predict the effort of developing the software. Following are the main
+challenges that are faced by web effort estimators:
+
+- Size estimation is difficult as web contents include varieties of
+
+media having different characteristics, different storage requirements, different display requirements and different access
+methods [6].
+
+- The software development process of web content management systems requires gradual refinement; so it is hard to find
+basis for good estimates
+
+- Historical data is not always available
+
+- Management & customer not always readily accept the schedule.
+
+Over the years, different approaches have been suggested for the
+estimation of different types of projects. These projects are categorized as development projects; maintenance projects and support
+services by keeping in mind that these activities never occurred
+simultaneously. Most of these approaches estimate the effort based
+on the size of the development project and same approach is also
+used in estimating the effort of web projects [7].
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 2 March 2009 Volume 34 Number 2
+
+
+Reifer et al [8] proposed an extension to the COCOMO-II model
+by introducing WEBMO model. Reifer proposed different cost
+drivers by keeping in mind the demands of web projects. Further,
+as web projects keep on changing, hence variable effort power law
+is used rather than the fixed one. In WEBMO, size is measured by
+using analytical Halstead’s formula for volume. Although, all the
+different sub components in a typical web project are considered,
+but with the changing development tools, the fixed cost drivers are
+not suitable.
+
+Morisio et al [9] solved this problem by introducing the estimation
+model for the web development companies to predict and track the
+development costs when new technologies are employed. An object oriented framework is used to gather the data and a learning
+factor is associated which changes with every usage of framework.
+The results clearly show that effort to write a code reduces with
+every usage of the framework.
+
+Most of the web development companies are very small and are
+working at SEI CMM level 2. Hence a study was conducted by
+Ruhe et al [10] to assess whether the COBRA (Cost Estimation
+Benchmarking and Risk Analysis) method was adequate for estimating Web development effort accurately using data from these
+companies. As COBRA is heavily depended upon the expert opinion and data on past projects to estimate development effort
+hence accurate results are possible only if size estimates are correct. Although the prediction accuracy obtained using COBRA for
+similar project is very good but for new projects some learning
+oriented method need to be incorporated.
+
+Mendes et al. [11, 12] studied the different learning oriented techniques such as the case-based reasoning, linear regression, and
+stepwise regression techniques with an aim to estimate development effort for Web applications. The two different data sets are
+used; one from the experienced students and another one from the
+inexperienced students. Mendes concluded that the case based reasoning gives the best result for experienced student datasets. Web
+cost estimation model uses either of top down or bottom up approach. In 2001, Mendes et al. [13] studied the prediction accuracy
+of these approaches using linear and stepwise multiple regression
+models. This time data is collected from the web sites of experienced programmers by considering the three main entities such as
+application page, media and program. In each entity the following
+five factors are considered such as: length size, reusability, complexity size, effort, and confounding factors (factors that, if not
+controlled, could influence the validity of the evaluation). Results
+showed that the best predictions were obtained for the entity program, based on non-reused program measures (code length and
+code comment length). In this study, results were not very good for
+application page entity. So in the next study, Fewster et al [14]
+proposed a generalized linear model for estimation of effort. This
+model provides a flexible regression framework for predictive
+modeling of effort. But the model was very much dependent on the
+accuracy of the different data and size metrics used.
+
+In 2002, Baresi et al. [15] investigated whether estimated effort
+provided by inexperienced developers can be used to estimate actual effort. It was quite clear that it is possible to use the estimated
+values as predictors for the actual ones; however other variables,
+such as size, also need to be incorporated to the model to make it
+more realistic and meaningful. Baresi et al [16] conducts a study
+
+
+with an aim to estimate the design effort of web applications. Their
+dataset comprised 30 Web applications developed by students. The
+relationship between the numbers of size measures are obtained
+and organized in categories. The categories employed were information model, navigation model and presentation model. They
+identified a few attributes that may be related to the total design
+effort. In addition, they also carried out a finer-grain analysis, to
+find out which of the used measures have an impact on the design
+effort when using W2000 [17,18].
+
+But all of these approaches discussed above are not directly applicable to the web content management system projects. This is
+mainly because:
+
+1) There are no well defined guidelines to identify the development model for CMS. Most of the processes employed are ad
+hoc. The estimation model based on a particular development
+model can not be used for other development models.
+2) There are no standard tools and technology defined for CMS.
+Hence it is very difficult to estimate the size of the project
+when the developers are not experienced. No mechanism
+available to create estimations model for new technologies and
+tools.
+
+3) Existing web project estimation guidelines are not robust
+enough to take care of the complexities of the interfacing system in CMS.
+
+Keeping above points in mind, it is felt that for different technologies which are being used in different domain, there should be different estimation model which are developed just from the
+experience gained in that domain only.
+
+**3. Effort Estimation Model**
+
+The basic approach of the Content Management System Effort
+Estimation Model (CMSEEM) is described in the Figure 1. This
+study is based upon the past data collected from the twelve different content management system projects taken from the subject
+company. The model is then refined from the data collected from
+the 70 different We b hypermedia CMS projects completed by the
+post graduate students.
+
+It is assumed that all the data of twelve different project requests
+studied is correct without any deviation.
+
+All the students who are involved in developing projects are provided with a detailed set of project requirements. After studying
+the requirements, they need to certify the following points before
+they start developing the projects.
+
+- Requirements Specifications are clear and well understood
+
+- Projects have main emphasis on user interface.
+
+- Tools used to develop the project can be mapped to Object
+Point analysis [19, 20], i.e. from Requirement analysis, it is
+possible to count the total number of objects required for development in the specified tool.
+
+- Overall size of project is small and do not involve any research activity.
+
+- Project is being implemented on already tried technologies.
+All the students were given a questionnaire, which they have to
+submit after completing the Software Requirement Specification
+document. The questionnaire is about the 40 different parameters
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 3 March 2009 Volume 34 Number 2
+
+
+related to the setup, implementation, design, performance, user
+interface, usability, reliability, external interface, and other requirements of the project.
+
+The proposed estimation model is an extension of the COCOMO
+2.0 Model [21,22]. For Size calculation, we have opted for the
+Object Point Analysis. Object Points are a measure of the size of
+computer applications and the projects that build them. The size is
+measured from a components point of view. It is independent of
+the computer language, development methodology, technology or
+capability of the project team used to develop the application.
+
+In atypical CMS, following different categories of objects have
+been identified [23-24]
+
+1. Framework setup
+
+a. Branch setup
+
+b. Templates / Sub-branch setup
+
+c. Authorities setup
+
+d. Other configurations like (receiver, Visual Formats, Color Palettes etc.)
+
+2. Work Flow Setup
+
+a. Number of Tasks and Their Dependencies
+
+3. Templating
+
+a. Internal Components (Containers, Data Components)
+
+b. External Interface Components
+
+i. ODBC Components
+
+ii. XML Tools (XPATH / XQuery / XSLT ….)
+
+iii. External APIs / Third Party Components
+
+iv. Data Conversion Tools
+
+4. User Interface Screens
+
+a. Data Forms
+
+b. Message Boxes
+
+c. Error Messages
+
+d. Interactions with Databases
+
+e. No. of Java Script functions / operations. / Validations.
+
+f. No. of style classes used.
+
+5. UI Reports
+
+a. Printed reports
+
+b. Graphics Analysis Reports
+
+6. Data Files (All types of DCT, DCT, TPL files)
+
+a. Data Design Files
+
+b. Data Configuration Files
+
+c. Presentation Files
+
+d. Control Files
+
+7. Databases
+
+
+a. Tables
+
+b. Views
+
+c. Triggers
+
+*3.1 Different steps for object point analysis*
+Following steps are mainly followed to calculate the total number
+of Object Points of a particular system.
+
+Step 1: Assess Object Counts: Estimate the different categories of
+components as shown above. These components and categories
+may vary according to the tools used.
+
+Step 2: Use the schema shown in the Table 1 to classify each object instances into corresponding total number of object points
+depending upon the value of characteristic dimensions. In this
+schema, one dimension represents the multiplicative factors shown
+in second column and other dimension represents the additive factors shown in first row of each category. Brief description about
+the different object instances categories is as follows.
+
+1. Branch Setup: In Branch Setup, Main Multiplicative factor is
+total number of branches and sub branches. Other tasks such as
+
+setting up work area, creating template data, changing configuration settings (setting proxies, receivers, color palettes and visual
+formats) are counted as additive task for each branch setup.
+
+2. Authorities Setup: In Authorities setup, number of functionalities to be enhanced in a CMS is taken as multiplicative factor. The
+number of tasks need to be performed for each of the functionality
+are taken as additive tasks such as changing permissions, events
+and privileges for each users, security settings etc.
+
+3. Work Flow Setup: Different task (user tasks, group tasks, local,
+external, cgi tasks, update, submit, end tasks etc) and different
+directives (Team Info, CGI Info, element Info etc) in work flow are
+taken as multiplicative factors. For each task different dependencies and different elements of each task are taken as additive fac
+tors.
+
+4. Static Containers: Total number of different items in each con
+tainer is taken as multiplicative factor. For each of these items,
+number of different characteristics and properties settings and other GUI settings are considered as an additive factor.
+
+5. Dynamic Containers: No of Object Points for Dynamic Containers is counted as sum of object points for the extra Template
+created and object points of container by considering it as static
+with current data items.
+
+Dynamic = Object Points of + Object points for container
+Container extra template by taking it as static
+(1)
+6. Data Components: For each data component, the total number of
+validations required for that component is considered as multiplicative factor. For each of these data components, number of source
+of data tables from where it is taking its data or sending its data
+along with the different hyperlinks associated with it are considered as additive factor for that item.
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 4 March 2009 Volume 34 Number 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|Branch Setup|No. of sub branches<br>required|# of Work areas / Template Data / Proxies require configuration|Col4|Col5|Col6|Col7|Col8|
+|---|---|---|---|---|---|---|---|
+|Branch Setup|No. of sub branches<br>required|Total < 4|Total = 4 - 12|Total = 4 - 12|Total = 12-24|Total = 12-24|Total >24|
+|Branch Setup|< 5|1|1|1|2|2|Divide into two<br>branch setup|
+|Branch Setup|5-15|1|2|2|3|3|3|
+|Branch Setup|15-30|2|3|3|4|4|4|
+|Branch Setup|>30|Divide into two branch setup|Divide into two branch setup|Divide into two branch setup|Divide into two branch setup|Divide into two branch setup|Divide into two branch setup|
+|Authorities Setup|No. of functionalities<br>to be enhanced|# of permissions / events for each functionality need to be adjust|# of permissions / events for each functionality need to be adjust|# of permissions / events for each functionality need to be adjust|# of permissions / events for each functionality need to be adjust|# of permissions / events for each functionality need to be adjust|# of permissions / events for each functionality need to be adjust|
+|Authorities Setup|No. of functionalities<br>to be enhanced|Total < 4|Total = 4 - 12|Total = 4 - 12|Total = 12-25|Total = 12-25|Total >25|
+|Authorities Setup|<2|1|1|1|2|2|Divide into two<br>authorities setup|
+|Authorities Setup|2-5|1|2|2|2|2|2|
+|Authorities Setup|5-10|2|3|3|3|3|3|
+|Authorities Setup|>10|Divide into two authorities setup|Divide into two authorities setup|Divide into two authorities setup|Divide into two authorities setup|Divide into two authorities setup|Divide into two authorities setup|
+|Work Flow Setup|No. of Tasks/<br>Directives|# of dependencies / # of elements|# of dependencies / # of elements|# of dependencies / # of elements|# of dependencies / # of elements|# of dependencies / # of elements|# of dependencies / # of elements|
+|Work Flow Setup|No. of Tasks/<br>Directives|Total <4|Total <4|Total = 4-8|Total = 4-8|Total >8|Total >8|
+|Work Flow Setup|<2|1|1|1|1|2|2|
+|Work Flow Setup|2-8|1|1|2|2|3|3|
+|Work Flow Setup|8-15|2|2|3|3|3|3|
+|Work Flow Setup|>15|Divide into two Work flow setup|Divide into two Work flow setup|Divide into two Work flow setup|Divide into two Work flow setup|Divide into two Work flow setup|Divide into two Work flow setup|
+|Static Containers|No. of items in<br>containers|# of characteristics and Properties settings|# of characteristics and Properties settings|# of characteristics and Properties settings|# of characteristics and Properties settings|# of characteristics and Properties settings|# of characteristics and Properties settings|
+|Static Containers|No. of items in<br>containers|0 or 1|2-10|2-10|Total= 10-20|Total= 10-20|Total >20|
+|Static Containers|0-5|1|1|1|2|2|Divide into two<br>containers|
+|Static Containers|5-20|1|2|2|2|2|2|
+|Static Containers|20-40|2|3|3|3|3|3|
+|Static Containers|>40|Divide into two containers|Divide into two containers|Divide into two containers|Divide into two containers|Divide into two containers|Divide into two containers|
+|Data Components|No. of Validations<br>required|# and Source of Data tables or hyperlinks|# and Source of Data tables or hyperlinks|# and Source of Data tables or hyperlinks|# and Source of Data tables or hyperlinks|# and Source of Data tables or hyperlinks|# and Source of Data tables or hyperlinks|
+|Data Components|No. of Validations<br>required|0 or 1|2-5|2-5|Total= 5-15|Total= 5-15|Total >15|
+|Data Components|0 or 1|1|1|1|2|2|Divide into two Data<br>components|
+|Data Components|1 or 2|1|2|2|2|2|2|
+|Data Components|2-4|2|3|3|3|3|3|
+|Data Components|>4|Divide into two Data components|Divide into two Data components|Divide into two Data components|Divide into two Data components|Divide into two Data components|Divide into two Data components|
+|External Interface<br>Components|No. of internal<br>Objects linked|# of external objects / API / ODBC / tools linked|# of external objects / API / ODBC / tools linked|# of external objects / API / ODBC / tools linked|# of external objects / API / ODBC / tools linked|# of external objects / API / ODBC / tools linked|# of external objects / API / ODBC / tools linked|
+|External Interface<br>Components|No. of internal<br>Objects linked|Total <4|Total = 4-8|Total = 4-8|Total =8-15|Total =8-15|Total >15|
+|External Interface<br>Components|0-2|3|3|3|9|9|Divide into two<br>External Interface<br>components|
+|External Interface<br>Components|2-6|3|9|9|9|9|9|
+|External Interface<br>Components|6-10|9|18|18|18|18|18|
+|External Interface<br>Components|> 10|Divide into two External Interface components|Divide into two External Interface components|Divide into two External Interface components|Divide into two External Interface components|Divide into two External Interface components|Divide into two External Interface components|
+|Screens|No. of Views<br>contained|# and Source of Data Tables / Style sheet Classes / JS Validations|# and Source of Data Tables / Style sheet Classes / JS Validations|# and Source of Data Tables / Style sheet Classes / JS Validations|# and Source of Data Tables / Style sheet Classes / JS Validations|# and Source of Data Tables / Style sheet Classes / JS Validations|# and Source of Data Tables / Style sheet Classes / JS Validations|
+|Screens|No. of Views<br>contained|Total <4|Total = 4-8|Total = 4-8|Total =8-15|Total =8-15|Total >15|
+|Screens|<3|2|2|2|3|3|Divide into two<br>Screens|
+|Screens|3-7|2|3|3|4|4|4|
+|Screens|7-12|3|4|4|4|4|4|
+|Screens|> 12|Divide into two Screens|Divide into two Screens|Divide into two Screens|Divide into two Screens|Divide into two Screens|Divide into two Screens|
+|Reports|No. of Sections<br>Contained|# and Source of Data Tables|# and Source of Data Tables|# and Source of Data Tables|# and Source of Data Tables|# and Source of Data Tables|# and Source of Data Tables|
+|Reports|No. of Sections<br>Contained|Total <4|Total = 4-8|Total = 4-8|Total =8-15|Total =8-15|Total >15|
+|Reports|0 or 1|4|4|4|8|8|Divide into two<br>reports|
+|Reports|2 or 3|4|8|8|12|12|12|
+|Reports|4-10|8|12|12|12|12|12|
+|Reports|> 10|Divide into two reports|Divide into two reports|Divide into two reports|Divide into two reports|Divide into two reports|Divide into two reports|
+|Files|No. of Sections<br>Changed / Added|# of Changes / Additions / Deletions|# of Changes / Additions / Deletions|# of Changes / Additions / Deletions|# of Changes / Additions / Deletions|# of Changes / Additions / Deletions|# of Changes / Additions / Deletions|
+|Files|No. of Sections<br>Changed / Added|Total <4|Total = 4-8|Total = 4-8|Total =8-15|Total =8-15|Total >15|
+|Files|<2|3|6|6|6|6|Divide into two Files|
+|Files|2-8|3|6|6|9|9|9|
+|Files|8-15|6|9|9|9|9|9|
+|Files|>15|Divide into two Files|Divide into two Files|Divide into two Files|Divide into two Files|Divide into two Files|Divide into two Files|
+|Database Setup|No. of Tables / Views<br>/ Triggers|# of Attributes changes / Additions / Deletions|# of Attributes changes / Additions / Deletions|# of Attributes changes / Additions / Deletions|# of Attributes changes / Additions / Deletions|# of Attributes changes / Additions / Deletions|# of Attributes changes / Additions / Deletions|
+|Database Setup|No. of Tables / Views<br>/ Triggers|Total <4|Total = 4-8|Total = 4-8|Total =8-15|Total =8-15|Total >15|
+|Database Setup|<2|4|6|6|8|8|Divide into two<br>Database setup|
+|Database Setup|2-8|5|8|8|10|10|10|
+|Database Setup|8-15|6|9|9|12|12|12|
+|Database Setup|>15|Divide into two Database setup|Divide into two Database setup|Divide into two Database setup|Divide into two Database setup|Divide into two Database setup|Divide into two Database setup|
+
+
+**Table 1: Schema to classify each object instances into corresponding total number of objects**
+
+
+
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 5 March 2009 Volume 34 Number 2
+
+
+7. External Interface Components: For this category, the total
+number of internal objects interlinked with external objects is taken as multiplicative factor. For each internal object, total number
+of external objects, API, ODBC, and tools. It is linked with is taken as an additive factor.
+
+8. Screens: For each screen, different data forms, message boxes,
+error messages, tabs, menus, frames etc are considered as different
+views. Total numbers of such views are considered as multiplicative factors. For each view, its interaction with databases, validations using Java Script functions, operations and different style
+classes used are taken as additive factors.
+
+9. Reports: Different sections in each report are considered as multiplicative factors. In each section, the number and source of data
+tables are considered as the additive factors.
+
+10. Files: Different sections in each file are considered as multiplicative factors. In each section, the numbers of different modifica
+tions or additions done are taken as additive factors.
+
+11. Database Setup: Different tables/views or triggers in particular
+database are considered as multiplicative factors. In each table/view/trigger, the different attributes and any changes made to
+these attributes are taken as additive factors.
+
+Step 3: Estimate the expected percentage of reuse to be achieved
+for the different Object Categories in this project. Compute the
+New Object Points (NOP) to be developed
+
+NOP= (Object Points) X (100- % Reuse) / 100 (2)
+
+Step 4: Determine the Object Points: Add all the weighted object
+instances to get one number, the object point count.
+
+Step 5: Calculate the Adjustment factors. Three main factors on
+which adjustment factor depends are:
+
+- Production System Characteristics
+
+- General System Characteristics
+
+- Developer’s Experience and Capability [25]
+These factors will affect the feature overall and not any object in
+particular. The productivity rate directly depends upon the developer’s experience and capability in a particular tool. It inversely
+depends upon the following Production System Characteristics
+(PSC). Main PSC that affects the system can be categorized as
+follows:
+
+- Application Characteristics (Round the Clock Support, Criticality, Complexity)
+
+- Data Characteristics (its Volume, Quality, Change Dynamics,
+External Dependency)
+
+- Others (Security, Portability, Privacy, Audit ability, User
+training etc.)
+The weighted influence of each of these characteristics is added to
+get the Adjustment factor corresponding to the PSC. If a characteristic has strong influence then 3 points are added, for average influence, 2 points are added and for less influence, one point is
+added.
+
+Similarly, the degrees of influence have to be calculated for the
+system characteristics, which are general to any feature. The following are the main system characteristics that are very much significant in designing the content management systems.
+
+
+|Developer’s<br>Experience<br>& Capability|Very<br>Low|Low|Nominal|High|Very<br>High|
+|---|---|---|---|---|---|
+|DEC|4|7|13|25|50|
+
+
+**Table 2. Effect of Developer’s Experience &**
+**Capability**
+
+1. Effective GUI: The complexity of GUI increases with the
+amount of control provided to user. Content management systems
+generally provide full user control using the event action model. So
+designing their GUI is very complex. Further considerable effort is
+needed to provide the consistent interface with visual, conceptual
+and linguistic clarity throughout the interface. The CMS are used
+on different platforms having different computational power. The
+designing a GUI that provides immediate response to user queries
+and handles all the errors gracefully is very challenging.
+
+If CMS are designed to be used in multiple countries, then they
+must provide support to different languages. There is no much influence of English like languages on the complexity. But languages
+such as Arabic, Chinese etc change the GUI appearance drastically. The complexity to make such a design increases manifold.
+
+2. Distributed Data Processing: In most of the CMS, data is
+processed dynamically using the appropriate component of the
+system. These components may be located distributively at different servers used by the CMS. The processing of multimedia data
+on these components requires very hight transaction rates. The
+total number of such components in a particular system defines the
+complexity of that system. Further the total different types of servers used to store data and different types of network used to connect these, adds the complexity.
+
+3. Installation and Operational Ease: Some of the CMSs, requires
+user to set up the environment for installation and convert the data
+into the desired formats.
+
+So, entire burden is on the user. On the other hand, some applications have automated installation and operation without any operator intervention. Hence developing such application is very
+complex. Similarly, the applications designed for automated recovery from failure or errors have more degree of complexity.The
+effects of all such general system characteristics are calculated on
+the same lines as we have calculated the PSC. Finally, the effect of
+developer’s experience and capability on the estimated effort can
+be considered in the similar way as suggested by Boehm et al [25].
+It is shown in Table 2.
+
+The Final adjustment factor is calculated as follows
+
+Final Adjustment factor (AF) = ((Sum of PSCs & GSCs) * 1/100)
+
++ 0.5) / DEC (3)
+
+*3.2 Calculating Effort*
+As the model is proposed to be used in early stage of development,
+so the following formula is used to estimate the effort.
+
+Effort nominal= AF X (NOP) [B] (4)
+
+The inputs are the NOP (Number of Object Points) of software
+development, an adjustment factor AF, and a scale factor, B. The
+
+
+
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 6 March 2009 Volume 34 Number 2
+
+
+|Types of<br>Projects|No. of Projects<br>Considered|Mean Actual<br>Effort|Without Using Model|Col5|Using Proposed Model|Col7|
+|---|---|---|---|---|---|---|
+|Types of<br>Projects|No. of Projects<br>Considered|Mean Actual<br>Effort|Effort Prediction|MRE|Effort Prediction|MRE|
+|Type 1|30|72|55|0.24|62|0.13|
+|Type 2|21|82|51|0.38|69|0.16|
+|Type 3|11|272|210|0.23|240|0.12|
+|Type 4|20|332|219|0.34|253|0.24|
+
+
+**Table 3. Comparison of Effort Estimation Using Model**
+
+
+
+
+
+
+
+scale (or exponential) factor, B, accounts for the relative economies or diseconomies of scale encountered for software projects of
+different sizes. As most of the project in Teamsite, MSCMS and
+ITG are of organic type, so value of initial value for B is taken as
+per the COCOMO. But finally its value is adjusted using regression analysis.
+
+*3.3 Effort Increment due to Complexity*
+The complexity of each phase may vary for different projects depending upon the features of systems and tools used to develop the
+system. Hence a complex phase in a particular project may require
+considerably more effort. Complexity for Build is considered while
+calculating object points and complexity for certain phases do not
+change much with different types of projects, such as Training
+phase. Complexity variations in other phases can be categorized in
+three levels viz. simple, medium and complex. In these phases,
+effort has to be multiplied with 1, 1.5 and 2 respectively for each
+of the complexity levels. The exact value of multiplier may very
+from one project to another project and it also depends upon the
+tools used.
+
+**4. VALIDATION**
+
+The proposed model is validated using two approaches. The first
+approach is based on the data available from the past projects.
+There were many different models used in the completed previous
+projects. The estimated effort of the proposed model is compared
+with the effort estimated in those projects. Its detailed analysis is
+shown in Table 3.
+
+In our second approach, the project managers were asked to estimate the effort of new project using the proposed model and
+another one of their choice. Then a survey is conducted using a
+questionnaire to check the confidence level of project manager in
+using the proposed model.
+
+*4.1 Comparisons in First Approach*
+Different projects studied vary in the complexity of implementation of different phases of life cycle. These projects have been
+grouped together into the following categories using their total/build ratio parameter.
+
+Type 1 - Small Projects, low total/build effort ratio
+
+Type 2 - Small Projects, high total/build effort ratio
+
+Type 3 - Large Projects, low total/build effort ratio
+
+Type 4 - Large Projects, high total/build effort ratio
+
+In each category, mean actual effort is calculated. All the effort
+shown in the table is in person months. This is compared with the
+effort predicted using the proposed model and without using it.
+Finally, the Mean Relative Error (MRE) in each category is calcu
+
+lated. From the Table III, it is very clear that MRE is very less
+when the effort is predicted using our model. Mean of all MRE
+(MMRE) using proposed model is 0.16 as compared to MMRE of
+0.30 without using the model.
+
+The prediction at level 25 by using proposed model is more than
+80%, which earlier was about 62% when the proposed model was
+not used.
+
+*4.2 Data Collection Using Questionnaire*
+Data is collected from the two different sets of projects. First set
+contains data and other details of twelve completed projects. Similarly, second set contains data of 70 different projects undertaken
+by post graduate students are also taken. For all these 70 projects,
+students have to answer two separate questionnaires, first one after
+studying the requirements and then the second one after completing the project. The answers of the first questionnaire are used to
+predict the effort using the proposed model and of the second questionnaire are used to refine the model.
+
+First questionnaire contains six different categories of questions.
+These categories are Design requirements, Set up requirements,
+Implementation requirements, Usability requirements, External
+interface requirements, Reliability and Performance requirements,
+Maintainability and Adaptability requirements. Each category contains 8-10 questions about the specific requirements. Hence all the
+details, which are required by the proposed models, are covered in
+this questionnaire.
+
+Second questionnaire is used after the completion of project. In
+this first of all, project heads were asked about the increase in
+complexity as compared to their first assessment in all the different
+phases of software development life cycle. Secondly, they were
+asked to distribute the total effort in phase wise manner. The predicted effort is compared phase wise for all the projects. For all the
+four types of projects average phase wise distribution of effort is
+calculated and is shown in Table 4. First column represent the different phases and first row represent the different types of project
+considered. It is found that the phase wise distribution of effort
+helps in better scheduling of the project. It also helps in finding the
+area where the estimates are weak.
+
+Finally, value of factor B is adjusted using regression analysis from
+the data collected from all these projects. Table 5 shows the value
+of factor B for different types of projects. As the project size
+grows, it exhibits more diseconomies of scale. Further, it is found
+that in the maintenance based project, due to large overhead,
+projects exhibit more diseconomies.
+
+**5. CONCLUSION**
+
+In this paper, Web Hypermedia Content Management System Effort Estimation model is proposed for the current technologies us
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+
+SIGSOFT Software Engineering Notes Page 7 March 2009 Volume 34 Number 2
+
+
+ing which a piece of work can be estimated most accurately. This
+model also provides guidelines to calculate phase wise distribution
+of effort. The model is designed to help project manager to estimate effort at the very early stage of requirement analysis. After
+the requirement analysis stage, the project size metric is estimated
+using the object point analysis. A questionnaire is prepared to help
+project managers to find out the different objects, their categories
+and their complexity in the project. Final effort is estimated using
+the project size and the different adjustment factors. For better
+calculation of these adjustments factors, these are categorized into
+three categories based on their characteristics. This model is proposed to be used differently for the different types of projects. Different projects have been categorized based on their total/build
+effort ratio. For each type of project, effort is distributed differently depending on the complexity of that phase. After analyzing 12
+completed industry projects and 70 students projects, the model
+shows very good accuracy for Type 1 and Type 3 projects, where
+total / build effort ratio is very low. But when the project contains
+very less coding then the effort estimation accuracy is not very
+good. This clearly shows that for the maintenance projects, adjustment factors needs to be modified.
+
+
+
+[4]. D. Schwabe, R. Pontes, I. Moura: “OOHDM-Web: An Environment for
+Implementation of Hypermedia Applications in the WWW”, ACM SigWEB Newsletter, Vol. 8, #2, June 1999.
+
+[5]. Tridas Mukhopadhyay, Steven S. Vicinanza and Michael J. Prietula, “Examining the Feasibility of a Case-Based Reasoning Model for Software Effort
+Estimation”, MIS Quarterly, Vol. 16, No. 2 June, 1992.
+
+[6.] Mendes, E.; Mosley, N.; Counsell, S., "Comparison of Web size measures
+for predicting Web design and authoring effort," Software, IEE Proceedings -,
+vol.149, no.3, pp.86-92, Jun 2002
+
+[7]. Yunsik Ahn, Jungseok Suh, Seungryceol Kim, Hyunsoo Kim, “The Software maintenance project effort estimation model based on function points”, Journal of Software Maintenance & Evolution: Research and Practice, Vol 15, issue 2,
+April, 2003.
+
+[8]. Reifer, D.J., “Web development: Estimating quick-to-market software”.
+IEEE Software, Nov – Dec 2000.
+
+[9]. Morisio, M., Stamelos, I., Spahos, V., Romano, D., “Measuring functionality and productivity in Web-based applications: A case study”, Proceedings of the
+Sixth International Software Metrics Symposium, 1999.
+
+[10]. Ruhe, M., Jeffery, R., & Wieczorek, I., “Cost estimation for Web applications”, Proceedings ICSE 2003
+
+[11]. Mendes, E., Watson, I., Triggs, C., Mosley, N., & Counsell, S., “A comparison of development effort estimation techniques for Web hypermedia applications”, Proceedings Metrics 2002.
+
+[12]. Mendes, E., Counsell, S., & Mosley, N., “Measurement and effort prediction of Web applications”, Proceedings of the 2nd ICSE Workshop on Web Engineering, June, 2000.
+
+[13]. Mendes, E., Mosley, N., & Counsell, S., “Web metrics – Estimating design
+and authoring effort”, IEEE Multimedia, Special Issue on Web Engineering, 2001.
+
+[14]. Fewster, R., & Mendes, E., “Measurement, prediction and risk analysis for
+Web applications” Proceedings of Software Metrics Symposium, METRICS 2001.
+
+[15]. Baresi, L., Morasca, S., & Paolini, P., “An empirical study on the design
+effort for Web applications”, Proceedings of Web Information System Engineering,
+2002.
+
+[16]. Baresi, L., Morasca, S., & Paolini, P., “Estimating the design effort for Web
+applications”, Proceedings of Software Metrics Symposium, Metrics 2003.
+
+[17]. Baresi, L., F. Garzotto, and P. Paolini. “Extending UML for modeling web
+applications”, In Proceedings of 34th Anual Hawaii International Conference on
+System Sciences (HICSS’34), Hawai, Jan. 2001.
+
+[18]. Baresi, L., Bianchi, E., Mainetti, L., Maritati, M. and Paro, A., “UWA
+Hypermedia -User Manual. Tech. Report UWA-15, Politecnico di Milano, 2001.
+
+[19]. Vahan Harput,Hermann Kaindl and Stefan Kramer, “Extending Function
+Point Analysis of Object-Oriented Requirements Specifications”, Proceedings of
+the 11th IEEE International Software Metrics Symposium, 2005.
+
+[20]. Jaime Gómez, Cristina Cachero, Oscar Pastor, “Conceptual Modeling of
+Device-independent Web Applications”, IEEE Multimedia, Vol. 8 issue 2, 2001.
+
+[21]. B. W. Boehm, Software engineering economics, Englewood Cliffs, NJ:
+Prentice-Hall, 1981.
+
+[22]. B.W. Boehm, B. Clark, E. Horrowitz, C. Westland, R. Madachy, R. Selby,
+"The COCOMO 2.0 Software Cost Estimation Model", American Prog., July 1996.
+
+[23]. A. Norman, M. Stillwell, “TeamSite Content Management Systems- Technical Overview”, http://www.its.monash.edu.au/staff/web/slideshows/teamsitetechnical/teamsite-tech-presentation.html
+
+[24]. B. English, O. Londer, T. Bleeker, S. Shell, S. Cawood, “Microsoft Contenet Management Server-2002 A Complete Guide”, Published by Addison-Wesley
+Professional, Oct 27, 2003.
+
+[25]. Boehm, B., “Anchoring the software processes”, IEEE Software, Vol 13,
+No 4, July 1996.
+
+
+
+
+
+
+
+|Phase|Type|Col3|Col4|Col5|
+|---|---|---|---|---|
+|Phase|Type<br>1|Type<br>2|Type<br>3|Type<br>4|
+|Requirement Analysis|8|12|5|11|
+|Design|10|17|9|11|
+|Build (Code +UT)|49|26|50|34|
+|Integration & System<br>Testing|12|15|11|14|
+|UAT|5|5|6|7|
+|Project Management +<br>Conf. Management|13|22|16|20|
+|Training|3|3|3|3|
+
+
+**Table 4. Effort Distribution based on Types of Projects**
+
+
+
+
+|Type of Project<br>|Type 1|Type 2|Type 3|Type 4|
+|---|---|---|---|---|
+|Value of B|1.03|1.09|1.12|1.19|
+
+
+**Table 5. Value of B for different types of projects**
+
+**REFERENCES**
+
+[1] Oreilly, tim, "What is Web 2.0: Design Patterns and Business Models for
+the Next Generation of Software”. Communications & Strategies, No. 1, p. 17,
+First Quarter 2007 http://ssrn.com/abstract=1008839
+
+[2]. Cailliau, R., and Ashman, H. "Hypertext in the Web - a History". ACM
+Computing Surveys, Vol. 31, No. 4, December, 1999
+http://www.cs.brown.edu/memex/ACM_HypertextTestbed/papers/62.html
+
+[3]. Carr, L., Bechhofer, S., Goble, C., and Hall, W. "Conceptual Linking: Ontology-based Open Hypermedia". In The Tenth International World Wide Web
+Conf., Hong Kong, May, 2001 http://www10.org/cdrom/papers/246/index.html
+
+
+http://doi.acm.org/10.1145/1507195.1507201 DOI: 10.1145/1507195.1507201
+

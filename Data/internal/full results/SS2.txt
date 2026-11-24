@@ -1,0 +1,954 @@
+���������������������������������������������
+# Web application functional size estimation based on COSMIC method and UWE approach
+
+Denis �eke [*], Marijan �urek [ **], Suad Kasapovi� [***]
+
+
+             - University of Tuzla/Technical Department, Tuzla, Bosnia and Herzegovina
+** University of Zagreb, Faculty of Electrical Engineering and Computing/Department of Applied Computing, Croatia
+***University of Tuzla, Faculty of electrical engineering/Department of communications, Tuzla, Bosnia and
+Herzegovina
+         - denis.ceke@untz.ba, ** marijan.djurek@fer.hr, *** suad.kasapovic@untz.ba
+
+**Abstract - In the last years measuring functional size of** To this day, the main challenge that remains in this
+**software applications became one of the most popular** area is how to estimate web applications size or
+**methods when there is need for creating models for effort,** development effort before application is even developed.
+**costs and budget estimation in software development.**
+**Functional Size Measurement (FSM) methods quantify the** The possible answer to this question lies in the
+**software from its user’s perspective, disregarding quality** assumption that web application development effort
+**and technical criteria. In context of conceptual models** depends from the functional size of web application. This
+**where models represent application at higher level of** may be the truth, because, the more complex application
+**abstraction,** **functional** **size** **of** **developed** **software** is, the more effort is needed to invest to develop it. This
+**application can be measured on the basis of conceptual** possible hypothesis was already tested by some
+**model and requirements analysis. Requirements analysis is** researchers [2]–[6], and they showed that this dependency
+**usually conducted thru usage of use case, sequence, activity** exists.
+**and other UML diagrams. In this work, we have**
+**investigated possibility of using COSMIC FSM method for** Functional size of software is defined as “size of the
+**functional size estimation of web applications whose basic** software derived by quantifying the Functional User
+**model is created using UML-based Web Engineering** Requirements” [7]. Functional User Requirements (FUR)
+**(UWE) approach. An example of developed web application** describes what the software is expected to do for its users
+**with UWE requirements model used for COSMIC** [8]. Examples are data transfer, data transformation, data
+**measurement is presented and discussed.** storage, and data retrieval. Functional size is independent
+
+
+I. I NTRODUCTION
+
+Web application development is moving toward
+application development based on model. This kind of
+development brings new advantages to project managers
+to make early estimation of cost and size of future web
+applications. Nature of web projects forces managers to
+focus primarily on time variable to achieve the best
+possible solution that have best ratio of cost and project
+requirements.
+
+To succeed in this, in the last couple of years,
+researchers have tried to find the best solution to calculate
+web applications size and development effort based on
+calculating number of web pages, links, animations,
+pictures etc [1]. These solutions required projects to be
+finished to be able to calculate some parameters on whose
+bases they have than calculated development effort or
+created budget models.
+
+It is important to state that there is no “ *silver bullet* ”
+method for development effort estimation in web
+development.
+
+396
+
+
+To this day, the main challenge that remains in this
+area is how to estimate web applications size or
+development effort before application is even developed.
+
+The possible answer to this question lies in the
+assumption that web application development effort
+depends from the functional size of web application. This
+may be the truth, because, the more complex application
+is, the more effort is needed to invest to develop it. This
+possible hypothesis was already tested by some
+researchers [2]–[6], and they showed that this dependency
+exists.
+
+Functional size of software is defined as “size of the
+software derived by quantifying the Functional User
+Requirements” [7]. Functional User Requirements (FUR)
+describes what the software is expected to do for its users
+
+[8]. Examples are data transfer, data transformation, data
+storage, and data retrieval. Functional size is independent
+of software language and development methods.
+
+Several Functional Size Methods (FSM) exists that
+could be used for functional size estimation of software.
+Among others, the most popular are: IFPUG FPA [9], MK
+II FPA [10], NESMA FPA [11], and COSMIC FFP [7].
+These FSM have been successfully used in software
+application development estimations, but there are only
+few examples of their implementation in web projects. A
+literature survey covering several methods can be found in
+
+[12].
+
+COSMIC (Common Software Metrics International
+Consortium) [7] measurement method can be applied to
+any kind of software and it allows application
+measurement on multi-layer bases, that other functional
+size methods are not able to do. Because of this fact,
+COSMIC FSM is used for specifying measurement
+approach that could be applied on conceptual models.
+
+For development of web application conceptual
+models number of methods exists (OOHDM [13],
+WebML [14], OO-H [15], W2000 [16] and UWE [17]).
+UWE approach was one of the first projects which were
+used specially for web applications. It is UML based tool
+with stereotypes specially created for web applications.
+UWE is supported thru CASE tool like ArgoUWE [18],
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+and now exists and MagicUWE [19] as plug-in for
+MagicDraw tool [20].
+
+In [21] there is an exhausting survey of methods for
+estimating functional size of software applications based
+on models and COSMIC measurement method.
+
+In research by [2] approach for effort estimation in
+web application development was presented based on
+COSMIC method. This approach is based on [22], for
+identifying rules that were used for COSMIC
+measurement procedure in context of web hypermedia
+applications.
+
+COSMIC-FFP-like approach for calculation of
+functional size of web applications based on COSMIC
+method and hypermedia elements was presented in [23].
+
+Our approach goes one step ahead. We have
+developed measurement procedure that uses COSMIC
+method for calculating data movements and UWE tool for
+creating user requirements model based on use case and
+activity diagrams. Using this approach we have
+investigated possibility of calculating sum of the COSMIC
+Function Points (CFP), which are basic numerical value in
+COSMIC method, in the early phase of software
+development life cycle. Most of approaches that we have
+analyzed, beside use case and sequence diagrams, had to
+include class diagrams to present mapping of data that is
+entered in the system and that were used for mapping to
+persistent storage. This was necessary because all
+diagrams used in analyzed approaches had no stereotypes
+with enough semantics to describe data movement as
+inputs from users forms to persistent storage and that were
+required in use case, sequence or other diagrams in the
+analyses or design phase. On the contrary, UWE approach
+has possibility to use this kind of stereotypes in the early
+requirements phase thru activity diagrams.
+
+II. C OMPONENTS USED FOR CREATING MODEL
+
+Our model is composed from two major components:
+UWE approach for modeling web applications and
+COSMIC measurement method.
+
+*A.* *UWE approach*
+
+UWE was one of the first projects that were created
+especially for modeling web applications that uses pure
+UML profile, extended with stereotypes for web
+applications. Another important extension is possibility to
+create navigation and presentation design, which are one
+of the major elements in web applications. Basic types of
+artifacts in UWE are: Requirements model, Conceptual
+model, Navigation model, Presentation model and Process
+model.
+
+UWE is domain specific modeling language (DSML),
+which provides the annotations needed to enrich standard
+requirements models with web features and to reduce
+model-complexity. The models specified with the DSML
+are used in the model transformations of the model-driven
+engineering (MDE) process to generate the design models
+of the web applications [24].
+
+This approach comprises a notation, a method and tool
+support. The notation is defined as a UML profile [25],
+
+397
+
+
+i.e. using the extension mechanism provided by the UML
+itself, which allows for the refinement of UML in a
+strictly additive manner by stereotypes, tag definitions and
+constraints, providing the required additional annotations
+
+[24]. The cornerstones of the UWE method are the
+principle of separation of concerns and a model-driven
+approach. Tool that supports UWE approach is the
+MagicUWE [19], plug-in implemented for Magic-Draw
+
+[20] and the UWE4JSF eclipse plug-in for the code
+generation.
+
+In the design phase, UWE modeling approach follows
+the principle of “separation of concerns” building separate
+models for views of the navigation, content, presentation,
+processes, etc. in the same way other web development
+methods do, such as OOHDM [26], OOHRIA [27] and
+WebML [28], among others. The set of model types is a
+highly flexible and modular modeling framework
+providing the basis for the model-driven engineering
+(MDE) development process.
+
+A set of model transformations is implemented in
+MagicUWE to benefit from the efforts invested in the
+requirements models and to produce initial versions of all
+design models, i.e. content, navigation and presentation
+models [24]. The set of transformations that are exploited
+thru this tool, are:
+� requirements to content,
+� requirements to navigation,
+� requirements to process, and
+� requirements to presentation.
+
+Detailed and well explained usage of elements and
+transformation is presented in [24] and also can be find
+on the project web page [19].
+
+*B.* *COSMIC method*
+
+COSMIC measurement method is widely used for
+software size estimation and it is approved as ISO
+standard (ISO/IEC 19761) since March 2003. This method
+was originally designed for estimation of business systems
+and real-time applications, but it is applicable in any other
+context where in some software solution dominates large
+number of data movements [7]. COSMIC method
+measures data movements from/to software process across
+boundary that is defined by the application and COSMIC
+rules. To be able to apply COSMIC method, it is
+necessary to separate a software application, which is to
+be measured, from its operational environment. Potential
+of COSMIC method for being applied accurately in the
+requirements specification phase compared to other FSM
+methods is demonstrated by the study [29]. COSMIC does
+not rely on subjective decision by the functional size
+measurer during the measurement process [7]. Thus, its
+measurements, taken from well specified requirements,
+tend to be the same among multiple measurers [30].
+
+In COSMIC, size is measured in terms of the number
+of data movements, which accounts for the movement of
+one or more data attributes belonging to a single data
+group. A data group is an aggregated set of data attributes.
+A functional process, in COSMIC, is an independently
+executable set of data movements that is triggered by one
+or more triggering events. A triggering event is initiated
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+by an actor (a functional user or an external component)
+that occurs outside the boundary of the software to be
+measured. Thus, a functional process holds the similar
+scope of a use case scenario, starting with the triggering
+event of a user request and ending with the completion of
+the scenario [30]. Fig. 1 illustrates the generic flow of data
+groups from a functional perspective, presented in the
+COSMIC standard [7].
+
+COSMIC recognizes four types of data movements:
+
+� Entry - moves data from functional users into
+the functional process;
+
+� Exit - moves data from the functional
+process, across boundary to the functional
+
+users;
+
+� Read - moves data from persistent storage to
+the functional process;
+
+� Write - moves data from the functional
+process to the persistent storage;
+
+Figure 1. Four types of data movement and their relationship with
+functional processes and users [7]
+
+COSMIC counts each of these data-movements as one
+
+CFP of functional size, and measures the size of each of
+the functional processes separately. It then adds the sizes
+of all the functional processes to compute the total size of
+the system to be measured. COSMIC offers an objective
+method of measuring functional size.
+
+To use COSMIC measurement method, it is necessary
+to go thru tree major phases: measurement strategy phase,
+mapping phase and measurement phase [7].
+
+After that, it is possible to determine functional size of
+software and calculate number of CFP for project.
+
+For some functional process *i*, total functional size is a
+sum of all data movements that occurs in that process:
+
+Size (FP i ) = �size(Entries i ) + �size(Exits i )
++�size(Reads i ) + �size(Writes i ) ����
+
+Size of software in terms of COSMIC is then sum of
+sizes of all functional processes that occurs in measured
+software application:
+
+Size (software) = �Size (FP i ) ����
+
+398
+
+
+III. C OSMIC MEASUREMENT FOR WEB APPLICATIONS
+
+Dynamic web applications are mainly characterized by
+a lot of data movement (from users to persistent storage
+and vice versa). Because of this fact, they are potential
+candidate suitable to be measured with COSMIC
+approach [31]. In order to apply method, software and
+context model of COSMIC method need to be adapted
+like it is presented in [2] in accordance with UWE
+approach. Software context model adapted for COSMIC
+for sizing hypermedia systems used in [22] is presented on
+Fig. 2. In this model Web Server is considered as data
+store.
+
+Figure 2. The functional flow of data attributes through Web
+applications used in [22]
+
+Our approach is based on generic software model
+presented in [2] except that instead of use case and class
+diagrams for defining requirements and *Conalen’s* model
+for presentation and process flow diagrams, we have used
+use case and activity diagrams for requirements with
+special stereotypes for web applications. These
+stereotypes are main elements that will be used for
+defining rules and counting procedure.
+
+The general COSMIC measurement process consists
+of three phases:
+
+� Measurement Strategy, in which the Software
+Context Model is applied to the software to
+be measured,
+
+� Mapping Phase in which the Generic
+Software Model is applied to the software to
+be measured,
+
+� Measurement Phase, in which actual size
+measurements are obtained.
+
+The result of applying the measurement process to a
+piece of software is a functional size measure of the FUR
+of the piece of software expressed in ‘COSMIC Function
+Points’ (or ‘CFP’) [7].
+
+*A.* *Measurement Strategy phase*
+
+This phase includes four steps: purpose and scope of
+measurement, identification of functional users and level
+of granularity. The purpose and scope of measurement
+would be e.g. a measurement of size of the web-based
+applications to support effort estimation in web
+development. Functional users of web applications can be
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+human users or other peer components (identified as
+actors thru use case diagrams) that can interact with web
+application. For software measurement, there is only one
+standard level of granularity that it is possible to define
+unambiguously. That is the level of granularity at which
+individual functional processes have been identified and
+their data movements defined [32].
+
+*B.* *Mapping phase*
+
+There are two major elements that have to be
+identified in this phase: Identification of functional
+processes and data groups. In web-based applications,
+functional process can be defined as elementary if it is
+triggered by an event sent by a user of the system (actor)
+or by the occurrence of temporal event [23].
+Functional processes in our approach in accordance
+with UWE are defined thru use case diagrams which can
+have two types of stereotypes: *<<browsing>>* and
+*<<processing>>* . These use case diagrams are then
+mapped into activity diagrams that perform desired
+actions in accordance with FUR. Data groups in our
+approach are defined as attribute values that are send to
+or received from activity diagram stereotypes *<<user*
+*action>>*, *<<system action>>, <<display action>>* or
+*<<central buffer node>>* . Stereotype *<<user action>>*
+presents actions that have been initialized by the user of
+software. Stereotype *<<system action>>* presents actions
+that are executed by the server side processes. Stereotype
+*<<central buffer node>>* presents persistent storage
+which enables a functional process to store a data group
+beyond the life of the functional process and/or from
+which a functional process can retrieve a data group
+stored by another functional process, or stored by an
+earlier occurrence of the same functional process, or
+stored by some other process.
+
+*C.* *Measurement Phase*
+
+In this phase we perform identification of data
+movements and aggregation of measurement results.
+Identifying data movements; this step consists of
+identifying data movements for each functional process
+on the basis of arrows that present object or control flow
+in activity diagrams. If we have object flow arrow, that
+means that we have potentially some kind of data
+movement. On the other hand, control flow arrow
+presents commands execution sequence inside of
+functional process. In UWE approach, these kinds of
+movements are identified based on the source/destination
+elements of UWE activity diagram elements:
+� If the source element if *<<user action>>*
+stereotype element and destination element is
+*<<system action>>*, than we identify 1 Entry
+data movement.
+
+� If *<<system action>>* is a source element and
+destination stereotype element is *<<central*
+*buffer node>>* than we identify 1 Write data
+
+movement.
+
+� If *<<central buffer node>>* is source element
+and destination element is *<<system action>>*
+than we identify 1 Read data movement.
+
+399
+
+
+� If *<<system action>>* is source element and
+destination stereotype element is *<<user*
+*action>>*, we identify 1 Exit data movement.
+� If *<<system action>>* is source element and
+destination stereotype element is *<<display*
+*action>>*, we identify 1 Exit data movement.
+� If *<<system action>>* is source element and
+destination element is *<<activity final node>>*,
+we identify 1 Exit data movement.
+
+Aggregating of measurement results; in this step we
+sum the results of all data movements in all functional
+processes (equation 2). Functional process is presented
+with use case diagram explained thru activity diagram.
+Functional size of each identified object is equal to
+the sum of all data movements identified inside that
+object (equation 1).
+
+IV. E XAMPLE APPLICATION
+
+In our example we have simple web application for
+management of university curriculum register. FUR is
+presented with use case and activity diagrams. This
+system has one user who is presented as actor in use case
+diagram and system to be measured is separated from the
+user by the boundary (Fig. 3). Basic use case diagrams
+are: *Login*, *Logout*, *View Study Programs*, *View*
+*Curriculum*, *View Curriculum Details*, *View Subjects* and
+*View Subject Details* . Some of the use cases have
+extension points which allow us detailed explanation of
+FUR. Process flow inside use case diagrams is presented
+with activity diagram, who presents functional process, on
+whose bases we calculate CFP (Fig. 4).
+
+Figure 3. Functional requirements modeled with use cases
+
+User of this web application is first authorized thru
+*Login* process. After successful authorization, he has
+possibility to e.g. view curriculums, edit them, add new
+etc. As example, we will show actions for *Login* process.
+User send his user name and password thru UWE
+stereotype *<<user action>> Input* toward system into
+UWE stereotype *<<system action>> CheckUserPass* . We
+identify 1 Entry. This UWE stereotype *<<system*
+*action>> CheckUserPass* checks if the user credentials
+are correct against persistent storage element presented
+with *<<central buffer node>> Users* . We identify 1
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+Read. If the user is authorized, *<<system action>>*
+*WriteLogForUser* writes log for logged user to persistent
+storage *<<central buffer node>> LogUsers* . We identify
+1 Write. And finally, we identify 1 Exit for error or
+confirmation message about unsuccessful of successful
+completed functional process, respectively. At the end, for
+*Login* process, we identify 4 CFP.
+
+Figure 4. Example of workflow represented as UML activity diagram
+for Login process
+
+V. E XPERIMENTAL RESULTS FOR CFP COUNT
+
+After analyze of use case and activity diagrams in
+accordance with proposed procedure, in Table I results of
+counting data movements and calculated CFP for example
+web application are presented.
+
+From the preformed analyze, number of CFP for each
+functional process and percentage of influence of every
+functional processes CFP in total sum of CFP, we can
+conclude that the most complex functional process are
+*Add Curriculum Subject* and *Edit Curriculum Subject* .
+They are characterized with a lot of data movements
+which is consequence of a large number of attributes
+which forms one curriculum subject. Operations like add
+or edit are usually one of the most complex operations
+
+TABLE I. F UNCTIONAL PROCESSES WITH CFP COUNT AND
+
+PRECENTAGE OF INFLUENCE
+
+400
+
+
+especially when there is need for consistency checking
+before they are conducted. On the basis of this
+requirement analysis we can conclude that e.g. the most
+development effort for developing of this simple web
+application will be invested in the creation of these two
+functional processes.
+
+VI. P ROPOSED EFFORT ESTIMATION MODEL SCHEMA
+
+AND VALIDATION PROCEDURE
+
+CFP counting and UWE approach are part of the
+integrated effort estimation model we plan to develop
+whose schema is presented in Fig. 5. This model, beside
+mentioned two basic components, has other components,
+which are:
+
+� XMI parser.
+� UWE to COSMIC rules engine.
+� Regression model.
+
+Figure 5. Web development effort estimation models schema
+
+To perform empirical validation of the proposed
+approach, we will applie Ordinary Least-Squares
+Regression (OLSR) analysis ([2],[3],[33],[34],[4]).
+Independent variable CFP will be calculated from the
+past projects documentation. Linear regression analysis
+determines equation line which interpolates data and can
+be used to predict development effort [2]. To assess the
+acceptability of the derived effort prediction model, we
+will use some summary measures, namely MRE, MMRE
+and Pred(0.25) ([2], [3],[34],[4]).
+
+MMRE and Pred(0.25) are considered the *de facto*
+standard evaluation criteria to assess the accuracy of
+software prediction models as stated in [35], [36], [37]
+and they have been used for many years in many
+comparisons ([2], [34], [4]). The Magnitude of Relative
+Error [34] is defined as:
+
+MRE = |EFHreal — EFHpred | / EFHreal ����
+
+where EFHreal and EFHpred are the actual and the
+predicted efforts, respectively [2]. We will calculate the
+Mean of MRE (MMRE) to measure the aggregation of
+MRE over the observations.
+
+The prediction at level 0.25 [34] is defined as:
+
+Pred (0.25) = k/N ����
+
+where *k* is the number of observations whose MRE is
+less than or equal to 0.25, and *N* is the total number of
+observations of the sets. A good effort prediction model
+
+|No.|Col2|Col3|Col4|
+|---|---|---|---|
+|No.|Functional process|CFP|%|
+|1|Login|4|3.95|
+|2|Logout|3|5.26|
+|3|View Study Programs|7|9.21|
+|4|View Curriculum|7|9.21|
+|5|Add Curriculum Subject|12|15.79|
+|6|Edit Curriculum Subject|10|13.16|
+|7|Delete Curriculum Subject|7|9.21|
+|8|View Subjects|4|3.95|
+|9|Search Subject by Name|4|3.95|
+|10|Add Subject Name|4|3.95|
+|11|Edit Subject Name|7|9.21|
+|12|Delete Subject Name|7|9.21|
+|||76|100|
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+should have a MMRE�0.25 and Pred(0.25)�0.75 (i.e., at
+least 75% of the predicted values should fall within 25%
+of their actual values) [2], [34].
+
+VII. A DVANTAGES AND DRAWBACKS OF THE PROPOSED
+
+APPROACH
+
+Most of the proposed procedures in past works for
+counting CFP were using older versions of COSMIC
+measurement manual, mostly versions 2.1 or 2.2 and
+none of them used new version of manual, version 3.0.1
+or COSMIC Business Application Guidelines v1.1 [32]
+which addresses instructions how to count CFP for online business applications. Our opinion is that newer
+versions of COSMIC manual and especially COSMIC
+Manual for Business Application Guidelines [32] provide
+improvements and clarifications that help practitioners to
+better understand the measurement method and to obtain
+accurate measures. Therefore, we think that using latest
+versions (and Method Updates) of manual provide us
+with instructions for the correct development of
+measurement procedures which were implemented thru
+our approach.
+UWE conceptual model have enough semantic
+formalization to specify all the functional requirements,
+thus, allowing the measurement of the functional size to
+be more precise.
+
+*A.* *Advantages of using this approach*
+
+� Usage of UWE tool that exploits notation of
+UML.
+
+� Easy to use for people familiar with standard
+design methodology using UML.
+� Possibility of using developed application XMI
+file for purpose of analyze and creating tool for
+automatic CFP counting on the basis of UWE
+model. Most of other approaches don’t have tool
+for automated counting of CFP.
+� The tool support is guaranteed by the OpenUWE
+model-driven development environment that
+comprises, at the current implementation state,
+two CASE tools: ArgoUWE and MagicUWE.
+� Using COSMIC method who is ISO/IEC
+standard 19761:2011, free and massive support
+(manuals, examples, case studies etc.).
+� COSMIC have improved project control on
+scope, effort and quality.
+� Can be used for web application development
+effort estimation based on model that is created
+with usage of OLSR analysis.
+� Independent from programming language used
+for creating applications based on UWE models.
+
+*B.* *Drawbacks of using this approach*
+
+� Not tested with enough sample applications or
+practitioners.
+� Used small data set of developed applications.
+� Small number of Web projects that use this
+approach (COSMIC for Web Applications).
+
+401
+
+
+� Very hard to compare results from our models to
+some other approaches.
+� No repository of finished projects based on this
+approach.
+� With COSMIC method we can’t measure:
+software which is characterized by complex
+mathematical algorithms, games, streaming
+software (audio, video).
+� Request basic knowledge of UWE process for
+creating models.
+� Request knowledge about UML in compliance
+with UWE.
+
+Most of the existing methods and procedures are
+based on some approaches that partially use some
+standard notations and standards. Most of them use some
+kind of the rules that are clearly known only to authors of
+method. Methods and models must be clearly defined in
+accordance with some internationally accepted standards
+and modeling languages to provide ease of use for all
+practitioners with minimal effort for usage and
+understanding. For new method, it should be very easy to
+access manuals, case studies, examples, free of charge on
+whose bases method will be created. In presented
+approach, this was the main idea and direction for
+developing this method.
+
+VIII. F UTURE WORK
+
+Future work will be focused on further collecting data
+from finished projects with models, creating database with
+information’s about projects (duration, development team,
+type of applications, effort, and number of CFP).
+
+Evaluation of model will be conducted thru the usage
+of data from finished projects, creating effort model with
+the usage of OLSR analysis and validation of models thru
+calculation of estimation error (MRE, MMRE, and
+Pred(n)).
+
+IX. C ONCLUSION
+
+In this paper we have presented possibility of using
+UWE approach, which is used for modeling web
+applications, and COSMIC measurement method for
+estimation of functional size of web applications based on
+the FUR. FUR has been identified with the usage of use
+case and activity diagrams in the requirements analyze
+phase.
+
+COSMIC measurement was conducted with support of
+UWE stereotypes which can clearly define on which part
+of system the action is performing: user, system or
+persistent storage. This is very important for identification
+of data movements and their direction because they are
+one of the main elements used for COSMIC measurement
+
+method.
+
+Estimation of functional size on the basis of the
+proposed approach has been demonstrated with simple
+web application for management of university curriculum
+register with the simple functionality. As we could saw,
+two functional processes had the biggest number of CFP,
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+*Add Curriculum Subject* and *Edit Curriculum Subject* .
+Based on these values, project manager could conclude
+that the biggest effort for development should be invested
+on the implementation of these two functional processes,
+e.g. if we have been used this method for development
+effort estimation purposes. The proposed method requires
+further experimental research.
+
+At the end, we presented proposed model for
+development effort estimation of web applications on the
+basis of our approach with some advantages and
+drawbacks of this idea.
+
+A CKNOWLEDGEMENT
+
+This work is supported in part by the Croatian
+Ministry of Science, Education and Sports, under the
+research project “Computer Support for Education”,
+project number 036-0361983-2019 and WUS project
+“Information System for Support of Internal Quality
+Assurance at the Universities of Tuzla and “Džemal
+Bijedi�” of Mostar”, project number QA_04/TZ-DzB/09.
+
+R EFERENCES
+
+[1] E. Mendes, N. Mosley, and S. Counsell, “Investigating Web size
+metrics for early Web cost estimation,” *Journal of Systems and*
+*Software*, vol. 77, no. 2, pp. 157–172, Aug. 2005.
+
+[2] G. Costagliola, S. Di Martino, F. Ferrucci, C. Gravino, G.
+Tortora, and G. Vitiello, “A COSMIC-FFP approach to predict
+web application development effort,” *J. Web Eng.*, vol. 5, no. 2,
+pp. 93–120, Jun. 2006.
+
+[3] S. D. Martino and C. Gravino, “Estimating Web Application
+Development Effort using COSMIC-FFP method,”
+*International Journal of Computers & Applications*, vol. 31, no.
+3, pp. 153–158, Jan. 2009.
+
+[4] F. Ferrucci, C. Gravino, and S. D. Martino, “A Case Study
+Using Web Objects and COSMIC for Effort Estimation of Web
+Applications,” in *Proceedings of the 2008 34th Euromicro*
+*Conference Software Engineering and Advanced Applications*,
+Washington, DC, USA, 2008, pp. 441–448.
+
+[5] L. Buglione, F. Ferrucci, C. Gencel, C. Gravino, and F. Sarro,
+“Which COSMIC Base Functional Components are Significant
+in Estimating Web Application Development? - A Case Study,”
+in *Proceedings of the International Conference on Software*
+*Process and Product Measurement*, 2010, pp. 205–224.
+
+[6] F. Ferrucci, C. Gravino, and S. D. Martino, “Estimating Web
+Application Development Effort Using Web-COBRA and
+COSMIC: An Empirical Study,” in *Proceedings of the 2009*
+*35th Euromicro Conference on Software Engineering and*
+*Advanced Applications*, Washington, DC, USA, 2009, pp. 306–
+312.
+
+[7] “The COSMIC Functional Size Measurement Method Version
+3.0.1 Measurement Manual,” *COSMICON*, 2009. [Online].
+Available: www.cosmicon.com/dl_goto.asp?id=73. [Accessed:
+13-Dec-2012].
+
+[8] K. Lind and R. Heldal, “A model-based and automated
+approach to size estimation of embedded software components,”
+in *Proceedings of the 14th international conference on Model*
+*driven engineering languages and systems*, Berlin, Heidelberg,
+2011, pp. 334–348.
+
+[9] “IFPUG. Function Points Counting Practices Manual (release
+4.2),” Westerville, Ohio, 2004.
+
+[10] “MkII Function Point Analysis Counting Practices Manual, v
+1.3.1,” Sep-1998.
+
+[11] “The application of function point analysis in the early phases of
+the application life cycle a practical manual: Theory and case
+study, Version 2.0,” 2005.
+
+[12] C. Gencel and O. Demirors, “Functional size measurement
+revisited,” *ACM Transactions on Software Engineering and*
+*Methodology*, vol. 17, no. 3, pp. 1–36, Jun. 2008.
+
+402
+
+
+
+[13] D. Schwabe and G. Rossi, “The object-oriented hypermedia
+design model,” *Commun. ACM*, vol. 38, no. 8, pp. 45–46, Aug.
+1995.
+
+[14] S. Ceri, P. Fraternali, and A. Bongio, “Web Modeling Language
+(WebML): a modeling language for designing Web sites,”
+*Computer Networks*, vol. 33, no. 1–6, pp. 137–157, Jun. 2000.
+
+[15] J. Gómez, C. Cachero, and O. Pastor, “Conceptual Modeling of
+Device-Independent Web Applications,” *IEEE MultiMedia*, vol.
+8, no. 2, pp. 26–39, Apr. 2001.
+
+[16] R. Paiano and A. Pandurino, “From the Design to the
+Development: a W2000 Based Framework, Issues and
+Guidelines,” in *Proceedings* *of* *Information* *Resources*
+*Management Association (IRMA) International Conference*,
+Philadelphia, PA, 2003.
+
+[17] G. Rossi, O. Pastor, D. Schwabe, and L. Olsina, Eds., *Web*
+*Engineering: Modelling and Implementing Web Applications*,
+1st Edition. Springer, 2007.
+
+[18] “ArgoUWE,” *UWE–UML-based* *Web* *Engineering* .
+
+[Online].Available: http://uwe.pst.ifi.lmu.de/toolargoUWE.html.
+
+[Accessed: 13-Dec-2012].
+
+[19] “MagicUWE,” *UWE – UML-based Web Engineering* . [Online].
+Available: http://uwe.pst.ifi.lmu.de/toolMagicUWE.html.
+
+[Accessed: 13-Dec-2012].
+
+[20] “MagicDraw,” *No* *Magic* . [Online]. Available:
+http://www.nomagic.com/products/magicdraw.html. [Accessed:
+13-Dec-2012].
+
+[21] B. Marín, G. Giachetti, and O. Pastor, “Measurement of
+Functional Size in Conceptual Models: A Survey of
+Measurement Procedures Based on COSMIC,” in *Proceedings*
+*of the International Conferences on Software Process and*
+*Product Measurement*, Berlin, Heidelberg, 2008, pp. 170–183.
+
+[22] E. Mendes, N. Mosley, and S. Counsell, “Comparison of Web
+size measures for predicting Web design and authoring effort,”
+*IEE Proceedings - Software*, vol. 149, no. 3, pp. 86–92, Jun.
+2002.
+
+[23] X. Gu, G. Song, and Q. Li, “An Improved FSM Method for
+Web-based Applications,” in *International Conference on*
+*Computational Intelligence for Modelling, Control and*
+*Automation, 2006 and International Conference on Intelligent*
+*Agents, Web Technologies and Internet Commerce*, 2006, p. 21.
+
+[24] N. Koch and S. Kozuruba, “Requirements Models as First Class
+Entities in Model-Driven Web Engineering,” in *Current Trends*
+*in Web Engineering*, M. Grossniklaus and M. Wimmer, Eds.
+Springer Berlin Heidelberg, 2012, pp. 158–169.
+
+[25] “OMG Unified Modeling Language (OMG UML),
+Superstructure,Version 2.4.1,” Aug-2011. [Online]. Available:
+http://www.omg.org/spec/UML/2.4.1/Superstructure/PDF/.
+
+[Accessed: 13-Dec-2012].
+
+[26] G. Rossi and D. Schwabe, “Modeling and Implementing Web
+Applications with Oohdm,” in *Web Engineering: Modelling and*
+*Implementing Web Applications*, G. Rossi, O. Pastor, D.
+Schwabe, and L. Olsina, Eds. London: Springer London, 2008,
+pp. 109–155.
+
+[27] S. Meliá, J. Gómez, S. Pérez, and O. Díaz, “A Model-Driven
+Development for GWT-Based Rich Internet Applications with
+OOH4RIA,” in *Proceedings of the 2008 Eighth International*
+*Conference on Web Engineering*, Washington, DC, USA, 2008,
+pp. 13–23.
+
+[28] S. Ceri, M. Brambilla, and P. Fraternali, “The History of
+WebML Lessons Learned from 10 Years of Model-Driven
+Development of Web Applications,” in *Conceptual Modeling:*
+*Foundations and Applications*, A. T. Borgida, V. K. Chaudhri,
+P. Giorgini, and E. S. Yu, Eds. Berlin, Heidelberg: SpringerVerlag, 2009, pp. 273–292.
+
+[29] C. Gencel, O. Demirors, and E. Yüceer, “Utilizing Functional
+Size Measurement Methods for Real Time Software Systems,”
+in *11th IEEE International Software Metrics Symposium*
+*(METRICS 2005)*, Como, Italy, 2005.
+
+[30] I. Hussain, L. Kosseim, and O. Ormandjieva, “Approximation
+of COSMIC functional size to support early effort estimation in
+Agile,” *Data & Knowledge Engineering*, no. In Press, 2012.
+
+[31] T. Rollo, “Sizing e-commerce,” in *Proceedings of the*
+*Australian Conference on Software*, Sydney, 2000.
+
+[32] “Guideline for Sizing Business Application Software 1.1,”
+*COSMICON*, May-2008. [Online]. Available:
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
+www.cosmicon.com/dl_goto.asp?id=71. [Accessed: 08-Jan2013].
+
+[33] L. De Marco, F. Ferrucci, C. Gravino, F. Sarro, S. Abrahao, and
+J. Gomez, “Functional versus design measures for model-driven
+Web applications: A case study in the context of Web effort
+estimation,” in *2012 3rd International Workshop on Emerging*
+*Trends in Software Metrics (WETSoM)*, 2012, pp. 21 –27.
+
+[34] A. Abran, *Software Metrics and Software Metrology*, 1st ed.
+Wiley-IEEE Computer Society Press, 2010.
+
+[35] E. Stensrud, T. Foss, B. Kitchenham, and I. Myrtveit, “A
+Further Empirical Investigation of the Relationship Between
+
+403
+
+
+MRE and Project Size,” *Empirical Softw. Engg.*, vol. 8, no. 2,
+pp. 139–161, Jun. 2003.
+
+[36] L. C. Briand and I. Wieczorek, “Resource Estimation in
+Software Engineering,” in *Encyclopedia* *of* *Software*
+*Engineering*, John Wiley & Sons, Inc., 2002.
+
+[37] E. Mendes, N. Mosley, and S. Counsell, “Do adaptation rules
+improve web cost estimation?,” in *Proceedings of the fourteenth*
+*ACM conference on Hypertext and hypermedia*, New York, NY,
+USA, 2003, pp. 173–183.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:37 UTC from IEEE Xplore. Restrictions apply.
+
