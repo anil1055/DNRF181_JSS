@@ -1,0 +1,28 @@
+Based on the research paper "Towards the Prediction of Development Effort for Web Applications" by Emilia Mendes and Wendy Hall, I've identified the following essential details regarding the predictors used for estimating web application effort:
+
+**Introduction and Background**: 
+Estimating the effort required for developing web applications plays a crucial role in managing large-scale web development projects effectively. Accurate predictions enable organizations to plan resources more efficiently and allocate them accordingly.
+
+**Research Methodology and Tool**: 
+The authors employed an analogy-based approach called Estimation By Analogy (EBASED) supported by their own tool named ANGEL (ANalogy Effort Estimation tool). They chose six attributes (predictors) to characterize web applications, considering both qualitative and quantitative factors.
+
+**Predictors Used for Estimation**:
+These attributes/predictors include:
+
+1.  **Number of Documents (HTML Files)**: Representing static applications with minimal dynamic generation of pages.
+2.  **Number of Reused Documents**: Reflecting instances where pre-existing materials are incorporated into the new application.
+3.  **Compactness**: Indicates the interconnectedness within the documents, with higher numbers signifying greater connections among components.
+4.  **Stratum**: Refers to the organization's navigational complexity, ranging from non-linear structures to directed sequences.
+5.  **Structure**: Describing the overall layout, such as sequence, hierarchy, or network.
+6.  **Authoring Experience Level**: Measuring student developers' familiarity with hypermedia design principles, divided across low-experience learners (LEL) and high-experience learners (HEL groups).
+
+Each predictor helps form an initial profile of the target application against existing completed projects in the database, facilitating comparisons for generating an effort estimation through ANGEL.
+
+**Analysis Results**:
+When testing these predictors on two distinct datasets created during a case study involving university students building educational websites, researchers found promising outcomes for various configurations:
+
+   - For the lower-authoring-level students (LEL), top contributors included 'Number of Links,' 'Structure,' and sometimes 'Reused Documents.'
+   
+   - Among the high-authoring-level participants (HEl), significant correlations involved 'Documents,' 'Reuse,' 'Compactness,' 'Stratums,' and occasionally 'Structure.'
+
+Though the datasets did not optimize conditions due to available constraints, studies demonstrated the potential effectiveness of this methodology. Future research directions focus on refining attribute selection according to optimal characterization strategies tailored specifically for web app development and comparing analogy methods against traditional algorithmic approaches like Linear Regression or Step-wise Multiple Regression.

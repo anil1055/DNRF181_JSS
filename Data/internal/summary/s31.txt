@@ -1,0 +1,42 @@
+This paper proposes an adapted version of the Cosmic-Full Function Point (COSMIC-FFP) method for estimating the effort required to develop dynamic web applications. Here's a detailed breakdown of the key points:
+
+**Problem Context:** 
+The authors highlight the need for reliable cost and effort estimates in web engineering, particularly for complex and large-scale web applications.
+
+**Methodology Overview**
+The researchers draw upon existing literature, building upon previous studies by Rollo and Mendes et al., who had previously applied COSMIC-FFP to estimate effort in different contexts. They suggest adapting COSMIC-FFP for dynamic web applications because of its focus on measuring data movements, relevant for client-server architectures.
+
+**Rules for Adapting COSMIC-FFP**
+To calculate the functional size of a web application, eight new rules specific to dynamic aspects of web applications are introduced:
+1. Counting data movements on static web pages involves three operations per page (*entry*, *read*, and *exit*).
+2. Multimedia components require adding weights to these basic counts, depending on the component's impact on the development process (low, medium, or high influence).
+3. Scripts providing functionalities for manipulating documents on the client-side involve single-entry operations.
+4. Client-side applications necessitate adding weighted entries and exits according to their complexity.
+5. Server-side scripts or modules producing dynamic web pages add multiple operation types (*entry*, *read*, and *exit*) along with potential extra reads if necessary.
+6. Modifications made to persisted data via server-side scripting also include a write operation alongside the original three operations.
+7. Confirmation, alerts, or errors displayed by servers contribute another pair of basic counts.
+8. External references like libraries and routines increase the operational tally similarly.
+
+**Example Walkthrough**: An example involving an e-learning application demonstrates how these rules can be applied to a sample scenario.
+
+**Validation Approach**
+Thirty-two student-developed projects serve as subjects for a preliminary study aimed at verifying the efficacy of applying COSMIC-FFP towards predicting actual development efforts. Data includes both 'person-hours' spent and 'COSMIC-FFP units'.
+
+**Analysis Findings**:
+- Initial statistical tests show promising correlations between measured effort hours ('Person-Hours') and calculated 'COSMIC-FFPs'.
+- Linear Regression Analysis reveals considerable explanatory power, accounting for approximately 76% of 'Person-Hour's variation.
+- Estimated models seem robust enough to accurately forecast development times when compared against established thresholds.
+
+**Conclusion & Future Work**:
+While acknowledging limitations related to experimental bias stemming from reliance solely on student projects, they discuss plans to collect industry-wide data for enhanced generalizability. Additionally, the team aims to improve predictive capability through factors beyond just size metrics, encompassing issues such as algorithmic intricacy and structural complications in databases.
+
+The paper identifies following predictors to be utilized for estimating web application effort in the proposed methodology:
+1. Number of Static Web Pages  
+2. Weighted Entries and Exits on Media Components
+3. Script Counts on Client Side  
+4. Type of Operations Executed On-Client
+5. Presence of Server-Side Operations Including Writes
+6. Existence of Alerts/Confirmation Messages
+7. Usage of External References  
+
+These parameters demonstrate the breadth of considerations taken into account while developing the COSMIC-FFP-adaptation tailored for assessing the resource requirements involved in creating web-based systems effectively.

@@ -1,0 +1,27 @@
+Based on the given paper titled "A COSMIC-FFP Approach to Predict Web Application Development Effort", here is a thorough analysis of the content and identification of the predictors used for estimating web application effort.
+
+**Summary of the Paper:**
+
+The paper proposes an approach to predict the development effort of web applications using the COSMIC-FFP (COSMIC Full Function Point) method. The method focuses on counting data movements, which is assumed to be a major contributor to the development effort in web applications. The approach consists of two measures: C-FFPan and C-FFPde, which are applied to analysis and design documents, respectively. C-FFPan estimates the effort based on use-case diagrams and sequence diagrams, while C-FFPde applies to class diagrams modeled using Conallen's notation. The approach was empirically validated using 44 web applications developed by students, and the results show promising accuracy in effort prediction.
+
+**Identified Predictors Used for Estimating Web Application Effort:**
+
+1. **Number of Entries**: Represented by 'ENTRY', counts the instances where data is moved from a user to the web application.
+2. **Number of Exits**: Represented by 'EXIT', counts the instances where data is moved from the web application to a user.
+3. **Number of Reads**: Represented by 'READ', counts the instances where data is retrieved from a persistent storage device by the web application.
+4. **Number of Writes**: Represented by 'WRITE', counts the instances where data is updated or created in a persistent storage device by the web application.
+
+These four data movement counters are combined to arrive at the estimated effort, measured in Cosmic Functional Size Units (CFSUs).
+
+Additionally, the following secondary predictors were mentioned:
+
+1. **Complexity of Client Pages**: Counts the number of client-side operations executed to display the page.
+2. **Presence of Multimedia Files**: Increases the CFSUs if multimedia files need to be processed.
+3. **Presence of Scripts**: Adds to the CFSUs if scripting is required to generate parts of the web application.
+4. **Number of Applets, Active-X controls, Plug-ins, and Media**: Increase the CFSUs if embedded code needs to execute in addition to the primary language.
+5. **Additional Read Operations**: Incrementally increases the CFSUs depending upon how much processing occurs beyond initial data retrieval.
+6. **Number of External Invocations**: Increments the CFSUs whenever non-web-specific functions are called.
+
+These additional predictors serve to increase the precision of the estimated effort by accounting for increased computational resources and potential issues encountered during execution.
+
+Please note that the original text does not explicitly define these predictors under separate headings, so you would need to manually combine information from throughout the text to extract these individual items. However, they remain critical in the overall framework of the approach presented.

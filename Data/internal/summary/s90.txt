@@ -1,0 +1,37 @@
+This response addresses the prompt question: Identify the predictors used as effort estimators in the specified paper "Investigating the use of Support Vector Regression for web effort estimation."
+
+**Predictors Used**
+
+According to the paper, the predictor variables used in the experiment are listed in **Table 1**, titled "The Tukutuku Variables". There are 25 predictor variables categorized into COMPANY DATA, PROJECT DATA, WEB APPLICATION, and OTHER VARIABLES. Some notable predictors include:
+
+*   COMPANY DATA:
+    *   Country (categorical)
+    *   Established (ordinal)
+    *   nPeopleWD (ratio)
+*   PROJECT DATA:
+    *   TypeProj (categorical)
+    *   nLang (ratio)
+    *   DocProc (categorical)
+    *   ProImpr (categorical)
+    *   Metrics (categorical)
+    *   DevTeam (ratio)
+    *   TeamExp (ratio)
+    *   TotEffort (ratio)
+    *   EstEffort (ratio)
+*   WEB APPLICATION:
+    *   TypeApp (categorical)
+    *   TotWP (ratio)
+    *   NewWP (ratio)
+    *   TotImg (ratio)
+    *   NewImg (ratio)
+    *   Fots (ratio)
+    *   HFotsA (ratio)
+    *   Hnew (ratio)
+    *   totHigh (ratio)
+    *   FotsA (ratio)
+    *   New (ratio)
+    *   totNHigh (ratio)
+
+These predictors cover various aspects of the project, including country and establishment year, personnel count, project type, documentation process involvement, process improvement participation, metric usage, team composition, team experience, total effort, and estimated effort. Additionally, for the web application category, there are variables like the type of app, total and new web pages, total and new images, reusable features, high-effort features, new high-effort features, total high-effort features, reused low-effort features, new low-effort features, and total low-effort features.
+
+All the predictor variables mentioned in the table are utilized in the experiment to determine the efficacy of Support Vector Regression for web effort estimation.

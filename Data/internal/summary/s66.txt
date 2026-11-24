@@ -1,0 +1,93 @@
+After carefully analyzing the content of the paper "Bayesian Network Models for Web Effort Prediction: A Comparative Study" by Emilia Mendes and Nile Mosley, here is a thorough summary of the paper along with the predictors used for estimating web application effort:
+
+**Introduction**
+
+* The paper aims to compare the performance of different Bayesian Network (BN) models for predicting web application effort.
+* The study investigates the effectiveness of data-driven and hybrid BN models using project data from the Tukutuku database.
+* The Tukutuku database consists of 195 industrial web projects, which characterizes web projects using size measures and cost drivers targeting early effort estimation.
+
+**Literature Review**
+
+* Previous studies have attempted to model effort estimation for web projects, but most have used simple probabilistic models.
+* Only one study (Mendes' earlier work) has used a probabilistic model for web effort estimation.
+* Most web effort estimation studies have focused on student-based projects rather than industrial projects.
+
+**Procedure Used to Build the Web Effort BN Models**
+
+* The BNs were built and validated using an adapted Knowledge Engineering of BN (KEBN) process.
+* The KEBN process involves three main steps: Structural Development, Parameter Estimation, and Model Validation.
+* The structural development stage creates the graphical structure (causal graph) of the BN.
+* Parameters were obtained by automatically fitting a BN graph to two training sets each containing 130 web projects.
+* The BNs were evaluated using two validation sets, each containing 65 projects.
+
+**Building the Early Web Effort BN Models**
+
+* The causal graphs of the eight BN models are presented, with four models using the same graph elicited by a domain expert.
+* The variables pointing directly at TotalEffort included TotWP, DevTeam, Fots, New, NewWP, and TotImg (except for TotImg).
+* Six of the nine causal relationships identified in at least three graphs are clear-cut, while the remaining three suggest possible relationships between certain variables.
+
+**Manual Stepwise Regression (MSWR)-Based Web Effort Model**
+
+* The MSWR procedure selects categorical and numerical variables that jointly have a statistically significant effect on the dependent variable, TotEffort.
+* The two MSWR-based models selected four and five significant independent variables, respectively.
+* The equations for the two MSWR models are presented, which relate the logarithm of TotalEffort to the logarithms of several predictor variables.
+
+**Case-Based Reasoning (CBR)**
+
+* CBR uses historical data from completed projects with known effort (case base) to estimate effort for new projects.
+* The CBR tool used was CBR-Works, which allowed the simulation of the feature subset selection mechanism.
+* Five parameters needed to be decided upon, including the similarity measure, the number of closest cases, and the weight assigned to each attribute.
+
+**Comparing Predictions Between Techniques**
+
+* The paper compares the predictions of eight different web effort BN models with those obtained using manual stepwise regression (MSWR) and case-based reasoning (CBR).
+* The accuracy of each technique is measured using six different prediction measures, including magnitude of relative error (MRE), mean magnitude of relative error (MMRE), median magnitude of relative error (MdMRE), prediction at level l (Pred(l)), mean effort, and median effort.
+* The results indicate that MSWR performed well in terms of prediction accuracy, especially when compared to the mean effort model.
+
+**Discussion**
+
+* The results suggest that building data-driven and hybrid BNs with complex causal graphs may only be a suitable approach if using a dataset much larger than the one used in this study.
+* The findings highlight the importance of choosing appropriate predictors for web effort estimation.
+* The paper concludes that simpler models, such as the median effort, can perform better than more complex models, such as BNs.
+
+**Conclusion**
+
+* The study contributes to the body of knowledge on web effort estimation by providing insights into the strengths and limitations of BN models.
+* The results suggest that MSWR may be the preferred technique for web effort estimation, especially when dealing with small datasets.
+* The study highlights the importance of considering multiple evaluation criteria when selecting a web effort estimation technique.
+
+**Used Predictors:**
+
+1. **Size of the development team**: 
+   - LNDEVTEAM
+   - DEVTEAM
+   
+2. **Number of web pages**
+   
+   - LTOTWP
+   - NEWWP
+   - NWEP
+   
+3. **Use of documentation**
+   
+   - DOCPROC
+   - METRICS
+   
+4. **Project complexity**
+   
+   - TOTALIMG
+   - PROIMPR
+   
+5. **Total effort**
+   
+   - LOTOTEFF
+   
+6. **Features/functions**
+   
+   - NFOTS
+   - HNEW
+   - TFOTA
+   - SFOTA
+   - LFOTS
+  
+Please let me know if you want me to add anything else to this answer!

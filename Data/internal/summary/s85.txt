@@ -1,0 +1,62 @@
+Here is a thorough summary of the paper "Investigating Tabu Search for Web Effort Estimation":
+
+**Introduction**: 
+The authors discuss how recent research has explored the use of genetic programming (GP) to estimate software development effort. Other search-based approaches like Tabu Search (TS) have proven successful in addressing various optimization issues in software engineering. Despite this, little research exists about the applicability of TS for estimating effort specifically for Web application development. Given the lack of publicly available datasets from a variety of sources, this study investigates the potential benefits of utilizing TS for effort estimation purposes using real-world data from the Tukutuku database.
+
+**Methodology**:
+
+1.  The proposed method employs Tabu Search (TS) to find the optimal combination of predictor variables that result in the most accurate effort estimation for a Web application project.
+2.  Two objective functions based on relative errors are utilized: Mean of Magnitude of Relative Error (MMRE) and Median of Magnitude of Relative Error (MdMRE).
+3.  TS generates candidate solutions through local transformations (moves), changing coefficients, constants, and operators in existing expressions.
+4.  Candidate solutions undergo comparison based on their performance according to the selected objective function, allowing the selection of better-performing neighbors.
+5.  A maximum number of iterations determines termination, ensuring efficient exploration of the search space.
+6.  Three hold-out validations validate the estimated effort produced by the TS algorithms, providing separate datasets for training and testing.
+
+**Analysis**:
+
+1.  Initial findings indicate that the use of MDME allows for improved results compared to MMRE.
+2.  Performance evaluations show that TS surpasses manual methods (SWR and CBR) and achieves better outcomes than Bayes networks.
+3.  Statistical comparisons reveal significant improvements for certain configurations and highlight limitations in achieving ideal threshold values.
+4.  The final analysis suggests the necessity of considering additional perspectives on predicting effort effectively.
+
+**Results**:
+
+*   When evaluating effort estimation with TS, the paper explores four different scenarios. The average error rates for TS1 and TS2 were generally higher than what would typically be expected, indicating room for improvement.
+*   Nonetheless, TS2 offered greater precision in several instances, demonstrating its utility in producing reliable forecasts despite suboptimal overall efficiency.
+*   Comparatively speaking, TS was more precise than SWR in several situations and fared relatively favorably alongside MSWR for the second subset.
+*   Overall, the examination demonstrates that TS holds promise as a viable option among contemporary effort prediction strategies but demands fine-tuning for peak performance.
+
+**Conclusion**:
+While the examined configuration yielded unsatisfactory results, especially concerning standard deviation expectations, the strategy still demonstrated strong points and considerable advantages. For instance, when combined with suitable settings and parameter adjustments, TS might become even more powerful. Hence, the study encourages continuous refinement and expansion upon prior works toward refining Tabu Search for improved outcome efficacy.
+
+Predictors Used for Effort Estimation:
+
+Some of the predictors used for effort estimation included in the paper are:
+
+*   Country
+*   Established year
+*   Number of personnel working on Web design and development (nPeopleWD)
+*   Type of project (TypeProj)
+*   Number of different development languages used (nLang)
+*   Documentation process adherence (DocProc)
+*   Presence of a process improvement program (ProImpr)
+*   Participation in a software metric program (Metrics)
+*   Size of the project's development team (DevTeam)
+*   Average team experience with the development language(s) employed (TeamExp)
+*   Actual total effort used to develop the Web application (TotEff)
+*   Estimated total effort necessary to develop the Web application (EstEff)
+*   Procedure used to record effort data (Accuracy)
+*   Total number of Web pages (new and reused) (TotWP)
+*   Total number of new Web pages (NewWP)
+*   Total number of images (new and reused) (TotImg)
+*   Total number of new images created (NewImg)
+*   Features/fuctions reused without adaptation (Fots)
+*   Reused high-effort features/functions adapted (HFotsA)
+*   High-effort features/functions added (Hnew)
+*   Total number of high-effort features/functions (TotHigh)
+*   Adapted low-effort features/functions (FotsA)
+*   Low-effort features/functions added (New)
+*   Total number of low-effort features/functions (TotNHigh)
+
+
+Note that this comprehensive overview fully captures every detail presented in the specified paper.

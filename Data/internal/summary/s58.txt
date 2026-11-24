@@ -1,0 +1,46 @@
+Based on the provided research paper titled "Content Management System Effort Estimation Using Bagging Predictors," here is a thorough summary of the paper's content, including the predictors used as effort estimators:
+
+**Introduction:** 
+The authors discuss how the traditional methods of effort estimation fail to provide reliable estimates for web content management systems (CMS) due to their unique nature and evolving requirements. With the rise of Web 2.0, the demand for efficient web design that enables users to customize information sharing is becoming increasingly significant. However, designing hypermedia applications poses challenges due to high coupling among elements, customization requirements, and inconsistencies in customer needs.
+
+**Related Works:**
+Previous studies attempted to apply existing estimation models like COCOOMO II, CASE BASED REASONING, STEPWISE REGRESSION TECHNIQUE, GENERALIZED LINEAR MODELS, and others. Despite achieving reasonable success, none cater specifically to CMS projects. Common issues include lack of well-defined development models, absence of standardized tools and technology, difficulty in estimating project size due to multimedia content variations, and insufficient consideration of complexities involving interfacing systems in CMS.
+
+**Proposed Effort Estimation Model (CMSEEM):**
+To address these limitations, CMSEEM proposes a novel approach combining object-point analysis with adjustment factors. The model involves:
+    1. Initial Effort Estimation Model (IEE): Developed using COCOMO 2.0 Model and extended by incorporating additional features specific to CMS.
+    2. Refinement Phase: Additional refinements introduced through data collection from various sources and analyses to produce the final effort estimation model.
+    
+**Object Point Analysis (OPA)**: 
+OPA serves as the basis for calculating project size. Steps included assessing object counts, classifying each object instance, determining the expected percentage of reuse, computing new object points, and finally, adding weighted object instances to obtain the object point count.
+
+**Adjustment Factors**: Three primary groups of factors influencing overall effort levels are evaluated: production system characteristics, general system characteristics, and developer expertise.
+    •   Production System Characteristics (PSC):
+        o   Classified into application, data, and miscellaneous characteristics
+        o   Weighted influences summed to determine the PSC-adjustment factor
+    
+    •   General System Characteristics (GSC): Include effective GUI, distributed data processing, easy installation and operation, and other relevant aspects affecting system complexity
+    
+    •   Developer’s Expertise and Capability (DEC):
+
+*   Calculated by considering the cumulative weightage from both PSC and GSC.
+
+**Prediction using Bagging Predictors:** 
+Given the inherent uncertainties in prediction, particularly in cases with limited historical data, bagging predictors offer improved predictive outcomes. Two scenarios of bagging predictors' iterations (25 and 50 replicas) yield satisfactory results; however, 25 iterations prove sufficient for reaching optimal precision while avoiding redundancy.
+
+**Validation Studies:**
+Two validation methodologies were applied to test the effectiveness of the proposed model:  
+1. Evaluation against actual efforts reported for past CMS projects (test set).
+2. Comparisons against another estimation model selected by participants (control).
+
+Results demonstrate substantial improvements in estimation accuracy across the board, especially noticeable for type 1 and type 3 projects exhibiting lower total-build ratios.
+
+Key Findings:  
+
+*   Average prediction efficiencies improved significantly via bagging predictors, yielding MMRE (mean magnitude of relative error) reductions.
+*   Confidence intervals suggest a notable gain in estimation quality utilizing the proposed model combined with bagging predictors.
+
+
+
+**Conclusion:** 
+By leveraging object-point analysis and adjusting for context-specific variables, the CMSEEM addresses known weaknesses of previous models designed primarily for non-CMS projects. Validation demonstrates improved estimation capabilities, notably for smaller-scale CMS undertakings but warranting adjustments for larger projects involving little programming effort.

@@ -1,0 +1,20 @@
+Summary:
+
+The paper titled "Web application functional size estimation based on COSMIC method and UWE approach" proposes a novel method for estimating the functional size of web applications using the COSMIC method and the UWE approach. The researchers aim to address the long-standing problem of estimating web application size or development effort before the application is even developed.
+
+Predictors used for estimating web application effort:
+
+1. **COSMIC Function Points (CFPs)**: The COSMIC method measures the functional size of a software system in terms of the number of data movements between the system and its operational environment. Each type of data movement (entry, exit, read, write) contributes to the overall functional size, which is expressed in CFPs.
+2. **Use case and Activity Diagrams**: Use case and activity diagrams are used to identify functional processes, data groups, and data movements in the web application.
+3. **UWE Approach**: The UWE (UML-based Web Engineering) approach is used to create a conceptual model of the web application. UWE provides a set of stereotypes specifically tailored for web applications, enabling the definition of user actions, system actions, display actions, central buffer nodes, and other relevant concepts.
+4. **Activity Diagram Elements**: Specific UWE stereotypes are used to identify data movements based on the source and destination elements of activity diagram elements, such as entry, exit, read, and write data movements.
+
+The proposed method involves five phases:
+
+1. **Measurement Strategy**: Identify the purpose and scope of measurement, functional users, and the level of granularity.
+2. **Mapping Phase**: Map the generic software model onto the web application, identifying functional processes and data groups.
+3. **Measurement Phase**: Perform data movement identification and aggregation of measurement results.
+4. **Identification of Data Movements**: Identify data movements using the UWE stereotypes in activity diagrams.
+5. **Aggregation of Measurement Results**: Sum up the results of all data movements in all functional processes.
+
+The authors demonstrate the feasibility of their approach using a simple web application for managing a university curriculum register. They validate their proposal using ordinary least-squares regression (OLSr) analysis and evaluate the acceptability of the derived effort prediction model using metrics such as magnitude of relative error (MRE), mean magnitudes of relative errors (MMRE), and prediction at level 0.25 (Pred(0.25)).

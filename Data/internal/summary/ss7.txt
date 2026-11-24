@@ -1,0 +1,57 @@
+Summary of the Paper "Using Ensembles for Web Effort Estimation" by Damir Azhar, Patricia Riddle, Emilia Mendes, Nikolaos Mittas, and Lefteris Angelis
+
+Introduction:
+The paper discusses the challenges faced in selecting the most accurate effort estimation technique for web projects, which is essential for successful project planning. Despite various efforts, there is no consensus on the best estimation technique, leading to inaccurate estimates. Researchers propose using ensembles of estimation techniques to improve accuracy.
+
+Literature Review:
+Previous studies show that using ensembles of estimation techniques improves accuracy in general software estimation tasks. However, the applicability of these results to web effort estimation remains unknown. A systematic review confirms that existing research has primarily focused on effort estimation using size measures as predictors.
+
+Objectives:
+The main objectives of this research are to investigate whether ensembles of effort estimation techniques are effective for web effort estimation and to determine the suitable predictor variables for this purpose.
+
+Methods:
+The study employed two approaches to create ensembles:
+
+Approach 1: Replication
+The researchers replicated the methodology used in a previous study that successfully applied ensembles in general software estimation. They assessed 90 solo estimation techniques on the Tukutuku dataset, which consists of 195 web project data points, each represented by 25 numerical variables.
+
+Approach 2: Selective Fusion Through Multiple Comparisons Procedure
+The researchers adopted the Scott-Knot algorithm, a statistical framework that allows clustering prediction models into non-overlapping groups. This approach aims to rank and select the best cluster of effort estimation techniques.
+
+Predictors Used for Effort Estimation:
+The paper considers the following predictors as input variables:
+
+Numerical Variables from the Tukutuku Dataset:
+
+1. nLang (Number of different development languages used)
+2. DevTeam (Size of a project’s development team)
+3. TeamExp (Average team experience with the development language(s))
+4. TotWP (Total number of Web pages)
+5. NewWP (Total number of new Web pages)
+6. TotImg (Total number of images)
+7. NewImg (Total number of new images created)
+8. Fots (Number of features reused without adaptation)
+9. HFotsA (Number of reused high-effort features/functions adapted)
+10. Hnew (Number of new high-effort features/functions)
+11. totHigh (Total number of high-effort features/functions)
+12. FotsA (Number of reused low-effort features/functions)
+13. NewLow (Number of new low-effort features/functions)
+14. totNHigh (Total number of low-effort features/functions)
+15. TotEff (Actual total effort in person-hours to develop an application)
+
+Results:
+Both approaches resulted in promising outcomes, indicating the effectiveness of ensembles for web effort estimation. Approach 1 yielded 15 ensembles that outperformed almost all solo techniques regarding their stability and accuracy. Approach 2 identified 19 solo techniques with the best prediction capabilities, which formed the foundation for creating two ensembles. By applying the Scott-Knot algorithm, these ensembles achieved better performance than their solo counterparts.
+
+Discussion and Conclusion:
+Overall, the research demonstrates that ensembles of effort estimation techniques offer improved accuracy and robustness in predicting effort for web projects. Building on this knowledge, future directions for investigation focus on combining diverse estimation techniques to enhance ensemble performance, exploring the usage of cross-validation and bootstrapping methods to minimize correlations between learners, and validating the practical feasibility of constructing ensembles in real-world settings.
+
+Key Points Summary:
+
+1.  There is currently no agreed-upon best practice for effort estimation in web projects, suggesting that employing ensembles might lead to improved accuracy.
+2.  Numerical variables extracted from the Tukutuku dataset served as input variables for the estimation processes.
+3.  The Scott-Knot algorithm enabled identifying the top-performing solo techniques and effectively clustering them into non-overlapping groups for ensemble creation.
+4.  Both studied approaches confirmed the superiority of ensembles in achieving higher accuracy rates compared to individual techniques.
+5.  Future work will concentrate on developing strategies for enhancing ensemble diversity, leveraging resampling techniques to mitigate dependence between learners, and implementing the approach in industrial contexts.
+
+Therefore, the answer to what predictors are used for estimating web effort is: 
+numerical variables from the Tukutuku dataset, mainly including Number of different development languages used, Development team size, Average team experience with the development language(s), Total number of web pages, Total number of new web pages, Total number of images, Total number of new images, Features reused without adaptation, High-effort features/reuses adapted, New high-effort features/functions, Total high-effort features/functions, Reuse Low-effort features/functions, New low-effort features/functions, Total low-effort features/functions, Actual total effort in-person hours to develop an application.

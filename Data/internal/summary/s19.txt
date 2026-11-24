@@ -1,0 +1,45 @@
+Based on the provided paper "Estimating the Design Effort of Web Applications" by Luciano Baresi, Sandro Morasca, and Paolo Paolini, here's a thorough summary of the paper's findings:
+
+**Research Background**: 
+The authors conducted an empirical study on estimating the design effort of web applications. Modern web applications involve creating both static HTML pages and interactive dynamic web sites. These applications require integrating multimedia content, databases, and interfaces. The design phase is crucial and resource-intensive.
+
+**Objectives:**
+The primary aim of the study is to create estimation models for the design phase of web applications. Specifically, the researchers sought to identify attributes influencing the effort required for the design phase, focusing on web application design using W2000 (a special-purpose, object-oriented design notation for web applications).
+
+**Methodology:**
+An empirical study involving 56 students participating in an advanced course on web application design using W2000 was undertaken. Students designed a hypothetical e-commerce application with varying domains (books, CDs, groceries, etc.). Before commencing work, participants completed a survey assessing their familiarity with computer science and web technologies, estimated the effort required to model their respective apps, and predicted the design effort for each stage (information, navigation, and presentation). Afterward, students submitted their final designs and evaluated their own efforts retrospectively.
+
+**Variables Used as Predictors of Effort:**
+
+1. **Information Model Variables:**
+   - Number of Entities (#Entities)
+   - Number of Components (#Components)
+   - Average Slots per Component (Avg. #SlotsPerComp.)
+   - Average Granularity of Decomposition (avgGranDecomp.)
+
+2. **Navigation Model Variables:**
+   - Total Nodes (#Nodes)
+   - Average Clusters (#NavClusters)
+   - Average Links (#NavLinks)
+   
+3. **Re-use Measure Variable:**
+   - Number of Segments (#Segmets)
+
+**Analysis and Results:**
+
+- **Multiple Linear Regression Analysis:** Identified statistically significant relationships between predictor variables and total design effort. Notably, increased numbers of components and navigation slots significantly affected the total effort.
+
+    - Multiple linear regression equation: Total_Effort = Intercept + (Coefficients for #Components, nav_Slots, SACenters, info_Slots, segments)
+
+- **Individual Predictor Variables Correlations with Total Effort:**
+    - Positive correlation observed with the number of components, suggesting an increase in effort when the number of components grows.
+    - Negative correlation noted for reuse (segments), indicating decreased effort when reusing existing components.
+
+- **Corresponding Sub-studies:**
+    - **Information Effort:** Most hypotheses failed to demonstrate statistical significance except for one concerning segment count showing a slight inverse relation.
+    - **Navigation Effort:** Demonstrated that'size' and 'complexity' positively correlate with the navigation effort.
+
+**Limitations and Future Directions:**
+Potential biases arise from employing student participants without industry background, relying solely on W2000 notation, lacking access to commercially viable tools, and potential inaccuracies in measuring constructs. Recommendations suggest incorporating tools, exploring additional attributes impacting effort, examining later stages of web development, and replication/refinement of this study.
+
+Overall, this research contributes to advancing the body of knowledge regarding predicting web application design effort, particularly emphasizing the importance of leveraging reusable components within the design phase.

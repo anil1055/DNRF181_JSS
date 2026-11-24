@@ -1,0 +1,37 @@
+After thoroughly analyzing the paper "Approximate COSMIC size to early estimate Web application development effort" by Lucia De Marco et al., here is a comprehensive summary of the paper:
+
+**Research Goal:** 
+The primary objective of this research is to explore whether certain approximations of the COSMIC method can be utilized for making precise early estimates of the development effort for web applications.
+
+**Methodology:**
+The researcher conducted an empirical investigation involving 25 web applications created by an Italian software firm. Three various methods were explored during the analysis:
+    •   First, the number of COSMIC Functional Processes (CFunP) was evaluated as a proxy for assessing the size of web applications.
+    •   Second, the Average Functional Process (AFP) method recommended by the COSMIC documentation was examined.
+    •   Third, comparisons were made with established benchmark methods and the conventional COSMIC method.
+
+**Key Findings:**
+
+•   The outcomes indicate that the approximate measurements based on CFunP and AFP offer promising early assessments of web application development effort.
+•   Both CFunP and AFP demonstrated better accuracy relative to baseline metrics, particularly in relation to predicting the overall effort expenditure.
+•   Notably, CFunP yielded even superior results than AFP in terms of forecasting effort costs.
+
+**Statistical Methods Used:**
+Simple linear regression was used to create predictive models for both CFunP and AFP. Leave-One-Out cross-validation ensured robustness in testing and validating the efficacy of the chosen metrics in providing reliable effort forecasts.
+
+**Performance Indicators:**
+Summary metrics such as Mean Magnitude of Relative Errors (MMRE), Median Magnitude of Relative Errors (MdMRE), and Prediction at Level 25% (Pred(25)) were used to gauge the precision of the developed models. Additionally, Mean Absolute Residuals (MAR) and Median Absolute Residuals (MdAR) were used to validate the outcome.
+
+**Comparisons with Benchmark Approaches:**
+The findings demonstrate that CFunP offers a substantial improvement over existing benchmark strategies in regards to obtaining fairly precise effort projections.
+
+**Effectiveness of Approximate Measurements:**
+Considering both theoretical considerations and statistical evidence, it appears that utilizing approximate methods derived from the COSMIC metric can yield dependable preliminary evaluations of the necessary effort investment for developing websites. While full-scale usage of the COSMIC approach remains optimal for improved accuracy, this strategy aims to enhance efficiency throughout the pre-project stages.
+
+**Conclusion:**
+By incorporating these alternatives into practice, developers and engineers working with web programs will enjoy enhanced ease-of-use in gauging development expenses upfront. More broadly speaking, these procedures have far-reaching implications beyond just enhancing productivity, potentially leading towards streamlined workflow optimization via effective up-front resource allocation choices.
+
+The article concludes by highlighting the following recommendations:
+
+*   Developers can leverage these simplified approaches to gain efficient insights regarding potential labor demands.
+*   Although a fully-fledged implementation of the COSMIC framework yields more accurate results, utilizing CFunP enables faster determination of preliminary expense expectations.
+*   Future endeavors could include exploring additional alternative methodologies, examining diverse settings and conditions affecting feasibility and usability, along with further analyses comparing CFunP against additional metrics.

@@ -1,0 +1,49 @@
+Based on the paper "Realising Web Effort Estimation: a Qualitative Investigation," the researchers aimed to identify key factors that affect effort estimates for new Web projects and explore their inter-relations. Here is a thorough summary of the paper:
+
+**Introduction**: The introduction highlights the significance of reliable effort estimation in project management, particularly in the Web development industry. The researchers acknowledge that although previous studies have developed effort estimation models for Web projects, little attention has been paid to exploring the underlying factors that influence these efforts using qualitative research methods.
+
+**Previous Studies**: The authors discuss a recent systematic literature review on Web resource estimation, revealing a growth trend in the number of studies focused on Web effort estimation. Most of these studies relied on quantitative approaches, whereas few explored the topic qualitatively. Common techniques used include Case-Based Reasoning (CBR), Stepwise Regression, and Linear Regression. Notably, size measures emerged as the most frequent effort predictor, followed by complexity measures and cost drivers.
+
+**Methodology**: The researchers employed a qualitative research methodology involving semi-structured interviews with four experienced Web developers from different organizations in Manaus, Brazil. The Grounded Theory (GT) framework guided the data analysis process. The research objectives included uncovering significant factors impacting effort estimation, examining the relationships among these factors, and synthesizing insights gained from the interviews.
+
+**Results**: Through the analysis, 35 factors were identified, categorized into four main areas: Web project, Web development team, Clients, and Web development complexity. Some of these factors exhibit both positive and negative impacts on effort estimates depending on contextual circumstances.
+
+Here's an excerpt of the table listing the factors that affect effort estimates in Web projects:
+
+| Category | Factor |
+| --- | --- |
+| Web Project | Product’s Innovation level, Integration with existing Systems, Technical factors, Non-functional requirements |
+| Web development team | Number of teams participating in the project, Employee’s experience, Professional maturity, Developers’ skills, etc. |
+| Clients | Client’s exigency level, Quality of the code, Architecture used, Ease maintenance, Evolutions of the code |
+| Web development complexity | Definition of business rules, Development’s restrictions |
+
+Some notable points extracted from the paper are:
+
+1.  **Web Project factors**:
+
+    *   The product's innovation level significantly influences effort estimation, especially if the innovation is novel or complex.
+    *   Integration with existing systems complicates the effort estimation process, requiring additional time and effort for integration tasks.
+    *   Technical factors, such as access to databases and validation rules, impact the overall effort required for the project.
+    *   Non-functional requirements, including usability, scalability, and maintainability, play critical roles in determining effort estimates.
+2.  **Web Development Team factors**:
+
+    *   Collaboration within the team enhances productivity and reduces errors, positively impacting effort estimation.
+    *   Familiarity with the team's strengths and weaknesses aids in creating more accurate effort estimates.
+    *   Employees' commitment, skillset, and experience are vital determinants of effort estimates.
+    *   Lack of employee experience or expertise leads to incorrect estimates due to unforeseen complexities emerging during development.
+3.  **Client factors**:
+
+    *   Well-mapped client processes simplify the estimation process and reduce uncertainty.
+    *   Stable requirement definitions enable easier prediction of effort estimates.
+    *   Available clients familiar with project specifics aid in streamlining the effort estimation process.
+    *   Unstable client expectations, unclear needs, or missing involvement create challenges in predicting effort accurately.
+4.  **Web Development Complexity factors**:
+
+    *   Clear business rules foster efficiency and enhance effort estimation accuracy.
+    *   Technological restrictions, time limitations, and limited resources complicate the estimation process and necessitate extra effort.
+    *   Past experiences serve as valuable references for informing current effort predictions.
+    *   Features' difficulty to estimate and misunderstanding of requirements introduce inaccuracies in effort projections.
+
+**Conclusion**: This qualitative research sheds light on the factors contributing to effort estimation issues in Web projects. Despite the relatively small sample size, the findings suggest valuable avenues for improving effort estimation methodologies, highlighting the relevance of combining quantitative and qualitative research methods for comprehensive understanding.
+
+Overall, the study emphasizes the importance of acknowledging diverse perspectives, considering both positive and negative influencers, and recognizing the intricacies inherent in real-world environments to refine predictive models for effort estimation in Web projects.

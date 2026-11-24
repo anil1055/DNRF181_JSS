@@ -1,0 +1,26 @@
+After carefully analyzing the content of the paper "Comparative Study of Cost Estimation Models for Web Hypermedia Applications," the key points and insights gained can be summarized as follows:
+
+1.  **Introduction**: The paper discusses the importance of realistic effort estimates in successful project management, particularly in web development, due to short schedules and fluid scopes. Current cost estimation techniques fall into three categories: expert judgement, algorithmic models, and machine learning.
+
+2.  **Literature Review**: Previous studies have shown mixed results when comparing different cost estimation techniques, mainly because of variations in dataset characteristics and experimental designs. The paper aims to address these limitations by investigating three case-based reasoning (CBR) techniques alongside stepwise regression and regression trees in the context of web hypermedia applications.
+
+3.  **Dataset**: The dataset consists of 37 web hypermedia projects developed by graduate and master's-level students. Eighteen size and complexity metrics were collected, including total effort, page count, media count, program count, reused media count, reused program count, connectivity density, and total page complexity.
+
+4.  **Cost Modelling Techniques**: 
+   -   **Case-based Reasoning (CBR)**: Uses historical information from completed projects with known efforts to provide estimates. Parameters include feature subset selection, similarity measure, scaling, number of analogies, and analogy adaptation.
+       •   Unweighted Euclidean Distance: Calculates the geometrically meaningful distance between two points in multidimensional space.
+       •   Weighted Euclidean Distance: Gives different weights to size measures reflecting their relative importance.
+       •   Maximum Measure: Reduces similarity to a single feature with the most similar value.
+   
+   -   **Stepwise Regression**: Builds a prediction model by iteratively selecting the most informative variable until the desired level of precision is reached.
+   
+   -   **Regression Trees (CART)**: Develops a decision-making process through recursive partitioning of predictor spaces, identifying optimal cutpoints to minimize entropy.
+   
+
+5.  **Results**: 
+    -   **Comparison of CBR Techniques**: Jackknife method reveals that the weighted Euclidean distance produces better estimates overall, especially with the closest analogy.
+    -   **Comparison to Stepwise Regression and Regression Trees**: Stepwise regression emerges as the best-performing technique across both splits (66% and 86%), giving the smallest variance in z-values and providing generally better predictions.
+    
+6.  **Conclusion**: While stepwise regression performs exceptionally well on this dataset, acknowledging the possibility of 'noise' in effort values highlights the ongoing challenge of achieving perfect estimates. Other investigations suggest exploring additional CBR techniques and adapting them to suit the dataset.
+
+Overall, this comprehensive review identifies key aspects and implications of the research article on cost estimation models for web hypermedia applications.

@@ -1,0 +1,48 @@
+This paper titled "Early Web Size Measures and Effort Prediction for Web Costimation" focuses on investigating various factors affecting the estimation of effort for web application development projects. Here's a thorough breakdown of the article's content:
+
+**Introduction**: The paper highlights the challenges associated with predicting the effort needed for web development projects, citing factors such as lack of standardized development techniques, diverse technologies used, inexperienced personnel, and short deadlines. It emphasizes the importance of obtaining precise effort estimates during the planning phase.
+
+**Literature review**: Previous studies proposing size measures for web applications have focused primarily on implemented applications, whereas the authors argue that considering requirements documentation generated using established web development methods would yield more accurate efforts. Additionally, the authors note that employing company-specific datasets generally produces better estimates but acknowledges potential drawbacks, including the requirement for significant amounts of time to compile sufficient data.
+
+**Survey methodology**: A global survey was conducted to determine the early size measures utilized by 133 web companies. Respondents filled out web forms indicating their preferred measures for quoting web development projects. The responses yielded insights into the measures deemed essential by companies worldwide. The measures fell into four categories:
+
+   1.  Web Application Static Measures 
+       *   Total number of Web pages
+       *   Total number of images provided by the customer
+       *   Total number of text pages provided by the customer
+       *   And others (21)
+
+    2.  Web Application Dynamic Measures  
+        *   Which features or functionalities
+        *   Percentage of companies asking for specific measures (# Co.)
+
+     3.  Web Project Measures   
+        *   Project budget  
+
+      4.  Web Interface Design Measures 
+          *   Background color
+
+Five key measures emerged from the rankings:
+    
+    1.  The 'Total number of Web pages'
+    2.  'Which features or functionalities'
+
+These two indicators accounted for approximately 70% of the responses combined.
+
+**Moving towards a repository of web projects**: Following the survey, a Brazilian web company was consulted to verify and refine the measures prioritized earlier. Additional measures were incorporated, particularly focusing on complexity levels attached to features and functionalities. A categorization system was designed to distinguish among feature reuse (Feature Off-The-Shelf/FOTS, FOTS adapted/adapted, and New In-House Feature/new).
+
+**Data Collection Methodology**: The Tukutuku benchmarking project initiated to gather data from web projects worldwide through an open-form submission system. By October 2002, 36 submissions were acquired from 17 companies globally, offering substantial diversity in terms of age (years since establishment), employee count, geographic locations, programming languages, and methodologies applied (incremental prototyping or waterfall). Key characteristics of submitted projects include six being redesigns of existing sites while thirty being newly developed websites.
+
+**Comparative Study of Multi-Company vs. Company-Specific Dataset**:
+
+1.  **Dataset Description**: For comparative analysis, two subsets were extracted from the Tukutuku database: the Multi-Company Dataset (MCD) consisting of 24 entries and the Company-Specific Dataset (CSD) comprising twelve projects belonging to one firm. Due to shared project specifics, certain variables were dropped for CSD, leading to usage of alternative pairings.
+2.  **Prediction Techniques Used**: Step-wise Regression (SWR) and Case-base Reasoning (CBR) algorithms were employed to evaluate predictive performance. Factors influencing selection included the prevalence of outliers and multicollinearity observed in the datasets.
+3.  **Evaluation Metrics**: Accuracy was assessed utilizing Mean Magnitude of Relative Errors (MMRE), Predictions at Level n (Pred[n]), and box plots of residual distribution.
+4.  **Result Interpretation**: Findings indicated superior outcomes from the CSD dataset. Statistical tests supported these claims except when analyzing analogous implementations of CBRI. Contributing factors potentially impacting these results include:
+
+    i. Smaller dataset sizes.
+    ii. Presence of outliers, especially prevalent in the MCD group.
+    iii. Imperfect quality control procedures in place during data compilation.
+5.  **Comparison of Predictor Variables**: Variable rankings varied between CBR and SRW techniques for each dataset. Notably, every algorithm picked variables reflecting the overall quantity of high-efficiency tasks as having considerable impact on the total effort invested in the task.
+
+Overall, this comprehensive paper offers practical guidelines for establishing improved web size measures through surveys, emphasizing the advantages of working with company-specific data versus multi-firm datasets in accurately forecasting the extent of resources demanded for web application developments. While suggesting improvements for data quality and expansion of dataset samples, the document provides valuable insights for enhancing the precision of web effort predictions.

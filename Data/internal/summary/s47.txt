@@ -1,0 +1,39 @@
+Based on the provided paper, "Three Empirical Studies on Estimating the Design Effort of Web Applications" by Luciano Baresi and Sandro Morasca, the predictors used for estimating web application effort are primarily related to the size and complexity of the W2000 design artifacts. Here are the specific predictors identified in the paper:
+
+1. Entity count (# of entities in the model)
+2. Component count (# of components in the model)
+3. Slot count (# of slots in the model)
+4. Average slot count per segmentation association center (avg. # of slots per sem. assoc. center)
+5. Average slot count per collection center (avg. # of slots per collection center)
+6. Component-entity relationship (avg. # of components per entity)
+7. Segmentation count (# of segments in the model)
+8. Node count (# of nodes in the model)
+9. Nav-slot count (# of slots in the model)
+10. Node-cluster relationship (avg. # of nodes per cluster)
+11. Node-slot count (avg. # of slots per node)
+12. Navigation link count (# of links in the model)
+13. Cluster count (# of clusters in the model)
+14. Page count (# of pages in the model)
+15. Publishing unit count (# of publishing units in the model)
+16. Presentation link count (# of links in the model)
+17. Section count (# of sections in the model)
+
+Additionally, the paper mentions the following indirect predictors that affect the actual effort, although they were not found to be strongly correlated with the actual effort in all studies:
+
+1. Reuse (segment count)
+2. Granularity decomposition of the information model
+3. Structuredness (cluster count, structuredness)
+4. Complexity (component count, nav-link count, slots-node count)
+5. Total number of Web pages and features/functionality provided by the application
+
+The paper also explores other factors that may influence effort estimation, such as:
+
+1. Student's skill level (technical knowledge and school proficiency)
+2. Team composition and collaboration
+3. Notation type (W2000 vs. other modeling languages)
+4. Availability of automation tools
+5. Class attendance
+
+However, these factors were not found to be significantly correlated with the actual effort in the studies.
+
+Overall, the primary predictors of web application effort in the paper are related to the size and complexity of the W2000 design artifacts, particularly those involving the creation of entities, components, slots, and nodes.

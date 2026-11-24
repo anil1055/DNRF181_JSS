@@ -1,0 +1,30 @@
+This paper investigates the use of Support Vector Regression (SVR) for web development effort estimation using a cross-company data set. Here's a detailed summary of the paper:
+
+**Introduction**: The researchers aimed to explore the applicability of SVR for web development effort estimation using a cross-company data set, specifically the Tukutuku database, which contains data from 195 web projects.
+
+**Background**: Traditional estimation techniques, such as manual step-wise regression and case-based reasoning, often fail to produce satisfactory results with cross-company data sets. Therefore, alternative methods, like SVR, are being explored for their potential benefits.
+
+**Methodology**: The researchers implemented four different SVR configurations: linear, polynomial, Gaussian, and sigmoid kernels, along with two preprocessing strategies: normalization and logarithmic transformation. They held-out validated these configurations using a training set of 130 projects and a testing set of 65 projects from the Tukutuku database.
+
+**Data Set Description**: The Tukutuku database comprises 195 web projects with diverse characteristics, such as country of origin, type of project (new or enhancement), and technological stack. There are 25 features associated with each project, including numeric attributes like the number of languages used and the total number of web pages.
+
+**Evaluation Technique**: The researchers utilized common metrics, including Mean Magnitude of Relative Error (MMRE), Median Magnitude of Relative Error (MdMRE), and Prediction at Level 25% (Pred(25)), to evaluate the predictive accuracy of SVR against traditional techniques.
+
+**Results**: After analyzing the results, the researchers discovered that the linear kernel with logarithmic transformation produced the best outcomes, denoted as "LinLog." The "Polynomial" kernel exhibited poor results, whereas the "Gaussian" and "Sigmoid" kernels demonstrated moderate success.
+
+**Comparison with Other Techniques**: When compared with established techniques, such as manual step-wise regression, case-based reasoning, and Bayesian networks, the "LinLog" configuration consistently yielded the highest scores across multiple metrics.
+
+**Conclusion**: The findings indicate that SVR offers improved estimation capabilities when employing the "LinLog" configuration on the Tukutuku database. This outcome suggests that SVR might serve as a valuable asset for making precise effort predictions in web development endeavors.
+
+Key Predictors Used in the Paper:
+
+1. **Number of Programming Languages Adopted in the Project**: Represented as "nlang"
+2. **Number of Developers Involved in the Project**: Denoted as "DevTeam"
+3. **Mean Number of Years of Experience for Team Members**: Indicated as "TeamExp"
+4. **Effort in Person-Hours**: Notated as "TotEff"
+5. **Total Number of Web Pages (New and Reused)**: Identified as "TotWP"
+6. **Number of Features/Functions Reused Without Adaptation**: Symbolized as "Fots"
+7. **Number of High-Effort Features/Functions Admitted**: Represented as "HFotsA"
+8. **Number of New High-Effort Features/Functions**: Marked as "Hnew"
+
+Note that these factors contributed to the final effort predictions through the implementation of SVR.

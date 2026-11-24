@@ -1,0 +1,64 @@
+I'll carefully break down the research paper and highlight the key points related to predicting web application effort.
+
+### Paper Summary
+
+The paper discusses the challenges of accurately predicting effort for web application development. To address this issue, researchers conducted a case study involving 43 computer science students who designed and authored web applications using cognitive flexibility theory principles. The study involved collecting various metrics, categorized into five groups: effort metrics, structure metrics, complexity metrics, reuse metrics, and size metrics.
+
+#### Used Metrics
+
+The article lists multiple metrics as potential effort predictors, grouped into five categories:
+
+1.  **Size Metrics:** 
+    *   `Page Count`: Number of HTML/SHTML files used in the web application
+    *   `Media Count`: Number of media files used in the application
+    *   `Program Count`: Number of CGI scripts, JavaScript files, Java applets used in the application
+    *   `Total Page Allocation` (`TPA`): Total space allocated for all HTML/SHTML pages
+    *   `Total Media Allocation` (`TMA`): Total space allocated for all media files
+    *   `Total Code Length`: Total number of lines of code for all programs
+2.  **Reuse Metrics**: 
+    *   `Reused Media Count`: Number of reused/modified media files
+    *   `Reused Program Count`: Number of reused/modified programs
+    *   `Total Reused Media Allocation`: Total space allocated for all reused media files
+    *   `Total Reused Code Length`: Total number of lines of code for all reused programs
+3.  **Complexity Metrics**: 
+    *   `Connectivity`: Total number of internal links (excluding dynamically generated links)
+    *   `Connectivity Density`: Connectivity divided by page count
+    *   `Total Page Complexity`: Sum of page complexities
+    *   `Cyclomatic Complexity`: `(Connectivity - Page Count) + 2`
+    *   `Structure`: Measures how the backbone of the application is organized (sequence, hierarchy, or network)
+4.  **Effort Metrics**: 
+    *   `Total Effort`: Elapsed time spent on design and authoring efforts
+    *   `Structuring Effort`: Estimated time to structure an application
+    *   `InterLinking Effort`: Estimated time to create links among pages
+    *   `Interface Planning`: Estimated time to plan the user interface
+    *   `Interface Building`: Estimated time to implement the user interface
+    *   `Link Testing Effort`: Estimated time to test all links on the application
+    *   `Media Testing Effort`: Estimated time to test all media elements
+5.  **Confounding Factors**:
+    *   `Experience`: Authoring/design experience of the developer (scale: 0 - 4)
+    *   `Tool Type`: Type of tool used for web page creation (text-based, WYSIWYG, or semi-WYSIWYG)
+
+#### Methods
+
+To predict web application effort, the researchers employed generalized linear modeling (GLM). They tested different link functions and eventually settled on the identity link due to its simplicity and the near-linearity of the relationships between effort and metrics.
+
+The initial model included all relevant metrics but ultimately narrowed down to the top two significant ones, `Total Page Allocation` and `Total Media Allocation`, after experimenting with various combinations.
+
+The resulting model estimated effort with a gamma-distributed response variable, accounting for the likelihood of extreme variances in effort predictions.
+
+#### Findings and Conclusion
+
+After conducting sensitivity tests with different link functions and verifying the goodness-of-fit statistics, the team validated the reliability of the GLM.
+
+One notable finding was the negative coefficient of `Total Media Allocation`, contradicting expectations; it seemed plausible due to strong outliers affecting the regression coefficients. Nonetheless, the method proved useful in determining realistic intervals rather than exact point estimates for effort predictions.
+
+Furthermore, the team demonstrated that the generalized linear model provided a solid foundation for addressing risk management strategies across various projects, allowing for adaptability and improved decision-making regarding task delegation and staffing.
+
+**Predictors Used:**
+
+Based on the discussion above, the primary predictors utilized for estimating web application effort in this paper are:
+
+*   `Total Page Allocation`
+*   `Total Media Allocation`
+
+Note that the usage of other predictors like `Page Count`, `Media Count`, etc. has been mentioned, but these specific metrics were not retained as statistically significant once refined through model optimization.

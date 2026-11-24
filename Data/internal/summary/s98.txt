@@ -1,0 +1,120 @@
+This study aims to develop a structural equation modeling-based approach for estimating the cost of maintaining web applications. Here is a thorough summary of the paper:
+
+**Background**
+-----------------
+
+The authors aim to improve upon previous studies' limitations, particularly focusing on a relatively small dataset, which led to inaccurate estimates due to overfitting. They chose to employ Bayesian analysis to alleviate this issue.
+
+**Methodology**
+--------------
+
+### Predictor Variables Collection
+
+A literature review identified 17 potential predictor variables related to software maintenance costs, summarized in Table 1. These include attributes like "Web_Object," "App_Req" (application requirements), "App_Reli" (application reliability), and others.
+
+| Indicator | Description       | DataType |
+|-----------|-------------------|----------|
+| Web_Object|                  |          |
+| App_Req   |                   |          |
+| App_Reli  |                  |          |
+
+### Data Collection
+
+Twenty-two questionnaires were distributed to various organizations, collecting data from 222 projects. However, after filtering and cleaning, only 192 datasets remained usable.
+
+### Data Preprocessing
+
+Variables were log-transformed where necessary to achieve normal distributions. Standardization helped prevent domination by individual indicators.
+
+### Factor Analysis
+
+Principal Component Analysis (PCA) was employed to extract four main factors from the original set of 22 variables. Varimax rotation revealed meaningful insights, grouped into three categories:
+ 
+| Factor      | Comprised Indicators                |
+|-------------|------------------------------------|
+| App_Attribue| zApp-Req, zApp_Aging            |
+|             | zApp_Lang_Old                     |
+|             | zApp_Rel_T_Org                    |
+|             | zCMM_Lev                          |
+|             | zL_Web_Object                      |
+| App_difficul| zApp_Comp                        |
+|             | zApp_Plt_Diff                      |
+|             | zApp_Lang-Diff                     |
+| App_reliabilty_modularity | zApp-Reli              |
+|                            | zApp-Modu                        |
+
+These components were labeled as App_Attributes, App_Difficulty, App_Reliability_Modularity, and Maintenance Attribute.
+
+### Structural Equation Modeling (SEM)
+
+The researchers proposed a conceptual model consisting of a single dependent variable (Maintenance Cost; MT_Cost) formed by five independent variables derived from the aforementioned factors (see Figure 1 below):
+
+```markdown
+           Maintenance Cost (MT_Cost)
+               /
+              /         \
+   App_Attributes →
+        \    ._______/
+          ↓  
+App_Difficulty→ MT_Attribute →Maintenance Team Attributes 
+```
+
+The initial SEM models resulted in Chi-Square χ² (12.36 p-value=0.263), RMSEA < 0.05, and Hoelter's N > 150, indicating acceptable fits according to predefined criteria.
+
+After several iterations, they established a most optimal solution as seen in figure 2:
+
+
+
+However, it appears there seems to be missing sections within the diagram.
+
+
+
+They finalized the structural model shown below: MT\_cost = 1.013\* app\_attribute – 0.059 mt\_attribte. 
+
+
+
+### Parameter Refinement through Bayes Analysis
+
+Posterior coefficients via Monte Carlo simulations showed considerable changes between maximum likelihood estimation and Bayesian analyses, as displayed below: 
+
+| Regression weight|Mean |SE |
+|---------------|------|----|
+|Zapp_Lang_old<-App_attributes|0.596|0.001|
+|Zmt_exp<-Mt_attribute|0.805|0.010|
+|mt_cost <- Mt_attribtute|-0.057|0.001|
+|mt_cost<- App_attribute|1.113|0.000|
+|Zapp_rel_t_org <-App_attribute|0.835|0.001|
+|zl_web_object<-App_attribute|1.062|0.001|
+
+
+
+To obtain higher accuracy predictions, these revised regression weights were applied to create new versions of the predictive equations, including eqns (6)-(9): 
+
+
+
+The findings show improved performance compared to traditional methods when predicting software maintenance costs (52.42%) against actual costs recorded across 30 different case studies analyzed.
+
+Here is what you need to know: The predictor variables selected for web effort estimation includes:
+
+* `Web_Object`
+* `App_Req` (application requirements)
+* `App_Reli` (application reliability)
+* `App_Complexity` (app_complexity)
+* `App_Modularity` (app_modularities)
+* `Maintenace Team Capabilities`(maint_team_cap)
+* `Mainteanance Team Experience `(maint_teamp_experience )
+* `Team Coheisiveness` (`team_cohesion`)
+* `Stability` (`stability`) `Maintenance Team Expereince` (maint_team_appexp) `
+*Maintenance Teem Applciations Experiance` (maint_team_appexperience)`Applicaton Platfform Diffuculties` (app_platform_difftfy)`Applicatoin Lanaguage Difficulties` (applilcatoin_language difficuly)`Aplication Age` (app_age)`
+* `Application Langauge Odl `(`app_lang_old)
+* `Relatioship to Organsiation` (relation_to_organization)
+*Cmm Level *(cmmlavel)
+* `Tool Used by Maintanece Teanm` (tool_used_by_mantenance_team )
+
+
+
+
+
+
+
+I hope this detailed answer gives you everything you wanted to learn from this academic article.

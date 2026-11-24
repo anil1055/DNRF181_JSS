@@ -1,0 +1,35 @@
+The paper discusses the challenges faced by software companies in accurately estimating the size of web applications during the development process. To address this issue, researchers propose a simplified method for estimating the size of web applications using a combination of function points from the IFPUG (International Function Point Users Group) and the NESMA (Netherlands Software Metrics Association) approaches. Here's a comprehensive summary of the paper:
+
+**Predictors Used for Effort Estimation:**
+
+1. **Lines of Code (LOC)**: While mentioned briefly, LOC is discussed as a common measure for determining software size, but its limitations are acknowledged due to dependencies on programming languages and difficulty in achieving accuracy without prior project completion.
+2. **Functional Requirements**: Functional requirements are emphasized as essential components for calculating software size, providing elements that can be counted beforehand at the start of the project.
+3. **Data Functions (DF)**: DF represents the functionality provided to users to satisfy both internal and external data requirements, categorized as Internal Logical Files (ILF) or External Logical Files (EIF).
+   * Determination of Data Element Types (DET) and Record Element Types (RET) impacts the calculation.
+4. **Transactional Functions (TF)**: TF signifies the capability offered to customers to handle data; classified as External Inputs (EI), External Outputs (EO), or External Inquiries (EQ); complexity depends on the quantity of DETs and File Type Referenced (FTR).
+5. **General System Characteristics (GSC)**: GSC refers to fourteen broad features assessing overall product performance; however, the authors exclude GSC considerations in favor of simplicity.
+
+**Methods Discussed for Effort Estimation:**
+
+1. **IFPUG Function Points (FP)**:
+	* Developed by IFPUG in 1986 to evaluate software size via six distinct phases: defining counting procedures, identifying counting scope and boundaries, counting data functions, counting transactional functions, adjusting function points, and applying weighting factors.
+	* Calculating adjusted function points involves multiplying weighted values by complexity ratings and summing the products.
+2. **NESMA Function Points**:
+	* Recognized by NESMA as consisting of three types: Detailed, Estimated, and Indicative counts.
+	* Detailed Count mirrors IFPUG's methodology.
+	* Estimated Count omits complexity determination per item and assigns default levels to various items.
+	* Indicative Count focuses solely on ILF and EIF quantities.
+3. **MARK II Function Points**:
+	* Proposed by Charles Symons and initially introduced around 1980.
+	* Considers entire requirements as logical operations derived from input/output parameters, entity relationships, and query queries.
+4. **COSMIC-FFP**:
+	* Created by the Common Software Measurement International Consortium (COSMIC) to improve upon previous efforts' weaknesses.
+	* Designed specifically for managing software engineering standards and evaluating functional size across diverse industries and platforms.
+
+**New Methodology:**
+To simplify the process while minimizing discrepancies with traditional methods, a novel approach was proposed for estimating web application size based on IFPUG function points combined with NESMA-suggested modifications. This involved categorizing data and transactional functions under 'Low Complexity,' thus streamlining the assessment.
+
+**Validation and Results:**
+An empirical study involving 20 web applications demonstrated promising outcomes, indicating minimal discrepancy (average error of 4%) between the proposed simplified method and the detailed IFPUG method. Additionally, further testing revealed comparable success rates relative to NESMA methods. 
+
+In conclusion, the newly devised strategy aims to enhance efficiency and reliability in predicting the required timeframe and human labor investment in web development endeavors.

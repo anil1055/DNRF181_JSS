@@ -1,0 +1,26 @@
+The paper titled "**A Comparison of Development Effort Estimation Techniques for Web Hypermedia Applications**" explores various methods for estimating the effort required to develop web hypermedia applications. Here's a thorough breakdown of the paper:
+
+**Background**: The researchers aim to improve the efficiency of effort estimation for web hypermedia applications. Current methods rely heavily on traditional software metrics, which may not accurately capture the complexities of web development.
+
+**Methodology**: The study utilizes a dataset consisting of 37 web hypermedia projects developed by postgraduate students. Eight independent variables were chosen to represent the projects: Page Count (PaC), Media Count (MeC), Program Count (PRC), Reused Media Count (RMC), Reused Program Count (RPC), Connectivity Density (COD), Total Page Complexity (TPC), and Total Effort (TE). The target variable is Total Effort (TE), representing the entire effort invested in designing and creating a web hypermedia application.
+
+**Comparative Study**: The researchers aimed to evaluate and compare three machine learning algorithms:
+
+1. **Case-based Reasoning (CBR):** Retrieves relevant historical data from a database to predict future outcomes. Four different configurations of CBR were explored:
+	* Feature Subset Selection (FSS)
+	* Different similarity measures: unweighted Euclidean (UE), weighted Euclidean (WE), and maximum measure (MX)
+	* Various numbers of analogies (1, 2, and 3)
+	* Different ways of adapting the analogy: mean, median, and inverse rank-weighted mean
+2. **Linear and Stepwise Regressions (LR/SW):** Statistical methods for establishing relationships between input variables and output variables. 
+3. **Decision Tree-based Model (DTR):** A type of supervised learning algorithm used primarily for classification tasks.
+
+**Results:**
+
+1. **Effectiveness of Feature Subset Selection (FSS) in CBR:** Applying FSS improved prediction accuracy, especially when combined with 1 analogy. This indicates that selecting the most informative attributes enhances performance.
+2. **Choice of Distance Measure in CBR:** Amongst UE, WE, and MX, the weighted Euclidean distance yielded the highest prediction accuracy. Conversely, the maximum measure produced poorer results.
+3. **Evaluation of Algorithms:** After testing the models using two different splits (66% and 86%), the results indicated that:
+	* Regression models demonstrated greater accuracy in terms of MMRE and MdMRE.
+	* However, CBR displayed superior performance in residual plots.
+	* Decision trees exhibited poor results throughout the experiments.
+
+**Conclusion:** The researchers concluded that while different configuration options exist for CBR and other techniques, specific settings yield varying degrees of accuracy. Ultimately, regression models achieved higher MMRE and MdMRE scores, yet CBR excelled in residual plot analysis.

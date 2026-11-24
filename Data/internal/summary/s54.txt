@@ -1,0 +1,23 @@
+The paper titled 'A Replicated Study Comparing Web Effort Estimation Techniques' compares three effort estimation techniques for web application development: Forward Stepwise Regression (SWR), Case-Based Reasoning (CBR), and Classification and Regression Trees (CART). The authors employ a comprehensive dataset called Tukutuku, which comprises 150 web projects from various companies worldwide.
+
+### Predictors Used as Effort Estimators
+
+Based on the paper, the following predictors were used as effort estimators:
+
+For Stepwise Regression:
+- LototalHigh (total number of high-effort features/functions)
+- LNewWP (natural logarithm of total number of new Web pages)
+- LDevTeam (natural logarithm of the size of a project's development team)
+- Proimpry (process improvement program indicator)
+- LNewImg (natural logarithm of the total number of new images created)
+- Lnlang (natural logarithm of the number of used development languages)
+
+For Case-Based Reasoning:
+- Various size and functional measures, such as length and functionality indicators (including the number of Web pages, images, and links)
+- Similarity functions, like Euclidean distance
+- Adaptation strategies, such as selecting the effort value of the most similar project, averaging efforts among top similar projects, etc.
+
+For Classification and Regression Trees:
+- Multiple variables listed in tables 2 and 3, including country, establishment year, number of developers, project type, development languages, documentation procedures, and others.
+
+Additionally, the authors utilized non-parametric methods to evaluate the accuracy of the effort estimation techniques, including the mean magnitude of relative error (MMRE), median magnitude of relative error (MdMRE), and prediction at level 25 (Pred(25)). They found that the effort estimation techniques presented similar predictions and performed better than using the mean effort.

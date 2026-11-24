@@ -1,0 +1,43 @@
+Based on the provided research paper "Effort Estimation of Web Applications through Web CMF Objects", the authors propose a novel methodology called Web CMF Objects for estimating the effort required to develop web applications using Content Management Frameworks (CMFs).
+
+Here's a comprehensive breakdown of the paper's content:
+
+1. Introduction:
+	* The introduction highlights the importance of effort estimation in software development, particularly for web applications.
+	* Current efforts estimation models do not accurately capture the complexities of web application development.
+	* The authors aim to address this gap by introducing a new methodology, Web CMF Objects, tailored to estimate effort for web applications developed with CMFs.
+2. Overview of Existing Models:
+	* The authors discuss various cost models and estimation approaches used in software development, highlighting the limitations of existing models for web application development.
+	* They note that common functional-size measurements, such as Function Points (FP) and COCOMO, are inadequate for web application effort estimation.
+3. Proposed Methodology: Web CMF Objects:
+	* The authors describe the Web CMF Objects methodology, comprising two primary phases:
+		+ Phase 1: Size Estimation
+			- Identify distinct elements contributing to the size of the web application, categorized as either general elements or specific functionalities.
+			- Assign complexity degrees to each element based on factors like context, customization, and implementation difficulties.
+		+ Phase 2: Identification of the Cost Model
+			- Determine the cost model specific to the organization, taking into account factors like software development languages, team member expertise, software reuse, and development experience.
+4. Key Components:
+	* General Elements: Preliminary analyses, planning activities, and essential structural elements for the application.
+	* Specific Functionalities: Interactions between the application and user, focusing on unique features and database interactions.
+	* Complexity Degrees: Four categories (low, medium-low, medium-high, and high) assigned to each element based on the context and implementation details.
+	* Tables I-VII outline the individual elements, their definitions, and examples.
+5. Empirical Validation:
+	* The authors test the Web CMF Objects methodology on a dataset consisting of nine projects from three different Italian software companies.
+	* They collect data on project requirements, original estimations, and final development effort for each project.
+	* Results demonstrate that the methodology produces excellent outcomes, achieving a Magnitude of Relative Error (MRE) close to zero for most projects.
+6. Comparison with Other Methods:
+	* The authors compare their results against industry-standard effort estimation methods (such as Function Points, COCOMO, and Revised Web Objects) and find significant improvements in accuracy.
+7. Conclusion:
+	* The Web CMF Objects methodology offers improved effort estimation capabilities for web applications developed with CMFs.
+	* Future research directions involve further validating the methodology across diverse datasets and exploring potential extensions to handle emerging trends in web development.
+
+Predictors Used as Effort Estimators:
+
+The Web CMF Objects methodology employs the following predictors as effort estimators:
+
+1. **General Elements**: Identified elements contributing to the size of the web application, including preliminary analyses, planning activities, and essential structural elements.
+2. **Specific Functionalities**: Unique features and database interactions between the application and user.
+3. **Complexity Degrees**: Factors influencing the ease of implementation, such as context, customization, and implementation difficulties.
+4. **Cost Drivers**: Parameters defining the cost model for a specific organization, including software development languages, team member expertise, software reuse, and development experience.
+
+These predictors enable the Web CMF Objects methodology to effectively assess the effort required to develop web applications utilizing Content Management Frameworks.

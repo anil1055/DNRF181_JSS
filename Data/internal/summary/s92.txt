@@ -1,0 +1,22 @@
+Summary:
+The paper titled "Web Components as a Measure for Estimating Effort and Size of Web Applications" proposes a new model called Web Component Model for estimating the effort and size of web applications. The authors aim to overcome the limitations of existing methods for estimating the size and effort of web applications due to the rapid evolution of internet technologies and the growing importance of web applications.
+
+The researchers conducted a thorough investigation of existing efforts in software measurement and identified several challenges in applying traditional methods to web applications, particularly those involving multimedia elements, web services, and evolving technologies. They aimed to create a framework that addresses these complexities while leveraging established principles from software measurement.
+
+Key Contributions:
+1. Introduction of the Web Component Model: 
+   The article presents a novel method for measuring the effort and size of web applications by utilizing 'Web Components'. These components encompass multimedia files, web building blocks, scripts, and links (XML, HTML, and Query Language Lines). This comprehensive view enables a detailed examination of various factors contributing to web application development, leading to improved estimation accuracy.
+
+2. Development of Web Component Calculations:
+    The authors propose employing a modified version of Halstead's equation to calculate the volume of work required for each type of web component, resulting in a more refined assessment of web application size and effort.
+    
+3. Extension of Function Points:
+   The paper extends the function point technique to suitably accommodate web-specific characteristics like multimedia, web building blocks, and scripting elements through the inclusion of four additional predictor variables.
+
+4. Definition of Web Component Prediction List:
+    A list of twelve essential components is introduced as part of the Web Component Model, allowing users to gauge how effectively the web developers manage multiple features like navigation, graphical items, reusability, and others when calculating sizes.
+
+5. Identification of Suitable Weightage Assignments:
+    By establishing weights for every single aspect under the control of the programmer during the project implementation phase provides more precise measurements of tasks necessary to build particular parts of the website.
+
+Implementation of the Web Component Model involves determining the individual predictors' numbers by assessing user demands and layout specifications. Thereafter, the total effort may be calculated using the formula provided above. Finally, this helps businesses forecast potential expenses before beginning projects by evaluating resource usage.

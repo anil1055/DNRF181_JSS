@@ -1,0 +1,52 @@
+The paper "Empirical Evaluation and Prediction of Web Applications' Authoring Effort" aims to empirically evaluate a set of proposed effort metrics for predicting the effort involved in authoring web applications. The researchers conducted a case study involving 71 computer science students who built web applications as part of their coursework. The objective of the case study was twofold: to investigate the feasibility of the proposed metrics and to develop a generalized linear model (GLM) for predicting the effort required to build web applications.
+
+**Case Study Description**
+
+The case study involved administering two questionnaires to the participants. Questionnaire Q1 assessed the respondents' web-authoring experience, while Q2 gathered data on the characteristics of the web applications they built and the time spent building them. The participants were divided into two categories based on their experience levels: Low Experience Level (LEL) and High Experience Level (HEL).
+
+**Variables Used in the Case Study**
+
+Several variables were used in the case study:
+
+1.  **Hyperdocument Size**: Refers to the number of documents (HTML files) in the web application.
+2.  **Reuse Documents**: Measures the number of HTML files copied from existing sources without modification.
+3.  **Connectivity**: Represents the number of links between documents in the web application.
+4.  **Perceived Compactness (P-Compactness)**: Estimated by users as a score from 1 (disconnected) to 5 (highly interconnected).
+5.  **Perceived Stratum (P-Stratum)**: Assessed as a score from 1 (no structured reading path) to 5 (strongly structured reading path).
+6.  **Application Structure**: Classified into sequence, hierarchy, or network structures.
+7.  **Elapsed Time**: Measured as the total time spent creating the web application.
+
+These variables served as potential predictors for the effort involved in authoring web applications.
+
+**Validating the Case Study**
+
+The authors evaluated the case study against three criteria for evaluating the validity of an empirical study: construct validity, internal validity, and external validity.
+
+*   **Construct Validity:** Addressed concerns regarding the accuracy of the instruments and measurements used. While acknowledging limitations like the reliance on self-reported estimates, the researchers felt that these biases could be mitigated and acknowledged.
+*   **Internal Validity:** Examined the potential impact of extraneous variables affecting the outcome. Confounders like varying participant skill levels, maturation effects from increased familiarity with web-building techniques, and differences in tools usage were addressed.
+*   **External Validity:** Considered the applicability of the results beyond the confines of the current study. Potential limitations include sample bias towards education-based scenarios and relatively simple application sizes.
+
+**Developing the Generalized Linear Model (GLM)**
+
+Based on the insights gained from analyzing the data, the researchers employed a Generalized Linear Model (GLM) to predict the effort invested in web application construction. Key features of the GLM incorporated:
+
+1.  Response Variable (y): Represented the elapsed time allocated for creating the web application.
+2.  Explanatory Variables:
+    *   \(X_1\): Experience level (low vs. high)
+    *   \(X_2\): Application size (new documents count)
+    *   \(X_3\): Connectivity (link counts)
+    *   \(X_4\): Reuse documents count
+    *   \(X_5\) and \(X_6\): Perceived compactness and percieved stratum respectively 
+    *   \(X_7\): Application structure type (sequence, hierarchy, or network)
+3.  Distribution Selection: The response variable (\(Y\)) followed a gamma distribution, accounting for right-skewed outcomes typical in software development efforts.
+4.  Transformation Function: A log-transformation was adopted to map the expected value of Y to a linear representation of the explanatory variables.
+
+**Findings and Implications**
+
+The resulting GLM indicated that three primary factors significantly influenced the predicted effort for authoring web applications:
+
+1.  Experience level (Experience)
+2.  Number of new documents added to the application (Size)
+3.  Connectivty (links count)
+
+While initially considering additional variables such as perceived compactness and stratum, the Akaike's Information Criteria led to selecting just these three as essential contributors to the model. Furthermore, a significant factor was observed for the experience level category, indicating lower-experienced developers needed around 1.15 times longer to accomplish equivalent tasks compared to higher-experienced counterparts.

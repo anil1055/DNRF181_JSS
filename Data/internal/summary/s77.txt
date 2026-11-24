@@ -1,0 +1,53 @@
+Here's a thorough summary of the research paper "Estimating Web Application Development Effort Using Web-COBRA and COSMIC: An Empirical Study" by Filomena Ferrucci, Carmine Gravino, Sergio Di Martino.
+
+**Background**: 
+The paper discusses the importance of accurately estimating the effort required for developing web applications. Various techniques have been proposed to achieve this; however, there is still room for improvement. The authors focus on evaluating the effectiveness of the Web-COBRA method, which combines expert opinions with a formal modeling technique, specifically with the COSMIC method, to measure the functional size of a software system.
+
+**Previous Research**: 
+Only one prior study has evaluated the effectiveness of Web-COBRA, which utilized the Web Objects measure. Although the results were promising, multiple investigations are needed to validate the usability of effort estimation approaches. Furthermore, the usage of alternative size metrics combined with Web-COBRA has not been extensively researched.
+
+**Research Questions**: 
+The primary objective of the current investigation is to examine the efficiency of Web-COBRA when paired with the COSMIC metric. Additionally, the study aims to explore whether combining functional aspects of a software program (captured by COSMIC) with other factors identified via Web-COBRA leads to improved effort estimation outcomes.
+
+**Methodology**: 
+For this study, the authors utilize a quantitative approach, focusing on an exploratory design with a moderate sample size of fifteen web-based applications created by an Italian software firm. Web-COBRA involves three stages:
+1. Establishing a framework of essential features and factors affecting the development costs of an online app within the chosen industry.
+2. Collecting input from subject matter specialists on the relative weightage of each element within this established framework. Triangular probability distributions are used to represent the variability in specialist opinion on these items' influences.
+3. Developing an algorithm utilizing ordinary least squares regression (OLS) to compute the link between these weighted factors and expected expenses.
+Using the collected data, the researchers formulate a predictive formula for determining project expenditure.
+
+**Evaluation criteria**: 
+To gauge the efficacy of the methodology, the investigators employ common indicators like Mean Absolute Percentage Error (MAPE), Median Average Error (MdAPE), and Prediction Level 0.25 (Pred(0.25)). The evaluation considers both the precision of individual projections and aggregated performance against benchmarks of the average and median historical expenditures.
+
+**Results**: 
+The experiment yields favorable findings, revealing that Web-COBRA is effective in projecting web application development expense when integrated with COSMIC. Specifically:
+- MAPE (average absolute percentage deviation) scores demonstrate considerable conformity to accepted norms (<0.30).
+- MdAPE and Pred(0.25) figures indicate satisfactory overall agreement, demonstrating reasonable precision in projected versus actual prices.
+By comparison to earlier experiments using the Web Objects measure, the contemporary study presents enhanced estimation quality. These results contribute evidence of the potency of the blended approach of using Web-COBRA alongside COSMIC for predicting web application production expenses.
+
+**Implications**: 
+This research offers valuable insights regarding the applicability and efficiency of the Web-COBRA strategy combined with the COSMIC measure for anticipating web application creation expenses. The comprehensive experimentation suggests the strong potential of integrating both methodologies in generating precise predictions. The results show that combining the strengths of the Web-COBRA system (combines human judgment with a structured analytical framework) and the COSMIC method (provides detailed measurements of a software product's functional dimensions) enhances the forecasting capabilities in this area.
+
+**Conclusion**: 
+Given the results from this empirical analysis, using Web-COBRA along with COSMIC demonstrates great promise for providing efficient forecasts of web application growth effort. Future research directions include extending the existing examination with diverse populations, examining variations in application functionality, exploring distinct combinations of methodologies and measures, and continually refining the integration between Web-COBRA and COSMIC.
+
+From the given paper, the predictors used for estimating web application development effort are:
+
+1.  CosMIC - Common Software Metric Standard for measuring software functions.
+2. Cost Factors (described below)
+
+Cost Factors:
+
+1. Importance of Software Portability
+2. Importance of Software Reliability
+3. Importance of Software Usability
+4. Importance of Software Efficiency and Performance
+5. Novelty of Technologies
+6. Integration/ Interaction with Legacy Systems
+7. Temporal Overlap with other Projects
+8. Productivity of Adopted Technological Platform
+9. Developer's Technical Capabilities
+
+Each cost factor is assigned a rating on a scale of 0-3 representing varying levels of influence, allowing the model to capture nuanced impacts on the project's development effort.
+
+The full explanation of the cost factors can be seen in table II and technical document referenced hereinafter.

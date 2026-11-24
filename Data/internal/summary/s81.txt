@@ -1,0 +1,35 @@
+After analyzing the contents of the research paper "Web Cost Estimation and Productivity Benchmarking," I've compiled a list of the predictors used for estimating web application effort.
+
+Predictors Used for Estimating Web Application Effort:
+
+1.  **Application Size**: 
+    - Total number of Web pages (totwp)
+    - Total number of new Web pages (newwp)
+    - Total number of images (images)
+    - Total number of new images (imgnew)
+    - Features Off-The-Shelf (FOTS)
+        • Reusable features (FOTS)
+        • High-Effort FOTS (highfota)
+            o Number of reusable high-effort features (hfotsa)
+        • New High-Effort features (hnew)
+            o Number of newly-developed high-effort features/new functionalities (hnew)
+        • Low-Effort FOTS (foresa)
+            o Number of reusable low-effort features (fotsa)
+        • Newly Developed Low-Effort features (newlows)
+            o Number of newly-developed low-effort features/new functionalities (new)
+
+2.  **Team Characteristics**
+    - Team Experience (teamexp): Average team experience with the development language(s) employed.
+    - Team Size (devteam): Size of a project’s development team.
+    - Developers' average number of years of experience with the development tools employed.
+
+3.  **Project Attributes**
+    - Type of project (typeproj): Whether the project is either 'new', 'enhancement,' or other types.
+    - Implementation Languages (langs): Programming languages used during development.
+    - Documented process (docproc): Whether the project followed a defined and documented process.
+    - Process Improvement Programme (imprproc): Whether the project team participated in a process-improvement program.
+    - Software Metrics Programmes (metricsprog): Whether the project team participated in a software-metrics program.
+
+
+
+The researchers conclude that the chosen predictors for estimating web application effort in this paper are size, team characteristics, and project attributes.

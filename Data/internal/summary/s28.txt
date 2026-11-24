@@ -1,0 +1,21 @@
+To answer what predictors are used for estimating web application effort in the paper "Using Web Objects for Estimating Software Development Effort for Web Applications," let us break down the content of the paper.
+
+Firstly, the authors investigate the suitability of a size measure for web development projects called Web Objects for predicting effort. They compare it against traditional Function Points. The researchers choose Allette Systems, a small Australian software development company specializing in developing web-based systems, as the subject of their investigation. From this company, they gathered data from twelve completed web applications. Each project had unique features and complexities that catered to their respective clients' needs.
+
+To begin analyzing the paper, the author mentions various ways of calculating the size of a software project. Problem-oriented measures include those focused on defining elements that could be counted from early life cycle documents, such as state charts, data flow diagrams, or entity-relationship models. Some examples of these measures are Function Points, Object Oriented Function Points (OOFP), and Full Function Points (FFPs).
+
+Now regarding specific effort estimations for web applications, the paper identifies the following:
+
+1.  **Function Points**: Introduced by Albrecht and Gaffney, it captures the size of a software product in terms of its functional characteristics. Five types of functions exist: internal logical files, external interface files, external inputs, outputs, and inquiries. According to the study, the Function Point counts show comparable figures for transactions (inputs, outputs, and inquiries).
+2.  **Full Function Points (FFPs)**: Developed for integrating CASE environments, they allow users to adjust the counting rules to suit the specifications of the system being estimated.
+3.  **Cosmic FFP**: Designed for real-time systems and integrated computerized maintenance information capability (COSMIC) standards, it involves identifying and enumerating every operation executed during the execution of a transformation of the system.
+4.  **Lines Of Code (Loc)**: Commonly used to measure program length, although it faces criticism due to variability across languages and styles.
+5.  **Object-Oriented Function Points (OOFP):** Used primarily for measuring MIS, it takes into consideration the complexity of objects rather than just their quantity.
+6.  **Feature Points:** Proposed to estimate effort for non-MIS applications, it considers individual feature points as part of the total system size.
+7.  **Web Objects:** Specifically developed for estimating web applications, it extends the concept of Function Points to incorporate web-specific components, consisting of multimedia files, web-building blocks, scripts, and links.
+
+Amongst the efforts described above, the article investigates the effectiveness of two approaches: Function Points and Web Objects, and compares the outcomes against human expertise from the organization.
+
+The study aims to explore if these measurements produce accurate effort predictions for web applications. Ultimately, the findings demonstrate that the sizes estimated through the Web Objects metric generally produces more precise effort predictions than the Function Points measure. Henceforth, providing strong basis for concluding that the tailor-made size measure referred to as Web Objects possesses advantages over conventional Function Points.
+
+By breaking down the steps and examining the structure of the research paper, the predictors utilized for estimating web application effort can be clearly identified. The critical details lie in utilizing appropriate size measures that fit the specificity of web applications to obtain reliable forecasts.

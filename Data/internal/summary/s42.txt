@@ -1,0 +1,60 @@
+This paper explores the topic of effort estimation in web application development. Here's a thorough breakdown of the contents and findings:
+
+**Summary**
+
+The authors conducted an empirical analysis to investigate the suitability of specific size measures and modeling techniques for estimating web development effort. They collected data from 15 web projects developed by an Italian software company and analyzed the relationships between different size measures and actual effort expended during development.
+
+**Predictors Used for Estimating Web Application Effort**
+
+According to the paper, the following predictors were used to estimate web application effort:
+
+1. **Length Measures**: These include:
+	* Number of web pages (WPA)
+	* Number of new web pages (NWPA)
+	* Number of multimedia elements (Me)
+	* Number of new multimedia elements (N_ME)
+	* Number of client-side scripts and applications (CSAPP)
+	* Number of server-side scripts and applications (SSApp)
+	* Number of internal links (IL)
+	* Number of external references (EL)
+2. **Functional Measures**: These include:
+	* Number of external inputs (EI)
+	* Number of external outputs (EO)
+	* Number of external queries (EQ)
+	* Number of internal logical files (ILF)
+	* Number of external interface files (EIF)
+	* Number of web building blocks (WBB)
+	* Number of multimedia files (MMF)
+	* Number of scripts (Scr)
+	* Number of links (Lin)
+
+These size measures were categorized into two groups: Length Measures and Functional Measures.
+
+**Methods Employed**
+
+The authors explored the following methods to estimate web application effort:
+
+1. **Multiple Linear Regression (MLR)**: This method involves creating a mathematical equation that predicts effort based on the size measures.
+2. **Forward Stepwise Regression (FSR)**: Similar to MLR, but involves selecting the most influential size measures iteratively.
+3. **Regression Tree (RT)**: A machine learning algorithm that splits the data into subsets based on size measures.
+4. **Analogy-Based Estimation (AE)**: Estimates effort based on similarities between past projects and the current project.
+5. **Combination of Regression Tree and Linear Regression (CRTL)**: Combines the strengths of RT and MLR to improve prediction accuracy.
+6. **Combination of Regression Tree and Analogy-Based Estimation (CRTE)**: Combines the strengths of RT and AE.
+
+**Results**
+
+The authors evaluated the predictive power of each method using various metrics, including Magnitude of Relative Error (MMRE), Median of Absolute Deviation (MdMRE), and Percentage of Actual Values within ±25% (Pred). The results showed that:
+
+1. **Best Results with Length Measures**: Combination of Regression Tree and Analogy-Based Estimation (CRTE) produced the best results, particularly with 3 analogies and inverse distance-weighted mean as the adaptation strategy.
+2. **Best Results with Functional Measures**: Forward Stepwise Regression (FSR) yielded the best results, specifically with External Input as the primary predictor.
+
+Overall, the study highlights the importance of carefully choosing the correct size measures and modeling techniques for estimating web development effort accurately.
+
+Key takeaways from the paper:
+
+1. **Use a combination of Regression Tree and Analogy-Based Estimation (CRTE)** for optimal results with Length Measures.
+2. **Employ Forward Stepwise Regression (FSR)** for Functional Measures.
+3. **Select the correct size measures**, focusing on either Length Measures or Functional Measures depending on the specific context.
+4. **Consider adapting the Adaptation Strategy** in Analogy-Based Estimation to achieve better results.
+
+Keep in mind that the conclusions drawn here are based solely on this specific paper; additional research would likely yield varying insights. Always refer back to the original source material whenever possible!

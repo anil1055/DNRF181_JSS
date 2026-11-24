@@ -1,0 +1,44 @@
+Summary:
+
+The paper "Applying Knowledge Elicitation to Improve Web Effort Estimation: A Case Study" presents a case study on applying Bayesian Networks (BNs) to improve web effort estimation. The authors aimed to create an expert-based web effort estimation model using the knowledge of a web project manager from a well-established web company in Auckland, New Zealand.
+
+Methodology:
+
+The researchers adopted the Knowledge Engineering of Bayesian Networks (KEBN) process to develop the BN model. Three main steps were performed: structural development, parameter estimation, and model validation.
+
+1.  Structural Development: 
+    * Identified the factors (nodes, variables) and causal relationships essential for web effort estimation using the KEBN process.
+    * Utilized the Tukutuku dataset as a starting point to elicit the web effort BN's structure.
+    * Sketched the variables on a whiteboard, explaining their meanings, removing irrelevant variables, and documenting factor descriptions.
+    * Determined the states that each factor would take, ensuring they were discrete.
+    * Documented effort ranges for measures of effort to prevent future ambiguity.
+2.  Parameter Estimation: 
+    * Used expert elicitation to gather conditional probabilities describing the relationships between variables.
+    * Employed sensitivity analysis reports to determine which nodes to adjust first whenever mismatches occurred.
+3.  Model Validation:
+    * Conducted model walkthrough to evaluate the BN's performance against real-case scenarios provided by the domain expert.
+    * Performed predictive accuracy evaluation using historical data from 22 past projects representing various sizes and complexity levels.
+    * Adjusted probabilities and recalculated efforts until the model matched actual efforts for all 22 projects except five medium-sized projects and one large project.
+
+Key Findings:
+
+The constructed BN model consisted of 16 factors and 16 causal relationships, focusing on web software applications. After completing the model in December 2009, it showed improved effort estimates compared to the domain expert's previous attempts. Since its implementation, the BN model has been successfully utilized to estimate effort for new projects. However, the largest challenge lay in the lengthy elicitation process, taking approximately 126 person-hours. Future work aims to address this limitation by investigating alternative elicitation strategies.
+
+Important Points:
+
+*   Key predictors used in the BN model for web effort estimation:
+    *   Type of Project (new or enhancement)
+    *   Number of Different Development Languages Used
+    *   Followed Defined and Documented Process
+    *   Team Experience With the Development Language(s) Employed
+    *   Total Number of Web Pages (New and Reused)
+    *   Total Images Created (New and Reused)
+    *   Number of Features Reused Without Adaptation
+    *   Number of High-Effort Features Adaptable
+    *   Number of New High-Effort Features Developed
+    *   Total Number of High-Effort Features
+    *   Animation Programming
+    *   Feature Programming
+    *   Overall Complexity of Features
+    *   Project Management
+    *   Front-end Design

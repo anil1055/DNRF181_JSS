@@ -1,0 +1,49 @@
+Based on the provided research paper "Effort Estimation: How valuable is it for a Web company to use a cross-company data set, compared to using its own single-company data set?" by Emilia Mendes, Sergio Di Martino, Filomena Ferrucci, and Carmine Gravino, the researchers investigate whether a cross-company data set is beneficial for a web company to use for effort estimation, compared to using its own single-company data set.
+
+Here is a detailed summary of the paper:
+
+**Research Questions:**
+
+1. How successful is a cross-company data set at estimating effort for projects from a single company?
+2. How successful is the use of a cross-company data set, compared to a single-company data set, for effort estimation?
+
+**Methodology:**
+
+The authors analyzed data from the Tukutuku database, which consists of 150 Web projects from various countries, including New Zealand, Brazil, Italy, Spain, United States, England, and Canada. The data includes 25 variables related to application and development process attributes.
+
+For the purpose of this study, the authors used 83 Web projects from the Tukutuku database, consisting of 15 projects from a single company and 68 projects from 25 different companies. They employed two effort estimation techniques: Forward Stepwise Regression (FSWR) and Case-Based Reasoning (CBR).
+
+**Predictors Used:**
+
+Several predictor variables were used in the study, primarily focusing on organizational-level and project-level factors. Some of the notable predictors include:
+
+1. Number of People Working on Web Design and Development (#people WD)
+2. Total Number of Languages Used (#Language)
+3. Average Team Experience with Development Language (#language exp.)
+4. Size of a Project's Development Team (#Development Team)
+5. Total Number of Web Pages (#total WP)
+6. Total Number of Images Created (#images created)
+7. Features Reused Without Adaptation (#Features Reused)
+8. High-Effort Features Adapted (#High-effort features adapted)
+9. Low-Effort Features Adaptable (#Low-effort features adaptable)
+10. Actual Total Effort in Person-Hours (#actual effort)
+11. Estimated Total Effort in Person-Hours (#estimated effort)
+
+Additionally, some numerical transformations of these variables were performed, specifically the Natural Logarithmic Transformation, denoted by 'LN' prefix, due to skewness concerns.
+
+**Findings:**
+
+Using Forward Stepwise Regression (FSWR):
+
+*   For the cross-company model, the best-fitting equation accounted for approximately 79% of the variance in effort (R² = 0.789). 
+    The independent variables included `Log(Total WP)` (slope coefficient of 0.576), `log(Number of Languages)` (slope coefficient of 1.450), `Log(New Images)` (slope coefficient of 0.365), `Log(Average Team Experience)` (slope coefficient of 1.373), and `Log(Size of Development Team)` (slope coefficient of 1.027).
+    
+*   When checked against the single-company data set, the predictions based on the cross-company model were not satisfactory, exhibiting poor prediction accuracy (MMRE = 85.86%). Specifically, Mean Absolute Percentage Error (MAPE) and Median Absolute Percentage Error (MedAPE) exceeded acceptable thresholds, suggesting room for improvement. 
+    
+
+Using Case-Based Reasoning (CBR):
+  
+*   Predictions from the CBR approach based on the cross-company data set resulted in comparable predictive errors to those produced by the regression-based cross-company model, yielding unsatisfactory outcomes. On the other hand, the CBR employing the single-company data set offered promising insights, closely matching predictions derived from the single-company regression model.
+
+**Conclusion:** 
+Considering the findings from this research study, the evidence suggests that using a cross-company data set might not yield reliable effort estimation for individual companies. Instead, utilizing company-specific data sets appears to offer superior results, as seen through the reduced prediction error margins relative to cross-company datasets. Although these outcomes align partially with prior investigations, discrepancies exist regarding certain aspects, notably the performance of Case-Based Reasoning methods. Future endeavors could explore ways to improve the reliability of cross-company data-driven effort forecasts.

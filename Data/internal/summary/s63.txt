@@ -1,0 +1,36 @@
+Based on the provided research paper "Comparative Study on Applicability of WEBMO in Web Application Cost Estimation within Klang Valley in Malaysia", I'll provide a comprehensive summary of the paper, highlighting the predictors used for estimating web application effort.
+
+**Summary:**
+
+The paper explores the applicability of the Web Model (WEBMO) in web application cost estimation within Klang Valley in Malaysia. The researchers aimed to develop a parametric web application cost estimation tool called WEBCOMO based on WEBMO principles.
+
+Here's a brief overview of the research steps:
+
+1.  **Problem Statement:** The authors investigated the current state of software cost estimation in Malaysia and found that many organizations rely heavily on expert judgment and estimation by analogy.
+2.  **Research Design**: An exploratory case study research design was employed, involving single-case studies with multiple iterations.
+3.  **Methodology**: The researchers surveyed 16 samples among 8 respondents from various industries in Klang Valley, using online questionnaires and phone interviews. The results showed that parametric tools like WEBMO had low acceptance rates among Malaysian developers.
+4.  **Evaluation Mechanism**: The researchers used qualitative analysis through one-to-one interviews to assess the usability and effectiveness of WEBCOMO in real-world scenarios.
+
+**Predictors Used for Effort Estimation:**
+
+While the paper doesn't explicitly mention any predictors specifically, we can infer several relevant ones from the discussion around WEBMO and WEBCOMO. Here are some potential predictors that can be inferred:
+
+1.  **Function Points**: Mentioned in Section 3.1, Function Point Analysis is likely considered a predictor variable when applying WEBMO to calculate estimated effort and duration.
+2.  **Object-Oriented Factors**: WEBMO uses object-oriented concepts such as classes, methods, and attributes to break down complex systems. Although not directly related to traditional predictors, these components contribute to calculating overall complexity and ultimately impact effort estimation.
+3.  **Cost Drivers**: WEBMO considers various cost drivers associated with web application development, such as hardware, software, personnel, training, documentation, maintenance, operation, transportation, risk, communication, user support, facilities, miscellaneous costs, etc.
+4.  **Input Parameters**: When computing effort estimates using WEBCOMO, certain input parameters come into play, including:
+    *   number of interfaces
+    *   type of database
+    *   level of security required
+    *   degree of modularity
+    *   amount of legacy code integration
+    *   extent of internationalization/localization needed
+5.  **Project-Specific Variables**: As discussed in the conclusion, variables unique to individual projects, such as developer experience, technology stack, and project scope changes, undoubtedly influence effort predictions.
+
+
+
+These predictors serve as the foundation upon which WEBMO calculates estimated effort and duration in web application development. By analyzing these aspects of web application characteristics, developers gain valuable insights necessary for efficient resource allocation, budget planning, and project scheduling.
+
+Please note that the original text did not detail what predictors were used as independent variables. We made our own educated guesses on those items that seemed reasonable.
+
+For more precise answers, consider looking at other sources that describe how WEBMO works. If you're still unsure or require clarification regarding something else, please don’t hesitate to ask!

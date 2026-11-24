@@ -1,0 +1,87 @@
+Based on the research paper titled "**Comparing Effort Prediction Models for Web Design and Authoring using Boxplots**," the following is a comprehensive summary of the paper's content:
+
+## Abstract
+
+The abstract highlights the significance of realistic effort estimates in managing software projects, particularly in the context of web development. Realistic estimates enable project managers and organizations to allocate resources efficiently. To achieve this, predicting effort accurately becomes essential in various stages of the project lifecycle, including authoring, design, testing, and overall web development. The paper compares two effort prediction models, linear regression and stepwise multiple regression, using a case study evaluation involving student participants who designed and authored web applications. The comparison aims to assess the predictive capabilities of the two models.
+
+## Introduction
+
+The introduction emphasizes the importance of effort estimation in software development, citing the need for realistic estimates to inform decision-making throughout the project lifecycle. The authors discuss the history of effort estimation, mentioning the reliance on expert judgment, algorithmic models, and analogy-based estimation. The authors focus on algorithmic models, noting their advantages but acknowledging the requirement for calibration or adaptation to specific contexts.
+
+## Background
+
+The section delves deeper into the concept of effort estimation, discussing various approaches and categorizations. It identifies three primary approaches: expert judgment, algorithmic models, and analogy. Algorithmic models rely heavily on representing the relationship between effort and one or more project characteristics, commonly focusing on software size as the primary cost driver. Other notable examples mentioned include the COCOMO model, SLIM model, and function points.
+
+## Measuring Effort for Web Authoring and Design
+
+The chapter explains the methodology behind the case study evaluation, drawing upon the Conceptual Framework for Software Measurement by Fenton and Pfleeger. The framework consists of classifying entities, determining measurement objectives, and establishing the organization's level of maturity. For the case study, the researchers selected level 1 or 2 maturity levels in the Web application development community.
+
+The study gathered data from forty-three computer science students tasked with creating web applications under the guidance of the Cognitive Flexibility Theory (CFT) principles. Students answered questionnaires regarding their web-authoring experience, characteristics of the created applications, and the effort invested in designing and authoring them.
+
+## Entities Attributes
+
+The table describing the entities and attributes measured includes:
+
+* Product Entity: page count, media count, program count, etc.
+* Process Entity: Total Effort, Structuring Effort, Interlinking Effort, etc.
+* Resource Entity: Experience and Type of Tool Used.
+
+## Case Study Evaluation Description
+
+The study comprised a structured task for students to create web applications using the CFT principles. Data collection included two questionnaires capturing web-authoring experience, application features, and the time spent on design and authoring. Four out of fifty-seven responses contained missing crucial information and were discarded.
+
+## Metrics Collected During the Case Study
+
+Key metrics collected included:
+
+* Size-related metrics (page count, media count, program count, etc.)
+* Structural metrics (connectivity density, cyclomatic complexity, etc.)
+* Time metrics (total effort, structuring effort, interlinking effort, etc.)
+
+## Validity of the Case Study
+
+Potential limitations of the case study involve difficulty in measuring complex concepts like design and authoring effort, potential bias in representing professional practices among students, and concerns with sample scalability and generalization across different domains.
+
+## Estimation Process
+
+The authors utilized linear regression and stepwise multiple regression to establish effort prediction models for web design and authoring. Both techniques aim to elucidate the connection between input parameters (metrics) and output (actual effort).
+
+## Comparing the Prediction Models
+
+By employing residual boxplots, the study found that stepwise regression tended to underestimate effort while linear regression overestimated it. Despite neither achieving perfect accuracy, stepwise regression displayed relatively superior outcomes.
+
+## Conclusions and Future Work
+
+Despite encountering challenges in accurately modeling effort, the study contributes insights toward refining effort prediction for web application development. Recommendations point towards incorporating additional techniques like Generalized Linear Modeling (GLM) and Case-Based Reasoning to enhance prediction precision.
+
+Predictors used as effort estimators in the paper's research include:
+
+1. **Size-related metrics**: 
+	* Page count
+	* Media count
+	* Program count
+	* Total page allocation
+	* Total media allocation
+	* Total code length
+	* Reused media count
+	* Reused program count
+	* Total reused media allocation
+	* Total reused code length
+2. **Structural metrics**: 
+	* Connectivity
+	* Connectivity density
+	* Total page complexity
+	* Cyclomatic complexity
+3. **Time metrics**:
+	* Total effort
+	* Structuring effort
+	* Interlinking effort
+	* Interface planning
+	* Interface building
+	* Link testing effort
+	* Media testing effort
+4. **Other metrics**:
+	* Experience (measured via self-assessment)
+	* Type of tool used
+
+Overall, the study suggests that integrating structural and temporal components alongside traditional size metrics could lead to enhanced effort forecasting accuracy.

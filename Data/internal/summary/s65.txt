@@ -1,0 +1,44 @@
+Based on the provided paper titled "The Use of Bayesian Networks for Web Effort Estimation: Further Investigation," written by Emilia Mendes, the authors aimed to explore the effectiveness of Bayesian Networks (BNs) in predicting web application effort. Below is a thorough breakdown of the paper's contents, focusing particularly on the predictors used for estimating web application effort.
+
+**Introduction**: 
+The paper begins by highlighting the importance of effort estimation in web development projects, citing the growth of the web development market and the challenges faced by developers in meeting deadlines and staying within budgets. The authors argue that traditional approaches often fail to accurately predict effort requirements, emphasizing the need for novel solutions like Bayesian Networks.
+
+**Literature Review**:
+The authors conducted a comprehensive review of prior studies on web effort estimation, noting common practices, limitations, and areas requiring further exploration. They summarized various approaches, such as machine learning, multiple regressions, and case-based reasoning, used in earlier studies.
+
+**Research Questions**: 
+The primary objectives of the study were:
+1. Whether an uncertainty-based model would continue to offer superior predictions when using multiple validation sets.
+2. How an uncertainty-based model compares to other established techniques like regression analysis and case-based reasoning.
+3. If a hybrid uncertainty-based model performs better than purely data-driven uncertainty models.
+
+**Dataset Description**: 
+The research utilized the Tukutuku dataset consisting of 195 web projects, offering diverse insights into various aspects of web applications. Variables included size measures (e.g., number of web pages, images, and functions) and cost drivers (team size, technology usage, etc.).
+
+**Building Web Effort BN Models**:
+Four BN models were constructed using the KE-BN (knowledge engineering of Bayesian networks) process. Three of the models relied entirely on structural development driven by experts while the fourth combined expert-driven structure with data-driven parameters learned using an automatic algorithm.
+
+**Results and Discussions**:
+The authors evaluated the performance of the four BN models along with manual step-wise regression (MSWR) and case-based reasoning (CBR) techniques. Statistical significance testing revealed that MSWR performed exceptionally well overall, producing significantly superior results compared to the tool-based BN model (BNAuHu) in both validation sets. When validating set 2 was analyzed, the results indicated that the best BN model (BNAuHu) presented significantly better predictions than those obtained using the Mean-based effort model.
+
+For the Hybrid BN (BNHyHu) model, results varied depending on whether analyzing absolute residuals or 'z' values. Although BNHyHu exhibited excellent performance in the first validation set, its performance decreased in the second validation set, indicating inconsistency in its outcomes.
+
+**Threats to validity**:
+Several potential threats to the study's validity were acknowledged, including incomplete representation of possible correlations among variables and reliance on specific choices regarding data preprocessing strategies and model construction methodologies.
+
+**Conclusion**: 
+Overall, the study demonstrated promising results for the utility of Bayesian Networks in web effort estimation. While acknowledging certain limitations and avenues for further research, the authors concluded that their findings support continued exploration of Bayesian Networks in addressing web development effort forecasting needs.
+
+Key Findings:
+- Bayesian Networks effectively modeled uncertainty in web effort estimation.
+- Automatic generation of BN structures led to competitive results, although human-expert-influenced models yielded mixed outcomes.
+- Manual StepWise Regression consistently achieved outstanding performance, especially in comparison with Human-expert-generated models.
+
+Given the goals outlined in the abstract, the predictor variables explored in this study were primarily focused around web-specific parameters such as the number of web pages, images, and functions, alongside general project-related criteria such as team size, development technologies, and documentation processes. Specifically, the key variables influencing total effort predictions in the BN models included:
+
+- Number of web pages ( TotWP )
+- Number of total images ( TotImg )
+- Number of new web pages ( NewWP )
+- Frequency of Functionally-Oriented Technical Off-The-Shelf components ( FOTS )
+
+Additionally, team-level factors like Team Experience (TeamExp ), team size ( DevTeam ), documented process adherence ( DocProc ), and the presence of a process-improvement program ( ProImpr ) contributed significantly to the prediction accuracy of the studied models.

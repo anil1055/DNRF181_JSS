@@ -1,0 +1,50 @@
+Based on the provided text, the following are the researchers' efforts and findings, along with the predictors used for estimating web application effort:
+
+### Researchers' Contributions
+
+The authors conducted a comprehensive review of various effort estimation techniques, focusing specifically on web effort estimation. They explored different methodologies, including expert opinion, algorithmic models, and artificial intelligence techniques like case-based reasoning (CBR) and classification and regression trees (CRT).
+
+### Key Findings
+
+Their research aimed to investigate the accuracy of various effort estimation techniques for web projects. Specifically, they evaluated the performance of stepwise regression, case-based reasoning, and regression trees. According to their results, stepwise regression performed better overall.
+
+Moreover, they analyzed a dataset consisting of 87 industrial web projects and extracted relevant variables through exploratory data analysis. These variables included:
+
+- Total number of new web pages (TONEWWP)
+- Total number of images (TOTALIMAGE)
+- Total number of high-effort features/functions (TOTHIGH)
+- Total number of low-effort features/functions (TOTLOW)
+- Development team size (DEVELOPMENT TEAM SIZE)
+- Team members' average experience (EXPERIENCE)
+- Various categorical variables indicating whether the project was "new" or "enhancement," whether documentation procedures were followed, whether the project underwent process improvements, etc.
+
+Using a two-stage process combining manual stepwise regression and multivariate regression analysis, they developed an effort estimation model. The two primary predictors in the final model were:
+
+- Logarithmic-transformed total number of new web pages (LNEWWP)
+- Logarithmic-transformed total number of high-effort features/functions (LTOTHIGH)
+
+### Effort Estimation Model
+
+The authors formulated an effort estimation model as follows:
+
+LTOTEFF = 1.959 +.0553 \* LNEWWP +.1001 \* LTOTHIGH
+
+Converting the logarithmic transformations back to the original units yields:
+
+TOTEFF = 7.092 \* (NEWWP^1.0553) + 1.1001
+
+Here, the coefficient 7.092 approximates the effort needed to develop one web page.
+
+### Model Evaluation
+
+They utilized a one-fold cross-validation method, dividing their dataset into training and validation sets comprising 58 and 29 projects, respectively. Applying their effort estimation model to the validation set resulted in acceptable values for MMRE, MDRE, and Pred(25):
+
+- MMRE = 12.9
+- MdMRE = 73
+- Pred(25) = 17.24
+
+While the model showed promise, its performance could be enhanced by incorporating additional contextual factors specific to individual projects or organizations.
+
+Overall, the authors demonstrated the potential benefits of employing effort estimation techniques tailored to web development environments, particularly stepwise regression combined with exploratory data analysis and logarithmic transformation of relevant variables.
+
+Please note that the exact wording might slightly change depending on how you want to phrase things, but the core ideas remain intact.

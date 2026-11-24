@@ -1,0 +1,34 @@
+After carefully analyzing the paper "Applying Support Vector Regression for Web Effort Estimation Using a Cross-Company Dataset", I have identified the main findings and conclusions drawn by the researchers.
+
+Summary:
+
+This paper investigates the effectiveness of Support Vector Regression (SVR) for Web effort estimation using a cross-company dataset. The authors employ the Tukutuku database, which contains data on 195 Web projects developed worldwide. Six different configurations of SVR were evaluated using four kernels (linear, polynomial, Gaussian, and sigmoid) and two preprocessing strategies (normalization and logarithmic). The results show that SVR provides better predictions than traditional methods like manual step-wise regression, case-based reasoning, and Bayesian networks.
+
+Predictors Used:
+
+1. Variables' Transformation Strategies:
+	* Normalization
+	* Logarithmic
+2. Dependent Variable Options:
+	* Effort (EFH)
+	* Inverse Effort (1/EFH)
+
+These predictor combinations resulted in six different SVR configurations:
+1. No transformation of variables (C1)
+2. Normalization of features (C2)
+3. Log transformation of effort and features (C3)
+4. Normalization of features (C4)
+5. Log transformation of features (C5)
+6. Log transformation of effort and features (C6)
+
+Key Findings:
+
+*   When evaluating the results, the authors used several criteria to assess the effectiveness of the predictions, including:
+    1. Mean Magnitude of Relative Error (MMRE)
+    2. Median Magnitude of Relative Error (MdMRE)
+    3. Prediction at Level l (Pred(l))
+    4. Magnitude of Relative Error relative to the Estimate (EMRE)
+    5. Box plots of absolute residuals and z scores
+*   The authors conducted a comprehensive analysis of the results, comparing the performance of the different SVR configurations against each other and against alternative effort estimation techniques (manual step-wise regression, case-based reasoning, and Bayesian networks).
+*   According to the Wilcoxon signed-rank test, the absolute residuals obtained with certain SVR configurations (such as C3 and C6) were significantly smaller than those obtained with other configurations.
+*   The results indicate that SVR outperformed the other techniques examined in this study, providing more accurate predictions and being statistically significant (with a confidence of 90%).

@@ -1,0 +1,30 @@
+Here is a detailed and thorough summary of the research paper "Measuring Functionality and Productivity in Web-based Applications" authored by Maurizio Morisio et al.
+
+**Research Background**: 
+The authors aimed to examine the feasibility of creating a cost estimation model that considers the learning effect for web-based application development using an object-oriented framework. Framework-based development involves a lot of reuse, making it challenging for developers to understand its complexities and efficiently utilize existing features.
+
+**Methodology**:
+To address this issue, the researchers conducted experiments where they created multiple web-based applications using a specific object-oriented framework called CORBA (Common Object Request Broker Architecture). During the experimentation process, three distinct metrics were utilized to determine the efficiency of software production: 
+
+    1. Function Points (FP): An older technique to evaluate software size through evaluating the program's functionalities.
+    2. Object-Oriented Function Points (OOFPs): Developed later, focusing on aspects of object-oriented programming like classes and their relationships.
+    3. Lines Of Code (LOCs): A basic unit to express code quantity.
+
+
+
+These metrics allowed researchers to assess and compare various characteristics of the constructed applications. Moreover, they implemented another aspect named 'Reuse' using the LOCs and OOFPs metrics; it refers to how much of pre-existing code was utilized throughout each project. Their work explored two approaches for quantifying the degree of reuse—either using the lines of code (LOCs) directly or employing OOFPs specifically tailored toward assessing reuse levels.
+
+**Key Findings and Discussion**:
+After processing the collected data and comparing it against several metrics, the study reached the following major findings:
+
+    • Utilizing FP did not allow distinguishing between original and reused elements; thus, the team deemed LOCS better suited for developing a predictive model. They further discovered that both LOCs and OOFPs correlated positively with productivity, signifying increased coding speed occurred alongside larger codebases. Nonetheless, since OOFP allows tracking progress early in the developmental stages whereas LOC could do this accurately later, OOFP became preferred over LOC.
+    
+    • To handle variations in initial output caused primarily by the learning effect (familiarization with the framework), they adjusted a modified version of the U.S. Defense Information System Agency’s (DISA) model designed for calculating overall project expenses. By dividing tasks into those requiring novel code creation (custom code), utilization of ready-made components within the framework, repeated incorporation of identical code parts without adaptations (verbatim reuse), the group came up with estimates.
+        
+    • Further refining their strategy, the team extracted individual component-specific expense assessments using LCOS. They derived useful insights about decreasing prices associated with the learning experience acquired throughout successive endeavors utilizing the object-oriented structure.
+    
+    • Applying statistical techniques to approximate optimal learning curves demonstrated the viability of modeling efforts required for these kinds of projects, particularly at the beginning when individuals begin working with the framework. Through comparison of modeled parameters from data gathered via either LOCs or OOFPs, both metrics showed positive correlation, suggesting similar patterns regarding improvement in efficiency linked with rising sizes of programs worked upon.
+
+
+
+**Conclusion**: With comprehensive knowledge about how object-oriented structures impact efficiency, especially concerning framework initialization phases, experts gained deeper insight into variables affecting costs associated with building certain types of digital solutions. Building off prior discoveries, future studies focused on enhancing usability, reliability, and effectiveness might find substantial benefits in integrating principles established through this exploration into their own methodologies.

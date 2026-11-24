@@ -1,0 +1,30 @@
+This paper "Functional Versus Design Measures for Model-Driven Web Applications" investigates the comparison between design measures and functional measures for predicting the development effort of model-driven web applications. Here's a thorough breakdown of the paper:
+
+**Summary:**
+
+Researchers conducted a case study to explore the use of design measures from the Object-Oriented Hypermedia (OOH) method for estimating the development effort of web applications. They analyzed a dataset consisting of 30 web applications developed using the OOH approach. The researchers evaluated various size measures derived from the OOH models, known as OOH design measures, against the OOH-FP (Object-Oriented Hypermedia Function Points) measure, a functional size measurement procedure based on Function Points Analysis.
+
+**Key Findings:**
+
+1.  All the examined OOH design measures demonstrated positive correlations with the actual development effort, indicating that these measures could potentially serve as effective effort predictors.
+2.  The strongest correlations were observed for Internal Links (IL), Navigation Classes (NC), and Number of Targets (NT), with Spearman's rho statistics exceeding 0.9.
+3.  When building separate linear regression models for individual measures, the model featuring IL produced the highest adjusted R-squared value (0.94).
+4.  By contrast, the OOH-FP measure yielded a relatively weaker estimate of development effort compared to the combination of IL and Total Links (TL) as input parameters.
+5.  Further investigation through Leave-One-Out cross-validation revealed that the predictions made using the IL-TL combined measure resulted in significantly fewer errors relative to the OOH-FP measure.
+
+**Predictors Used as Effort Estimators:**
+
+According to the findings, the top predictors for estimating the development effort of web applications are:
+
+1.  Internal Links (IL)
+2.  Navigation Classes (NC)
+3.  Number of Targets (NT)
+4.  Total Links (TL)
+
+These measures relate to navigational aspects and indicate the presence of multiple connections within a website or app, which may contribute to increased development efforts due to additional functionality needs to be implemented.
+
+**Conclusion:**
+
+Overall, the study demonstrates the efficacy of certain OOH design measures as potential predictors of development effort in web applications. Specifically, combining the measures of Internal Links and Total Links offered superior predictive power compared to relying solely on the established OOH-FP measure. Future directions include exploring alternative functional size measurement procedures, particularly the COSMIC methodology, to enhance their applicability across diverse model-driven approaches.
+
+By identifying relevant measures for assessing development effort in web applications, the study contributes valuable insights toward refining estimation strategies and facilitating successful resource allocation in software engineering endeavors.
