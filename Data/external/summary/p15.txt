@@ -1,0 +1,30 @@
+Based on the provided research paper "On the Accuracy of Effort Estimations based on COSMIC Functional Size Measurement: A Case Study," here is a thorough summary of the paper:
+
+**Summary**
+
+The authors of the paper aimed to evaluate the accuracy of effort estimations made using COSMIC Functional Point (CFP) measurements at the architecture design phase. The study focused on a FinTech company developing a system consisting of a backend, a native iOS app, and a native Android app. The study collected CFP calculations performed at the architecture design phase and actual effort measurements for 12 months. The authors investigated the correlation between CFP calculations and actual effort using the Pearson Correlation Coefficient.
+
+**Predictors Used for Effort Estimation**
+
+The paper primarily uses the following predictor to estimate effort:
+
+1. **COSMIC Function Point (CFP):** The study utilizes CFP as the primary predictor variable to measure the functional size of software. CFP is a standardized method that can be applied to obtain size measurements based on early artifacts such as the software architecture design.
+
+Additionally, the paper explores the effect of other factors on effort estimates, including:
+
+2. **Level of Developer Experience**: The study analyzes the impact of developer experience (Junior, Senior, and Expert) on effort estimates.
+3. **Type of Target Platform**: The authors examine the influence of the target platform (Backend, iOS, and Android) on effort estimates.
+
+**Key Findings**
+
+The results of the study demonstrate a significant correlation between CFP measurements and actual effort. The study finds that the variance in effort per CFP among varying types of platforms is statistically significant. Moreover, the authors observe variance in effort per CFP among developers with varying levels of expertise; however, statistical significance cannot be inferred due to inadequate data samples.
+
+**Discussion**
+
+The study suggests that CFP can serve as a reliable proxy measure for effort estimation. The results imply that CFP can help predict actual effort with reasonable accuracy. However, the study notes that the relationship between CFP and actual effort can be influenced by factors such as developer experience and target platform.
+
+**Limitations and Future Directions**
+
+One limitation of the study is the reliance on a single organization and a specific software system. The authors recommend conducting further research involving a broader range of teams and systems from different application domains to enhance the generalizability of the findings. Additionally, the study highlights the need for tools to facilitate automated CFP calculations based on standard and custom architectural views.
+
+Overall, the paper provides insights into the efficacy of CFP as a predictive indicator for effort estimation, taking into account additional influencing factors such as developer experience and target platform.

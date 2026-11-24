@@ -1,0 +1,54 @@
+The given paper titled "Swarm Intelligence for Predicting Software Development Effort" proposes a novel approach called Mexican Axolotl Optimization (MAO)-Statistical Regression Equation (SRE) (MAO-SRE) for predicting software development effort. Here's a detailed breakdown of the paper:
+
+**Summary:**
+
+The paper aims to develop a new approach for predicting software development effort, specifically addressing the challenges associated with under-prediction or over-prediction. The authors focus on utilizing a swarm intelligence algorithm, namely the Mexican Axolotl Optimization (MAO), for optimizing the parameters of statistical regression equations (SREs). The MAO-SRE approach combines the strengths of both swarm intelligence and statistical modeling to achieve more accurate predictions.
+
+**Predictors Used:**
+
+The predictors used in the proposed MAO-SRE approach are derived from various machine learning and statistical models, which are listed below:
+
+1. **Machine Learning:** 
+   a. Multilayer Perceptron (MLP): With an input layer, one hidden layer, and an output layer.
+   b. Support Vector Regression (SVR):
+      i. ε-SVR: Uses the ε-insensitive loss function, which tolerates errors up to ε.
+      ii. v-SVR: Changes the SVR formulation using a v parameter between 0 and 1.
+      iii. Linear Kernel: Maps the features onto a higher dimensional space.
+      iv. Polynomial Kernel: Creates a polynomial relationship between the features and target variable.
+      v. Radial Basis Function (RBF) Kernel: Produces nonlinear relationships through Gaussian distributions.
+      vi. Sigmoid Kernel: Maps the features onto a binary classification format.
+2. **Statistical Regression Equations (SREs):**
+   a. COCOMO II: Estimates effort as a function of program size (in KLOC).
+   b. COCOMO 81: Estimates effort as a function of program size (in KLOC).
+   c. Simple Linear Equation: Relates the log of effort to a constant plus the log of adjusted function points.
+3. **Non-Statistical Equation:**
+   a. Estimation Model Using Story Points, Velocity, Team Size, and Experience.
+4. **Other Techniques:**
+   a. Adaptation-Invariant-Based Evolutionary Algorithm (AEBA).
+   b. Analogies-Based Estimation.
+
+**Methodology:**
+
+The methodology used in the paper consists of the following steps:
+
+1. Selecting the dataset: Eight datasets were chosen from the ISBSG release 2018, consisting of 1,500 projects across diverse industries and domains.
+2. Normalizing the data: Both the predictor and response variables were normalized using the natural logarithmic transformation to address the non-normal distribution issue.
+3. Feature weighting: A variety of metaheuristic algorithms and machine learning models were employed to find the optimal subset of relevant features.
+4. Evaluation metric: Mean Absolute Residual (MAR), Median Absolute Residual (MdAR), Standard Accuracy (SA), and Effectiveness (η) were used to evaluate the performance of the MAO-SRE model.
+
+**Comparison Studies:**
+
+Comparisons were made against six competing models:
+
+1. **Multiple Linear Regression**: Traditional statistical model.
+2. **Multilayer Perceptron (MLP)**: Nearest neighbor imputation with wrapper-based attribute selection.
+3. **Support Vector Regression (SVR)**: Combined with gradient tree boosting and wrapper-based feature elimination.
+4. **Random Forest (RF)**: Utilizing recursive feature elimination via backward sequential floating forward search.
+5. **Genetic Algorithm-Statistical Regression Equation (GA-SRE)**: Combining a genetic algorithm with wrapper-based feature elimination.
+6. **Particle Swarm Optimization-Statistical Regression Equation (PSO-SRE)**: Employing a swarm-based optimization technique with wrapper-based feature reduction.
+
+**Conclusion:**
+
+After conducting thorough comparisons, the results indicate that the proposed MAO-SRE approach offers superior performance, particularly in terms of MAR, MdAR, SA, and η metrics. Additionally, the effectiveness and stability of MAO-SRE are demonstrated across multiple datasets and under varying combinations of project attributes. These outcomes validate the utility of the proposed MAO-SRE approach for predicting software development effort.
+
+The study emphasizes the significance of integrating insights from both swarm intelligence and statistical modeling to tackle challenging tasks in software development effort prediction. Future directions may include extending the scope of MAO-SRE to encompass other software engineering endeavors and examining its adaptability across diverse software project settings.

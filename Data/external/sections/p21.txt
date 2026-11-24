@@ -1,0 +1,1782 @@
+Received: 25 September 2021 Revised: 27 November 2022 Accepted: 31 March 2023
+
+[DOI: 10.1002/smr.2569](https://doi.org/10.1002/smr.2569)
+
+R E S E A R C H A R T I C L E - M E T H O D O L O G Y
+# CoBRA without experts: New paradigm for software development effort estimation using COCOMO metrics
+
+Elham Feizpour [1] | Hooman Tahayori [1] | Ashkan Sami [1,2]
+
+
+1 Department of Computer Science and
+
+Engineering and IT, School of Electrical and
+
+Computer Engineering, Shiraz University,
+
+Shiraz, Iran
+
+2 Edinburgh Napier University, Edinburgh, UK
+
+Correspondence
+
+Hooman Tahayori, Department of Computer
+
+Science and Engineering and IT, School of
+
+Electrical and Computer Engineering, Shiraz
+
+University, Shiraz, Iran.
+
+[Email: tahayori@shirazu.ac.ir](mailto:tahayori@shirazu.ac.ir)
+
+1 | INTRODUCTION
+
+
+Abstract
+
+Software development effort estimation (SDEE) is a critical activity in developing
+
+software. Accurate effort estimation in the early phases of software design life cycle
+
+has important effects on the success of software projects. COCOMO (Constructive
+
+Cost Model) is a parametric data-driven SDEE model whose parameters must be cali
+brated with an organization's local data for accurate estimation. Such data are scarce
+
+for most organizations. On the other hand, CoBRA (Cost estimation, Benchmarking,
+
+and Risk Assessment) is one of the powerful hybrid methods that need a small num
+ber of local historical data for effort estimation. However, data gathering in CoBRA is
+
+time-consuming and costly. To ease the use of CoBRA, in this paper, we design a
+
+methodology that extracts CoBRA-required data from COCOMO datasets. By the
+
+proposed method, data collected for COCOMO would be used in CoBRA. Using
+
+CoBRA, a more accurate estimation of the required effort would be achieved with
+
+fewer number of historical data than what is required to calibrate the COCOMO
+
+model. We apply the proposed method on six well-known public COCOMO datasets
+
+and use them in CoBRA. Obtained results depict an increase in the accuracy of esti
+mations in comparison with other existing methods.
+
+K E Y W O R D S
+
+CoBRA, COCOMO, cost driver, effort multiplier, software development effort estimation
+
+
+There are two major software development methodologies, classical waterfall-based and agile. [1,2] In waterfall-style development, each phase of the
+
+software development starts only when the prior phase is completed. Moreover, the final software product will be delivered after the last phase
+
+is fulfilled. Planning, designing, and testing phases in agile development, however, are iterative and incremental, and a new version of the product
+
+is developed in each iteration. Agile development process that uses continuous integrations of small codes to produce the final software does not
+
+require a strict estimation of the overall required effort. Instead, they need short-term estimations of the effort required to do the current task. [1]
+
+Waterfall methodology is still the most appropriate software development methodology for large-scale projects and is mainly used in large
+
+governmental or military projects and also for projects whose budgets must be known in advance. [1] Estimating the required effort in waterfall
+style projects is an important issue because due to the size of such projects and their vitality, overestimation or underestimation of the required
+
+effort may drastically affect the projects and the software development companies.
+
+Software development effort estimation (SDEE) as one of the main concerns for software project managers [3] is defined as “the process of
+
+predicting the effort required to develop a software system.” [4] SDEE in waterfall projects enables determining the right budget before starting the
+
+work. [1] Poor estimation is one of the most common causes of software project failures. [5] On one hand, overestimation of the efforts leads a com
+pany to allocate extra budget and human resources for the project that wastes the company's resources and causes loss of customers because of
+
+J Softw Evol Proc. 2023;35:e2569. [wileyonlinelibrary.com/journal/smr](http://wileyonlinelibrary.com/journal/smr) © 2023 John Wiley & Sons Ltd. 1 of 32
+
+[https://doi.org/10.1002/smr.2569](https://doi.org/10.1002/smr.2569)
+
+
+|2 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+extra bid for the project. On the other hand, underestimation can lead to a lower quality product or even project failure. Appropriate SDEE
+
+method helps project managers to have better control on the project and complete the project on time and within the budget.
+
+COCOMO and CoBRA [6,7] are two SDEE methods that can be used for waterfall-style projects. COCOMO [8] and its newer version, COCOMO
+               II, [9] are parametric data driven models that are built from past completed project data (historical data). Menzies et al. have recommended that
+
+COCOMO must be used while COCOMO-style datasets are available [10] and the parameters of COCOMO must be calibrated for specific organiza
+tion and context. Calibration process in COCOMO is difficult and requires dozens of historical data. AS is discussed in Nguyen et al., [5] at least
+
+10 historical data are needed to calibrate two main coefficients of the COCOMO-II model. In the real world, not enough historical data in a new
+
+context or in a newly established software organization exist.
+
+To adjust the parameters of these methods toward improving their accuracy, recent studies have exploited meta-heuristic algorithms. Notably,
+
+Kumari and Pushkar [11] have used a hybrid Cuckoo and Harmony algorithm, whereas Fadhil et al. [12] have utilized the Dolphin algorithm to optimize
+
+the estimation of COCOMO models. Nguyen et al. [5] have proposed a calibrating method for COCOMO using small windows of the most recently
+
+completed projects. Some studies [13,14] have used fuzzy technique to handle uncertainty and vagueness in the parameters of the COCOMO model.
+
+Recently, researchers have integrated optimization algorithms like genetic algorithm (GA) [15] and particle swarm optimization (PSO) [16] to optimize
+
+the parameters of fuzzy model-based COCOMO. In Singh et al., [17] artificial neural network (ANN) is integrated with COCOMO.
+
+CoBRA introduced by Briand et al. [6,7] is a hybrid method that uses experts' knowledge and historical data simultaneously. It can be
+
+implemented with small datasets and does not require any calibration. CoBRA balances the need of historical data and experts' knowledge in the
+
+estimation process. Achieving high estimation accuracy with minimal data requirements and generating reusable cost model across similar projects
+
+can be counted as the strengths of CoBRA. [7] It is notable that collecting data to be used in CoBRA is time-consuming and requires expertise and
+
+training. There are few effort estimation researches on this method. [6,18][–][20] Moreover, because of the confidentiality reasons, data and some
+
+results of these research are not publicly available. To the best of our knowledge, there is no public dataset to meet the data requirements of the
+
+CoBRA method and its efficiency and effectiveness are not compared with other SDEE methods.
+
+In this study, we propose a mapping algorithm to generate CoBRA required data from the datasets collected for COCOMO and
+
+COCOMO-II models. More precisely, with the proposed mapping algorithm, we transform the COCOMO and COCOMO-II existing datasets
+
+to meet the CoBRA requirements. The importance of this transformation lies in the fact that collecting data for methods like COCOMO is
+
+straightforward and well established but data collection for CoBRA is difficult and time-consuming. However, as we will show, when there
+
+is no enough local historical data in a specific organization to calibrate the parameters of the COCOMO model, CoBRA can more accurately
+
+estimate the required effort.
+
+We apply the proposed transformation method on open-source COCOMO-style datasets that are collected to be used with COCOMO and
+
+COCOMO-II. Hence, initially, we make them applicable in CoBRA. Then, we compare estimations obtained by CoBRA with some well-known
+
+SDEE methods, using the same datasets. Obtained results on the COCOMO-style datasets show that CoBRA with a small number of historical
+
+projects can better predict efforts than other existing methods. Moreover, the generated datasets in this study could be used in future CoBRA
+
+research.
+
+In summary, the questions that this research tries to answer are as follows:
+
+� RQ1: Considering the similarity of the nature of the COCOMO and CoBRA, is it possible (how) to provide a method to generate CoBRA
+required data from the datasets collected for COCOMO?
+
+� RQ2: How is the effectiveness of the CoBRA method compared to other effort estimation methods?
+
+� RQ3: At least with how many historical projects CoBRA can predict the software effort accurately?
+
+� RQ4: Can CoBRA be a good alternative for COCOMO when there is insufficient historical data to calibrate COCOMO?
+
+The rest of this paper is organized as follows. In Section 2, related research on SDEE are reviewed. A fast review on the CoBRA method and
+
+COCOMO model is provided in Section 3. In Section 4, our proposed transformation method for adjusting datasets to be applicable in CoBRA is
+
+explained. The experimental design is explained in Section 5. In Section 6, obtained results on the datasets and also the results of statistical analy
+sis on the conducted experiments are presented. In Section 7, performance of the proposed method on different datasets is compared with other
+
+methods. Section 8 discusses the major threats to the validity of the study. Finally, Section 9 concludes the paper.
+
+2 | RELATED RESEARCH
+
+Different SDEE methods and techniques are developed in recent years, but getting more accurate and reliable predictions is still a challenging
+
+problem. Some extensive reviews have investigated the existing methods for SDEE from different perspectives. [4,21][–][23] SDEE methods can be
+
+broadly categorized into experts' judgments, data-driven methods, and hybrid methods. [24]
+
+
+|FEIZPOUR ET AL.|3 of 32|
+|---|---|
+|||
+
+
+The first approach that is introduced for SDEE relies on experts' judgments. [23] In expert-driven approaches, [25,26] several experienced experts
+
+familiar with the context of software provide independent estimations, and then consensus methods are used to get the final effort estimation. In
+
+the absence of sufficient historical data, expert-based methods can be used in SDEE, but these methods are expensive and may suffer from incon
+sistent, biased, and limited access to experts. [27] Moreover, such methods are not easily repeatable. [6]
+
+The second category of SDEE consists of data-driven methods. The accuracy of these methods completely depends on the quantity and qual
+ity of the data used to construct the model. These methods usually require large sets of high-quality historical projects. Data gathering in software
+
+engineering is time-consuming and difficult. Furthermore, the value of collected data may decrease over time because of the advancements in
+
+technology or changes within the company. [28] Most of the software production companies do not have sufficient and well-documented past pro
+ject data to systematically build such effort estimation models. One of the main categories of data-driven models are algorithmic models including
+
+COCOMO, [8] COCOMO II, [9] SLIM, [29] and Function Point Analysis. [30] Parameters of these models must be calibrated with local historical data that is
+
+usually scarce in companies.
+
+A wide range of data mining techniques are used for SDEE. A comparative study of these methods is presented in Dejaeger et al. [23] These
+
+methods include various regression techniques such as ordinary least squares (OLS) regression, [31] robust regression (RoR), [32] ridge regression
+
+(RiR), [23] support vector regression (SVR), [3] multiple linear regression (MLR), stepwise regression (SWR), and classification and regression tree
+
+(CART). These methods are wildly used in different researches, for example. [1,23,33,34]
+
+Different types of ANN such as multi-layered perceptron (MLP) [35] and radial basis function (RBF) [23,36] are also utilized in SDEE. Recently, a
+
+number of researches have integrated ANN with the other SDEE methods to improve the accuracy of their estimations. [11,37,38]
+
+Analogy-based software effort estimation (ABE) is another widely used method in SDEE. [39] ABE methods are based on the assumption
+
+that the projects of similar characteristics require similar efforts. [40][–][43] Hence, they focus on finding the former completed projects that are
+
+most similar to the target project. Then, taking the actual effort of such completed projects, they predict the required effort for the target
+
+project. The accuracy of ABE is not satisfactory, so many studies have tried to increase its accuracy by integrating it with different
+
+methods. Combination of ABE and PSO, [44] ABE and ANN, [45] and ABE and differential evolution-based model [46] are other types of the
+
+ABE method. In order to achieve a high-performance model, some studies have combined several estimation methods using specific
+
+selection methods or combination rules to estimate the effort. [1,33,47][–][50] Jose Thiago and Oliveira [50] have introduced a dynamic ensemble
+
+selection method of 15 regression models to obtain better accuracy in the predictions. Many of the new methods that are introduced in
+
+recent studies are complicated and are not practical in the real world because they require many past project data and special skills and
+
+knowledge.
+
+The third category of SDEE methods consists of hybrid methods that use combination of experts' knowledge and historical data to estimate
+
+software development effort. Examples of these methods are CoBRA [6,7] and Bayesian belief network. [51][–][53] CoBRA is a method with high predictive
+
+power, high flexibility, and reusability with minimal data requirements. [24] But this method is rather ignored in recent studies. Collecting data to be
+
+used in CoBRA is time-consuming and difficult, which can be a reason for CoBRA to be overlooked.
+
+Few studies have used the CoBRA method to estimate software development effort. [6,18][–][20,54][–][56] Table 1 shows a few former projects that
+
+have relied on CoBRA for estimating their required efforts. In Ruhe et al., [18] CoBRA is used for estimating the effort of 12 web applications of a
+
+small Australian company, and its result shows the mean magnitude of relative error (MMRE) of 0.17. In Trendowicz et al., [19] CoBRA is used in the
+
+iterative manner for Oki Electric Industry in Japan, and the achieved MMRE has been 0.12, and PRED (0.25) of 100% means that all predictions
+
+were within 25% of the actual values. These results are very significant and satisfactory. CoBRA is also used in Nakaoa et al. [20] to estimate the
+
+effort of independent verification and validation of mission-critical software systems. The results of this research proved that CoBRA can provide
+
+more reliable estimates than expert-base estimation and OLS models.
+
+TABLE 1 Approximate costs of the applying CoBRA method on some case study.
+
+Involved Total duration Effort per team member Total effort
+Case study personnel (months) (person-hours) (person-months)
+
+
+Software design & management company in
+Germany [6]
+
+
+14 8 16 3
+
+
+Australian software company Allette Systems [18] 8 6 - 2.7
+
+Oki Electric Industry Co. Ltd. in Japan [19] 15 4 26 3.5
+
+
+Siemens Information Systems Ltd organization in
+India [7]
+
+
+8 0.75 84 
+
+Japan Manned Space Systems company [20] 5 1 30 
+
+|4 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+3 | BACKGROUND
+
+In this section, we provide a brief introduction to COCOMO and CoBRA methods and present the required definitions.
+
+3.1 | COCOMO
+
+The Constructive Cost Model (COCOMO), proposed by Boehem, [8] is a data-driven and algorithmic estimation model that defines mathematical
+
+relations for estimating the effort required to develop a software project. COCOMO has three variants, namely, basic, intermediate, and detailed.
+
+Basic COCOMO, suitable for quick and early estimations of software effort, has limited accuracy because it only provides a regression model based
+
+on the lines of code (size) and does not consider other attributes. Intermediate COCOMO considers some characteristics of projects that affect
+
+their efforts. Such characteristics that make the projects with the same size to demand for different efforts are referred to as “cost drivers.”
+
+Detailed COCOMO, however, is used when the software life-cycle architecture has been developed. Detailed COCOMO in addition to cost drivers,
+
+accounts the effects of each phase of the project on the required effort.
+
+In intermediate COCOMO [8] model, the required effort is calculated as
+
+
+15
+Effort ¼ A � Size [B] � Y EM i ð1Þ
+
+i¼1
+
+
+where Effort represents the needed development effort for a project in person/months. Size is thousands of lines of delivered source code
+
+(KLOC). A and B, however, are two factors that can be calibrated depending on the characteristics of the software development company to
+
+reflect the local development environment. [23] EM i depicts the i [th] effort multiplier (EM) that is a numeric value associated with the rating level of
+
+TABLE 2 Coefficients A and B in three software modes in COCOMO.
+
+Mode A B
+
+Organic 3.2 1.05
+
+Semi-detached 2.8 1.2
+
+Embedded 3.0 1.12
+
+TABLE 3 Cost drivers and corresponding effort multipliers in COCOMO.
+
+
+
+
+acap Analysts capability 1.46 1.19 1.00 0.86 0.71
+
+pcap Programmers capability 1.42 1.17 1.00 0.86 0.70
+
+aexp Application experience 1.29 1.13 1.00 0.91 0.82
+
+modp Modern programing practices 1.24 1.10 1.00 0.91 0.82
+
+tool Use of software tools 1.24 1.10 1.00 0.91 0.83
+
+vexp Virtual machine experience 1.21 1.10 1.00 0.90
+
+lexp Language experience 1.14 1.07 1.00 0.95
+
+sced Schedule constraint 1.23 1.08 1.00 1.04 1.10
+
+stor Main memory constraint 1.00 1.06 1.21 1.56
+
+data Database size 0.94 1.00 1.08 1.16
+
+time Time constraint for cpu 1.00 1.11 1.30 1.66
+
+turn Turnaround time 0.87 1.00 1.07 1.15
+
+virt Volatility of virtual machine environment 0.87 1.00 1.15 1.30
+
+rely Required software reliability 0.75 0.88 1.00 1.15 1.40
+
+cplx Process complexity 0.70 0.85 1.00 1.15 1.30 1.65
+
+Abbreviations: VL, very low; L, low; N, nominal; H, high; VH, very high; XH, extra high.
+
+
+|FEIZPOUR ET AL.|5 of 32|
+|---|---|
+|||
+
+
+i [th] cost driver. The rating level of a cost driver has a qualitative value that expresses the impact of the cost driver on the development effort.
+
+These rating levels range from “very low” to “extra high.” EM i s are calculated via regression on historical data. [23]
+
+In COCOMO, three modes of software are identified: Organic, Semi-detached, and Embedded. The values of A and B in the three modes are
+
+shown in Table 2.
+
+Table 3 represents the cost drivers and associated EMs used in the intermediate COCOMO.
+
+Cost driver with nominal rating level always has an EM equal to 1.0 (see Table 3, column “N”), which means that it does not
+
+change the overall development effort. If a rating level indicates an increase of the software development effort, then its corresponding EM
+
+would be more than 1.0. Conversely, if the rating level indicates a reduction of the development effort, then the corresponding EM is
+
+less than 1.0. When all cost drivers are set to nominal rating level, the calculated efforts—that would be (A � Size [B] )—is referred to as the
+
+nominal effort.
+
+COCOMO-II, [9] introduced in 2000 as the enhanced version of COCOMO, [9] is created by analyzing 161 projects from different organizations.
+
+However, the data based on which this model is developed are not publicly available. In this version, five new attributes called scale factors that
+
+have an exponential impact on the effort are introduced. Also, 17 cost drivers are defined, and EMs are updated. Effort in COCOMO-II is calcu
+lated as
+
+
+17
+
+[5] j¼1 [SF] [j] �
+
+Y
+
+
+Effort ¼ A � Size [B][þ][0][:][01] [P] j [5]
+
+
+EM i ð2Þ
+
+i¼1
+
+
+where SF j is the jth scale factor and EM i depicts the i [th] EM. A and B are the local calibration parameters with default values of 2.94 and 0.91,
+
+respectively. Table 4 represents the five scale factors, 17 cost drivers, and associated EMs used in COCOMO-II.
+
+TABLE 4 COCOMO-II scale factors, cost drivers, and rating values.
+
+Category Scale factors VL L N H VH XH
+
+Scale factors prec Precedentedness 6.2 4.96 3.72 2.48 1.24
+
+flex Development flexibility 5.07 4.05 3.04 2.03 1.01
+
+resl Risk resolution 7.07 5.65 4.24 2.83 1.41
+
+team Team cohesion 5.48 4.38 3.29 2.19 1.1
+
+pmat Process maturity 7.8 6.24 4.68 3.12 1.56
+
+Cost drivers
+
+Product factors rely Required software reliability 0.82 0.92 1 1.1 1.26
+
+data Database size 0.9 1 1.14 1.28
+
+cplx Product complexity 0.73 0.87 1 1.17 1.34 1.74
+
+ruse Required reusability 0.95 1 1.07 1.15 1.24
+
+docu Documentation match to life-cycle needs 0.81 0.91 1 1.11 1.23
+
+Personnel factors acap Analyst capability 1.42 1.22 1 0.85 0.71
+
+pcap Programmer capability 1.34 1.16 1 0.88 0.76
+
+pcon Personnel continuity 1.29 1.1 1 0.9 0.81
+
+apex Applications experience 1.22 1.1 1 0.88 0.81
+
+plex Platform experience 1.19 1.12 1 0.91 0.85
+
+ltex Language and tool experience 1.2 1.1 1 0.91 0.84
+
+Abbreviations: VL, very low; L, low; N, nominal; H, high; VH, very high; XH, extra high.
+
+
+|6 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+3.2 | CoBRA method
+
+The CoBRA (Cost estimation, Benchmarking, and Risk Assessment) method was introduced in 1998 and first used in German companies. [6] To esti
+mate the effort of a new project, CoBRA needs the project size, the characteristics that affect the effort of the project, and the extent of their
+
+affect based on expert judgment as well as the information of several similar completed projects—Figure 1A. Software effort estimation in CoBRA
+
+is based on the idea that a project effort consists of two basic components: nominal effort and effort overhead. More precisely, [7]
+
+Effort ¼ Effort Nom þ EOð � Effort Nom Þ ð3Þ
+
+where Effort is the effort required to develop a software project. Nominal effort Effortð Nom ) depicts the required effort for developing the project
+
+under the optimum conditions in a specific context. The project that is developed under such optimal conditions is called nominal project. EO is
+
+Effort Overhead and refers to the additional effort required to overcome shortcomings of a real project environment, such as insufficient skills of
+
+the project team and high complexity of software. In effect, EO represents the percentage increase of effort in a real project relative to the nomi
+nal project. [20] Figure 1 schematically shows how effort is calculated with CoBRA.
+
+In order to estimate the software development effort, CoBRA uses two components: effort overhead model and productivity model. Effort over
+head model (or causal model) in a certain context consists of factors influencing the effort overhead and their inter-relationships. These factors are
+
+called effort drivers that are determined by a questionnaire [6] or through interviewing domain experts and project managers. [18] Each effort driver
+
+has either Positive or Negative relationship with the effort—arrows labeled “+” and arrows labeled “�” in Figure 1B, respectively. Effort drivers
+
+with positive relationship increase the effort overhead as their value increases. However, an effort driver with a negative relationship increases
+
+the effort overhead as its value decreases. There are two types of relationships: direct and indirect. A direct relationship (solid arrow in Figure 1B)
+
+means that the effort driver directly increases effort overhead regardless of the values of the other effort drivers. An indirect relationship (dashed
+
+arrow in Figure 1B) indicates an interaction effect and indicates how the effort driver affects other effort drivers.
+
+Similar to COCOMO, each effort driver has qualitative and quantitative values that indicate its impact rate on the effort. The quantified
+
+impact of an effort driver on software effort is also called effort multiplier (EM)—similar to COCOMO. The value of each EM indicates the percent
+age of additional effort for completing the project compared to the nominal project. For example, if EM for an effort driver with “high” qualitative
+
+value is 20%, then the project requires 120% of the nominal effort. In CoBRA, the value of an EM is elicited from experts. In order to handle
+
+FIGURE 1 Components of CoBRA model 26.
+
+
+|FEIZPOUR ET AL.|7 of 32|
+|---|---|
+|||
+
+
+experts' uncertainty, each expert can use either of the three EM values for each effort driver: minimum, most likely, and maximum. These values
+
+depict the percentage of the increase in effort caused by the effort drivers and are modeled by triangular distributions. With the Monte Carlo
+
+simulation, [56] sampling is performed on each of these distributions and each sample value is used to obtain an effort overhead estimate. This pro
+cess is repeated many times, and finally, the distribution of effort for a project would be obtained—Figure 1D.
+
+Productivity model determines the relationship between actual effort and the size and effort overhead of projects in a specific context. It is
+
+used to determine nominal productivity (P Nom ) that refers to the development productivity of a nominal project. [7] To determine P Nom, data from
+
+some similar historical projects are used in order to identify a relationship between effort overhead and actual project effort. In CoBRA, nominal
+
+productivity is assumed to have constant value across projects in the same context, that is, nominal productivity can be assumed the same for sim
+ilar projects. It is used as a baseline for estimating efforts of new projects. [6,7] Theoretically, nominal productivity for each historical project
+
+i (P Nom ið Þ) can be determined. If the right side of Equation (3) is multiplied and divided by the size of project, according to classical definition of
+
+productivity in software engineering (productivity ¼ effort [size] [),] [57] [ effort would be]
+
+1
+EFfort ¼ � size � ð1 þ EOÞ ð4Þ
+P Nom
+
+So, nominal productivity for each historical project i can be determined by
+
+ð Þ� size i
+P Nom ið Þ ¼ [1] [þ] [EO] [i] ð5Þ
+Effort act i
+
+where EO i is the effort overhead of project i, size is the size of the project i in KLOC, and Effort act i is the actual effort for developing the project i.
+
+To determine a crisp-value baseline nominal productivity (P Nom ), a median approach [18] or regression analysis [7] is usually used. In the median
+
+approach, first, the nominal productivity for each historical project using its effort overhead and size and actual effort using Equation (5) is calcu
+lated. Next, the median of the nominal productivities is obtained as P Nom . In the regression approach, the inverse of the slope of the best-fit
+
+regression line f : Size � ð1þ EOÞ ! Effort across the historical projects is used as P Nom —Figure 1C. Trendowicz [7] has mentioned that “the nominal
+
+productivity regression line represents a simple bivariate relationship that does not require a large dataset. This is important, as it explains why
+
+CoBRA does not have demanding data requirements, as opposed to data-driven estimation techniques.”
+
+4 | PROPOSED METHOD
+
+In this section, we discuss the proposed method that enables a software company that does not have adequate historical data in COCOMO for
+mat, to use CoBRA and achieve higher accuracy of effort estimation.
+
+To show the effectiveness of the proposed method, we have used some public datasets that are developed to be used in COCOMO. In these
+
+datasets, each project is described with COCOMO cost drivers and their linguistic values and numeric values for size and effort. The proposed
+
+method converts the data collected for COCOMO into the data required by CoBRA and extracts the components of the CoBRA, including the
+
+effort overhead model, EMs, and productivity model. In the following, we illustrate in detail the extraction of CoBRA components from COCOMO
+
+data. The proposed method can be similarly applied on the datasets collected for COCOMO-II.
+
+4.1 | COCOMO cost drivers versus CoBRA effort drivers
+
+To obtain effort overhead model in CoBRA, factors that affect software effort must be determined. In CoBRA, these factors should be identified
+
+and ranked by experts in several brainstorming sessions, which is a difficult step to be fulfilled. However, because identifying cost drivers in
+
+COCOMO is more established, in this section, we demonstrate a methodology for deriving CoBRA effort drivers based on the COCOMO cost
+
+drivers.
+
+Cost drivers in COCOMO are divided into three groups [58] :
+
+- Cost drivers that increase in their rating level increase the project effort. They are known as positive-influencing cost drivers.
+
+- Cost drivers that increase in their rating level reduce the project effort. These cost drivers are referred to as negative-influencing cost drivers.
+
+- “sced” cost driver that defines project's schedule-related constraint.
+
+
+|8 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+Positive-influencing cost drivers in COCOMO are stor, data, time, turn, virt, cplx, and rely. For example, as is shown in Table 3, “High” (H) rating
+
+of cplx—product complexity—will add 15% to the estimated effort. When its rating level increases to “Very High” (VH) or “Extra High” (XH), extra
+
+30% or 65% effort would be required, respectively. We consider positive-influencing cost drivers in COCOMO as positive relationship effort
+
+drivers in CoBRA.
+
+Negative-influencing cost drivers in COCOMO are acap, pcap, aexp, modp, tool, vexp, and lexp. For example, with respect to Table 3, “High”
+
+(H) rating of acap—analyst capability—will reduce 14% (its EM is 0.86) of the project effort and “Very High” (VH) acap rating will reduce 29% (its
+
+EM is 0.71).
+
+“sced” cost driver in COCOMO is a special cost driver. As can be seen in Table 3, by increasing the rating level of “sced,” effort does not reg
+ularly increase or regularly decrease. So, depending on the value of rating level, it can be put in both positive-influencing cost drivers group and
+
+negative-influencing cost drivers group.
+
+Figure 2 shows how COCOMO cost drivers can be viewed in the CoBRA effort overhead model. As can be seen in the figure, this EO model
+
+depicts only the direct relationship between each effort driver and the effort overhead. This is due to the fact that the cost drivers in COCOMO
+
+are orthogonal [8] and do not have interaction with each other.
+
+4.2 | Calculating CoBRA EMs from COCOMO model
+
+The concept of nominal rating level differs in COCOMO and CoBRA. In COCOMO, nominal rating level refers to ordinary or normal conditions
+
+and its assigned EM is 1. More precisely, if a cost driver is evaluated as nominal (normal), no reduction or extra effort would be imposed by that
+
+cost driver. However, in CoBRA, the nominal rating level for an effort driver refers to the ideal state of that effort driver. In other words, in
+
+CoBRA, an effort driver that is evaluated as nominal indicates that the effort driver would not cause an effort overhead. So, according to the nom
+inal concept in these two methods, it can be inferred that the rating level of cost driver of the COCOMO with the minimum EM value corresponds
+
+to the ideal state of the CoBRA method, that is, the CoBRA nominal state, and thus, its CoBRA EM value should be set to zero. In order to calcu
+late other EMs corresponding to each rating level of CoBRA effort drivers, we calculate the difference between the COCOMO EM value
+
+corresponding to that rating level and the COCOMO EM value designated as the CoBRA nominal state.
+
+For calculating CoBRA EM from positive-influencing COCOMO cost drivers group, the ideal state of a cost driver is its lowest rating level that
+
+does not cause any effort overhead in CoBRA. For example, “cplx” cost driver is an instance of positive-influencing COCOMO cost driver. With
+
+respect to the COCOMO, the ideal rating level that has a least impact on effort for cplx is “VL”; hence, its corresponding CoBRA EM should be
+
+zero. CoBRA EM for “cplx” with the rating value of “L” is the difference between COCOMO EM of rating level “L” (0.85) and COCOMO EM of
+
+CoBRA nominal rating level, that is, “VL,” that is, 0.85 � 0.7 = 0.15 (15%). Similar calculations are performed for other EM of each rating level.
+
+In negative-influencing cost drivers, the ideal state of a cost driver with COCOMO is at its largest rating level. As an instance, “acap” is a nega
+tive influencing COCOMO cost driver. Its ideal rating level is “VH,” which means if analyst capacities are very high, then the least effort from this
+
+aspect would be imposed on the project. Correspondingly, effort overhead in CoBRA caused by acap is assumed zero (nominal state) when its
+
+value in COCOMO is VH. The next rating level is “H,” and its corresponding CoBRA EM is the difference between its COCOMO EM and
+
+COCOMO EM corresponding to the CoBRA nominal state, that is, “VH,” that is (0.86 � 0.71 = 0.15).
+
+To calculate “sced” EM in CoBRA, the COCOMO rating level that has the lowest EM value is considered as the CoBRA nominal state. The dif
+ference between EM of other rating levels of “sced” with N—that is its rating level corresponds to the CoBRA nominal state—constitutes the basis
+
+for calculating the CoBRA EM of other rating levels. The mapping of COCOMO to CoBRA EMs for all effort drivers in each defined rating level is
+
+presented in Table 5.
+
+FIGURE 2 COCOMO cost drivers effects on CoBRA effort overhead.
+
+
+|FEIZPOUR ET AL.|9 of 32|
+|---|---|
+|||
+
+
+TABLE 5 CoBRA effort multipliers calculated with respect to COCOMO model.
+
+Abbreviations: VL, very low; L, low; N, nominal; H, high; VH, very high; XH, extra high.
+
+The pseudo-code of the proposed algorithm for converting collected projects' data in COCOMO (and COCOMO-II) format into their CoBRA
+
+correspondence is shown in Table 6. Using this algorithm, the values of the COCOMO cost drivers of each project collected with the linguistic
+
+words can be replaced with the corresponding CoBRA EMs.
+
+The proposed conversion method can also be applied on COCOMO-II format datasets. The proposed mapping algorithm does not incorporate
+
+the value of COCOMO-II scale factors to the CoBRA EM. There is no such concept as scale factor in CoBRA. We only consider the
+
+17 COCOMO-II cost drivers as CoBRA effort drivers and transform their EMs to CoBRA EMs. Therefore, algorithm 1 would be used for conver
+ting the COCOMO-II format data to CoBRA format data. By applying the proposed conversion method on the COCOMO-II dataset, there will be
+
+17 cost drivers whose EMs are shown in Table 4.
+
+4.3 | Determining nominal productivity
+
+In this section, we describe our proposed method for building the CoBRA nominal productivity model from a COCOMO dataset. We utilize
+
+median approach introduced in Ruhe et al. [18] for calculating the nominal productivity (P Nom ), whereas K similar historical projects are identified.
+
+In order to retrieve similar historical projects, we use Euclidean similarity (ES) and Manhattan similarity (MS). [59] ES is defined as
+
+
+|10 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+TABLE 6 Proposed algorithm to convert project data in COCOMO (COCOMO-II) format to a CoBRA-required format.
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+
+1
+sim ES pð, ´pÞ ¼ f **f** i f **f** i f **f** i f **f** i f **f** i f **f** i fi f **f** **f** i f **f** i f **f** i f **f** i f **f** i f **f** i f **f** i f **f** iffi, δ ¼ 0:0001
+hqP ni¼1 [Dis f] � [i] [,] [f] i [0] � þ δ i
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+�f i � f [0] i � 2 if f i andf [0] i [arenumerical]
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+1 if f i and f [0] i [arenominal and f] [i] [ ≠] [f] [0] i
+
+0 if f i and f [0] i [aren][o][minal andf] [i] [ ¼][ f] [0] i
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+ð6Þ
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+Dis f� i, f [0] i � ¼
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+8>><>>:
+
+
+**f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f** **f**
+
+where p and ´p are the projects. f i and f [0] i [are the][ i][th feature of each project, and][ n][ indicates the number of features.][ δ][ is used to obtain nonzero]
+
+results. The MS similarity function is very similar to ES, but it computes the absolute difference between features,
+
+
+|FEIZPOUR ET AL.|11 of 32|
+|---|---|
+|||
+
+
+1
+sim MS pð, ´pÞ ¼ �P ni¼1 [Dis f] � [i] [,] [f] i [0] � þ δ �, δ ¼ 0:0001
+
+
+ð7Þ
+
+
+Dis f� i, f [0] i � ¼
+
+
+8>><>>:
+
+
+jf i � f [0] i [j] if f i andf [0] i [arenumerical]
+
+1 if f i andf [0] i [arenominal andf] [i] [ ≠] [f] [0] i
+
+0 if f i andf [0] i [arenominal andf] [i] [ ¼][ f] [0] i
+
+
+We propose a dynamic search-based method to find the optimal value of K and the best similarity function for finding similar historical pro
+jects, so that this value may be different for different projects and datasets. This method will be described in Section 6.
+
+Nominal productivity for each retrieved historical project is then calculated by Equation (5). EO for each project in Equation (5) would be cal
+culated from the EO model, that is, effort drivers shown in Figure 2 and the corresponding EMs in Table 5. Because cost drivers in COCOMO are
+
+orthogonal [8] and the same cost drivers are considered as CoBRA effort drivers, we calculate the EO of each project by the sum of all the EMs of
+
+the project’s effort drivers, that is,
+
+
+EO ¼ XEM effort driverð i Þ: ð8Þ
+
+i
+
+
+Table 7 shows an example of obtained CoBRA EMs for a project with its given COCOMO effort drivers. The EO of this project calculated by
+
+Equation (8) is 353, and its P Nom calculated by Equation (5) is 182.9.
+
+5 | EXPERIMENTAL DESIGN
+
+5.1 | Datasets
+
+To evaluate the proposed method, we test it on both COCOMO and COCOMO-II datasets. Used datasets that are demonstrated in Table 8 are
+
+widely used in previous studies. [1,5,10,50]
+
+COCOMO81 dataset is the original dataset used by Boehm to calibrate COCOMO [8] and has 15 cost drivers. This dataset includes
+
+63 instances of software projects [60] with their cost drivers, size, mode, category of application (type), and effort—we refer to this dataset as
+
+“ ”
+COC81. This dataset was later translated to the COCOMO-II format and is available in the SEACRAFT repository. [61] We refer to this
+
+dataset as “COC81-dem.”
+
+“COCOMONASA2” dataset contains 93 projects’ data from different centers of NASA company. COCOMO and COCOMO-II format of this
+
+dataset are respectively available in PROMISE [62] and SEACRAFT [61] repositories. In this paper, we refer to these datasets as NASA93 and
+
+NASA93-dem, respectively.
+
+COCOMONASA dataset contains 60 projects' data in COCOMO format from different centers of NASA from the 1980s to 1990s. It is avail
+able in the PROMISE repository. [63] In the rest of the paper, we refer to this dataset as “NASA60.”
+
+“NASA10” dataset is another dataset in COCOMO-II that has 17 instances of software projects. This dataset is presented in Menzies et al. [10]
+
+TABLE 7 A sample project with linguistic values of effort drivers in COCOMO format and its corresponding CoBRA effort multipliers, EO,
+
+and P Nom .
+
+COCOMO's data H N VH VH VH H H N N N
+
+CoBRA's data 40 6 60 30 21 28 20 29 18 30
+
+TABLE 7 (Continued)
+
+
+
+
+COCOMO's data L L N N H 6.2 12 - 
+CoBRA's data 20 12 18 17 4 6.2 12 353 182.9
+
+
+|12 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+TABLE 8 The datasets used in the conducted experiment.
+
+Dataset COCOMO format Number of instance Features
+
+COC81 COCOMO 63 21
+
+COC81-dem COCOMO-II 63 26
+
+NASA93 COCOMO 93 23
+
+NASA93-dem COCOMO-II 93 26
+
+NASA60 COCOMO 60 17
+
+NASA10 COCOMO-II 17 24
+
+5.2 | Performance metrics
+
+There are several performance metrics commonly used in SDEE based on absolute residual (AR) and magnitude of relative error (MRE). AR shows
+
+the absolute difference between the actual effort (Y i ) and the estimated effort (Y [b] i ) of the project i:
+
+AR i ¼ jð Y i Þ� Y [b] i j ð9Þ
+� �
+
+Mean absolute residual (MAR) is calculated as
+
+
+P Ni¼1 [j] ð [ Y] [i] Þ� �Y [b] i �j
+
+
+MAR ¼
+
+
+, ð10Þ
+N
+
+
+where N denotes the number of instances.
+
+MRE is computed as
+
+
+MRE i ¼
+
+
+jð Y i Þ� Y [b] i j
+� � ð11Þ
+
+Y i
+
+
+MMRE specifies the mean magnitude of relative error, and MdMRE is the median of all MREs. Because MMRE can be highly affected by
+
+outliers, [23] MdMRE metric is used in some studies. [23,33,44,64] Despite being criticized by some researcher as being biased toward underestimated
+
+prediction, [50,65] MRE is a popular accuracy statistics that is used in many studies. [1,5,44,50]
+
+Another common and popular metric is PRED(L). [13,23,44] It depicts the percentage of estimates that are within the L percent of the actual value
+
+and is defined as
+
+PRED Lð Þ ¼ [A] ð12Þ
+N
+
+where N represents the number of instances and A is the number of projects with MRE less than or equal to L. Commonly, L = 0.25 is considered.
+
+It is desirable for estimation methods to maximize PRED and minimize MAR, MRE, MMRE, and MdMRE. MMRE is sensitive to outliers, and a sin
+gle large MRE can skew the MMRE [66] ; hence, it is not a reliable performance metric. Instead, PRED (0.25) is more preferred. [23]
+
+Recently, an unbiased measure introduced by Shepperd and MacDonell [65] called standard accuracy (SA) is used by researchers. [1,5,50] SA for
+
+prediction method P i is defined as
+
+SA ¼ 1 � [MAR] [P] [i] ð13Þ
+MAR P 0
+
+where MAR P i is the mean absolute residual for P i and MAR P 0 is the mean of a large number of random guessing runs (1000 in our case). SA shows
+
+how much P i is better than random guessing. Values under zero indicate that performance of the prediction model P i is worse than random
+
+guessing. The values near zero mean that the prediction model is useless. The closer SA values to 1, the better P i .
+
+Idri et al. have shown [67] that PRED(L) is less biased toward underestimates. Moreover, they have shown that SA and PRED(L) measure differ
+ent aspects of the method's performance.
+
+
+|FEIZPOUR ET AL.|13 of 32|
+|---|---|
+|||
+
+
+5.3 | Implementation
+
+In order to determine the performance of our proposed method and compare it with others, we used the leave-one-out cross-validation (LOOCV)
+
+method in our method and other methods. In the LOOCV method, iteratively one of the instances is selected as the test set and the remaining
+
+instances are used as the training set. So, test project is not seen in the training phase.
+
+FIGURE 3 The training phase of the proposed method to determine the optimum number of similar projects (K) and the best similarity
+
+function.
+
+
+|14 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+In order to find the optimal value of k—that depicts the number of similar historical projects—and the similarity function used in the productivity
+
+model of CoBRA, a dynamic search is applied in the training phase. Different combinations of k and two similarity functions are considered to determine
+
+the best k and the best similarity function that minimizes (MdMRE � PRED (0.25)). [44] Therefore, the lower bound for the difference between these two
+
+metrics is “�1.” It is desirable the difference between these metrics be closer to �1. Figure 3 depicts the training phase of the proposed method for
+
+determining the optimum number of similar projects (K) and the best similarity function. Project effort is then estimated as shown in Figure 4.
+
+Few other methods including CART, SVR, K nearest neighborhood (KNN), and random forest (RF) [1,10,23,33,44,50,64,68] are used in SDEE. We
+
+have implemented these methods with Matlab 2017 library with the default settings and compared their perfomance with our proposed method.
+
+We have also compared the proposed method with COCOMO and COCOMO-II by using the default values of the parameters of these models to
+
+demonstrate the performance of the proposed method when calibration of COCOMO is not possible.
+
+6 | RESULTS
+
+In this section, experimental results obtained in each dataset are represented separately. The results obtained in our experiment (MMRE, PRED
+
+(0.25), MdMRE, MAR, and SA) are shown in Tables 9–14. In addition to implementing several well-known and efficient effort estimation methods,
+
+we compared our results with the results reported in the previous studies that have used the same datasets and the same performance metrics.
+
+The results of the conducted experiments on each dataset are also depicted with boxplot and bar charts. Note that, for PRED (0.25) and SA
+
+values, larger are better and for MMRE, MdMRE, and MAR values, smaller are better.
+
+6.1 | Results on COC81 dataset
+
+Table 9 shows the results obtained on COC81. In the most of the previous studies, MMRE and PRED (0.25) are used as performance measures
+
+but the state-of-the-art model [50] has used MAR. Considering the MAR measure, our proposed method has obtained a much lower MAR than in
+
+Jose Thiago and Oliveira [50] (i.e., 290.44 vs. 888).
+
+FIGURE 4 Testing phase.
+
+
+|FEIZPOUR ET AL.|15 of 32|
+|---|---|
+|||
+
+
+On this dataset, COCOMO has obtained better results than our proposed method and other studies with the lowest MMRE, MdMRE,
+
+and MAR value and the highest PRED (0.25) and SA value. This can be explained due to the fact that the COCOMO model is already built
+
+and calibrated on this dataset. This means that COCOMO is perfectly fitted into this dataset. After COCOMO, on this dataset, our pro
+posed method has obtained better results than the other methods in all measures, with lower MMRE, MdMRE, and MAR and higher SA
+
+and PRED (0.25).
+
+Figure 5 depicts the distribution of ARs obtained from the estimation methods on the COC81 dataset. COCOMO and our proposed method
+
+have shorter interquartile range in comparison with the other methods, 92.26 and 114.96, respectively.
+
+Figure 6 visually compares the results of the implemented methods with three unbiased metrics. In the case of PRED (0.25) and SA, higher
+
+values and, in the case of MdMRE, lower values are better.
+
+TABLE 9 Comparison of the results obtained on COC81 with other existing methods.
+
+PRED
+
+Method MMRE (0.25) MdMRE MAR SA
+
+Proposed method 0.43 0.42 0.32 290.44 0.74
+
+COCOMO 0.33 0.50 0.22 210.93 0.81
+
+CART 1.55 0.14 0.73 689.26 0.38
+
+KNN3 0.84 0.16 0.81 633.55 0.44
+
+KNN1 2.12 0.13 0.84 568.85 0.49
+
+SVR 1.30 0.21 0.66 433.93 0.60
+
+RF 5.21 0.11 2.44 602.62 0.46
+
+Ensemble of Neural Network with Associative Memory (NN + AM) [37] 0.57 [a] 0.40 [a] 0.49 [a]
+
+Regression Rule Extraction from Neural Networks (RRE + NN) [71] 0.61 0.37 0.40
+
+
+Weighted combination of few SDEE method: COCOMO, linear regression, analogy, Grey
+relational analysis (GRA), and ANN [49]
+
+
+0.86 [a] 0.27 [a] 0.59 [a]
+
+
+Data mining technique (with backward input selection): [23] 
+Ridge regression (RiR) 0.08 0.95
+
+M5 algorithm 0.13 0.83
+
+Least median of squares regression (LMS) 0.27 0.48
+
+Ordinary least squares regression (OLS) 0.06 1.77
+
+Box Cox transformation (BC) + OLS 0.19 0.63
+
+log transformation (LOG) + OLS 0.40 0.30
+
+Multivariate adaptive regression splines (MARS) 0.13 0.65
+
+Robust regression (ROR) 0.16 0.65
+
+Least squares SVM (LS-SVM) 0.17 0.68
+
+Multi-layered perceptron (MLP) 0.17 0.79
+
+Case base reasoning (CBR), K = 1 0.19 0.65
+
+Radial basis function network (RBFN) 0.09 0.89
+
+Voting ensemble (MLP-RBF-RT-KNN_SVR) for estimating software development effort [48] 2.37 0.19 
+ABE + ANN [33] 0.88 0.33 0.79
+
+ABE + GA [33] 0.62 0.41 0.50
+
+ABE + PSO [44] 0.49 0.40 
+SVR + feature selection (SVR + FS) [3] 1.24 [a] 0.37 [a] 0.51 [a]
+
+
+Clustering + feature selection + ANN + GA as evolutionary algorithm (clustering + FS
++ ANN + GA) [38]
+
+
+0.86 0.32 0.65
+
+
+Dynamic ensemble Selection model [50]  -  -  - 888 [a]
+
+Note: KNN1: KNN with k = 1. KNN3: KNN with k = 3.
+
+a Accuracy value under the best configuration.
+
+
+|16 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+TABLE 10 Comparison of the results obtained on COC81-dem with other existing methods.
+
+Method MMRE PRED(0.25) MdMRE MAR SA
+
+Proposed method 0.52 0.34 0.40 330.75 0.70
+
+COCOMO-II 0.40 0.35 0.32 343.38 0.69
+
+CART 1.88 0.11 0.76 690.11 0.38
+
+KNN3 0.86 0.12 0.82 637.64 0.43
+
+KNN1 2.05 0.11 0.89 700.46 0.37
+
+SVR 1.29 0.21 0.67 436.19 0.61
+
+RF 4.91 0.17 2.42 554.50 0.50
+
+Fuzzy COCOMO2 [13] 0.39 0.34  
+Cuckoo search + COCOMO2 [11] 0.36 0.46  
+“ROME”: Sequential model-based optimization [1]  -  - 0.64  - 0.25
+
+TABLE 11 Comparison of the results obtained on NASA93 dataset with other existing methods.
+
+Method MMRE PRED (0.25) MdMRE MAR SA
+
+Proposed method 0.54 0.62 0.15 192.43 0.77
+
+COCOMO-II 0.60 0.48 0.26 433.60 0.49
+
+CART 1.15 0.28 0.47 396.93 0.53
+
+KNN3 0.93 0.19 0.63 480.93 0.44
+
+KNN1 1.17 0.32 0.50 574.51 0.32
+
+SVR 0.81 0.29 0.44 345.23 0.59
+
+RF 1.72 0.30 0.53 371.84 0.56
+
+Ensemble of Neural Network with Associative Memory (NN + AM) [37] 0.46 [a] 0.40 [a] 0.27 [a]  -  
+Data mining technique (with backward input selection) [23] :  -  -  
+RiR 0.35 0.44
+
+M5 0.30 0.49
+
+LMS 0.44 0.28
+
+OLS 0.31 0.51
+
+BC + OLS 0.30 0.45
+
+LOG + OLS 0.49 0.25
+
+MARS 0.34 0.39
+
+ROR 0.38 0.35
+
+LS-SVM 0.30 0.43
+
+MLP 0.38 0.38
+
+CBR K = 1 0.47 0.28
+
+RBFN 0.15 0.82
+
+COCOMO + ANN [17] 0.44 0.44 - 
+COCOMO2 + Dolphin + Bat [12] 0.50 0.26  -  -  
+Fuzzy COCOMO + PSO [16] 0.45 0.57  -  -  
+Dynamic ensemble Selection model [50]  -  -  - 422 [a]  
+a Accuracy value under the best configuration.
+
+6.2 | Results on COC81-dem dataset
+
+Table 10 shows the results of the conducted experiments on COC81-dem dataset. The proposed method has resulted in the lower MAR and
+
+higher value of SA than other methods. The standardized accuracy obtained by our proposed method is significantly greater than in Xia
+
+et al. [1] (i.e., 0.70 vs. 0.25) and almost equal to COCOMO-II. MMRE of our proposed method is 0.52 that is not less than the MMRE obtained
+
+
+|FEIZPOUR ET AL.|17 of 32|
+|---|---|
+|||
+
+
+TABLE 12 Comparison of the results obtained on NASA93-dem dataset with other existing methods.
+
+Method MMRE PRED (0.25) MdMRE MAR SA
+
+Proposed method 0.49 0.49 0.25 208.10 0.76
+
+COCOMO-II 0.50 0.31 0.38 370.27 0.56
+
+CART 1.14 0.28 0.45 395.19 0.53
+
+KNN3 0.91 0.19 0.67 479.52 0.44
+
+KNN1 1.12 0.32 0.57 481.18 0.43
+
+SVR 0.83 0.28 0.41 345.74 0.59
+
+RF 1.73 0.31 0.56 373.03 0.56
+
+Fuzzy COCOMO2 [13] 0.28 0.38  -  -  
+ROME: A sequential model-based optimization [1]  -  - 0.40  - 0.41
+
+a Accuracy value under the best configuration.
+
+TABLE 13 Comparison of the results obtained on NASA60 dataset and comparison with other existing methods.
+
+Method MMRE PRED (0.25) MdMRE MAR SA
+
+Proposed method 0.25 0.72 0.15 99.93 0.82
+
+COCOMO 0.30 0.58 0.19 114.36 0.79
+
+CART 0.48 0.38 0.35 190.50 0.65
+
+KNN3 0.58 0.22 0.54 325.22 0.42
+
+KNN1 0.77 0.35 0.42 285.13 0.48
+
+SVR 0.43 0.42 0.30 129.37 0.76
+
+RF 1.27 0.27 0.66 214.13 0.61
+
+Ensemble of NN with associative memory (NN + AM) [37] 0.36 [a] 0.50 [a] 0.26 [a]  -  
+Cuckoo search + COCOMO2 [11] 0.36 0.63  -  -  
+Fuzzy COCOMO + GA [15] 0.21 0.53  -  -  
+COCOMO2 + Dolphin+ Bat [12] 0.15 0.67  -  -  
+Fuzzy COCOMO + PSO [16] 0.22 0.65  -  -  
+Dynamic ensemble Selection model [50]  -  -  - 379  
+a Accuracy value under the best configuration.
+
+by COCOMO-II. [11,13] However, PRED (0.25) of the proposed method is equal to the PRED (0.25) of Attarzadeh and Ow [13] and is almost equal
+
+to the PRED (0.25) of COCOMO-II. As mentioned earlier, MMRE is sensitive to outliers, and it is not a reliable performance metric. Consider
+ing MMRE and PRED (0.25), the method presented in Kumari and Pushkar [11] has obtained better results than ours. Method of Kumari and
+
+Pushkar [11] has shown lower performance than ours on NASA60 (Table 13). The least MdMRE is achieved by COCOMO-II and then by our
+
+proposed method.
+
+Figure 7 shows the distribution of ARs obtained from the estimation methods. As can be seen, our proposed method has a shorter inter
+quartile range (111.06), in comparison with the other estimation methods. Figure 8 visually compares SA, MdMRE, and PRED (0.25) obtained by
+
+the different methods.
+
+6.3 | Results on NASA93
+
+Table 11 compares the results obtained on the NASA93 dataset. As can be seen, in comparison with other methods, the proposed method has
+
+the smallest MAR and the greatest SA and PRED (0.25). The value of MdMRE obtained by our method is lower than other methods. Although
+
+considering MMRE, our method is not better than previous studies, the value of PRED (0.25) of our method (0.62) is greater than others. It is
+
+worth reminding that MMRE is a sensitive measure to the outliers and is not a reliable measure.
+
+
+|18 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+TABLE 14 Comparison of the results obtained on NASA10 dataset with other existing methods.
+
+Method MMRE PRED MdMRE MAR SA
+
+Proposed method 0.32 0.47 0.27 417.56 0.53
+
+COCOMO-II 0.45 0.29 0.42 551.93 0.39
+
+CART 0.67 0.29 0.50 698.68 0.23
+
+KNN3 0.51 0.23 0.59 738.53 0.18
+
+KNN1 0.73 0.18 0.60 815.53 0.09
+
+SVR 0.55 0.29 0.51 561.22 0.37
+
+RF 0.94 0.18 0.69 707.87 0.21
+
+ROME: A sequential model-based optimization [1]  -  - 0.28  - 0.61
+
+FIGURE 5 Boxplot of absolute residuals on COC81 dataset. (The numbers below the methods' name indicate interquartile range of the
+absolute residuals of the method).
+
+FIGURE 6 Standard accuracy (SA), PRED(0.25), and MdMRE on COC81 dataset.
+
+
+|FEIZPOUR ET AL.|19 of 32|
+|---|---|
+|||
+
+
+FIGURE 7 Boxplot of absolute residuals on COC81-dem dataset. (The numbers below the methods' name indicate interquartile range of the
+absolute residuals of the methods).
+
+FIGURE 8 Standard accuracy (SA), PRED(0.25), and MdMRE on COC81-dem dataset.
+
+The distribution of ARs obtained from the estimation methods on the NASA93 dataset is depicted in Figure 9. Our proposed method on
+
+NASA93 has a shorter interquartile range followed by COCOMO (185.26 and 191.11, respectively). The widest interquartile range is obtained
+
+from KNN1 and KNN3.
+
+Figure 10 compares SA, PRED (0.25), and MdMRE on NASA93.
+
+Interestingly, because COCOMO's parameters are not calibrated on this dataset, its performance has not been good. This indicates that
+
+COCOMO without calibrated parameters on the local dataset would not perform well. However, our proposed method has provided much better
+
+results without the need of calibration.
+
+
+|20 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+FIGURE 9 Boxplot of absolute residuals on NASA93. The y-axis is plotted on a logarithmic scale. (The numbers below the methods' name
+indicate interquartile range of the absolute residuals of the method).
+
+FIGURE 10 Standard accuracy (SA), PRED(0.25), and MdMRE on NASA93 dataset.
+
+6.4 | Results on NASA93-dem dataset
+
+The results of the conducted experiments on NASA93-dem dataset are shown in Table 12. Considering the SA measure, our proposed method
+
+shows higher performance than the other methods. Notably, our obtained SA is greater than the study of Xia et al. [1] (i.e., 0.77 vs. 0.41).
+
+Furthermore, MdMRE and MAR of our proposed method are lower than other methods. Moreover, our method has shown a higher value of
+
+PRED (0.25) than other methods. Figure 11 clearly shows this superiority. The distribution of ARs obtained from the experiment is shown in
+
+Figure 12. Although SVR has obtained a shorter interquartile range than the proposed method (247.75 vs. 249.76), as can be seen in Figure 12,
+
+the median, lower quartile (Q1), and upper quartile (Q3) of AR of the proposed method are smaller than other methods.
+
+
+|FEIZPOUR ET AL.|21 of 32|
+|---|---|
+|||
+
+
+FIGURE 11 Standard accuracy (SA), PRED(0.25), and MdMRE on NASA93-dem dataset.
+
+FIGURE 12 Boxplot of absolute residuals on NASA93-dem. The y-axis is plotted on a logarithmic scale. (The numbers below the methods'
+name indicate interquartile range of the absolute residuals of the method).
+
+6.5 | Results on NASA60 dataset
+
+NASA60 dataset includes 60 projects in COCOMO format. Results obtained from our proposed method and other existing methods on this
+
+dataset are presented in Table 13. The lowest values of MMRE, MdMRE, and MAR and also the highest values of PRED (0.25) and SA are
+
+achieved by our proposed method. Figure 13 shows the obtained results.
+
+A number of studies have proposed methods to calibrate the coefficients of COCOMO on this dataset. [11,12,16] However, our proposed
+
+method has provided better results without the need of calibration. Moreover, with the proposed method MdMRE and MMRE are 0.15 and 0.25,
+
+respectively. Although previous studies [12,15,16] have obtained lower MMRE, their PRED (0.25) is less than ours. Considering the MAR measure,
+
+our proposed method has resulted in a much lower value than in Jose Thiago and Oliveira. [50] Moreover, the obtained MdMRE by our method is
+
+better than the others.
+
+
+|22 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+FIGURE 13 Standard accuracy (SA), PRED(0.25), and MdMRE on NASA60 dataset.
+
+FIGURE 14 Boxplot of absolute residuals on NASA60 dataset. (The numbers below the methods' name indicate interquartile range of the
+absolute residuals of the method).
+
+The distribution of ARs obtained from the methods used in the experiment on the NASA60 dataset is depicted by a boxplot in Figure 14. As
+
+is shown, the shorter interquartile range is obtained by our method (53.81). Similar to the results on COC81-dem, NASA93, and NASA93-dem
+
+datasets, COCOMO without being calibrated on these datasets has not been able to provide better results than our method.
+
+6.6 | Results on NASA10 dataset
+
+NASA10 dataset includes attributes of the COCOMO-II model for each project. Obtained results of the conducted experiment on this dataset are
+
+shown in Table 14. As can be seen, COCOMO-II without calibration has not provided satisfactory results. Our proposed method has obtained the
+
+best results in all measures than the other methods. Figure 15 shows this superiority of the proposed method in SA, MdMRE, and PRED (0.25).
+
+Furthermore, Figure 16 shows that our proposed method has achieved the lowest median, lower quartile (Q1), and upper quartile (Q3) of ARs in
+
+the boxplot chart.
+
+
+|FEIZPOUR ET AL.|23 of 32|
+|---|---|
+|||
+
+
+FIGURE 15 Standard accuracy (SA), PRED(0.25), and MdMRE on NASA10 dataset.
+
+FIGURE 16 Boxplot of absolute residuals on NASA10 dataset. (The numbers below the methods' name indicate interquartile range of the
+absolute residuals of the method).
+
+This dataset is rarely used in the previous studies. Xia et al. [1] have proposed a method that uses sequential model-based optimization to find
+
+the best technique for a particular dataset and applied it on NASA10 dataset. Their proposed method has resulted in 0.61 and 0.28 for SA and
+
+MdMRE, respectively. Although their SA is greater than ours, MdMREs are equal. Furthermore, their method could not perform well on
+
+COC81-dem and NASA93-dem datasets—see Tables 10 and 12.
+
+6.7 | Statistical analysis
+
+To support the findings about MRE and AR obtained in different experiments, we have conducted Wilcoxon signed ranks test at the significance
+
+level of 0.05. [33,44] This test is used to compare significant differences between average of two dependent samples. In effect, the reported results
+
+show the significant difference between MMRE and MAR of the proposed method and others. Moreover, we have calculated A12 effect size,
+
+which measures the percentage of cases in which other methods have led to higher or equal MRE (AR) compared with the proposed method. [69]
+
+A12 over 0.56, 0.64, and 0.71 respectively indicates small, medium, and large difference.
+
+
+|24 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+Statistical tests on the results of COCOMO and the proposed method conducted on the six datasets are compared in Table 15. Wilcoxon test
+
+for both MRE and AR reveals significant difference between the two methods on three datasets of NASA93, NASA93-dem, and NASA10 with p
+value of <0.05. Obtained A12 on these datasets shows lower performance of COCOMO in comparison with the proposed method.
+
+The test on both MRE and AR shows that the proposed method and CART are significantly different on five datasets of COC81,
+
+COC81-dem, NASA93, NASA93-dem, and NASA60. A12 obtained on each of these datasets depicts big differences between CART and the
+
+TABLE 15 Wilcoxon signed ranks test and A12 effect size for comparison between proposed method and others.
+
+
+
+
+COCOMO Proposed method COC81 �1.965 0.049 0.381 �1.212 0.226 0.381
+
+COC81-dem �1.828 0.086 0.429 �0.842 0.400 0.429
+
+NASA93 �2.362* 0.018 0.667 [+] �2.197* 0.028 0.667 [+]
+
+NASA93-dem �2.136* 0.033 0.656 [+] �3.067** 0.002 0.656 [+]
+
+NASA60 �1.141 0.254 0.517 �0.994 0.320 0.517
+
+NASA10 �2.201* 0.028 0.765 [++] �2.343* 0.019 0.765 [++]
+
+KNN3 Proposed method COC81 �4.874*** <0.001 0.746 [++] �5.792*** <0.001 0.746 [++]
+
+COC81-dem �3.889*** <0.001 0.746 [++] �4.916*** <0.001 0.746 [++]
+
+NASA93 �5.117*** <0.001 0.774 [++] �5.814*** <0.001 0.774 [++]
+
+NASA93-dem �5.370*** <0.001 0.785 [++] �5.899*** <0.001 0.785 [++]
+
+NASA60 �5.080*** <0.001 0.833 [++] �5.602*** <0.001 0.833 [++]
+
+NASA10 �2.391* 0.017 0.824 [++] �2.434* 0.015 0.824 [++]
+
+SVR Proposed method COC81 �5.100*** <0.001 0.794 [++] �4.546 <0.001 0.794 [++]
+
+COC81-dem �3.574*** <0.001 0.667 [+] �3.327*** 0.001 0.667 [+]
+
+NASA93 �5.500*** <0.001 0.774 [++] �4.335*** <0.001 0.774 [++]
+
+NASA93-dem �4.937*** <0.001 0.731 [++] �4.297*** <0.001 0.731 [++]
+
+NASA60 �3.931*** <0.001 0.717 [++] �3.372** 0.001 0.717 [++]
+
+NASA10 �1.112 0.266 0.588 �1.396 0.163 0.588
+
+*p < 0.05,**p < 0.01,***p < 0.001. [+] A12 ≥ 0.64 (medium difference).
+++ A12 ≥ 0.71 (big difference).
+
+
+|FEIZPOUR ET AL.|25 of 32|
+|---|---|
+|||
+
+
+proposed method, such that in at least 71% of the cases MRE and AR of CART are higher than the proposed method. A12 was obtained for
+
+NASA10 but depicts that in 70% of the cases, obtained MRE and AR with CART are higher than the proposed method.
+
+The statistical tests on the results obtained by KNN3 and RF in comparison with the proposed method show that MRE and AR obtained by
+
+the proposed method on all the six datasets are significantly lower than KNN3 and RF. Obtained A12 on all the datasets shows that in at least
+
+73% of cases, MRE and AR of KNN3 and RF are higher than the proposed method. Similar results are obtained with KNN1, except that obtained
+
+A12 depicts in at least 66% of cases obtained MRE and AR with KNN1 are higher than the proposed method.
+
+The test on both MRE and AR shows that the proposed method and SVR are significantly different on five datasets of COC81, COC81-dem,
+
+NASA93, NASA93-dem, and NASA60. According to the obtained A12, in at least 66% of cases on the five datasets, SVR results in higher MRE
+
+and AR. Although the statistical analysis does not show a significant difference between our proposed method and SVR on NASA10, in 58% of
+
+cases, its obtained MRE and AR have been lower than SVR.
+
+FIGURE 17 Comparisons of MMREs, MdMREs, and MARs among the proposed model and others.
+
+
+|26 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+7 | DISCUSSION
+
+In this section, we provide our discussions and interpretations of the results presented in the previous section.
+
+7.1 | Answers to the research questions
+
+In this section, we answer the research questions based on experiments.
+
+� RQ1: Considering the similarity of the nature of the COCOMO and CoBRA, is it possible (how) to provide a method to generate CoBRA
+required data from the datasets collected for COCOMO?
+
+In Section 4, we have proposed a mapping algorithm—Algorithm 1—that converts COCOMO-style dataset to a dataset that is applicable in
+
+CoBRA.
+
+� RQ2: How is the effectiveness of the CoBRA method compared with other effort estimation methods?
+
+Comparison of the proposed method with COCOMO, CART, KNN3, KNN1, SVR, and RF on all six datasets are depicted in Figures 17 and 18. In
+
+these figures, horizontal axis represents the datasets: 1, COC81 dataset; 2, COC81-dem dataset; 3, NASA93 dataset; 4, NASA93-dem; 5, NASA60
+
+dataset; 6, NASA10 dataset.
+
+Figures 17A and 17B respectively compare the MMRE and MdMRE obtained by the methods. It can be seen that MMREs and
+
+MdMREs obtained by the proposed method are lower than other methods on NASA93, NASA93-dem, NASA60, and NASA10 datasets.
+
+However, MMREs and MdMREs of COCOMO on COC81 and COC81-dem are lower than ours. As can be seen in Figure 17C, the MAR
+
+obtained by the proposed method is lower than all other methods on all the datasets, except for the COC81 dataset on which COCOMO
+
+has had the lowest MAR. Results of Table 15 also shows statistically significant difference in MAR and MMRE between our proposed
+
+method and others on different datasets.
+
+FIGURE 18 Comparisons of PREDs and SAs among the proposed model and others.
+
+
+|FEIZPOUR ET AL.|27 of 32|
+|---|---|
+|||
+
+
+Figure 18 compares the PREDs and SAs obtained from the proposed method with other methods in all six datasets. Figure 18A shows that
+
+except on COC81 and COC81-dem, the PREDs (0.25) obtained by the proposed method are higher than all other methods and on all other
+
+datasets. Only COCOMO has had higher PRED (0.25) than the proposed method on COC81 and COC81-dem. As can be seen in Figure 18B, the
+
+SA obtained by the proposed method has been higher than all other methods on all datasets, except on COC81. Only COCOMO on COC81
+
+dataset shows higher SA than the proposed method.
+
+As can be seen in Figures 17 and 18, the performance of the proposed method has been better on the COCOMO-II versions of the
+
+datasets. It seems that CoBRA on COCOMO-II features can better estimate the effort on COCOMO features. Of course, this observation
+
+needs further investigation. Moreover, it can be seen that the proposed method has had better performance than other methods on all
+
+datasets except on COC81. Only COCOMO has shown better performance on COC81, which is not unexpected because COCOMO is cali
+brated on this dataset.
+
+� RQ3: At least with how many historical projects CoBRA can predict the software effort accurately?
+
+We have also studied the optimum number of similar projects (k) that are used by CoBRA on the datasets—Figure 19. As is evident from
+
+Figure 19A—except in three cases—10 historical projects are used to estimate projects' effort in CoC81 dataset. However, for estimating the
+
+efforts of projects in COC81-dem, different values of k are used that range from 3 to 10—Figure 19B. Figures 19C and 19D respectively show
+
+that on NASA93—except in one case—and on NASA93-dem dataset—except in thirteen cases—five historical projects are used to estimate the
+
+effort of the projects. The maximum values of k in NASA93 and NASA93-dem are 9 and 7, respectively. Figure 19E shows that in most cases, four
+
+historical projects are used to estimate the projects' effort. However, the maximum value of k in this dataset is 9. Figure 19F shows that in
+
+NASA10, two historical projects are used to estimate projects' effort, except in two cases.
+
+FIGURE 19 The number of historical projects (K) used by proposed method to estimate effort of projects on datasets.
+
+
+|28 of 32|FEIZPOUR ET AL.|
+|---|---|
+|||
+
+
+The experiments show different values of k in different datasets, but with CoBRA, at least two similar historical projects need to estimate
+
+software efforts.
+
+� RQ4: Can CoBRA be a good alternative for COCOMO when there is insufficient historical data to calibrate COCOMO?
+
+As the results of statistical analysis in Table 15 and the results of Table 9–14 show, except the COC81 that COCOMO calibrated on them, our
+
+proposed method can better or the same estimates than the COCOMO.
+
+7.2 | Summary of achievements
+
+The obtained results by our proposed method on six datasets in the COCOMO and COCOMO-II format demonstrate its effectiveness on (1) con
+verting COCOMO's data to meet the CoBRA requirement data and (2) superiority of using the proposed method for SDEE over a significant num
+ber of existing methods.
+
+Based on the above-discussed findings, we can argue that using the proposed method, more accurate effort estimation of the software pro
+jects would be achieved with fewer number of historical projects. Hence, data related to historical projects can be collected in COCOMO
+
+(or COCOMO-II) format that is well-established in the community. Despite the COCOMO method that needs at least 10 historical projects to
+
+have acceptable performance, [5] better estimations would be achieved by applying CoBRA on a reasonably fewer number of transformed historical
+
+projects. As such, the proposed method can be useful and efficient for newly established software companies that do not have much historical
+
+data to estimate software development efforts. Compared with COCOMO, our proposed method has the advantage of not needing any calibra
+tion as is required for the parameters of COCOMO. Also, the scarce expertise required to directly collect data for CoBRA is eliminated.
+
+8 | THREATS TO VALIDITY
+
+All experiment-based studies are threatened by a number of issues that must be considered to avoid wrong conclusion.
+
+8.1 | Internal validity
+
+Internal validity examines the question of whether different results can be achieved with regard to different runs or different parameter setups. In
+
+this study, all the estimates were produced using the LOOCV technique in which iteratively a project is selected as the test set and the remaining
+
+projects are used for training; therefore, the test project is an unseen project in training phase, and any bias in the conclusion is avoided. LOOCV
+
+produces the same results on a specific dataset if the experiments are repeated. [67] Furthermore, all parameters and similarity measure in this study
+
+are well defined. The value of k, which specifies k similar historical projects to the target project, is determined using the LOOCV technique in a
+
+dynamic search; therefore, in each run, the same value is obtained for each target project.
+
+8.2 | External validity
+
+External validity is discussed as how the proposed models can be generalized in the real world. COCOMO is still used in SDEE, and calibrating its
+
+coefficients is still a hot topic. [5,11,12,16] Menzies et al. [10] strongly recommend using COCOMO for predicting software effort when COCOMO style
+
+attributes are available.
+
+Our proposed method is based on the fact that when there is no enough local data to calibrate COCOMO parameters, COCOMO cannot be able
+
+to produce accurate estimates. It is unlikely to have access to enough quality historical data in new contexts or in newly established organizations to
+
+calibrate COCOMO. In this case, our proposed method can mitigate this problem. We have tested our proposed method on six well-known and pub
+lic datasets in COCOMO and COCOMO-II formats. The datasets contain projects in various contexts such as banking, aerospace, military, and soft
+ware. The projects cover a wide range of application domains including management of information system, operating systems, simulation, and signal
+
+processing. Considering the variety of datasets used, it is reasonable to conclude that the proposed method can be effective in the real world.
+
+The other concern of external validity is whether the findings of this study are relevant to the present software development methods. Xia
+
+et al. [1] have argued that despite the popularity of agile methods in software development, waterfall model for developing projects is still in use,
+
+especially in large government and military software contracts. For instance, COCOMO-II is recently used for estimating software development
+
+effort in real aeronautical safety-critical software development project under the DO-178C processes. [70]
+
+
+|FEIZPOUR ET AL.|29 of 32|
+|---|---|
+|||
+
+
+8.3 | Construct validity
+
+Construct validity examines the question of whether a study measures what it really intends to measure. The aim of this study was to investigate
+
+whether the proposed CoBRA is an efficient method for software effort estimation. Although some performance metrics used in this study such
+
+as MMRE and MdMRE have been criticized by some researchers as it is biased toward error underestimations, we have also used two state-of
+the-art measures, namely, SA and MAR, to avoid the biasing in the results. Use of these metrics makes the results comparable with a wide range
+
+of prior studies. Furthermore, the use of Wilcoxon signed ranks test on MRE and AR and also A 12 effect size between each pair of the proposed
+
+method and the other comparing methods can minimize the possible threat to construct validity. In addition, a boxplot of ARs is utilized to show
+
+the distribution of error in results and ease the comparison of results. We believe the results and the findings of this study are of the highest
+
+reliability.
+
+9 | CONCLUSION AND FUTURE WORK
+
+Software project managers require accurate development effort estimation to implement, schedule and control software projects successfully. A
+
+number of methods are proposed for software effort estimation. Data-driven methods usually require large sets of historical projects. COCOMO
+
+is a popular parametric data-driven model that is used in waterfall software development process. It has shown good accuracy in the effort predic
+tions if its parameters are accurately calibrated on local historical data. These data are usually scarce in software companies, and their collection is
+
+time-consuming and costly. CoBRA as a hybrid method that uses expert knowledge and past completed project data for effort estimation does
+
+not require large dataset and provides accurate estimates of effort. However, collecting CoBRA-required data is complex and costly. In this paper,
+
+we propose a method that extracts CoBRA-required data from COCOMO data and then estimates the development effort of projects using the
+
+CoBRA method. More precisely, we have proposed (1) a mapping algorithm for converting COCOMO EMs to CoBRA EMs and (2) a method for
+
+determining CoBRA productivity model to be extracted from COCOMO's data. With the proposed method, more accurate effort estimates can
+
+be obtained when there is not enough data to calibrate the parameters of COCOMO.
+
+We applied our method on six public datasets and compared the obtained results with a number of well-known methods and also other previ
+ous research that have used the same datasets and the performance metrics. The evaluation results showed the proposed method outperformed
+
+a significant number of previous studies and has increased the accuracy of estimates.
+
+It is notable to mention that applying our proposed transforming method has resulted in six public datasets that are applicable in CoBRA.
+
+CoBRA as one of the capable hybrid methods is almost overlooked in the realm of SDEE, and to the best of the authors' knowledge, no public
+
+dataset is released for it. The results of this research can motivate researchers to focus more on the CoBRA method and direct their research to
+
+this forgotten method that can be a beginning for the improvement of this method.
+
+DATA AVAILABILITY STATEMENT
+
+The COCOMO datasets that support the finding of this study are openly available,
+
+[• COC81 at http://unbox.org/wisp/trunk/cocomo/data/coc81modeTypeLangType.csv, reference number 12680](http://unbox.org/wisp/trunk/cocomo/data/coc81modeTypeLangType.csv)
+
+[• Coc81-dem at https://doi.org/10.5281/zenodo.268424, reference number 268424](https://doi.org/10.5281/zenodo.268424)
+
+[• NASA93 at PROMISE repository, http://promise.site.uottawa.ca/SERepository/datasets/cocomonasa_2.arff](http://promise.site.uottawa.ca/SERepository/datasets/cocomonasa_2.arff)
+
+[• NASA93-dem at https://doi.org/10.5281/zenodo.268419, reference number 268419](https://doi.org/10.5281/zenodo.268419)
+
+[• NASA60 at PROMISE repository, http://promise.site.uottawa.ca/SERepository/datasets/cocomonasa_v1.arff](http://promise.site.uottawa.ca/SERepository/datasets/cocomonasa_v1.arff)
+
+[• NASA10 at doi:10.1007/s10664-016-9,472-2](https://doi.org/10.1007/s10664-016-9,472-2)
+
+The CoBRA data that support the findings of this study are available from the corresponding author upon reasonable request.
+
+ORCID
+
+Hooman Tahayori [https://orcid.org/0000-0003-2152-7760](https://orcid.org/0000-0003-2152-7760)
+

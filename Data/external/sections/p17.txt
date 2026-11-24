@@ -1,0 +1,1658 @@
+International Journal of System Assurance Engineering and Management
+[https://doi.org/10.1007/s13198-025-03069-9](https://doi.org/10.1007/s13198-025-03069-9)
+
+
+# **Software development effort estimation using COCOMO-II model with ** **FA and CFAEE**
+
+**Sarika Mustyala** **[1]** **· Manjubala Bisi** **[1]**
+
+Received: 31 March 2025 / Accepted: 5 November 2025
+© The Author(s) under exclusive licence to The Society for Reliability Engineering, Quality and Operations Management (SREQOM), India and The
+Division of Operation and Maintenance, Lulea University of Technology, Sweden 2025
+
+
+**Abstract**
+Software effort estimation is a critical and vital step in the
+software development life cycle. Software effort estimation
+has attracted significant attention from both the software
+industry and the research community. Effort estimates are
+crucial for determining development time, resource plan-­
+ning, and budgeting. Therefore, accurately estimating effort
+is essential for effective project management. Numerous
+researchers have previously presented a variety of tech-­
+niques for estimating software effort, including statistical,
+algorithmic, machine learning-based, and nature-inspired
+models. Selecting the most accurate estimation method is
+a complex procedure. This study optimizes the COCOMOII model parameters for estimation accuracy by employing
+the Firefly Algorithm(FA) and the Chaotic Firefly Algo-­
+rithm with Enhanced Exploration (CFAEE). Mean Mag-­
+nitude of Relative Error (MMRE) and Prediction (PRED)
+are used to assess the application of the two models on six
+datasets. While the Firefly Algorithm surpasses previous
+algorithms, the results show that the CFAEE methodology
+is the most effective approach for determining the effi-­
+ciency coefficients of the COCOMO-II model. Statistical
+testing also shows that the proposed model yields better
+results.
+
+**Keywords** COCOMO-II model · Effort estimation ·
+Parameters optimization · Firefly algorithm · Chaotic
+firefly algorithm with enhanced exploration
+
+Sarika Mustyala
+
+ms23csr1r02@student.nitw.ac.in
+
+Manjubala Bisi
+manjubalabisi@nitw.ac.in
+
+1 Computer Science and Engineering, National Institute of
+Technology, Warangal, Warangal, Telangana 506004, India
+
+
+**1 Introduction**
+
+The number of software projects that exceed their budget
+and take longer than expected to finish is one of the main
+problems software project managers encounter. Inaccurate
+estimates have frequently led to projects being over bud-­
+get, behind schedule, and ultimately abandoned. Despite
+exceeding budget or time, thirty to forty percent of software
+projects were eventually completed, and numerous addi-­
+tional projects were scrapped or failed (Nisar et al. 2008).
+Besides various causes of failure, a significant portion of
+software development failures have been traced back to
+inaccurate software estimations (Papic 2019; Attarzadeh
+and Ow 2011). There are several issues with software effort
+prediction when developing software projects. In develop-­
+ing a software project, estimating effort and costs is criti-­
+cal. Effort and cost estimation involves predicting the work
+and resources required to complete project tasks, typically
+measured in labor hours and financial expenses. It is help-­
+ful when offering services to meet clients’ functional needs
+(Fernández-Diego et al. 2020). There are numerous rea-­
+sons why software projects run behind schedule, including
+unpredictable and unreliable production that is hard for soft-­
+ware project managers to manage. Communication issues
+can also cause delays and failures in software projects, mak-­
+ing it complex to forecast the development effort for these
+projects.
+
+Boehm stated that 20% of the project duration and 8% of
+all resources are allocated to developing baseline require-­
+ments. Most software projects effectively utilize between
+7% and 15% of the project’s overall resources. The project
+attribute under consideration explains the features of the
+link to a software engineering project (Putri et al. 2021).
+The Constructive Cost Model (COCOMO) II is a widely
+used strategy in the software industry for estimating soft-­
+ware efforts. Numerous enhancements in various cost driv-­
+ers have demonstrated their increased accuracy (Putri et al.
+## 1 3
+
+
+2021). Organizations’ methods and processes for determin-­
+ing estimates for project planning, probability estimates,
+and proposal bidding are collectively referred to as software
+effort estimation (Agarwal et al. 2001; Jorgensen 2005). As
+a result, managers, professionals who perform or rely on
+effort estimating, technical personnel, and executives have
+severe concerns about estimation accuracy (Kemerer 1987;
+Jain et al. 2024; Mustyala and Bisi 2025). The need for
+more reliable estimates makes it challenging for software
+engineering researchers to estimate software development
+efforts accurately (Kaushik et al. 2022).
+
+Software effort estimation models are categorized into
+two main approaches: algorithmic and non-algorithmic. The
+Constructive Cost Model (COCOMO) (Boehm 1984) and
+Software Life Cycle Management (SLIM) (Putnam 1978)
+are examples of algorithmic models, developed through
+statistical analysis of historical data (Manchala and Bisi
+2024). Well-known algorithmic effort estimation models
+include Putnam’s SLIM (Putnam 1978), Function Point
+Analysis (Boehm et al. 2000), and Boehm’s COCOMO-I
+and II (Boehm et al. 2000). However, obtaining the inputs
+that these models require early in the software development
+process, such as the number of user screens, interfaces,
+source lines of code (SLOC), and complexity, can be timeconsuming and effort-intensive. Despite this, these models
+are relatively simple to understand, and their formulas and
+calculations provide quick estimates compared to non-algo-­
+rithmic models.
+
+Among the wide variety of estimating models, algo-­
+rithmic constructs like the Constructive Cost Model
+
+(COCOMO) and its descendants, COCOMO-II, remain
+popular due to their ease of use and adaptability to vari-­
+ous project phases (Boehm 1984; Boehm et al. 1995). The
+input parameters plays a crucial role in these models’ accu-­
+racy, and this dependence can lead to substantial estimation
+mistakes. Machine learning approaches and metaheuristic
+algorithms have improved estimation accuracy by refining
+parameter values, making these models more reliable (Mah-­
+mood et al. 2022).
+
+Metaheuristic algorithms have been recommended for
+their ability to quickly find near-optimal solutions, which
+makes them ideal for handling complex optimization prob-­
+lems in software effort estimation. For estimating pur-­
+poses, a meta-heuristic method is currently used to improve
+forecast results and yield accurate outcomes (Putri et al.
+2021). When compared to other optimization techniques,
+COCOMO-II’s effort estimation calculation needs to be
+more accurate| (Chalotra et al. 2015; Jafari and Ziaaddini
+2016; Hidayat et al. 2016). To increase the accuracy of effort
+in software projects, this study combines COCOMO-II and
+the Firefly algorithm(FA) and Chaotic FA with Enhanced
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+Exploration (CFAEE) to optimize COCOMO-II model
+coefficients (A,B) values.
+
+We have applied the FA and CFAEE models to the six
+datasets, NASA93, NASA60, COCOMO81, China, Deshar-­
+nais, and Maxwell. The actual effort of the projects in the
+dataset is expressed in Person-Months and hours. The results
+show that the proposed CFAEE effectively optimizes the
+COCOMO-II model’s coefficients (A and B), as evidenced
+by improved MMRE and PRED evaluation metrics. In par-­
+ticular, we will focus on the following research questions:
+
+RQ1: How do the coefficient values for COCOMO-II,
+obtained from CFAEE, demonstrate a better understanding
+or representation of the complexities involved in software
+projects compared to conventional methods?
+
+RQ2: What is the potential impact on effort estima-­
+tion accuracy in the COCOMO-II model of integrating
+the Chaotic Firefly Algorithm with Enhanced Exploration
+(CFAEE)?
+
+The paper’s organization is as follows: The relevant
+work on effort estimation is presented in Sect. 2, and the
+background work is presented in Sect. 3. Section 4 presents
+the methodology. The achieved outcomes are presented in
+Sect. 5, following the discussion. Section 6 discusses our
+experimental study’s validity threats. Finally, a conclusion
+is included in Sect. 7 of the study.
+
+**3.1 Constructive cost model II**
+
+Barry W. Boehm created a model called the COnstructive
+COst MOdel (COCOMO), which consists of 63 differ-­
+ent sample projects. Boehm proposed three categories of
+COCOMO modes. According to Boehm (1984), the three
+modes are: basic, intermediate, and detailed. The effort is
+estimated using different input parameters based on the
+model type. These features include the number of lines
+of code (KLOC) for the project, 15 cost driver attributes,
+and the calibration constants (A, B, C, and D), whose val-­
+ues vary depending on whether the project is embedded,
+semi-detached, or organic. The values of these calibra-­
+tion constants are specified in Table 1, which is the project
+description.
+
+Based on the project size and calibration constants (A,
+B), the fundamental COCOMO model (Eq. 1) computes
+effort expressed in person-months (PM) (Boehm 1984).
+The effort required to develop the software does not grow
+linearly with the project’s size, as exponent (B) indicates.
+With Eq. 2, where C and D are calibration constants, one
+can find the time necessary for software development *T* Dev
+in calendar months.
+
+Effort[PM] = *A ·* (KLOC) *[B]*  (1)
+
+
+International Journal of System Assurance Engineering and Management
+
+T Dev = *C ·* (Effort) *[D]*  (2)
+
+The intermediate model estimates the software development
+effort in terms of man-months by considering the size of the
+code, which is measured in thousands of lines. It adjusts the
+estimated value using the empirical constants A and B. Proj-­
+ect attributes are defined through 15 drivers, each associated
+with a specific numerical value known as a multiplier. The
+estimated effort for COCOMO-II is calculated using Eq. 3.
+
+
+where Size is expressed in kilo lines of code (KLOC) and
+∏ 15 *i* =1 [EM] *[i]* [ is the result of multiplying 15 effort multipliers. ]
+Model multipliers stand for the following factors: computer,
+product, personnel, and project factors. Driver multiplier
+values have been assigned based on the following six cat-­
+egories: Very Low, Low, Nominal, High, Very High, and
+Extra High. Table 2 provides the precise values (Boehm
+1984).
+
+Several improvements were made by the COCOMOII paradigm, including reuse, object-oriented methodol-­
+ogy, and non-sequential development (Boehm et al. 1995).
+This model defines three submodels: the Post-Architecture
+model, the Early Design model, and the Applications com-­
+position model.
+
+Application composition model is applied when compo-­
+nent-based development or prototyping is done in the soft-­
+ware development’s early stages (Boehm et al. 2000). To
+estimate the effort, count the object points, correct for reus-­
+ability, and then multiply the result by productivity rates.
+When a detailed system design is unavailable in the early
+stages of development, the Early Design model is employed
+
+
+Effort = *A ·* (Size) *[B]* *·*
+
+
+15
+∏
+
+*i* =1
+
+
+EM *i*  (3)
+
+
+**Table 2** Effort multipliers ratings
+Attribute Very low Low Nominal High Very high Extra high
+
+ACAP (Analyst Capability) 1.46 1.19 1.00 0.86 0.71 –
+PCAP (Programmer Capability) 1.42 1.17 1.00 0.86 0.70 –
+AEXP (Applications Experience) 1.29 1.13 1.00 0.91 0.82 –
+MODP (Modern Programming Practices) 1.24 1.10 1.00 0.91 0.82 –
+TOOL (Use of Software Tools) 1.24 1.10 1.00 0.91 0.83 –
+VEXP (Virtual Machine Experience) 1.21 1.10 1.00 0.90 – –
+LEXP (Language Experience) 1.14 1.07 1.00 0.95 – –
+SCED (Required Development Schedule) 1.23 1.08 1.00 1.04 1.10 –
+STOR (Main Storage Constraint) – – 1.00 1.06 1.21 1.56
+DATA (Database Size) – 0.94 1.00 1.08 1.16 –
+TIME (Execution Time Constraint) – – 1.00 1.11 1.30 1.66
+TURN (Computer Turnaround Time) 0.87 1.00 1.07 1.15 – –
+VIRT (Virtual Machine Volatility) 0.87 1.00 1.15 1.30 – –
+RELY (Required Software Reliability) 0.75 0.88 1.00 1.15 1.40 –
+CPLX (Product Complexity) 0.70 0.85 1.00 1.15 1.30 1.65
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+to determine a preliminary estimate (Boehm et al. 2000).
+This model uses thousands of lines of code or raw function
+
+points to represent the software size, along with a set of 7
+effort multipliers and five scaling factors. Conversion tables
+can translate function pointers into source code (LOC) lines.
+Compared to the Early Design Model, the Post-Architecture
+model offers more precise estimates because it is based on
+detailed system specifications and can be used in the devel-­
+opment or maintenance phase (Bajusova et al. 2024).
+
+**3.2 Firefly algorithm and FA with explicit**
+**exploration mechanism**
+
+The Firefly Algorithm (FA) is based on fireflies’ social
+and flashing properties. The FA mimics the natural system
+using several approximation principles because it is highly
+sophisticated and complicated in the“real world” (Yang
+2009; Khoshniat et al. 2024). Fitness functions are repre-­
+sented as firefly attractiveness and brightness; in most FA
+implementations, attractiveness depends on brightness,
+which is determined by the value of the objective function.
+When handling minimization problems, it is represented as
+follows:
+
+
+Each firefly employs attraction *β*, which is directly related
+to the luminous intensity of a specific firefly and depends on
+distance, as shown by Eq. 7.
+
+*β* ( *r* ) = *β* 0 *· e* *[−][γr]* [2]  (7)
+
+where attractiveness is indicated at distance r = 0 by param-­
+eter *β* 0 . Note that, in reality, Eq. 8 is frequently used in place
+of Eq. 7 (Yang 2009).
+
+*β* 0
+*β* ( *r* ) = (8)
+1 + *γr* [2] [ ]
+
+Using the above-provided information, the fundamental FA
+search formula for a randomly selected individual i, which
+improves on a new position *y* *i* in iteration t + 1 in the direc-­
+tion of individual j with higher fitness, appears as follows
+(Yang 2009):
+
+
+*i* *[t]* [+] *[ β]* [0] *[·][ e]* *[−][γr]* [2]
+
+
+*j* *[t]* *[−]* *[y]* *i* *[t]*
+
+
+*y* *i* *[t]* [+1] = *y* *i* *[t]*
+
+
+*i,j* ( *y* *[t]*
+
+
+*i* *[t]* [) +] *[ α]* *[t]* [(] *[κ][ −]* [0] *[.]* [5)] [ ] (9)
+
+
+where *κ* is the random number selected from a uniform or
+
+Gaussian distribution, and *r* *i,j* is the distance between two
+fireflies, i and j, that have been detected. *α* represents the
+value for the randomization parameter. For *β* 0 and *α*, the
+typical values that generate satisfactory results for most
+problems are one & [0, 1]. The Cartesian distance *r* *i,j* is
+calculated by using the following Eq. 10
+
+
+*I* ( *y* ) =
+
+
+{ 1 + *f* ( 1 *y* ) *|f* ( *y* ) *|* ifotherwise *f* ( *y* ) *>* 0  (4)
+
+
+where the value of the objective function at location y is
+indicated by f(y), and attractiveness is represented by I(y).
+Hence, when an individual gets farther away from the light
+source, one’s attraction reduces (Yang 2009), which is rep-­
+resented in Eq. 5.
+
+*I* 0
+*I* ( *r* ) = (5)
+1 + *γr* [2] [ ]
+
+where *I* 0 denotes the light intensity at the source, and I(r) is
+the light intensity at the distance r. Furthermore, the Firefly
+Algorithm uses the *γ* parameter, the light absorption coef-­
+ficient, to replicate real-world natural systems in which the
+environment around it partly captures light. For most FA
+variants, the combined effect of the *γ* coefficient and the
+inverse square law of distance is approximated by the fol-­
+lowing Gaussian form Yang (2009):
+
+*I* ( *r* ) = *I* 0 *e* *[−][γr]* [2]  (6)
+
+
+~~�~~
+�
+�
+�
+
+
+*r* *i,j* = *∥y* *i* *−* *y* *j* *∥* =
+
+
+*n*
+�
+
+
+�( *y* *i,k* *−* *y* *j,k* ) [2]  (10)
+
+*k* =1
+
+
+where n represents the problem’s dimensionality.
+
+It is evident from examining a basic FA search equation,
+as in Eq. 9, that it is deficient in an explicit exploration pro-­
+cess. Some FA implementations use the dynamic random-­
+ization parameter *α* to overcome this problem (Wang et al.
+2017).
+
+Despite this, the comprehensive empirical simulations
+conclude that the suggested approach only addresses a por-­
+tion of the problem and that more than dynamic alone is
+needed to improve FA exploration abilities.
+
+
+ (11)
+
+)
+
+
+)
+
+
+*α* *[t]* [+1] = *α* *[t]*
+
+
+(
+
+
+1 *−* *[t]*
+
+*I*
+
+## 1 3
+
+
+where I is the maximum number of iterations in an algo-­
+rithm run, and t and t + 1 stand for the current and subse-­
+quent iterations, respectively.
+
+The Chaotic Firefly Algorithm with Enhanced Explora-­
+tion (CFAEE) is an advanced optimization technique that
+outperforms the traditional Firefly Algorithm. The algo-­
+rithm initiates a population of fireflies, evaluates their fit-­
+ness using a predetermined objective function, and then
+updates the fireflies based on their decreasing attractiveness
+with distance, determined by a light absorption coefficient.
+To prevent premature convergence and escape local optima,
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+the algorithm uses chaotic maps to dynamically adjust the
+randomization parameter, thereby enhancing each firefly’s
+migration towards brighter ones (i.e., those with superior fit-­
+ness). Crucially, boundary management ensures that every
+firefly remains within the allowed search spaces, thereby
+maintaining the algorithm’s efficiency. The algorithm
+updates the firefly positions and fitness, ultimately yielding
+an optimal or nearly ideal solution. The optimal solution
+is refined over successive generations until the maximum
+number of repetitions is reached. The pseudo code for
+CFAEE is as follows:
+
+
+International Journal of System Assurance Engineering and Management
+
+A detailed explanation of CFAEE is as follows:
+Explicit exploration aids in exploring the parameter
+boundaries for the current optimal individual *y* *[∗]* at late
+execution phases. At the same time, in early iterations, it
+aims to ensure the algorithm eventually reaches the optimal
+portion of the search area. Each solution is modeled using
+an additional characteristics trial to integrate this behavior;
+this trial is incremented each time the basic FA search fails
+
+to enhance the solution using Eq. 9. The random solution
+chosen from within the search space is substituted for the
+individual when the trial parameter for that solution hits a
+predefined limit value using the same process as in the setup
+phase:
+
+*y* *i,j* = *L* *j* + ( *U* *j* *−* *L* *j* ) *·* Rand  (12)
+
+where *y* *i,j* denotes the j-th component of the i-th individual,
+*U* *j* and *L* *j* represent upper and lower search boundaries of
+the j-th element, and the Rand is a random number with a
+uniform distribution from the interval [0, 1].
+
+When the algorithm fails to explore the appropriate por-­
+tions of the search region during the early iterations, replac-­
+ing the exhausted solution with a pseudo-random individual
+disrupts search performance. However, this replacement
+consumes function evaluations in later iterations, assuming
+the best region has already been identified.
+
+*y* *i,j* = *PL* *j* + ( *PU* *j* *−* *PL* *j* ) *·* Rand  (13)
+
+where the lowest and greatest values of the j-th component
+for the total population P are denoted by *PL* *j* and *PU* *j*,
+respectively.
+
+In deterministic and nonlinear systems, chaos is a random
+phenomenon susceptible to its beginning circumstances
+(Alatas 2010; Santos Coelho and Mariani 2008). The sug-­
+gested approach uses a logistic map (Li et al. 2012) that is
+defined as follows and is executed in K steps.
+
+*σ* *i,j* *[k]* [+1] = *µσ* *i,j* *[k]* [(1] *[ −]* *[σ]* *[i,j]* [)] *[,]* *k* = 1 *,* 2 *, . . ., K*  (14)
+
+where *µ* is the control variable and *σ* *i,j* *[k]* [ and ] *[σ]* *i,j* *[k]* [+1] [ repre-­]
+sent the chaotic variables for the *j* -th element of the *i* -th
+solution in steps *k* and *k* + 1, respectively. As this value
+has already been determined empirically (Mirjalili 2016),
+*σ* *i,j* *̸* = 0 *.* 25 *,* 0 *.* 5 *,* and0 *.* 75, *σ* *i,j* *∈* (0 *,* 1), and *µ* are set to 4.
+
+At every phase *k*, new *y* *[∗]*, sometimes called *y* *[∗]* *[′]*, is gener-­
+ated by applying Eqs. 15 and 16 to component *j* of *y* *[∗]* :
+
+*y* *j* *[∗]* *[′]* [= (1] *[ −]* *[L]* [)] *[ ·][ y]* *j* *[∗]* [+] *[ l][ ·][ S]* *[j]* [ ] (15)
+
+*S* *j* = *L* *j* + *σ* *j* *[k]* *[·]* [ (] *[U]* *[j]* *[−]* *[L]* *[j]* [)]  (16)
+
+
+*λ* = [mffe] *[ −]* [ffe][ + 1]  (17)
+
+ffe
+
+where *λ* is the dynamic shrinkage parameter that is depen-­
+dent on the maximum number of fitness function evalu-­
+ations (mffe) in the process, as well as the current fitness
+function evaluation (ffe). Dynamic *λ* improves the exploi-­
+tation-exploration stability around the *⃗y* *[∗]* . The implementa-­
+tion is done in phases, with a more targeted exploitation in
+the latter stages and a more extensive search radius within
+*⃗y* *[∗]* being examined in the earlier stages.
+
+**4 Methodology**
+
+**4.1 Problem representation**
+
+Accurate software effort estimation is essential for efficient
+project management and resource allocation. The intricate
+and nonlinear relationships between project features and
+development effort pose a problem for standard models
+such as the COCOMO (Constructive Cost Model) regard-­
+ing parameter optimization (Bajusova et al. 2024). Since the
+model is static, it is less successful at adjusting to contempo-­
+rary software projects’ complex and dynamic settings. This
+unpredictability frequently leads to inconsistent estimations.
+
+Because of this, parametric models such as COCOMO
+frequently generate estimates that are inconsistent and less
+accurate, particularly when applied in situations that are
+significantly different from those in which the models were
+initially calibrated. Moreover, these models’ parameter tun-­
+ing procedures are usually manual or dependent on histori-­
+cal data, which makes it challenging to adjust to changing
+organizational settings, development methodologies, or
+technology.
+
+These challenges underscore a critical research need for
+adaptive and flexible optimization techniques capable of
+dynamically adjusting the parameters of estimation models
+to better reflect real-world software development scenarios.
+Consequently, there is a need to create and assess improved
+optimization techniques to improve the accuracy of effort
+estimating models. Among existing approaches, the Firefly
+Algorithm (FA) has demonstrated promise in optimization
+tasks across benchmark problems and real-world applica-­
+tions (Yang and He 2013). However, the basic FA suffers
+from several limitations, including premature convergence,
+weak intensification, and poor balance between exploration
+and exploitation (Strumberger et al. 2017). These issues are
+particularly problematic in the early stages of search, where
+a lack of diversity can prevent the algorithm from locating
+optimal regions in the solution space.
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+
+**Fig. 1** Flowchart for development
+effort estimation using COCOMO-II
+optimized by CFAEE
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+To overcome these limitations, this study investigates the
+use of the Chaotic Firefly Algorithm with Explicit Explora-­
+tion (CFAEE), which enhances the original FA by integrat-­
+ing chaotic dynamics and a targeted exploration strategy.
+This enables more robust parameter optimization in effort
+estimation models, resulting in enhanced adaptability,
+increased accuracy, and more reliable support for software
+project planning.
+
+**4.2 Proposed approach COCOMO-II with CFAEE**
+
+The chaotic Firefly algorithm with enhanced exploration
+(CFAEE) has been used in this study to optimize the coef-­
+ficient values of the COCOMO-II model and forecast soft-­
+1
+ware effort in the initial phase. Figure shows the flowchart
+of the proposed approach. This approach shows the ability
+of CFAEE to explore complex search spaces effectively
+with the integration of CFAEE and COCOMO-II to improve
+exploration and avoid local optima. This integration also
+aims to enhance the accuracy of the model’s prediction by
+optimizing parameters through a metaheuristic approach
+inspired by the natural behavior of fireflies.
+
+In software effort estimation, the challenge faced by the
+COCOMO-II model is the significant nonlinear relation-­
+ship between inputs and predicted effort. Small changes can
+have a significant impact on output; hence, the parameter
+tuning procedure must traverse a delicate and complicated
+search space. This results in a landscape with noise, sparse
+data, and several local optima. Exploring methods that can
+better manage the balance between global exploration and
+local exploitation in such complex areas is still necessary,
+even though a variety of metaheuristics, including Genetic
+methods, Particle Swarm Optimization, and others, have
+been used in this field. FA and CFAEE effectively handle
+the nonlinear and complex nature of software effort estima-­
+tion and adapt well across diverse datasets without requiring
+
+
+structural modifications. They rely solely on objective func-­
+tions such as MMRE and PRED, making them suitable
+for data-driven, black-box optimization and robust against
+noisy or incomplete input conditions common in early proj-­
+ect phases. Our research particularly examines whether the
+Firefly Algorithm and its chaotic-enhanced variant are more
+suitable for handling the estimated problems presented by
+this field of study.
+
+We chose FA and CFAEE for the following reasons. In
+complicated problem domains like software effort estimat-­
+ing, the (FA) and its improved variant, the (CFAEE), are
+preferred over several other algorithms because of their
+potent ability to strike a balance between exploration and
+exploitation (Yang 2009). Inspired by the behavior of fire-­
+flies, FA excels at finding optimal solutions while avoiding
+local optima, which makes it helpful in managing the multidimensional and non-linear nature of software projects. By
+adding chaotic maps to FA, CFAEE improves its capabili-­
+ties even further. By preventing premature convergence and
+promoting better exploration, these maps help the algorithm
+better negotiate the complex linkages in software projects.
+Studies comparing methods demonstrate that CFAEE per-­
+forms better in accuracy than GA and Bat Algorithm, with
+much lower MMRE and higher PRED(25) values, demon-­
+strating its superiority in generating more dependable effort
+estimates.
+
+Many crucial phases are involved in integrating
+COCOMO-II with CFAEE to increase effort estimation
+accuracy. The main goal of this integration is to use CFAEE,
+a metaheuristic approach of optimization inspired by firefly
+behavior with chaotic mapping, to optimize the COCOMOII model’s estimation parameters to improve explora-­
+tion capabilities. Iterative evaluations and refinements are
+involved in this integration process to ensure the optimized
+parameters produce reliable effort estimates across different
+datasets.
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+
+**Algorithm 1** Algorithm for CFAEE with COCOMO-II Model
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+An enhanced metaheuristic optimization technique called
+the Chaotic Firefly Algorithm with Enhanced Exploration
+(CFAEE)is used to improve software effort estimation using
+the COCOMO-II model. This method addresses the diffi-­
+culties and uncertainties involved in software development.
+Also, this method combines increased exploration mecha-­
+nisms, chaotic dynamics, and the concepts of the firefly
+algorithm, as shown in Algorithm 1.
+
+The CFAEE algorithm begins by initializing several vital
+parameters to define the search space and control the optimi-­
+zation process. The number of fireflies (possible solutions)
+and the maximal amount of iterations are metaheuristic con-­
+trol parameters *n* and *NT* . The problem’s dimensionality,
+*D*, is represented by the search space parameters *l* *j* and *u* *j*,
+which denote the bottom and upper bounds of each dimen-­
+sion. The light absorption coefficient, *γ*, the initial attrac-­
+tiveness coefficient, *β* 0, the initial randomization parameter,
+*α* 0, the minimum randomization parameter, *K*, the number
+of local search iterations, and *ϕ*, a parameter governing
+the exploration strategy are some of the specific CFAEE
+parameters.
+
+The procedure produces an initial population of fireflies.
+It is represented as *P* init = *{y* *i,j* *}*, where *i* is the firefly index
+and *j* is the parameter index. Equation 12 uses a random ini-­
+tialization function to randomly initialize each firefly’s posi-­
+tion inside the specified constraints. A proposed solution
+with parameters for the COCOMO-II model is represented
+by each firefly *y* *i* = ( *A, B* ) . The Mean Magnitude of Rela-­
+tive Error (MMRE) and Prediction at level 0.25 (PRED),
+which are computed by Eqs. 19 and 20, respectively, are
+used to evaluate the initial fitness of each solution.
+
+The algorithm uses the COCOMO-II model to assess
+each firefly solution’s fitness during each iteration of the
+optimization process. The fireflies are compared, and those
+with better fitness (lower MMRE or higher PRED) attract
+other fireflies. Equation 9 computes the attractiveness of a
+solution, and Eq. 7 updates the solution dynamically with
+distance to ascertain the direction of firefly movement. This
+process ensures that less fit fireflies are pulled towards more
+optimal regions of the search space.
+
+To prevent early convergence and preserve diversity,
+CFAEE utilizes explicit exploration techniques. Each firefly
+is associated with a trial parameter that tracks the number
+
+
+of rounds without improvement. Equation 12 controls the
+replacement of a firefly’s trial with a new random solution
+inside the search space when its trial exceeds a predeter-­
+mined limit. A state of equilibrium is avoided, and this
+random replacement promotes population diversity. As the
+algorithm develops, a guided replacement method becomes
+increasingly essential. This technique concentrates the
+search on the most likely solutions *y* *[∗]* by utilizing parameter
+values from the current population. This guided technique
+(Eq. 13) generates new solutions that increase the effective-­
+ness of the search.
+
+The gBest Chaotic Local Search (CLS) technique is used
+to refine results further. Equation 14 introduces chaotic
+dynamics, which produce chaotic sequences that perturb the
+best solution *y* *[∗]* at now and lead to other candidate solu-­
+tions *y* *[′∗]* (Eq. 16). Based on shrinkage parameters and per-­
+formance improvements, the algorithm determines whether
+to replace or keep the original solution (Eq. 17). This guar-­
+antees weaker solutions are replaced or improved through
+focused search and chaotic perturbations.
+
+As the algorithm nears its final stages, it identifies the
+optimal parameters for the COCOMO-II model by mini-­
+mizing MMRE and maximizing PRED. Modifying the
+COCOMO-II model with the optimal parameters improves
+the model’s predictive accuracy for software effort estima-­
+tion. Software developers benefit from this refinement as
+it produces more accurate effort estimates that help with
+resource allocation and project planning.
+
+By integrating guided replacement techniques, chaotic
+dynamics, and explicit exploration, CFAEE offers a robust
+basis for COCOMO-II model parameter optimization. This
+methodology guarantees efficient exploration throughout
+the solution domain and enhances the model’s precision in
+predicting software development endeavors. The datasets
+NASA93, NASA60, COCOMO81, China, Desharnais, and
+Maxwell validate the algorithm’s performance and demon-­
+strate the algorithm’s ability to improve software effort esti-­
+mation and facilitate improved decision-making in software
+project management.
+
+To illustrate the optimization mechanism of the proposed
+CFAEE algorithm, consider a project from the NASA93
+dataset with a size of 16 KLOC and an actual effort of 114
+person-months. Using the standard COCOMO-II model
+
+
+**Table 3** Dataset Description
+Dataset Number of features Number of projects Effort data
+
+Unit Min Max Mean Median
+
+NASA93 17 93 Months 8.4 8211 624.41 252
+
+NASA60 17 60 Months 8.4 3240 406.41 118.8
+
+COCOMO81 17 63 Months 5.9 11,400 683.32 98
+
+China 18 499 Hours 26 54,620 3921 1829
+
+Desharnais 12 81 Hours 546 23,940 5046 3647
+
+Maxwell 27 62 Hours 583 63,694 8223.2 5189.5
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+**Table 4** Estimated Effort Using CFAEE and Various Algorithms for the Dataset NASA93
+Proj. No. Actual Effort COCOMO-II CSHS GA Bat Dolphin Dolphin Bat FA CFAEE
+
+1 117.6 49.9115 56.7804 58.1858 80.3913 64.1230 69.5742 68.2600 69.9800
+
+10 72 17.2299 20.1144 20.3917 26.1715 21.3653 23.2780 23.0200 23.5600
+
+20 60 66.2847 73.7144 76.2562 112.4030 87.8512 94.9706 92.5200 95.0200
+
+30 62 29.0020 53.3531 53.0930 59.9984 50.9808 55.9453 37.2300 37.9600
+
+40 114 46.7862 55.8512 56.0976 67.5590 56.2675 61.5253 61.2700 62.5900
+
+50 571.4 215.3688 201.4788 216.1617 408.9870 295.5100 314.9871 325.2700 336.2900
+
+60 720 232.2890 407.3608 465.2299 1350.5900 852.9140 887.4190 401.5800 419.9800
+
+70 432 210.3112 200.5821 221.1990 505.2720 44.0766 362.8745 337.0900 350.2700
+
+80 703 197.4476 196.2363 212.7259 432.0390 305.2860 324.1080 304.9500 315.8800
+
+90 8211 1162.6470 1061.7930 1192.2640 3082.0240 2018.6810 2114.1510 1937.6900 2020.1800
+
+**Table 5** Estimated effort using CFAEE and various algorithms for the dataset NASA60
+Proj. No. Actual effort COCOMO-II CSHS GA Bat Dolphin Dolphin bat FA CFAEE
+
+1 8.4 5.2930 5.1745 7.1257 5.2376 6.0198 6.9184 5.3700 5.8100
+
+10 42 22.4314 30.8817 28.0064 31.6982 36.7152 37.9471 22.5700 27.7800
+
+20 62 29.0020 23.3849 35.2301 46.6597 54.1974 53.8930 29.0900 37.5300
+
+30 117.6 47.6265 60.0370 55.6897 91.7638 107.0060 100.8421 47.5600 65.5000
+
+40 300 117.8850 329.8850 130.0582 298.9942 350.7490 304.5606 116.9300 177.9000
+
+50 571.4 215.3680 619.507 235.4266 570.5912 669.9930 574.2581 213.4000 329.8400
+
+60 3240 768.8650 901.0700 767.4658 3130.3900 3710.2290 2798.0860 753.890 1361.3900
+
+**Table 6** Estimated effort using CFAEE and various algorithms for the dataset COCOMO81
+Proj. No. Actual effort COCOMO-II CSHS GA Bat Dolphin Dolphin Bat FA CFAEE
+
+1 2040 496.737 211.1324 187.7924 193.9821 183.9623 205.0934 657.4701 729.5501
+
+10 321 108.9465 58.9212 54.2324 52.0267 52.1111 54.6623 155.8120 172.0091
+
+20 6400 1694.381 1526.1613 1456.8512 1497.3754 1453.6245 1528.1987 2513.2911 3651.0808
+
+30 5.9 4.4434 4.7589 4.6768 3.8723 4.3228 4.0221 4.4902 5.2314
+
+40 8 7.7091 7.0165 6.8245 5.7998 6.3532 6.0298 7.0501 7.3900
+
+50 176 67.8695 49.3343 45.6981 43.3135 43.7112 45.5723 94.8802 105.0700
+
+60 57 35.2804 14.9122 14.2176 12.6743 13.3986 13.1584 42.3099 46.0020
+
+
+with the default parameters *A* = 2 *.* 94 and *B* = 0 *.* 91,
+the estimated effort obtained from Eq. 3 is 46.79 personmonths. To improve this prediction, the CFAEE algorithm
+steps to be applied as follows:
+
+Initially, a random population of fireflies is generated
+within the predefined bounds for the parameters *A* and
+*B* ( *l* *j* *≤* *y* *i,j* *≤* *u* *j* ) according to the initialization rule in
+Eq. 12.
+
+- Each firefly *y* *i* = ( *A, B* ) represents a candidate solution
+whose brightness (fitness) is computed using the CO-­
+COMO-II estimation model defined in Eq. 3 and evalu-­
+ated through the MMRE criterion.
+
+- During each iteration ( *t < N* *T* ), the fireflies move to-­
+ward brighter ones using the attractiveness function in
+Eq. 9, where the attractiveness decreases with distance
+as defined by Eq. 7.
+
+For example, in the initial iteration, a promising can-­
+didate with parameters ( *A* = 3 *.* 10 *, B* = 0 *.* 94) yields an
+estimated effort of 56.76 person-months. As the itera-­
+tions progress, the chaotic factor *λ* and dynamic control
+## 1 3
+
+
+parameter *α* are updated through Eqs. 11 and 17 to balance
+exploration and exploitation, enabling the algorithm to
+refine parameter values such as ( *A* = 2 *.* 98 *, B* = 0 *.* 99)
+and ( *A* = 3 *.* 00 *, B* = 1 *.* 01), which produce estimated
+efforts of 59.82 and 62.59 person-months, respectively.
+
+- When the iteration count reaches the threshold *ϕ*, ran-­
+dom and guided replacements are performed using
+Eqs. 12 and 13 to maintain diversity, followed by the
+gBest-based Chaotic Local Search (CLS) strategy de-­
+fined in Eqs. 14–16 to further exploit the best solution.
+
+After the maximum number of iterations, the algorithm con-­
+verges with optimized parameters *A* = 3 *.* 00 and *B* = 1 *.* 01 .
+The final estimated effort of 62.59 person-months, obtained
+from Eq. 3 using these optimized values, is significantly
+closer to the actual effort than the default COCOMO-II esti-­
+mate of 46.79 person-months, demonstrating how CFAEE
+systematically improves parameter accuracy and directs the
+search toward more reliable effort predictions.
+
+
+International Journal of System Assurance Engineering and Management
+
+**Table 7** Estimated Effort Using CFAEE and Various Algorithms for the China Dataset
+Proj. No. Actual effort COCOMO-II CSHS GA fBat Dolphin Dolphin bat FA CFAEE
+
+1 7490 2403.6561 7703.3134 7475.6621 7489.5824 7490.8923 7490.1111 7886.8600 7593.3761
+
+50 8716 319.8669 717.7323 733.0814 674.6523 702.0912 746.2423 1761.9690 760.8579
+
+100 943 363.332 833.8316 848.9135 785.4645 815.3512 863.2843 692.3503 879.8786
+
+150 3303 243.1691 519.8245 534.6523 486.3954 508.9123 545.4254 511.3957 747.4802
+
+200 563 346.679 789.0498 804.2713 742.6822 771.6632 818.1924 343.3861 695.4526
+
+250 14938 2152.851 6566.4435 6584.8654 6566.5821 6581.9822 6603.2112 8204.5876 6696.4325
+
+300 580 55.0139 90.4497 96.5963 82.5432 88.9231 99.6921 79.4235 102.1533
+
+350 1440 355.0152 811.4123 826.5823 764.0523 793.4824 840.7213 600.3189 856.9415
+
+400 1829 800.3973 2112.0454 2107.6241 2015.9912 2060.4431 2130.1232 1599.3340 2166.1110
+
+450 1823 374.9441 865.2732 880.2313 815.5113 846.0242 894.9213 1332.3358 912.0272
+
+**Table 8** Estimated effort using CFAEE and various algorithms for the desharnais dataset
+Proj. No. Actual effort COCOMO-II CSHS GA Bat Dolphin Dolphin bat FA CFAEE
+
+1 5152 531.0723 3121.9812 3664.9912 3711.4112 3664.3123 3781.6421 4128.0256 5159.2058
+
+10 2422 199.5396 1069.8932 988.9732 987.4213 988.8121 984.5365 1113.3584 1396.0323
+
+20 840 169.3327 1005.0811 793.9312 790.7932 793.8201 785.6443 794.3205 897.2464
+
+30 3948 780.3962 8863.2401 6134.2965 6246.7123 6133.0541 6419.3212 3872.3278 3353.1721
+
+40 8050 875.3543 10438.5505 7153.1534 7296.3754 7151.6832 7517.0503 7471.4878 7998.198
+
+50 5817 351.6831 2247.1815 2111.2332 2125.2512 2110.8743 2145.8286 2371.9822 2906.8898
+
+60 1575 125.7256 657.6123 533.0102 528.6232 532.9453 521.7372 935.1143 960.7604
+
+70 1155 224.0766 1498.0415 755.0012 755.1322 754.8254 754.7175 1000.0012 1100.0012
+
+80 5880 1136.8133 15147.8332 10148.1624 10390.5912 10145.9873 10766.9263 4429.1989 4933.0240
+
+**Table 9** Estimated Effort Using CFAEE and Various Algorithms for the Maxwell Dataset
+Proj. No. Actual Effort COCOMO-II CSHS GA Bat Dolphin Dolphin bat FA CFAEE
+
+1 7871 1062.3564 3608.5511 3100.0123 3078.9312 2987.7912 3103.8112 2910.3013 3444.7943
+
+10 4300 333.2996 911.8912 802.8323 811.6512 784.5412 801.9843 966.0746 1433.2027
+
+20 11039 515.0457 1528.3714 1333.2512 1338.9432 1296.1331 1332.9751 1600.4416 1992.0347
+
+30 1798 665.5249 2071.6832 1797.4212 1798.0342 1742.055 1797.9632 1482.3255 1567.3466
+
+40 9700 1824.1958 6854.1321 5821.2634 5734.1431 5574.4701 5834.6113 6385.6274 6938.7029
+
+50 5931 2319.4337 9114.4443 7701.7123 7558.4321 7354.1102 7723.0565 4421.4229 4841.9648
+
+60 4620 371.63 1037.6321 911.4312 919.9112 889.5112 910.6613 1299.7606 1556.2254
+
+
+**5 Result analysis**
+
+This study undertakes a comprehensive analysis, comparing
+the performance of the COCOMO-II model with the Cha-­
+otic Firefly Algorithm with Enhanced Exploration (CFAEE)
+against several well-known models. These include the
+COCOMO-II model, the CSHS model, the Genetic Algo-­
+rithm (GA) model, the Bat algorithm, the Dolphin algo-­
+rithm, the Dolphin Bat algorithm, and the basic Firefly
+algorithm. The comparison is conducted using two robust
+evaluation measures, the Mean Magnitude of Relative Error
+(MMRE) and Prediction at level X=0.25 (PRED(X)), on the
+NASA93, NASA60, COCOMO81, China, Desharnais, and
+
+Maxwell datasets.
+
+**5.1 Datasets**
+
+The NASA93, NASA60, COCOMO81, China, Desharnais,
+and Maxwell datasets were used in this study as the primary
+
+
+sources of empirical data to assess how well software effort
+estimating models performed. Because they contain exten-­
+sive real-world project data, these datasets are well-recog-­
+nized and perfect for benchmarking and verifying estimating
+methodologies. COCOMO81, China, Desharnais, Maxwell
+datasets (Jones 2020), and NASA’s software development
+projects compile the NASA93 and NASA60 (Fadhil et al.
+2020) datasets. The datasets used in this study are prepro-­
+cessed and obtained directly from the (Jones 2020). The
+description of the datasets used is shown in Table 3.
+
+**5.2 Evaluation metrics**
+
+MMRE (Mean Magnitude of Relative Error) and
+PRED(0.25) are the metrics used to assess the predictive
+models’ accuracy. The Magnitude of Relative Error (MRE)
+represents the relative error of an individual prediction by
+expressing the absolute difference between the estimated
+and actual effort as a proportion of the actual effort. The
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+**Table 10** A and B Coefficients of Different Models across Datasets
+Dataset Coefficients COCOMO II CSHS GA Bat Dolphin Dolphin Bat FA CFAEE
+
+NASA93 A 2.94 4.14 4.63 2.26 2.41 2.76 3.00 3.00
+
+B 0.91 0.85 0.81 1.13 1.04 1.03 1.00 1.01
+
+NASA60 A 2.94 3.95 4.14 2.34 2.67 3.28 3.00 3.00
+
+B 0.91 1.08 0.85 1.18 1.19 1.10 0.90 1.00
+
+COCOMO81 A 2.94 2.50 2.50 2.00 3.29 3.06 2.53 3.00
+
+B 0.91 0.91 0.93 0.96 0.92 0.97 1.03 0.97
+
+China A 2.94 3.31 2.88 2.50 2.86 3.50 3.01 3.03
+
+B 0.91 1.05 1.07 1.09 1.07 1.04 1.03 1.06
+
+Desharnais A 2.94 3.50 3.12 3.28 3.50 2.98 3.00 3.03
+
+B 0.91 1.21 1.29 1.23 1.21 1.25 1.05 1.01
+
+Maxwell A 2.94 3.23 3.32 3.51 3.34 3.20 3.14 3.01
+
+B 0.91 1.06 1.07 1.04 1.04 1.06 0.98 0.98
+
+
+Mean Magnitude of Relative Error (MMRE) measures the
+average relative difference between estimated and actual
+effort needed for a software project. It is computed by divid-­
+ing the absolute error by the actual effort for each project
+and averaging the results. A lower MMRE indicates better
+estimation accuracy, reflecting smaller average deviations
+from actual effort values (Mensah et al. 2018; Mustyala
+et al. 2025; Singal et al. 2022). The equations for Magnitude
+of Relative Error(MRE) and MMRE are given in the Eqs.
+18 and 19.
+
+
+MRE = *[|]* *[E]* *[i]* *[ −]* *[E]* [ˆ] *[i]* *[|]*
+
+*E* *i*
+
+
+ (18)
+
+
+MMRE = [1]
+
+*f*
+
+
+*f*
+∑
+
+*i* =1
+
+
+MRE *i*  (19)
+
+
+PRED = *[A][ ∗]* [100] ; *A* =
+
+*f*
+
+
+*f*
+∑
+
+*i* =1
+
+
+{
+
+
+10 *,,* if MREotherwise *i* *≤* 0 *.* 25  (20)
+
+
+**5.3 Base models**
+
+To illustrate the advantage of the proposed model, we have
+compared it with the COCOMO-II model using a few esti-­
+mating approaches: the GA model (Alajlan and Tagoug
+2016), CSHS model (Puspaningrum and Sarno 2017), Bat
+(Ibrahim 2016), Dolphin and Dolphin Bat (Fadhil et al.
+2020). The genetic algorithm optimizes the parameters of
+the COCOMO-II model to achieve more accurate estimates
+of software effort and development time. By integrating
+the exploration capabilities of cuckoo Search(CS) with the
+fine-tuning abilities of Harmony Search(HS), the hybrid
+approach aims to optimize the parameters of software effort
+estimation models, leading to improved estimation accu-­
+racy. The bat method is used to fine-tune the software effort
+estimation model parameters by mimicking the echoloca-­
+tion behavior of bats, thereby enhancing prediction accu-­
+racy. Similarly, the Dolphin Bat approach optimizes the
+model parameters to improve the precision of software
+development effort predictions. The algorithm is useful for
+software project management because the results show how
+well it navigates the search area to reduce estimation errors.
+
+Python is used to implement our proposed model,
+CFAEE. Using the methodology in Sect. 4, we integrated
+COCOMO-II with CFAEE and compared it with different
+benchmarking models used in Fadhil et al. (2020). This
+comparison shows the advantages of our proposed model,
+COCOMO-II and CFAEE, in software effort estimation
+optimization and highlights its possibilities to improve the
+accuracy of software project management.
+
+**5.4 Results of effort estimation**
+
+From each of the six datasets, NASA93, NASA60,
+COCOMO81, China, Desharnais, and Maxwell, we have
+chosen a subset of projects to ensure variation in project
+features and estimation scenarios. Tables 4 to 9 present the
+results of the estimation for these projects. These tables
+
+
+where, *E* *i* is the actual effort, *E* [ˆ] *i* is the predicted effort, the
+number of projects is represented by f, the total number of
+projects with an MRE value of below or equivalent to 0.25
+is represented by parameter ’A’.
+
+PRED(0.25) Fadhil et al. (2020), another name for Pre-­
+diction at the 25% threshold, assesses the percentage of
+projects whose anticipated effort is within a given range
+of the actual effort. It gauges the proportion of projects,
+namely, when the expected effort and actual effort are within
+25% of each other. Calculating the proportion of forecasts
+that closely match the exact values aids in evaluating how
+effectively the model predicts effort. When a model’s pre-­
+dictions are closer to the actual effort, as seen by a greater
+PRED(0.25) score, it is constructive in real-world situa-­
+tions where estimates must fall within a specific range to be
+deemed trustworthy (Mensah et al. 2018). The equation for
+PRED is shown in Eq. 20.
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+compare the effort estimation for each project using the
+COCOMO-II model integrated with CFAEE against various
+benchmarking models like Genetic Algorithm(GA), CSHS,
+Bat, Dolphin Bat, and the Firefly Algorithm. It is evident
+that the CFAEE model consistently performs well in esti-­
+mating project efforts, often outperforming the other bench-­
+marking models.
+
+Table 4 represents the effort estimation results for ten
+projects chosen from the NASA93 dataset. These findings
+show that the CFAEE model’s effort estimations are gener-­
+ally within a reasonable range of the actual efforts in various
+projects. For example, the CFAEE model predicts the effort
+for Project 1 at 69.98 person-months, which is extremely
+close to the 117.6 person-months that the actual effort is.
+This closeness between estimated and actual efforts is a
+recurrent pattern in the chosen projects, suggesting that the
+optimization strategies of the CFAEE model, like increased
+exploration mechanisms and chaotic dynamics, are helpful
+for fine-tuning effort estimations. Compared to the other
+models, including the COCOMO-II, CSHS, GA, Bat, and
+Dolphin Bat algorithms, and the FA model, the CFAEE
+model shows a remarkable capacity to approximate efforts.
+
+The results of the effort estimation for the projects chosen
+from the dataset NASA60 are represented in Table 5. The
+CFAEE model demonstrates remarkable accuracy in esti-­
+mating efforts that closely match the actual efforts for each
+project. For Instance, Project 1 predicts an effort of 5.81
+person-months, remarkably close to the actual effort of 8.4
+person-months. This pattern is consistent across other proj-­
+ects, highlighting the CFAEE model’s ability to represent
+the basic nature of the effort estimates accurately. The close-­
+ness between effort estimates and actual values across dif-­
+ferent projects suggests that the CFAEE model’s increased
+exploration mechanisms and chaotic dynamics are skilled
+at fine-tuning effort estimates, resulting in more dependable
+and accurate forecasts.
+
+Table 6 represents the effort estimation results for seven
+projects chosen from the COCOMO81 dataset. For exam-­
+ple, the CFAEE model predicts the effort for Project 60 at
+42.3099 person-months, which is extremely close to the
+actual effort of 57 person-months. The selected projects
+consistently exhibit this proximity between estimated and
+
+
+real efforts, indicating that the CFAEE model’s optimization
+techniques-such as enhanced exploration mechanisms and
+chaotic dynamics-are useful for optimizing effort estimates.
+
+The results of the effort estimation for the projects chosen
+from the dataset China, Desharnais, and Maxwell are repre-­
+sented in Tables 7, 8, 9.
+
+
+The CFAEE model accurately estimates efforts for each
+project, closely matching the actual efforts. For example, in
+the China dataset, Project 100 predicts an effort of 879.8786
+person-hours, which is close to the actual effort of 943 per-­
+son-hours. In the Desharnais dataset, Project 70 estimates
+an effort of 1100.0012, which is nearer to the actual effort of
+1155 person-hours.
+
+The actual effort of Project 50 in the Maxwell dataset is
+5931 person-hours. Our model predicted 4841.9648 personhours, which is closer to the actual effort compared to the
+other models, as shown in the Table 9. This trend is con-­
+sistent across various projects among different datasets,
+demonstrating how well the CFAEE model captures the fun-­
+damentals of the effort estimates. Given how closely effort
+estimates and actual values across many projects match, it is
+likely that the CFAEE model’s enhanced exploration mech-­
+anisms and chaotic dynamics are adept at optimizing effort
+estimates, producing more reliable and accurate forecasts.
+
+**5.5 Values of A and B parameters of COCOMO-II**
+
+The COCOMO-II model’s coefficients A and B are essential
+in estimating the effort required for software development.
+To address parameter sensitivity, we have tested a range
+of values for the key parameters A(values [2,5]), B(values
+
+[0.5,1.5]), and selected the combinations that produced the
+best performance. This tuning process helped ensure the
+model’s stability and effectiveness without relying on fixed
+or arbitrary parameter settings. The Table 10 presents a
+summary of different algorithms that were used to optimize
+these coefficients for the NASA93, NASA60, COCOMO81,
+China, Desharnais, and Maxwell datasets.
+
+The research question RQ1 can be answered as follows:
+The COCOMO-II coefficient values optimized by
+CFAEE and other algorithms for the NASA93 dataset are
+shown in Table 10. While the base model uses an A value of
+
+
+**Table 11** Comparison of MMRE values
+Datasets COCOMO II CSHS GA Bat Dolphin Dolphin Bat FA CFAEE
+
+NASA93 57.400 53.049 54.040 53.528 51.875 50.275 37.981 **35** . **441**
+
+NASA60 33.958 30.236 29.946 16.980 16.650 14.576 10.500 **8** . **662**
+
+COCOMO81 46.591 61.563 61.275 61.591 61.852 61.411 26.791 **20** . **858**
+
+China 74.389 47.720 48.140 48.040 47.890 47.630 37.181 **35** . **061**
+
+Desharnais 46.430 40.280 57.620 40.801 40.028 41.640 35.333 **33** . **191**
+
+Maxwell 81.582 74.290 76.410 74.040 74.631 74.003 70.285 **69** . **911**
+
+***p-value*** 0.0025476 0.0229523 0.0070662 0.0312500 0.0414459 0.0466653 0.0212957
+***Effect size*** 1.1786 0.9510 1.1427 0.7648 0.7422 0.7090 0.1242
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+**Table 12** Comparison of PRED values
+Datasets COCOMO II CSHS GA Bat Dolphin Dolphin Bat FA CFAEE
+
+NASA93 7.526 16.120 18.279 31.182 22.580 25.806 40.000 **50** . **000**
+
+NASA60 6.660 68.236 11.661 61.660 61.662 66.667 71.428 **85** . **714**
+
+COCOMO81 28.571 17.462 17.461 14.291 15.871 14.291 57.142 **71** . **428**
+
+China 10.000 29.990 31.000 32.001 31.512 30.102 40.172 **48** . **010**
+
+Desharnais 8.321 33.303 22.022 32.933 33.303 34.033 37.331 **44** . **444**
+
+Maxwell 5.235 13.102 13.290 13.290 12.500 12.201 14.102 **14** . **281**
+
+***p-value*** 0.0063207 0.0314553 0.0274478 0.0408216 0.0297819 0.0372311 0.0312592
+***Effect size*** 1.2396 0.9992 1.2489 1.0041 1.0616 0.9793 0.4041
+
+
+2.94, optimization with GA and CSHS increases it to 4.14
+and 4.63, respectively, indicating higher initial effort esti-­
+mates. In contrast, the Bat algorithm reduces A to 2.26, and
+Dolphin-based models yield moderate values. CFAEE and
+FA maintain A value of 3, reflecting a balanced and reliable
+estimation approach.
+
+In COCOMO-II, the B coefficient governs how effort
+scales with project size, with a default value of 0.91. GA
+and CSHS reduce B to 0.8516 and 0.81, respectively, indi-­
+cating slower effort growth, suitable for smaller projects. In
+contrast, Bat and Dolphin-based models raise B above 1,
+reflecting steeper effort increases for larger systems. CFAEE
+tunes B to 1.01, offering a balanced, scenario-adaptive esti-­
+mation and demonstrating reliability for real-world software
+projects.
+
+In Table 10, we can see the optimized COCOMO-II
+coefficients (A and B) across various algorithms applied to
+enhance effort estimation for a specific dataset. The baseline
+model uses standard values (A = 2.94, B = 0.91), which are
+adjusted by each algorithm to better fit the data. For exam-­
+ple, the Bat algorithm sets (A = 2.34, B = 1.18), reflecting
+its echolocation-driven exploration. GA applies evolution-­
+ary optimization, resulting in (A = 4.14, B = 0.85). Dolphinbased models set higher B values, with the Dolphin Bat
+hybrid refining them to (A = 3.28, B = 1.10). The CFAEE
+and FA models achieve balanced tuning, with CFAEE opti-­
+mizing to (A = 3, B = 1.01), supporting more adaptive and
+accurate estimations.
+
+In the COCOMO81 dataset, the standard COCOMO-II
+uses (A = 2.94, B = 0.91), but Bat adjusts this to (A = 2.00, B
+= 0.96), implying a stronger scaling with size. GA increases
+B significantly to (A = 2.50, B = 0.93), while the Dolphin
+and Dolphin Bat models also raise both parameters. FA
+decreases A and increases b with (A = 2.53, B = 1.03), and
+CFAEE finds a balance with (A = 3, B = 0.97), improving
+generalization across COCOMO81’s diverse project types.
+
+For the China dataset, the Bat algorithm outputs (A =
+2.50, B = 1.09), while CSHS rises to (A = 3.31, B = 1.05).
+Dolphin models again show higher B values, reflecting
+increased non-linearity. The FA model stays consistent with
+(A = 3.01, B = 1.03). CFAEE applies enhanced exploration
+and sets (A = 3.03, B = 1.01), achieving adaptive tuning
+## 1 3
+
+
+suitable for the dataset’s functional-size-based estimation
+structure. Table 10 lists the A and B coefficients for the
+Desharnais dataset. CSHS and Dolphin algorithms raise the
+values of both coefficients (A=3.50, B=1.21), which shows
+increased baseline effort scaling. GA (A = 3.12, B = 1.29)
+and Bat (A = 3.28, B = 1.23) optimization yields, showing a
+high sensitivity to project scale. Both FA and CFAEE mod-­
+els offer balanced values (A = 3, B = 1.05) and (A = 3.03, B
+= 1.01), with CFAEE enhancing robustness through adap-­
+tive coefficient tuning.
+
+For the Maxwell dataset, the CSHS algorithm optimizes
+the coefficients to A=3.23 and B=1.06, which shows the
+nonlinearity. Bat, GA, and dolphin algorithms increase
+effort predictions highly, which shows that these models
+are highly sensitive to this dataset. The FA model remains
+stable at (A = 3.14, B = 0.98). CFAEE, through chaos-driven
+parameter tuning, produces (A = 3.01, B = 0.98), maintain-­
+ing an equilibrium between underestimation and overestima-­
+tion. The differences in A and B coefficients for the datasets
+NASA93, NASA60, COCOMO81, China, Desharnais, and
+Maxwell reveal that the various models symbolize the nonlinearity in the effort estimation, and the different values are
+scaled by each model, as shown in Table 10. These accurate
+and consistent effort assessments across various projects are
+likely due to the balanced adjustments made by the CFAEE
+model’s coefficients.
+
+**5.6 Results of MMRE and PRED**
+
+To answer RQ2, we have analyzed the results of MMRE
+(Mean Magnitude of Relative Error) and PRED (0.25) met-­
+rics to compare our proposed model, CFAEE, with other
+models like COCOMO-II, GA, CSHS, Bat, Dolphin, Dol-­
+phin Bat, and FA. This comparison shows that CFAEE gives
+more accuracy than other models concerning MMRE and
+PRED for the datasets NASA93, NASA60, COCOMO81,
+China, Desharnais, and Maxwell.
+
+Table 11 shows a comprehensive comparison of
+the Mean Magnitude of Relative Error (MMRE) val-­
+ues across six benchmark datasets NASA93, NASA60,
+COCOMO81, China, Desharnais, and Maxwell for the
+baseline COCOMO-II model and its variants enhanced by
+
+
+International Journal of System Assurance Engineering and Management
+
+**Fig. 2** MMRE for different datasets
+
+optimization algorithms: CSHS, GA, Bat, Dolphin, Dolphin
+Bat, Firefly Algorithm (FA), and the proposed CFAEE. In
+general, the default COCOMO-II model shows the high-­
+est MMREs across all datasets, such as 81.582 (Maxwell),
+74.389 (China), and 57.400 (NASA93), demonstrating its
+limitations without parameter tuning. CSHS and GA provide
+moderate improvements, reducing MMREs in some datas-­
+ets like Desharnais (30.236 and 29.946, respectively) and
+NASA93. The Bat, Dolphin, and Dolphin Bat algorithms
+further reduce MMREs, particularly in NASA60 and China.
+FA consistently delivers better performance than earlier
+models across datasets, such as 26.791 (COCOMO81) and
+10.500 (NASA60). Among all models, CFAEE consistently
+achieves the lowest MMRE values in every dataset, includ-­
+ing 8.662 (NASA60), 20.858 (COCOMO81), and 33.191
+(Desharnais), confirming its superior adaptability and
+
+
+accuracy across both large-scale and medium-scale projects.
+The proposed CFAEE model consistently achieved the best
+estimation accuracy across all datasets, and its results are
+highlighted in bold in the Table 11.
+
+We used the Wilcoxon Signed-Rank (WSR) test to assess
+whether the improvements of our proposed model over oth-­
+ers are statistically significant. When evaluating statisti-­
+cal hypotheses to determine the significance of the results,
+the p-value is necessary. Statistical significance is usually
+defined as a p-value of less than 0.05, indicating strong evi-­
+dence against the null hypothesis. In order to get over these
+limitations, researchers also provide the effect size, which
+quantifies the magnitude of the effect. We also used Cohen’s
+d effect size to measure the practical significance of differ-­
+ences, where values around 0.2 indicate small, 0.5 medium,
+## 1 3
+
+
+**Fig. 3** PRED for different datasets
+
+**Table 13** Execution time of different models when combined with
+COCOMO-II
+
+Model Average Execution time(in seconds)
+
+COCOMO-II 10
+
+CSHS 40
+
+GA 50
+
+Bat 30
+
+Dolphin 60
+Dolphin Bat 80
+
+FA 100
+
+CFAEE 120
+
+and 0.8 or above indicate large effects (Mustyala and Bisi
+2025).
+
+The statistical significance of CFAEE’s improvements
+over other models is confirmed using the Wilcoxon SignedRank Test. All p-values comparing CFAEE to the other
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+models are below 0.05, indicating that its performance gains
+are statistically significant across all datasets. The p-value is
+smallest when compared with CSHS (0.0025), followed by
+GA (0.0070), further validating the effectiveness of CFAEE
+against strong baselines. In terms of practical impact, the
+effect size analysis shows large improvements: 1.1786 for
+CSHS, 1.1427 for GA, and 0.9510 for Bat, indicating that
+CFAEE’s improvements are not only statistically significant
+but also meaningful in practice. Dolphin and Dolphin Bat
+show moderate effect sizes (0.7422 and 0.7090), confirm-­
+ing CFAEE’s advantage. Although FA performs closely to
+CFAEE, the effect size is 0.1242, suggesting that CFAEE
+still maintains a consistent edge. Overall, these results dem-­
+onstrate that CFAEE delivers the most accurate, statistically
+significant, and practically relevant effort estimations across
+diverse datasets and optimization scenarios.
+
+
+International Journal of System Assurance Engineering and Management
+
+Table 12 illustrates the PRED values for six benchmark
+datasets, NASA93, NASA60, COCOMO81, China, Deshar-­
+nais, and Maxwell, for different algorithms. In PRED,
+higher values indicate better estimation performance. The
+default COCOMO-II model consistently yields the low-­
+est PRED values across all datasets, such as 5.235 (Max-­
+well), 6.660 (NASA60), and 7.526 (NASA93), indicating
+poor prediction accuracy. Metaheuristic models like GA
+and CSHS show moderate improvements, particularly in
+datasets like China (31.000 and 29.990) and Desharnais
+(22.022 and 33.303). The Dolphin, Dolphin Bat, and Bat
+models further improve PRED scores across NASA93,
+NASA60, and China. FA significantly boosts predictive
+accuracy with PRED values such as 40.000 (NASA93)
+and 57.142 (COCOMO81). Notably, the proposed CFAEE
+model achieves the highest PRED scores across all datasets,
+including 85.714 (NASA60), 71.428 (COCOMO81), and
+50.000 (NASA93), confirming its superior performance.
+
+To statistically validate these improvements, the Wil-­
+coxon Signed-Rank (WSR) test was done, and results are
+shown in the Table 12. This confirms that the observed
+improvements in PRED are statistically significant across all
+models. The lowest p-value is observed for GA (0.0274) and
+CSHS (0.0314), reinforcing CFAEE’s consistent advantage.
+Additionally, Cohen’s d effect size was used to assess the
+magnitude of improvements. Large effect sizes are observed
+for comparisons with GA (1.2489), CSHS (1.2396), and Bat
+(1.0041), indicating a strong practical impact. Dolphin and
+Dolphin Bat also show large effects (1.0616 and 0.9793),
+while FA shows a moderate effect size (0.4041), suggest-­
+ing that although FA is competitive, CFAEE still offers
+substantial improvements. These results affirm that CFAEE
+provides not only statistically reliable but also practically
+meaningful enhancements in predictive performance across
+diverse software estimation datasets.
+
+The MMRE and PRED performance of several models,
+including COCOMO-II, GA, Bat, Dolphin, Dolphin Bat,
+FA, and CFAEE, for the NASA93, NASA60, COCOMO81,
+China, Desharnais, and Maxwell datasets are shown in Fig-­
+ures 2 and 3 respectively. It is observed that MMRE and
+PRED values across all datasets demonstrate the superior-­
+ity of the proposed CFAEE model. It consistently yields the
+lowest MMRE values, indicating minimal prediction error,
+and achieves the highest PRED values, reflecting a greater
+proportion of accurate predictions within acceptable thresh-­
+olds. This visual representation reinforces CFAEE’s robust-­
+ness and reliability in delivering accurate and consistent
+software effort estimations when compared to other com-­
+peting models.
+
+Table 13 presents the average execution time of each
+model, highlighting the trade-off between accuracy and
+computational cost. While CFAEE takes the longest time
+
+
+(120 s), its superior performance justifies the additional
+computation compared to simpler models like COCOMOII. The increased execution time of CFAEE is primarily due
+to its enhanced exploration mechanisms and chaotic opti-­
+mization strategy. It remains computationally feasible for
+real-world applications and offers significant improvements
+in prediction accuracy.
+
+**6 Threats to validity**
+
+This section discusses the possible risks to the validity of
+our study’s experimental results.
+
+**6.1 Internal validity**
+
+Chaotic maps enhance search space exploration, helping the
+algorithm avoid local optima and improve accuracy. Inte-­
+grating CFAEE with COCOMO-II supports better param-­
+eter calibration for more precise effort estimates. To reduce
+bias from parameter settings, we tested a range of values
+for A and B and chose the optimized value having the best
+performance. CFAEE can adapt to different datasets through
+fine-tuning and improving estimation accuracy. However,
+incorrect setup for COCOMO-II parameters such as effort
+multipliers and scale factors, may lead to biased or inac-­
+curate estimates. To mitigate this, we followed the effort
+multiplier ratings used in the existing study (Boehm 1984).
+
+**6.2 External validity**
+
+In this investigation, we meticulously analyzed multiple
+projects of different sizes from the NASA and PROMISE
+repositories. Our model’s applicability may be assessed
+through further validation with some open-source or com-­
+mercial projects. We have provided a comprehensive expla-­
+nation of the proposed methodology with step-by-step
+algorithm. This allows replicated studies with different proj-­
+ects to validate our findings, thereby enhancing the external
+validity of our study.
+
+**6.3 Construct validity**
+
+Our study employed two widely accepted evaluation met-­
+rics: the mean magnitude of relative error (MMRE) and the
+prediction at 25% (PRED). These metrics, commonly used
+in many studies, measure the accuracy of effort estimation
+and the percentage of projects for which the estimated effort
+is within a given range of the actual effort. By using these
+established measures, we have minimized the potential for
+any threats to the validity of our experimental results.
+## 1 3
+
+
+**6.4 Conclusion validity**
+
+Using the Chaotic Firefly Algorithm with Enhanced Explora-­
+tion (CFAEE) in conjunction with the COCOMO-II model,
+we carefully examined the data to guarantee the validity of
+the study’s conclusions. The careful selection of evalua-­
+tion metrics, such as the mean magnitude of relative error
+(MMRE) and the prediction at the 25% level (PRED), allows
+us to confidently conclude the effectiveness of our proposed
+approach over different models. We also ran the experiment
+several times, validating our results by contrasting them with
+existing models. Therefore, the impact of this threat on the
+outcome of our experimental findings is minimal.
+
+**7 Conclusion and future work**
+
+Software development Estimation is a vital stage in the
+software development life cycle (SDLC). Accurate soft-­
+ware development estimation ensures a smooth progres-­
+sion towards project completion. In this paper, we have
+used the Firefly algorithm (FA) and Chaotic Firefly Algo-­
+rithm with Enhanced Exploration (CFAEE) to optimize
+the COCOMO-II model’s parameters (A and B). We have
+evaluated the performance of different models such as
+COCOMO-II, Genetic Algorithm, Cuckoo Optimization
+and Harmony Search algorithm, Bat, Dolphin, Dolphin Bat,
+FA, and CFAEE, using projects from NASA93, NASA60,
+COCOMO81, China, Desharnais, and Maxwell datasets.
+Our proposed CFAEE method outperformed the other mod-­
+els by examining the MMRE and PRED results. The CFAEE
+model acquired lower estimation errors and improved the
+predictive accuracy for all datasets. In order to demonstrate
+the superiority of the proposed model over certain current
+models, we conducted a statistical wilcoxon signed-rank
+analysis of the data. These results show the possibility of
+CFAEE being a sophisticated effort estimation method that
+can give more accurate predictions and be more dependable
+than conventional models and various metaheuristic-based
+
+models. Future research can be extended by incorporating a
+broader range of projects from multiple datasets to validate
+the generalizability of the proposed approach across diverse
+software development scenarios. Additionally, ensembling
+the proposed approach with other effort estimation models
+such as Case-Based Reasoning and Machine Learning tech-­
+niques, may further enhance predictive accuracy.
+
+**Author contributions** Sarika Mustyala: conceptualization, methodol-­
+ogy/study design, software, validation, formal analysis, investigation,
+resources, data curation, writing-original draft, writing-review & edit-­
+ing, visualization. Manjubala Bisi: conceptualization, validation, for-­
+mal analysis, data curation, writing-review & editing, visualization,
+supervision.
+## 1 3
+
+
+International Journal of System Assurance Engineering and Management
+
+**Funding** The authors have not disclosed any funding.
+
+**Data availability** Datasets used in this work are available at [​h ​t ​t ​p ​​s ​: ​/ ​​/ ​](https://github.com/Derek-Jones/Software-estimation-datasets.)
+[g ​i ​t ​​h ​u ​​b ​. ​c ​​o ​m ​/ ​D ​​e ​r ​e ​​k ​- ​J ​​o ​n ​e ​​s ​/ ​S ​​o ​f ​t ​w ​​a ​r ​​e ​- ​e ​​s ​t ​i ​m ​​a ​t ​i ​​o ​n ​- ​​d ​a ​t ​a ​s ​e ​t ​s ​. We have also](https://github.com/Derek-Jones/Software-estimation-datasets.)
+[provided artifacts for replication and extension using Zenodo through](https://doi.org/10.5281/zenodo.17277139.)
+[h ​t ​t ​p ​​s ​: ​/ ​​/ ​d ​o ​i ​​. ​o ​​r ​g ​/ ​​1 ​0 ​. ​5 ​​2 ​8 ​1 ​​/ ​z ​e ​​n ​o ​d ​o ​. ​1 ​7 ​2 ​7 ​7 ​1 ​3 ​9 ​.](https://doi.org/10.5281/zenodo.17277139.)
+
+**Declarations**
+
+**Conflict of interest** The authors declared that they have no conflict of
+interest.

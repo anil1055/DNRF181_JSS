@@ -1,0 +1,1523 @@
+***Journal of Software: Evolution and Process***
+
+**RESEARCH ARTICLE - ­METHODOLOGY**
+# **PredictPP: A Rank- ­Based Weighted Ensemble Model for ** **Prediction of Software Project Productivity**
+
+Suyash Shukla [1,2] | Sandeep Kumar [[2]](mailto:)
+
+1 Department of Computer Science, Birla Institute of Technology & Science, Pilani, Dubai, UAE | 2 Department of Computer Science and Engineering,
+Indian Institute of Technology Roorkee, Roorkee, Uttarakhand, India
+
+**Correspondence:** [Sandeep Kumar (sandeepkumargarg@gmail.com)](mailto:sandeepkumargarg@gmail.com)
+
+**Received:** 22 March 2025 | **Revised:** 18 September 2025 | **Accepted:** 19 September 2025
+
+**Funding:** This work was supported by the Ministry of Electronics and Information Technology.
+
+**Keywords:** decision tree | machine learning | multilayer perceptron | productivity prediction | support vector regression
+
+
+**1   |   Introduction**
+
+In modern times, software has become an integral component
+of virtually every occupation inside the workplace. Software
+is ubiquitous in various industries, from healthcare and food
+to defense, suggesting that the growing population relies
+on high- ­quality software that generates accurate outcomes.
+Nevertheless, creating a prosperous software project poses a significant challenge within a software organization. According to
+the Standish Group report issued in 2020, the success rate of software projects was 31%, although 50% of projects were classified
+as challenging, and the remaining 19% were deemed failures [1].
+
+© 2025 John Wiley & Sons Ltd.
+
+
+Insufficient knowledge of requirements and inaccurate size calculation are primary factors contributing to software failure [2].
+These factors prompted academics to investigate the estimate of
+software for accurate assessment of size and effort.
+
+Software effort estimation (SEE) is a crucial requirement
+during the preliminary phase of a project to allocate appropriate resources [3]. Given the limited availability of information at this stage, the managers prioritize estimating the size.
+The size measures can be helpful to provide valuable insights
+into estimating the potential effort required. Various methodologies have been devised in previous years leading up to the
+
+
+*Journal of Software: Evolution and Process,* 2025; 37:e70059 1 of 16
+[https://doi.org/10.1002/smr.70059](https://doi.org/10.1002/smr.70059)
+
+
+establishment of the function point (FP) [4] and the constructive cost estimation (COCOMO) [5] techniques to estimate
+size. Nevertheless, the utility of FP and COCOMO approaches
+is diminished when considering vulnerabilities associated
+with parameters such as FPs and line of code (LOC) in the
+respective cases. Moreover, it should be noted that these methodologies are mostly applicable to software systems produced
+using procedural programming paradigms rather than the
+more contemporary object- ­oriented software development
+approaches.
+
+The object- ­oriented (OO) development paradigm has garnered
+significant attention because of the inherent dynamism and
+reusability offered by programs written in OO programming
+languages, a feature absent in procedurally generated software. Use case diagrams have been widely used in modeling
+the functional requirements of OO systems, especially in contexts where structured analysis and early- ­stage planning are
+essential. Their ongoing importance is apparent in scenarios
+that require formal documentation, including academic projects, government systems, and enterprise- ­level software development. The use case point (UCP) methodology, based on use
+case modeling, is an effective tool for early effort estimation
+in these contexts. Although agile development approaches
+typically prioritize user stories for their adaptability and ease,
+our research is conducted in areas where structured estima
+tion is essential, rendering the usage of use cases both suitable and advantageous for the aims of this study. Karner [6]
+introduced the UCP strategy as a means of estimating the size
+of OO software projects. This approach draws upon the fundamental principles of the FP technique. The UCP approach
+considers UML use case diagrams as input for the UCP estimation. The use case diagram components, such as actors and
+use cases, are converted into their related size measurements
+to compute UCP value through a well- ­defined methodology.
+The performance of the UCP approach relies upon the degree
+to which the use case diagram is explained [7]. So, this technique is dangerous to use without sufficient data. Although
+the UCP estimation technique requires less effort than the FP
+technique, the UCP is not noteworthy as a proficient effort estimation inside organizations because there is no accord on
+the best way to interpret the UCP size into a related measure
+of effort.
+
+As mentioned earlier, the UCP approach for SEE consists of two
+steps: size estimation (in UCP) and effort estimation from the
+calculated size. The software size can be easily calculated with
+a well- ­defined procedure by Karner [6]. However, effort estimation from the UCP is a tedious task. Initially, Karner suggested
+that the effort can be computed by multiplying UCP with the
+predecided productivity value, as shown in Equation (1). This
+methodology is somewhat transparent yet hazardous if the manager has less information about productivity. Productivity can
+be computed by dividing effort by size [8]. This definition involves discussion because there is no standard on the best way
+to refer to that relationship.
+
+*Effort* = *Productivity* [∗] *Size* (1)
+
+The productivity of a project is used as a cost driver for estimating effort using the classical UCP method. A few investigations
+
+
+have been done in the past to compute software productivity before software effort; a restricted number of productivity values
+are used in most of the studies [6, 9, 10]. These methodologies do
+not provide any consideration for the project attributes. Karner
+
+[6] recommends a single productivity value for all the projects,
+20 person- ­h/UCP. In a few other studies, researchers predicted
+the value of project productivity with the help of environmental
+factors. Schneider and Winters [10] (S&W) have used three types
+of productivity (very low = 36, low = 28, and fair = 20) values
+based on eight environmental factors. Nassif et al. [9] have used
+four types of productivity values based on eight environmental
+factors and utilized an expert- ­based fuzzy model. Then, they
+associate productivity with their nonlinear regression model
+for computing effort. Similarly, Azzeh and Nassif [11] have developed a two- ­stage hybrid model for effort estimation utilizing productivity and show the utilization of classification and
+clustering- ­based approaches for deriving different productivity
+labels.
+
+Based on the above discussion, we can observe the following findings concerning productivity. The assumption made
+by Karner is not a practical methodology because it does not
+consider the contrasts between software projects of their sorts,
+surroundings, and multifaceted nature. The S&W model endeavors to group a project into 1 of 3 classes based on calculating environmental factors utilizing a particular counting
+approach. The classification technique relies on counting the
+factors, disregarding the impact of their values. Nassif et al.
+calculated productivity values with the help of a prod_sum
+variable, utilizing an expert- ­based fuzzy model. Maybe they
+would have obtained better results if they had used some clustering approaches dependent on the gathered data. Similarly,
+Azzeh et al. have used a hybrid model to classify productivity
+labels, but the productivity values largely depend on the technique used to cluster and classify projects. This motivated us
+to develop a naive method for project productivity prediction,
+which can further estimate the effort required to create that
+project.
+
+Because a minimal amount of work has been done to consider
+
+the advantage that can be acquired from predicting project
+productivity, we have developed a rank- ­based weighted ensemble method, which we call PredictPP, for project productivity prediction based on environmental factors utilizing
+various individual and ensemble learners. The individual
+
+learners used for productivity prediction in the presented
+work are simple linear regression (SLR), Least Absolute
+Shrinkage and Selection Operator Regression (LR), ridge regression (RR), elastic net regression (ER), K- ­nearest neighbor
+(KNN), decision tree (DT), support vector regression (SVR),
+and multilayer perceptron (MLP). The hyperparameters of
+these individual prediction models are tuned using the grid
+search approach. These tuned individual prediction models
+are compared to select the top five individual learning models
+for project productivity prediction. The selected models will be
+base learners to develop ten different homogeneous (bagging
+and boosting) ensemble prediction models. The performance
+of these ensemble prediction models will be compared to select the top three models, which will then be combined using
+a ranking mechanism to obtain the proposed model. Then, we
+compared the results of the proposed approach with those of
+
+
+2 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+the existing models used for productivity prediction. Based on
+the above discussion, this research paper aims to answer the
+following research questions (RQs):
+
+  - RQ1: How does the proposed PredictPP model perform
+compared to the base models to predict the value of project
+productivity?
+
+  - RQ2: Does the proposed PredictPP model generate better
+predictions than other homogeneous ensemble learning
+models?
+
+  - RQ3: How does the proposed PredictPP model perform
+compared to the existing models in the literature?
+
+We have used the Western University dataset of 65 projects [9] to
+address these inquiries and applied different models for productivity prediction and effort estimation. The significant contributions of this work are as follows:
+
+ - Researchers have used project productivity as a cost driver
+for estimating effort in existing works. They have selected
+a project productivity value out of a set of predecided values. So, there may be a possibility that the productivity values of multiple projects will be the same even though their
+nature is different. To handle this limitation, we propose
+using learning models to predict project productivity based
+on environmental factors. Hence, this paper aims to show
+the usage of machine intelligence in project productivity
+prediction, which can help estimate software efforts.
+
+ - We have applied various individual and ensemble learning models for productivity prediction and evaluated these
+models based on different performance measures. Further,
+the performance of these models is compared against the
+classical models such as Karner, S&W, and Nassif. The results show that the learning models perform relatively better than the classical models.
+
+ - We proposed a rank- ­based weighted ensemble model for
+project productivity prediction based on the above contributions. To our knowledge, no earlier work has been reported
+using the ranking method for ensemble weight generation
+to predict productivity.
+
+ - We compared the performance of the proposed approach
+with base learning models used in this study based on various evaluation measures. Also, we have validated the results by performing statistical analysis.
+
+ - We have compared the performance of the proposed approach with the existing UCP prediction models available
+in the literature.
+
+The rest of the paper is organized as follows: Section 2 discusses
+the commonly used methods for UCP estimation and the existing work. Section 3 discusses the proposed approach utilized
+for productivity prediction and effort estimation. Section 4
+discusses the dataset, learning models, and performance measures used in this study. The results of the different models are
+discussed in Section 4. The statistical analysis results and the
+answers to the RQs are discussed in Section 5 and Section 6, respectively. Threats related to validity are discussed in Section 7.
+Finally, Section 8 presents the conclusion.
+
+
+**2.1   |   Commonly Used Classical Methods for UCP**
+**Effort Estimation**
+
+**2.1.1   |   Karner's Method**
+
+In 1993, Karner introduced the UCP calculation approach to
+estimate the size of object- ­oriented software projects [6]. This
+approach utilizes use case diagrams for estimation. The computational efficiency of the UCP approach is contingent upon
+the level of detail and clarity with which use case diagrams are
+elucidated. Hence, adhering to the prescribed rules for creating
+use case diagrams as outlined in references [12, 13]. The components of the use case diagram, including actors and use cases,
+are transformed into their respective size measures to calculate
+the UCP value using a clearly defined approach. Next, the calculated UCP value is modified by different technological and environmental complexity parameters.
+
+The computation of the UCP can be facilitated by utilizing
+four distinct elements. The initial component of UCP computation is determining the unadjusted actor weights (UAW) using
+Equation (2). The UAW valuation is contingent upon the various
+actors involved. The actors are categorized into three distinct
+types (simple, average, and complex) based on the nature and
+severity of their challenges.
+
+∗ ∗ ∗
+*UAW* = *A* 1 1 + *A* 2 2 + *A* 3 3 (2)
+
+*A* 1 denotes basic actors with a clearly defined application programming interface (API), *A* 2 refers to intermediate actors
+communicating through a specific protocol, and *A* 3 represents
+advanced actors that communicate using a graphical user interface (GUI). 1, 2, and 3 are the weights corresponding to simple,
+average, and complex actors, respectively.
+
+The second component of UCP computation is the determination of unadjusted use case weights (UUCW), which can be derived using Equation (3). The UUCW relies on the utilization of
+use cases. Similar to actors, use cases can be categorized into
+three classifications, namely, simple, average, and complex,
+based on the quantity of transactions involved.
+
+∗ ∗ ∗
+*UUCW* = *U* 1 5 + *U* 2 10 + *U* 3 15 (3)
+
+*U* 1 denotes simple use cases with three or fewer transactions,
+*U* 2 represents average use cases, encompassing use cases with
+transaction counts ranging from 4 to 7, and *U* 3 signifies complex
+use cases involving use cases with seven or more transactions. 5,
+10, and 15 are the weights corresponding to simple, average, and
+complex use cases, respectively.
+
+Then, unadjusted use case points (UUCP) are calculated, as
+shown in Equation (4).
+
+*UUCP* = *UAW* + *UUCW* (4)
+
+
+*Journal of Software: Evolution and Process,* 2025 3 of 16
+
+
+The technical complexity factor (TCF) and environmental complexity factor (ECF) are the third and fourth components of the
+UCP calculation. The UUCP value can be adjusted using TCF
+and ECF. Thirteen technical complexity characteristics have an
+impact on the effectiveness of software projects. The assigned
+values for these characteristics span from 0, signifying no influence, to 5, signifying a significant influence. The TCF can be
+calculated using Equation (5).
+
+
+13
+∑
+
+*i* = 1
+
+
+*TCF* = 0.6 + 0.01 [∗] *T* ∗ *W* *t* (5)
+
+
+with no past data is better. Still, when the past data are available,
+the productivity should be computed with the help of data.
+
+|
+**2.1.2** **S&W Modification**
+
+In another study by Schneider and Winters [10], they calibrated
+the value of productivity with the help of 8 environmental factors. They divided the productivity values into three classes
+(very low = 36, low = 28, and fair = 36) based on environmental
+factors. First, they counted the number of factors from *E* 1 to *E* 6
+having an influence value lesser than 3. Then, they counted
+the number of factors from *E* 7 to *E* 8, having an influence value
+greater than 3. Finally, they calculated the total sum by adding
+both values. They suggested three levels of productivity based
+on the value of the total sum, as shown in Equation (9).
+
+
+*T* *i* ∗ *W* *t*
+
+
+*i*
+
+
+*T* *i* represents the technical factor type, and *W* *i* *[t]* [ denotes the ]
+weight associated with that factor. Karner [6] identified thirteen
+complexity factors, which are distributed system ( *T* 1 ), response
+adjectives ( *T* 2 ), end- ­user efficiency ( *T* 3 ), complex processing ( *T* 4 ),
+reusable code ( *T* 5 ), easy to install ( *T* 6 ), easy to use ( *T* 7 ), portable
+( *T* 8 ), easy to change ( *T* 9 ), concurrent ( *T* 10 ), security feature ( *T* 11 ),
+access for third parties ( *T* 12 ), and special training required ( *T* 13 ).
+The weights ( *W* *i* *[t]* [) associated corresponding to these thirteen fac-]
+tors are 2, 2, 1, 1, 1, 0.5, 0.5, 2, 1, 1, 1, 1, and 1, respectively.
+Similarly, it is worth noting that eight environmental complexity
+elements have the potential to exert an influence on the performance of software projects. The values associated with these
+factors are also within the numerical range of 0–5. The ECF
+value can be calculated using Equation (6).
+
+
+⎧
+⎪
+⎨
+⎪⎩
+
+
+20 [∗] *UCP* *if* *total* _ *sum* ≤ 2
+
+28 [∗] *UCP* 3 ≤ *total* _ *sum* ≤ 4
+
+
+*Effort* = ⎨28 [∗] *UCP* 3 ≤ *total* _ *sum* ≤ 4 (9)
+
+
+36 [∗] *UCP* *total* _ *sum* *>* 4
+
+
+8
+∑
+
+*i* = 1
+
+
+*ECF* = 1.4 − 0.03 [∗] *E* ∗ *W* *e* (6)
+
+
+|
+**2.1.3** **Nassif's Modification**
+
+Nassif et al. [9] also conducted a study to analyze the effect
+of productivity on effort estimation. They assumed that effort
+and UCP are related nonlinearly, and their relationship follows an exponential curve. They proposed a nonlinear equation for effort estimation from UCP and productivity, shown
+in Equation (10).
+
+
+*E* *i* ∗ *W* *e*
+
+
+*i*
+
+
+∗
+
+
+*E* *i* represents the environmental factor type, and *W* *i* *[e]* [ denotes the ]
+weight associated with that factor. Karner [6] identified eight environmental factors, which are familiar with RUP ( *E* 1 ), application experience ( *E* 2 ), object- ­oriented experience ( *E* 3 ), lead analyst
+capability ( *E* 4 ), motivation ( *E* 5 ), special requirements ( *E* 6 ), part- ­
+time workers ( *E* 7 ), and different programming language ( *E* 8 ). The
+weights ( *W* *i* *[e]* [) associated corresponding to these eight factors are ]
+
+−
+1.5, 0.5, 1, 0.5, 1, 2, 1, and 2, respectively.
+
+The UCP value can be determined by utilizing the equation presented in Equation (7).
+
+*UCP* = *UUCP* [∗] *TCF* [∗] *ECF* (7)
+
+As mentioned in Equation (1), the software effort multiplies
+software size and productivity value. Software size (in UCP)
+can be obtained from Equation (7). For productivity calculation, Karner [6] conducted a study on three completed industrial software projects. Based on the study's findings, Karner
+suggested using a fixed productivity value of 20 person- ­
+hours/UCP for organizations with no past data, as shown in
+Equation (8).
+
+*Effort* = *UCP* [∗] 20 (8)
+
+Several organizations have used the productivity value suggested by Karner [6] for measuring the effort without knowing
+its validity. Utilizing a fixed productivity value is not the right
+solution, as each software project's nature and development environment differ. So, using a fixed productivity value for projects
+
+
+The value of productivity is calculated based on prod_sum
+value (prod_sum = [∑] *i* [8] =1 *[E]* *[i]* ∗ *W* *ei* [). They provided this prod_sum ]
+
+value as input to a fuzzy model, which converts it into a productivity value utilizing some predefined rules. They suggested four productivity classes based on the findings of this
+study. The prod_sum value of less than 0 indicates a productivity value of 0.4. The prod_sum value in the range of 1 to 10
+indicates a productivity value of 0.7. If the prod_sum value is
+in the range of 11–20, the value of productivity is 1; else, the
+value of productivity is 1.3.
+
+**3   |   Proposed Approach**
+
+As mentioned earlier, the UCP approach for SEE consists of size
+estimation (in terms of UCP) and effort estimation with the help
+of calculated UCP. The size estimation is not the focus of this
+paper. The software size can be easily calculated with a well- ­
+defined procedure by Karner [6]; we are only interested in predicting productivity values. Further, the predicted productivity
+values can be used to estimate the value of effort.
+
+**3.1   |   Underlying Fundamental**
+
+Few studies have reported the use of project productivity for
+SEE using a restricted number of productivity values [6, 9, 10],
+as shown in Figure 1. The major problem with these methods
+is that they used only static values for project productivity.
+However, we used learning techniques to predict productivity in
+the proposed method, considering past projects as input.
+
+Schneider and Winters [10] demonstrated that environmental
+factors such as team experience, team members' capabilities,
+and knowledge about projects can contribute more efficiently to
+productivity prediction. Also, evaluating these factors is simple
+and requires minimal expertise. So, in this study, we use environmental adjustment factors for productivity prediction, as
+shown in Figure 2.
+
+**FIGURE 1** |    Illustration of the existing approaches for UCP
+
+estimation.
+
+
+*Journal of Software: Evolution and Process,* 2025 5 of 16
+
+
+Firstly, the eight environmental factors are input to the learning model for productivity prediction. Then, the effort will
+be calculated with the help of size and predicted productivity
+value. Figure 3 shows the methodology for creating the proposed PredictPP model, as discussed in detail in upcoming
+
+sections.
+
+**3.2   |   Level 1: Base Learner Selection**
+
+The first stage, Level 1, encompasses selecting the base learners.
+The selection of these base learners is crucial for creating ensemble models that may be effectively used. The efficacy of this
+selection method relies on the degree to which the model aligns
+with the dataset and its ability to generate accurate predictions.
+Therefore, the individual models are implemented, evaluated,
+and selected based on different performance metrics. An experiment was conducted wherein eight distinct learning models
+were applied to a dataset of 65 Western University software projects [9] to determine appropriate base learners for ensemble formation. This experiment aims to select base learners from a pool
+of regularly employed learning models for the PredictPP model,
+which is proposed for productivity prediction. We have chosen
+SLR, LR, RR, ER, KNN, DT, SVR, and MLP learning models for
+this experimental analysis.
+
+This analysis selects five individual learners (RR, KNN, DT,
+SVR, and MLP) as the base learners. Section 4 provides a comprehensive experiment analysis and a concise overview of the
+chosen base learners.
+
+**FIGURE 2** |    Illustration of the proposed approach for UCP estimation.
+
+**FIGURE 3** |    Framework for the proposed PredictPP model.
+
+
+**3.3   |   Level 2: Creating Homogeneous Ensemble**
+**Learners**
+
+Level 2 entails constructing homogeneous ensemble prediction
+models from the base learners (RR, KNN, DT, SVR, and MLP)
+through bagging [16] and boosting [16] techniques. Ten different
+homogeneous ensemble prediction models are constructed at
+this stage, consisting of the bagging RR, bagging KNN, bagging
+DT, bagging SVR, bagging MLP, boosting RR, boosting KNN,
+boosting DT, boosting SVR, and boosting MLP ensembles. The
+performance of these ensemble models is evaluated separately
+on the given dataset to assess their effectiveness. The performance of these ensemble models is assessed using the leave- ­
+one- ­out cross- ­validation (LOOCV) strategy.
+
+This analysis selects the top three ensemble learners (bagging
+KNN, boosting DT, and boosting SVR) to create a rank- ­based
+weighted ensemble learner. The methodology for assigning
+weights is discussed in the next section. Section 4 provides a
+comprehensive examination of the experimental analysis and a
+concise portrayal of the chosen ensemble learners.
+
+**3.4   |   Level 3: Meta- ­Learner for Assigning Weights**
+**to Ensemble Learners**
+
+At this stage, a meta- ­learner allocates weights to the ensemble
+learners derived from Level 2. The proposed method utilizes a
+ranking average mechanism as a meta- ­learner to allocate the
+weights to the selected ensemble learners. First, sort the selected
+
+
+6 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+ensemble learners based on their error values in descending
+order, that is, the model with the highest error value will be assigned rank one, and so on. Then, assign weights to the selected
+three ensemble learners using Equation (11):
+
+
+*Rank* [�] *EL*
+*j*
+=
+� 3
+
+
+*j* �
+
+
+*W* [�] *EL* *j* � = 3 (11)
+
+*[Rank]* *[EL]*
+
+
+under consideration from a list of given values. We have used
+the GridSearchCV function from the Scikit- ­learn library to
+implement grid search.
+
+**4.1   |   Dataset Used**
+
+We performed an in- ­depth review of datasets pertaining to the
+UCP- ­based estimate and discovered six related datasets: DS1 to
+DS6. DS1 consists of 240 industry and academic software projects gathered from four primary sources [17]. DS2 comprises
+84 projects sourced from three distinct sources [18], whereas
+DS3 encompasses 28 projects [19]. DS4 comprises 71 projects
+provided by three data donors [19]. DS5 encompasses 65 software academic projects from Western University [9], whereas
+DS6 consists of 45 projects from the CompuTop company [9].
+
+As mentioned earlier, the UCP estimation approach consists of
+two key stages: size estimation (in terms of UCP) and effort estimation with the help of calculated UCP. A significant amount
+of research has already been done for size estimation utilizing
+DS1, DS2, DS3, and DS4 datasets. However, size estimation
+is not the focus of this paper. Our research especially focuses
+on the second phase—predicting effort, when the project size
+(UCP) is already established. The effort estimation using UCP is
+widely explored, which requires various factors along with UCP.
+One such factor is project productivity, which is to be used with
+UCP for effort estimation. As discussed earlier, this paper aims
+to ultimately help in improved effort estimation by predicting
+project productivity based on various environmental factors.
+The datasets mentioned above (DS1, DS2, DS3, and DS4) cannot
+be considered for productivity prediction as they do not contain
+any information about environmental factors.
+
+Among the listed datasets, only DS5 (or Western University
+dataset) is publicly accessible for research purposes. Because
+the Western University dataset is public and pertinent to the
+estimation of UCP- ­based effort, this dataset is the main empirical source for our investigation. So, we used only the Western
+University dataset for the experiment. The Western University
+dataset contains projects that were created and executed utilizing UML and OO languages. The dataset comprises ten features:
+size, environmental factors (E1 to E8), and effort. Productivity
+values for projects in the dataset are calculated by dividing the
+effort by the software size, as shown in Equation (1).
+
+Although the Western University dataset predominantly comprises academic software projects, which may differ in terms
+of complexity and development environment from industrial
+projects, the PredictPP model is fundamentally designed to
+capture and learn from environmental factors—such as team
+experience, project complexity, and technical familiarity—that
+are also highly relevant within industrial contexts. Moreover,
+the methodology itself is model- ­agnostic and can be readily applied to industrial datasets when such data become available.
+The statistical properties of the dataset are shown in Table 1.
+
+The dataset's statistical properties show that the dataset's productivity values are approximately symmetric, with a skewness
+value of 0.176. The productivity values are positively skewed,
+with the kurtosis value of −0.3157.
+
+
+∑ 3
+
+
+3
+
+*j* =1 *[Rank]* [�] *[EL]* *[j]*
+
+
+�
+
+
+where *W* ( *EL* *j* ) represents the weight assigned to the *j* th ensemble
+learner and *Rank* ( *EL* *j* ) is the rank of the *j* th ensemble learner.
+
+**3.5   |   Level 4: Proposed Model Prediction**
+
+This step involves obtaining proposed model predictions using
+the selected ensemble learners and their weights. The productivity value of the proposed model for the module *y* *j* will be calculated using Equation (12):
+
+
+) =
+
+
+3
+∑
+
+*i* = 1
+
+
+)
+
+
+*Productivity* [(] *y* *j* ) = ∑ *EL* *i* ( *y* *j* ) ∗ *W* ( *EL* *i* ) (12)
+
+
+*EL* *i*
+
+
+( *y* *j*
+
+
+) ∗ *W* ( *EL* *i*
+
+
+Here, *EL* *i* ( *y* *j* ) represents the predicted productivity value for the
+project *y* *j* using ensemble learners *EL* *i* .
+
+Detailed steps for implementing the PredictPP approach are presented in Algorithm 1.
+
+In Algorithm 1, we divided the dataset of n software projects
+into n parts and executed the model for n rounds. For every
+round, *n* − 2 parts are used as a train set, one as a validation
+set, and one as a test set. The final result will be the average
+result of n rounds. Eight individual learning models (SLR, LR,
+RR, ER, KNN, DT, SVR, and MLP) have been applied over the
+training dataset, and the trained models are validated using
+a validation dataset to choose the top five base learners (RR,
+KNN, DT, SVR, and MLP). The top five base learners are then
+used to create ten homogeneous ensemble learners (bagging
+RR, bagging KNN, bagging DT, bagging SVR, bagging MLP,
+boosting RR, boosting KNN, boosting DT, boosting SVR, and
+boosting MLP). The ten ensemble learners are also analyzed to
+obtain the top three homogeneous ensemble learners (bagging
+KNN, boosting DT, and boosting SVR) that create a proposed
+PredictPP model for effort estimation. The methodology for assigning weights to the top three ensemble learners is discussed
+in Section 3.4. After weight assignment, the productivity predictions for the testing data are made using Equation (12).
+
+**4   |   Experimental Analysis**
+
+As mentioned earlier, we have used the Western University
+dataset of 65 software projects [9] and applied learning techniques for productivity prediction and effort estimation. The
+learning approaches have been implemented utilizing the
+Scikit- ­learn module in the Python programming language.
+We have applied a LOOCV technique for building the learning
+models. The hyperparameters of various base learners are decided based on the grid search approach. The grid search approach provides the best set of parameter values for the model
+
+
+*Journal of Software: Evolution and Process,* 2025 7 of 16
+
+
+**ALGORITHM** **1** |    Proposed PredictPP approach for UCP estimation.
+
+`Input:` *l* 1 `,` *l* 2 `,` *l* 3 `, …,` *l* *P* `}, Dataset of “M”`
+```
+       Set of “P” individual learning techniques L = {
+```
+*d* 1 `,` *d* 2 `,` *d* 3 `, …,` *d* *M* `}`
+```
+       software modules: D = {
+  Output: Predicted effort values for different modules in the dataset
+
+```
+`1: Load the dataset.` ⊳ `Apply individual learners over the dataset for`
+```
+   selecting base learners
+ 2: Divide data into M-folds using LOOCV strategy.
+ 3:  for each fold k do
+
+```
+`4:` `for` `each learning technique` *l* *j* ϵ *L*, *j* = 1, 2, . ., *P* `do`
+`5:     Train set` *D* *train* *D* *test*
+```
+                 = “M-1” folds and test set  = one-fold
+```
+`6:     Train` *l* *j* `over` *D* *train* `and predict productivity values for` *D* *test* `.`
+```
+ 7:     Calculate effort by multiplying size and predicted productivity.
+ 8:    end for
+ 9:  end for
+ 10: Evaluate individual learners using different error measures.
+
+```
+`11: Select top five individual learning models as base learners and add them into BL.` ⊳
+```
+   Apply homogeneous ensemble learners over the dataset to select the top three ensemble
+   learners
+ 12: for each fold k do
+
+```
+`13:` `for` `each base learner` *bl* ϵ *BL* `do`
+*j* `, j = 1,2,3,4,5`
+`14:     Create bagging and boosting ensemble models with` *bl* *j*
+`15:     Train set` *D* *train* *D* *test*
+```
+                 = “M-1” folds and test set  = one-fold
+```
+`16:     Train ensembles on` *D* *train* `and predict productivity values for` *D* *test*
+```
+ 17:     Calculate effort by multiplying size and predicted productivity.
+ 18:    end for
+ 19: end for
+ 20: Evaluate different homogeneous ensemble learners using error measures.
+ 21: Select top three ensemble learners and add them to the set (EL).
+ 22: Rank various ensemble learners in descending order of error values.
+
+```
+`23: Calculate weight,` *W* [(] *el* *j* ) `, for each ensemble learner` *el* *j* `using equation&#x00A0;11 and add`
+`them into the set W.` ⊳ `Estimating effort` `values using the proposed PredictPP model` `.`
+```
+ 24: Predictions = []
+ 25: for each fold k do
+
+```
+`26:` `for` `each module` *y* *j* ϵ *D*, *j* = 1, 2, …, *M* `do`
+`27:     Apply module` *y* *j* `over the top three ensembles to predict productivity.`
+`28:     Calculate the productivity value for` *y* *j* `using equation&#x00A0;12.`
+`29:     Calculate the effort (` *E* *y* *j* `) for` *y* *j* `by multiplying productivity with size.`
+`30:     Add` *E* `the Predictions`
+*y* *j*
+```
+ 31:    end for
+ 32: end for
+ 33: Return Predictions
+
+```
+**TABLE 1** |    Descriptive statistics of UCP, effort, and productivity variables in the dataset.
+
+**Count** **Min** **Max** **Mean** **Standard deviation** **Median** **Skewness** **Kurtosis**
+
+UCP 65 40 149 82.6 20.71 81 0.8349 1.076
+
+Effort 65 696 2444 1672.46 414.32 1653 −0.0518 −0.8498
+
+Productivity 65 11 32 20.75 4.78 21 0.176 −0.3157
+
+
+**4.2   |   Performance Evaluation Measures**
+
+Performance measures are employed to assess various learning models. However, selecting them is not straightforward
+due to the potential for overestimation or underestimation,
+as noted in previous research [20]. Most studies have utilized
+
+
+mean magnitude relative error (MMRE) and prediction accuracy (Pred) measures to assess the proposed model's performance. However, these measures are known as biased
+measures, especially MMRE, due to their sensitive nature
+toward outliers [20]. So, we utilize the other measures, such
+as mean absolute error (MAE), mean balanced relative error
+
+
+8 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+**TABLE 2** |    The performance measures employed.
+
+**Measure** **Formula**
+
+
+*N* [1] ∑ *Ni* =1 *[abs]* [�] *[p]* *[i]* [ −] *[a]* *[i]*
+
+
+MAE *MAE* = [1]
+
+
+�
+
+
+where ( *a* 1, *a* 2, *a* 3, …, *a* *n* ) are actual
+values, ( *p* 1, *p* 2, *p* 3, …, *p* *n* )
+predicted values, and *N* is a
+total number of samples
+
+
+*N* [1] ∑ *Ni* =1 *absmin* ( *aa* *i* − *p* *i* )
+
+
+MBRE
+*MBRE* = [1]
+
+
+MIBRE *N*
+*MIBRE* = *N* [1] ∑ *i* =1
+
+
+*min* ( *a* *i*, *p* *i* )
+
+*abs* ( *a* *i* − *p* *i* )
+
+*max* ( *a* *i*, *p* *i* )
+
+
+SA *SA* = 1 − *[MAE]* ∗ 100
+
+
+*MAE* *r*
+
+where *MAE* *r* = mean absolute error
+of random guessing strategy
+
+
+Δ Δ = *[MAE]* [ −] *[MAE]* *[r]*
+
+*SD* *r*
+where *SD* *r* = standard deviation
+of the random guessing strategy
+
+
+*N* [1] ∑ *Ni* =1
+
+
+ME *ME* = [1]
+
+
+� *p* *i* − *a* *i* �
+
+
+(MBRE), mean inverse balanced relative error (MIBRE),
+standardized accuracy (SA), and effect size ( Δ ), as specified
+in brief in Table 2. These measures are selected as they are
+frequently used in the literature to evaluate productivity prediction models [9, 21–24].
+
+In addition to these measures, we conducted a systematic error
+directionality assessment to examine whether the PredictPP
+model exhibits any consistent bias—that is, a tendency to overestimate or underestimate productivity. For this purpose, we
+computed the mean error (ME), which considers the signed
+difference between predicted and actual values. Unlike MAE,
+which measures only the magnitude of the error, ME helps identify the direction of prediction errors.
+
+**4.3   |   Choosing the Base Learners**
+
+The learning approaches employed in this study are advantageous in their ability to effectively extract inherent patterns from
+the input data and establish correlations between these input
+features and the corresponding output. Moreover, the acquired
+data can be employed to predict the outcome of new projects.
+Various machine learning (ML) algorithms have been employed
+in previous studies for UCP estimation and productivity prediction. The SLR [9, 17, 18, 22, 25–27] is the most frequently used
+ML model for UCP estimation and productivity prediction due
+to its efficacy. Nevertheless, the assumptions of the SLR do not
+always hold. In such scenarios, the regularization techniques,
+such as LR, RR, and ER, provide more flexibility, robustness,
+and performance. So, we have expanded our research by integrating modified versions of the SLR model that use regularization techniques. Some existing studies have utilized the
+MLP [9, 22, 24], SVR [22, 24], and DT [22, 24] models for productivity prediction. Apart from these models, the KNN model
+is frequently employed for regression problems. Nevertheless,
+previous studies on UCP estimates have not examined the KNN
+
+
+**TABLE 3** |    Parameters for the individual learners.
+
+**Model** **Parameters**
+
+SLR
+fit_intercept = True, copy_X = False
+
+LR
+alpha = 0.01
+
+RR
+alpha = 50
+
+ER
+alpha = 0.01
+
+KNN
+metric = ‘minkowski’, n_neighbors = 13,
+weights = ‘distance’, leaf_size = 1
+
+DT
+max_depth = 1, random_state = 20,
+min_samples_split = 4
+
+SVR
+C = 10, epsilon = 0.001
+
+MLP
+hidden_layer_sizes = 8, random_
+state = 3, activation = ‘relu’,
+learning_rate = ‘adaptive’,
+max_iter = 500, solver = ‘lbfgs’
+
+model. So, based on the above observations, the SLR, LR, RR,
+
+ER, KNN, DT, SVR, and MLP models have been selected for the
+experimental analysis.
+
+To assure optimal performance of individual learners, such as
+SLR, LR, RR, ER, KNN, DT, SVR, and MLP, we used a grid
+search- ­based hyperparameter tuning technique. The primary
+goal is to find the best combination of hyperparameter values
+that maximizes prediction accuracy while being computationally efficient. We discovered that certain hyperparameters,
+such as the regularization parameter (C) in SVR, the number of
+neighbors (k) in KNN, and the hidden layer sizes in MLP, had a
+significant impact on model performance, whereas others had
+a minor impact and thus were kept at their default values to reduce computational overhead without sacrificing model quality.
+This selective tuning strategy enables us to strike a compromise
+between exhaustiveness and efficiency in model optimization.
+Table 3 shows the final hyperparameter setups for each individual learner. The outcomes derived from the learning approaches
+above are presented in Table 4.
+
+According to the findings presented in Table 4, the SVR model
+demonstrates superior performance compared to other individual learning models. The KNN model with an MAE value of
+259.94 is the second best individual learning model, whereas the
+DT model with an MAE value of 260.95 is the third best individ
+ual model. The top five base learners for the proposed PredictPP
+approach are RR, KNN, DT, SVR, and MLP.
+
+**4.4   |   Choosing the Ensemble Learners**
+
+The ensemble learning strategy combines several model predictions to provide an optimized prediction model [28]. The base
+learners creating the ensemble learner may or may not be the
+same type. The two main reasons for using ensemble methods
+are performance and robustness. The ensemble learner can perform better than the individual learners, reducing the variance of
+predictions. So, we have created different homogeneous ensemble
+
+
+*Journal of Software: Evolution and Process,* 2025 9 of 16
+
+
+**TABLE 4** |    Error measures for base learners.
+
+**Model** **MAE** **ME** **MBRE** **MIBRE** **SA** **횫**
+
+SLR 270.67 22.65 0.1934 0.1434 43.36 0.6758
+
+LR 270.59 22.65 0.1933 0.1434 43.37 0.676
+
+RR 267.76 23.16 0.1890 0.1429 43.97 0.685
+
+ER 270.46 22.63 0.1932 0.1433 43.40 0.676
+
+KNN 259.94 **6.51** 0.1860 0.1387 45.60 0.711
+
+DT 260.95 18.50 **0.1845** 0.1396 45.39 0.707
+
+SVR **252.73** −12.66 0.1860 **0.1383** **47.11** **0.734**
+
+MLP 264.77 14.84 0.1903 0.1403 44.59 0.695
+
+*Note:* The values in bold indicate the best- ­performing individual model across the different performance measures.
+
+
+learners (bagging and boosting) in this study. For boosting, we
+have used the adaptive boosting regressor. To achieve the best
+performance of the homogeneous ensemble learners, we used a
+grid search- ­based hyperparameter tuning strategy similar to the
+one used for individual base learners. During this process, we
+conducted a systematic grid search to identify the most influential
+hyperparameters while maintaining default values for the less impactful parameters to maintain a balance between computational
+efficiency and performance. Table 5 shows the final hyperparameter setups for each homogeneous ensemble learner. The top five
+base learners (RR, KNN, DT, SVR, and MLP) are base estimators
+to create ten homogeneous ensemble learners, as mentioned in
+Section 3. Table 6 shows the results obtained from the ensemble
+
+learning techniques.
+
+Table 6 shows that the boosting SVR is the best performing
+learning model among all the homogeneous ensemble learning models, with an MAE value of 236.70. The bagging KNN
+with an MAE value of 248.76 is the second best learning model,
+whereas the boosting DT with an MAE value of 250.02 is the
+third best ensemble learning model. The top three ensemble
+learners for the PredictPP approach are bagging KNN, boosting
+DT, and boosting SVR.
+
+**4.5   |   Experimental Results**
+
+The top three ensemble learners (bagging KNN, boosting DT,
+and boosting SVR) are used to generate predictions for the
+proposed PredictPP model. The proposed ranking method
+(Section 3.4) is used to assign weights to the ensemble learners.
+The boosting SVR model is assigned the highest weight (0.5) as it
+is the best performing model among the three models. Similarly,
+the boosting DT model is assigned the lowest weight (0.16).
+The bagging KNN model weighs 0.34. We have also analyzed
+the classical models. Table 7 shows the comparative results of
+the top five base learners, the top three homogeneous ensemble
+learners, and the proposed PredictPP model.
+
+Table 7 shows that the proposed PredictPP model has outperformed all models based on different error measures. The MAE
+
+value obtained from the proposed model is 228.2332. In addition, the ME value for the proposed model was found to be very
+close to zero, indicating a balanced error distribution.
+
+
+**5   |   Comparative Analysis**
+
+**5.1   |   Comparison Using Statistical Analysis**
+
+In the earlier section, error estimates for various models were
+shown. The findings indicate that the PredictPP model, as suggested, has satisfactory performance. However, it is imperative to validate the accuracy and reliability of these models. In
+this segment, we have performed statistical analysis using the
+Wilcoxon test [29] to investigate these models' characteristics.
+The nature of the two distributions, following similar or dissimilar patterns, can be inspected with the Wilcoxon test. The subsequent hypothesis is employed to examine the characteristics
+of two distributions:
+
+  - *H* 0 : Lack of substantial differentiation between models A
+and B.
+
+  - *H* 1 : Models A and B are significantly different.
+
+The hypothesis mentioned above is predicated upon the utilization of the *p* value. A *p* value beyond 0.05 supports the acceptance of hypothesis *H* 0, whereas a *p* value below 0.05 supports
+the acceptance of hypothesis *H* 1 . Table 8 displays the outcomes
+of the Wilcoxon test.
+
+Table 8 shows that the Wilcoxon signed rank test indicates the
+overall advantage of PredictPP; nevertheless, the *p* values for
+SVR (0.4864) and boosting SVR (0.5283) are not statistically
+significant at the level of 0.05. This indicates that, although
+PredictPP demonstrates superior average performance, variations with these two baselines are insufficient to be deemed
+
+statistically significant. We present these findings for the
+sake of thoroughness and to offer an impartial analysis of the
+results.
+
+**5.2   |   Comparison With Existing Models**
+
+This section presents a comparative analysis of the outcomes
+obtained from the PredictPP model suggested in this study
+and the existing methodologies documented in the literature.
+As mentioned, using learning techniques for UCP estimation
+has already been explored. Few works have also reported the
+
+
+10 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+**TABLE 5** |    Parameters for the homogeneous ensemble learners.
+
+**Model** **Parameters**
+
+Bag_Ridge base_estimator = Ridge (alpha = 50),
+n_estimators = 1, random_state = 2
+
+Bag_KNN base_estimator = KNeighborsRegressor
+(metric = ‘minkowski’, n_neighbors = 13,
+weights = ‘distance’, leaf_size = 1),
+n_estimators = 1, random_state = 2
+
+Bag_DT base_estimator = DecisionTreeRegressor
+(max_depth = 1, random_state = 20,
+min_samples_split = 4), n_
+estimators = 6, random_state = 4
+
+Bag_SVR base_estimator = LinearSVR(C = 10,
+epsilon = 0.001), n_estimators = 2,
+random_state = 6
+
+Bag_MLP base_estimator = MLPRegressor
+(hidden_layer_sizes = 8, random_state = 3,
+activation = ‘relu’, learning_rate = ‘adaptive’,
+max_iter = 500, solver = ‘lbfgs’), n_
+estimators = 8, random_state = 3
+
+Boost_Ridge base_estimator = Ridge (alpha = 50),
+n_estimators = 2, random_state = 6
+
+Boost_KNN base_estimator = KNeighborsRegressor
+(metric = ‘minkowski’, n_neighbors = 13,
+weights = ‘distance’, leaf_size = 1),
+n_estimators = 1, random_state = 10
+
+Boost_DT base_estimator = DecisionTreeRegressor
+(max_depth = 1, random_state = 20,
+min_samples_split = 4), n_
+estimators = 3, random_state = 9
+
+Boost_SVR base_estimator = LinearSVR(C = 10,
+epsilon = 0.001), n_estimators = 2,
+random_state = 16
+
+Boost_MLP base_estimator = MLPRegressor
+(hidden_layer_sizes = 8, random_state = 3,
+activation = ‘relu’, learning_rate = ‘adaptive’,
+max_iter = 500, solver = ‘lbfgs’), n_
+estimators = 2, random_state = 5
+
+use of learning techniques for SEE by choosing project productivity values from the set of values dependent upon the
+project features. However, the use of learning techniques for
+project productivity prediction has not been explored much
+until now. The proposed model tries to fulfill this purpose and
+presents a model that can be used to predict project productivity based on environmental factors. The motivation behind
+this approach is that the prediction of project productivity
+dynamically varies based on the values of environmental factors, which will ultimately give a better estimation of software
+efforts than choosing the productivity value out of some set
+of values as done in traditional methods such as Karner [6],
+Schneider and Winters [10], and Nassif et al. [9].
+
+Some works, such as Karner [6], Nassif et al. [9], Schneider and
+Winters [10], Azzeh and Nassif [21], and Azzeh et al. [22–24],
+
+
+have performed effort estimation using a Western University
+dataset, which we have also used to evaluate the proposed
+PredictPP model. We have implemented these existing SEE
+models under the same environmental conditions, such as
+dataset, validation mechanism, and model parameters, in
+which the proposed model is developed for fair comparison.
+Table 9 compares the PredictPP model's performance with
+the top performing models discussed in the studies mentioned above.
+
+According to the data presented in Table 9, it can be observed
+that the PredictPP model, which has been provided, exhibits superior performance compared to the previous models that were
+utilized on the identical dataset. The suggested model yielded
+an MAE value of 228.23, whereas the current models exhibited
+MAE values ranging from 262.759 to 446.42.
+
+**6   |   Discussion**
+
+**6.1   |   Answers to RQs**
+
+This section responds to the research questions (RQs) previously
+mentioned.
+
+**RQ1** . *How does the proposed PredictPP model perform*
+*compared to the base models to predict the value of project*
+*productivity* ?
+
+To answer RQ1, we have compared the performance of the
+proposed PredictPP model with the top five base models (RR,
+KNN, DT, SVR, and MLP) in this work. The evaluation and
+comparison of the proposed approach is done over the original
+dataset of 65 projects with the help of five different performance
+measures. The PredictPP model performed better than the top
+five base learning models, as shown in Table 7. The MAE value
+obtained from the PredictPP model is 228.23, whereas the MAE
+value for the best performing base learning model (SVR) is
+252.73. The other base models have MAE values between 259.94
+
+and 267.76.
+
+**RQ2** . *Does the proposed PredictPP model generate better pre-*
+*dictions than other homogeneous ensemble learning models* ?
+
+To answer RQ2, we have compared the performance of the proposed PredictPP model with the top three ensemble learning
+models (bagging KNN, boosting DT, and boosting SVR) over
+the original dataset of 65 projects with the help of five different performance measures. The results show an improvement
+in MAE values after applying the proposed PredictPP model, as
+shown in Table 7. The MAE value obtained from the PredictPP
+
+model is 228.23, whereas the MAE value for the best performing base learning model (boosting SVR) is 236.70. The bagging
+KNN and boosting ensembles have MAE values of 248.76 and
+250.02, respectively.
+
+**RQ3** . *How does the proposed PredictPP model perform com-*
+*pared to the existing models in the literature* ?
+
+To answer RQ3, we compare the proposed PredictPP
+model results with the existing approaches in the literature
+
+
+*Journal of Software: Evolution and Process,* 2025 11 of 16
+
+
+**TABLE 6** |    Error measures for homogeneous ensemble learners.
+
+**Model** **MAE** **ME** **MBRE** **MIBRE** **SA** **횫**
+
+Bag_Ridge 250.78 47.82 0.1792 0.1345 47.52 0.741
+
+Bag_KNN 248.76 4.27 0.1785 0.1338 47.94 0.747
+
+Bag_DT 260.47 −5.57 0.1835 0.1399 45.49 0.709
+
+Bag_SVR 254.37 −17.14 0.1868 0.1388 46.77 0.729
+
+Bag_MLP 266.56 12.95 0.1910 0.1413 44.22 0.689
+
+Boost_Ridge 255.98 11.54 0.1825 0.1390 46.43 0.724
+
+Boost_KNN 252.37 25.35 0.1787 0.1360 47.19 0.735
+
+Boost_DT 250.02 18.24 0.1787 0.1337 47.68 0.743
+
+Boost_SVR **236.70** 16.97 **0.1681** **0.1255** **50.47** **0.787**
+
+Boost_MLP 283.31 44.39 0.2030 0.1481 40.71 0.635
+
+*Note:* The values in bold indicate the best- ­performing ensemble model across the different performance measures.
+
+**TABLE 7** |    Error measures for the PredictPP model.
+
+**Models** **MAE** **ME** **MBRE** **MIBRE** **SA** **횫**
+
+Top 5 base learners RR 267.76 23.16 0.1890 0.1429 43.97 0.685
+
+KNN 259.94 6.51 0.1860 0.1387 45.60 0.711
+
+DT 260.95 18.50 0.1845 0.1396 45.39 0.707
+
+SVR 252.73 −12.66 0.1860 0.1383 47.11 0.734
+
+MLP 264.77 14.84 0.1903 0.1403 44.59 0.695
+
+Top 3 homogeneous ensemble learners Bag_KNN 248.76 4.27 0.1785 0.1338 47.94 0.747
+
+Boost_DT 250.02 18.24 0.1787 0.1337 47.68 0.743
+
+Boost_SVR 236.70 16.97 0.1681 0.1255 50.47 0.787
+
+Proposed approach PredictPP **228.23** **2.61** **0.1629** **0.1224** **52.24** **0.814**
+
+*Note:* The values in bold highlight the superior model among the proposed approach, the top five individual models, and the top three ensemble models across the
+various performance measures.
+
+**TABLE 8** |    Statistical analysis using the Wilcoxon test.
+
+**MAE** **MBRE**
+
+
+**PredictPP vs.**
+
+
+***p*** **E** ***p*** **E**
+
+
+Top 5 base learners RR 0.0020 0.1700 0.0022 0.1378
+
+KNN 0.0111 0.1359 0.0118 0.1194
+
+DT 0.0283 0.1440 0.0424 0.1171
+
+SVR **0.4864** 0.0351 **0.4905** 0.0266
+
+MLP 0.0020 0.1433 0.0017 0.1348
+
+Top 3 homogeneous ensemble learners Bag_KNN 0.0436 0.0891 0.0392 0.0816
+
+Boost_DT 0.0379 0.0939 0.0314 0.0835
+
+Boost_SVR **0.5283** 0.0596 **0.5155** 0.0669
+
+*Note:* The values in bold denote the models with p- ­values greater than 0.05 for the MAE or MBRE measures.
+
+
+
+[6, 9, 10, 21–24]. We have implemented these existing SEE models under the same environmental conditions, such as dataset,
+validation mechanism, and model parameters, in which the proposed model is developed for fair comparison. We found that the
+
+
+PredictPP model has outperformed the existing models in the
+literature, as shown in Table 9. The MAE value obtained from
+the proposed model is 228.23, whereas the MAE value for the
+existing models lies in 262.759–446.42.
+
+
+12 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+**TABLE 9** |    Comparison of the PredictPP model with existing models
+in the literature.
+
+**Models** **MAE** **MBRE** **MIBRE**
+
+
+Existing Regression
+approaches to mean
+model [23]
+
+Locality- ­
+
+based
+
+ensemble [24]
+
+Weighted
+
+average
+ensemble [22]
+
+Stepwise
+regression
+model [21]
+
+MLP and
+loglinear- ­
+based model
+
+[6, 9, 10]
+
+
+320.40 0.23 0.17
+
+290.06 0.21 0.15
+
+262.76 0.18 0.13
+
+275.60 0.19 0.15
+
+325.60 0.24 0.18
+
+446.42 0.3 0.27
+
+329.04 0.23 0.25
+
+
+Proposed **PredictPP** **228.23** **0.16** **0.12**
+approach **model**
+
+*Note:* The values in bold indicate the superior model between the proposed
+approach and the existing models across the various performance measures.
+
+**6.2   |   Computational Considerations and Efficiency**
+
+Ensemble learning techniques enhance predictive performance
+but typically incur additional computational complexity, particularly with dynamic weighting, repeated resampling, or
+complicated structures like boosting or stacking. This study intentionally developed the PredictPP rank- ­based ensemble model
+to ensure both performance and computing efficiency, considering practical limitations and the deployment requirements of
+industrial settings.
+
+In contrast with traditional ensemble methods like dynamic
+bagging or boosting, which involve iterative training or sequential updates of several models, PredictPP allocates fixed weights
+to base learners according to their ranked performance on validation data. This ranking is calculated once during training,
+hence eliminating the need for repeated evaluation or weight
+modification during prediction. The computational overhead
+during inference is negligible, rendering the model appropriate
+for real- ­time applications and incorporation into ongoing development workflows.
+
+To enhance model performance while minimizing computing demands, we employed a grid search method to adjust just
+the most significant hyperparameters of the base learners.
+Parameters with minimal impact on performance were maintained at their default settings. This method achieved an optimal
+balance between model performance and training cost.
+
+The PredictPP framework provides a streamlined and scalable
+approach for estimating software productivity. Its minimal inference time and single- ­pass prediction capacity render it suitable
+for industrial applications, particularly those necessitating rapid
+
+
+decision- ­making or functioning under resource limitations.
+These attributes establish PredictPP as a feasible substitute for
+
+more intricate ensemble models, providing better performance
+while maintaining operational efficiency.
+
+Although the proposed predictPP model is inherently industry- ­
+agnostic, we understand that its implementation across extensive industrial teams may pose difficulties. The efficacy of the
+proposed model is contingent upon the accessibility of high- ­
+quality historical data, which might differ substantially among
+large enterprises with decentralized teams. Furthermore, incorporating estimates into current project management workflows may necessitate further adjustments to accommodate
+differences in team productivity, communication overhead,
+and organizational procedures. These elements emphasize the
+need to customize the model for industrial contexts and verify
+its efficacy on extensive datasets derived from actual software
+projects.
+
+**6.3   |   Practical Implications for Practitioners**
+
+The PredictPP model, although methodologically sound, provides considerable practical benefits for software project managers and industry professionals engaged in the beginning stages
+of estimation. The model is explicitly developed for seamless
+integration with the prevalent UCP sizing methodology and
+may be readily included in current estimation processes. To
+implement PredictPP in practice, the subsequent steps can be
+undertaken:
+
+1. Data collection: During the requirements analysis phase,
+practitioners collect the eight basic environmental variables outlined in the UCP approach. These encompass variables such as team expertise, application complexity, tool
+knowledge, and development limitations.
+
+2. Input to PredictPP: Environmental variables serve as
+input for the trained ensemble model of PredictPP. The
+model analyzes this information and provides a predicted
+productivity.
+
+3. Effort estimation: The predicted productivity is multiplied
+by the overall size (UCP) of the software project to calculate the final estimated effort.
+
+4. Deployment options: The PredictPP model is efficient and
+adaptable, facilitating effortless integration across diverse
+environments, including Python or R scripts for technical
+teams, web- ­based APIs linked with project management
+platforms like Jira, Redmine, or MS Project, and customized dashboards designed for estimation teams.
+
+1. Efficiency: In contrast to complicated ensembles that necessitate dynamic weighting for each instance, PredictPP
+employs a rank- ­based static weighting system, therefore
+considerably diminishing processing demands during
+prediction.
+
+2. Reproducibility and simplicity: The model's architecture,
+built on established base learners and coupled with a clear
+rank- ­weighted aggregation, facilitates straightforward implementation, maintenance, and explanation.
+
+
+*Journal of Software: Evolution and Process,* 2025 13 of 16
+
+
+3. Scalability and generalization potential: This work used
+a dataset of academic software projects; nonetheless, the
+PredictPP approach is fundamentally modular and generalizable. It is applicable to any dataset where project sizing metrics are accessible (e.g., UCP and function points),
+environmental or contextual variables of projects can be
+measured, and effort or productivity measurements can be
+captured.
+
+Additionally, in this study, UCP was selected as the sizing metric because it corresponds with our research objectives and the dataset's structure. The dataset offers
+clearly delineated UCP- ­based effort estimates alongside relevant environmental and technical complexity
+variables, which are essential inputs for the PredictPP
+algorithm.
+
+UCP provides a systematic and measurable methodology based on OO analysis, rendering it especially appropriate for early- ­stage effort estimation [9]. Compared to
+alternatives, function points necessitate comprehensive
+design- ­level knowledge, whereas story points tend to be
+dependent upon team dynamics and subjective interpretation. Conversely, UCP incorporates standard adjustment
+variables and facilitates more consistent, objective modeling throughout the early stages of development. Thus,
+UCP not only improves the methodological rigor of our
+approach but also enables more dependable productivity
+prediction based on early- ­stage requirements.
+
+4. Interpretability of the PredictPP model: PredictPP is designed to establish a balance between predictive power
+and model interpretability. One significant method we
+used was a rank- ­based weighting mechanism that assigned
+static, data- ­driven significance values to each base learner.
+This transparent ranking system enables practitioners to
+readily understand each model's relative contribution to
+the overall ensemble output. Unlike black- ­box ensembles,
+which rely on dynamically modified weights or meta- ­
+learners, this technique provides intuitive insights into
+model behavior.
+
+Furthermore, the individual base learners utilized in PredictPP
+are inherently interpretable models. Their inclusion guarantees that the ensemble's decision- ­making process is based
+on models whose internal logic can be comprehensibly interpreted by domain specialists.
+
+PredictPP retains explainability by combining a simple
+ranking- ­based aggregate with interpretable constituent
+models, which is frequently lost in more sophisticated ensemble frameworks. This makes it a practical and clear solution for real- ­world applications where model knowledge is
+equally important as predicted accuracy.
+
+The PredictPP approach has numerous practical benefits for industry practitioners:
+
+Estimating productivity is crucial for helping managers measure
+project metrics in real- ­world scenarios. It facilitates distributing
+resources, planning projects, creating budgets, assessing performance, and managing risks. Accurate productivity estimates empower managers to optimize resource allocation by identifying
+
+
+the necessary number of developers for a project, which guarantees the most efficient use of resources. Furthermore, estimating productivity enables more accurate scheduling of project
+timeframes and milestones, facilitating the establishment of
+realistic deadlines and expectations based on team productivity
+estimations, which minimizes the probability of missing deadlines or project setbacks. Productivity estimation also aids in
+budgeting and cost estimation for the project. Managers can determine the labor expenses related to the project by considering
+the anticipated productivity of team members, resulting in more
+precise project budgets. Further, productivity estimation serves
+as a standard for assessing the effectiveness of the development
+team. Managers might assess the disparity between actual and
+predicted productivity to pinpoint areas that require enhancement or to recognize team members who have achieved exceptional performance. Managers can detect potential dangers early
+in the project life cycle by comprehending productivity levels.
+If the estimated productivity is below expectations, managers
+might adopt proactive actions, such as offering supplementary
+training or resources, to mitigate risks and guarantee the project's success.
+
+**7   |   Threats to Validity**
+
+This segment delineated several potential hazards that can
+compromise the integrity and reliability of findings. The risks
+mentioned above can be categorized into three distinct classifications, namely, internal, external, and construct.
+
+**7.1   |   Internal Validity**
+
+It ensures the degree of conclusions of the study concerning the
+arrangement. ML models have been used in this study for productivity prediction and effort estimation. No single ML model
+can be used for all the datasets. So, in this study, we have utilized seven different ML models to predict project productivity.
+We have also utilized LOOCV and grid search to optimize the
+parameters of the models used in this study. Apart from that, we
+used the Wilcoxon test to validate the results of these models.
+
+So, we can say that the results provided by these ML models are
+validated up to an extent.
+
+**7.2   |   External Validity**
+
+It ensures whether the results provided by the study are generalizable or not. The UCP estimation model mainly relies on the
+use case diagrams. The components of a use case diagram, such
+as actors and use cases, are transformed into their corresponding size measures to calculate the UCP value using a clearly
+defined approach. But the use case diagrams depend upon the
+knowledge of the designers. If these diagrams are not designed
+properly, they will affect the model's performance. Also, most
+of the dataset's projects are academic [9]. The students develop
+these projects as their part- ­time work. As industrial projects are
+less, the educational projects are utilized to estimate the actual
+software's effort. The projects developed by untrained and unskilled students might lead to errors when estimating real industrial software effort because the students focus on the coding
+
+
+14 of 16 *Journal of Software: Evolution and Process,* 2025
+
+
+phase of the project while ignoring the other phases of the software development life cycle. Due to these reasons, we are not
+sure about the generalizability of the results.
+
+**7.3   |   Construct Validity**
+
+It guarantees that we are estimating what we planned to estimate. In the past, researchers have utilized MMRE and Pred
+measures most frequently. However, these measures are known
+as biased measures, especially MMRE, due to their sensitive nature toward outliers. In this study, we have utilized some other
+robust measures, such as MAE, MBRE, MIBRE, SA, and Δ, to
+overcome the asymmetric measures.
+
+**8   |   Conclusion**
+
+A project's productivity is one of the main components for estimating effort using the UCP method. However, static productivity values are utilized in the early UCP methods. We can use
+learning techniques to learn productivity from environmental
+factors instead of static values. This work presents a novel productivity prediction model called PredictPP, which uses flexible
+productivity values for UCP estimation. The proposed model is
+built using different individual and ensemble learners. We have
+compared the proposed model's performance with the classical
+UCP models, base learners, and homogeneous ensemble learners. It was observed that the proposed model exhibited superior performance across several error measures, surpassing all
+other models. We also performed a statistical analysis using the
+Wilcoxon test to validate the various models used in this study.
+Further, we used the existing approaches in the literature, compared the proposed PredictPP approach with them, and found
+that the performance improved significantly. The findings derived from our investigation are both motivating and indicative
+of potential improvements in effort estimation. We suggest including environmental factors only for the productivity calculation instead of using them for UCP estimation. The results
+obtained through this study motivate managers to see how they
+can better measure environmental factors, as they directly affect
+productivity.
+
+A future study is planned to improve ensemble learning algorithms for predicting project productivity, which involves
+exploring different ensemble methodologies, fine- ­tuning hyperparameters, and incorporating novel algorithms to improve
+the accuracy of predictions. Additionally, we plan to collect and
+analyze larger and more diverse datasets, with a particular emphasis on industrial datasets sourced from real software development projects. This increased data collection will yield a more
+comprehensive evaluation of the model's effectiveness across
+many scenarios and improve its generalizability. We aim to enhance the robustness and practical applicability of the proposed
+model by incorporating data that reflects the complexities and
+unique characteristics of industrial environments. Further, it
+is also planned to incorporate the productivity prediction technique into current project management tools, making it easier
+to streamline effort estimation in real- ­world situations, enabling
+project teams to make data- ­based decisions and efficiently allocate resources.
+
+
+**Author Contributions**
+
+**Suyash Shukla:** conceptualization, methodology, initial draft preparation. **Sandeep Kumar:** writing – review and editing, funding acquisition, supervision, validation.
+
+**Conflicts of Interest**
+
+The authors declare no conflicts of interest.
+
+**Data Availability Statement**
+
+Data sharing not applicable to this article as no datasets were generated
+or analyzed during the current study.

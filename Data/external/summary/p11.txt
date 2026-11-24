@@ -1,0 +1,54 @@
+Based on the provided research paper "Software effort estimation based on inception network optimized by enhanced banyan tree growth optimizer," here's a thorough breakdown of the contents, focusing on the predictors used for estimating web application effort:
+
+**Summary:**
+
+The paper introduces a new approach for software effort estimation, combining the Inception Network with the Enhanced Banyan Tree Growth Optimizer (EBTGO). The Inception Network is a deep learning architecture that extracts hierarchical features from high-dimensional data, while EBTGO is a metaheuristic optimization algorithm inspired by the growth characteristics of banyan trees. The proposed approach aims to address the limitations of traditional methods, such as constructible cost model (COCOMO) and function points analysis (FPA), which simplify the relationships between project attributes and effort. By leveraging the strengths of both the Inception Network and EBTGO, the authors demonstrate the potential for improved accuracy and generalization in software effort estimation.
+
+**Predictors used:**
+
+1. **Size:** Measured in thousands of lines of code (KLOC).
+2. **Personnel:** Refers to the number of developers involved in the project.
+3. **Schedule:** Represents the duration of the project in months.
+4. **Environment:** Accounts for environmental factors affecting productivity, such as tools and working conditions.
+5. **Complexity:** Measures the complexity level of the software system.
+6. **Documentation:** Reflects the extent of documentation required.
+7. **Management:** Captures the quality of management in the project.
+8. **Language:** Represented numerically, indicating the programming language used.
+9. **Experience:** Includes the experience level of the development team.
+10. **Effort:** Serves as the target variable, measured in person-months.
+11. **Acquisition Capability (ACAP)**: Measure of analyst's skills and expertise
+12. **Application Experience (EXP)**: Level of experience gained by analysts from prior engagements 
+13. **Conceptual Integrity (CI)**: Measure of degree of requirement stability
+14. **Database Size (DBSIZE)**: Amount of data stored in databases 
+15. **Documentation Match-to-Lifecycle Needs (DOCU)**: Degree to which documents comply with lifecycle phases 
+16. **Development Flexibility (DEVELOPFLEX)**: Measure of ease with which requirements change
+17. **Language and Tools Experience (LANTEXPERIENCE)**: Analysts' familiarity with languages and tools
+18. **Programmer Capability (PCAP)**: Measure of programmer proficiency
+19. **Process Maturity (PMAT)**: Level of maturity of organizational processes 
+20. **Personnel Continuity (PECON)**: Stability of personnel composition
+21. **Platform Experience (PLEX)**: Familiarity with hardware/software technologies 
+22. **Use of Software Tools (UST)**: Frequency of tool usage in software development 
+23. **Required Reliability (RLY)**: Level of reliability expected from deliverables
+24. **Scheduled Development Time (SCED)**: Planned duration of project activities 
+25. **Site Location Multiplier (SITE)**: Effect of location on product delivery speed 
+26. **Storage Constraint (STOR)**: Limitations imposed by physical constraints 
+27. **Time Constraints (TIME)**: Influence of deadlines on product delivery 
+
+Note: The predictors listed above are based on the COCOMO dataset, which includes 17 features. The Maxwell dataset includes 10 features.
+
+**Methodology:**
+
+1. **Architecture**: The Inception Network is used as the base model, which is modified to accommodate tabular data.
+2. **Enhanced Banyan Tree Growth Optimizer (EBTGO)**: A metaheuristic optimization algorithm that adapts the Banyan Tree Growth Optimizer (BTOG) to incorporate additional operators and strategies to improve exploration-exploitation balance.
+3. **Data Preprocessing**: Min-max normalization, feature selection using correlation analysis and domain knowledge, handling missing values, encoding categorical variables, and outlier detection and removal.
+4. **Hyperparameter Tuning**: The EBTGO is used to optimize the Inception Network's hyperparameters.
+5. **Evaluation Metrics**: Mean Absolute Error (MAE) and Mean Magnitude of Relative Error (MMRE) are used to assess the performance of the proposed approach.
+
+**Key Findings:**
+
+1. The proposed approach outperforms traditional methods (COCOMO and FPA) and machine learning models (RF, SVR, and ANN) in terms of MAE and MMRE on both the Maxwell and COCOMO81 datasets.
+2. The Wilcoxon signed-rank test shows that the proposed approach achieves statistically significant differences compared to all baseline methods.
+3. The EBTGO is shown to be more efficient and effective in searching for optimal hyperparameters compared to Grid Search and Bayesian Optimization.
+4. The Inception Network is found to be more suitable for structured tabular software effort estimation data compared to standard 1D-CNN, MLP, and RNN architectures.
+
+Overall, the paper presents a comprehensive study on software effort estimation, introducing a novel approach that leverages the strengths of the Inception Network and EBTGO. The proposed approach demonstrates improved accuracy and generalization capabilities, highlighting its potential as a valuable tool for software engineers and project managers.

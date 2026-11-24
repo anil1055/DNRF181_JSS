@@ -1,0 +1,2089 @@
+Cluster Computing (2025) 28:241
+[https://doi.org/10.1007/s10586-024-04876-8](https://doi.org/10.1007/s10586-024-04876-8) (0123456789().,-volV)(0123456789().,- volV)
+# Exploring stacking methods for software effort estimation with hyperparameter tuning
+
+Maryam Hassanali [1] [ •] Mohammadreza Soltanaghaei [1] [ •] Taghi Javdani Gandomani [2] [ •] Farsad Zamani Boroujeni [3]
+
+Received: 10 May 2024 / Revised: 29 October 2024 / Accepted: 30 October 2024 / Published online: 25 February 2025
+� The Author(s), under exclusive licence to Springer Science+Business Media, LLC, part of Springer Nature 2024
+
+Abstract
+
+This study explores the use of stacking ensemble methods for software effort estimation, leveraging the ISBSG dataset. The
+research compares individual machine learning models such as Support Vector Regression (SVR), Random Forest,
+AdaBoost, LASSO, and neural networks with stacked models over two phases. In Phase 1, five stacking models were
+developed, using SVR, Random Forest, AdaBoost, LASSO, and a neural network as base models. In Phase 2, four stacking
+models incorporated two neural networks as base models combined with different metamodels. The results indicate that
+stacking models with SVR as the metamodel outperformed individual models and other ensemble methods, especially in
+terms of MAE, MSE, MMRE, and MdMRE evaluation metrics. Friedman Test and Nemenyi Post-Hoc Test validated the
+results. These findings suggest that using SVR as the metamodel leads to improved accuracy and reliability in effort
+estimation, offering significant advantages for project management by enhancing predictive precision and optimizing
+
+resource allocation.
+
+Keywords Software effort estimation � Stacked generalization � Stacked ensemble learning � SVR � Random forest �
+AdaBoost
+
+
+1 Introduction
+
+Project management plays a vital role in software product
+development, covering the entire process from beginning to
+end. A crucial aspect of project management is software
+effort estimation, which significantly influences how a
+project is planned and monitored to meet deadlines and
+budget constraints. Estimating the effort needed for software projects involves various methods to forecast the total
+work required, and it is often seen as one of the most
+difficult and intricate tasks that software companies
+encounter [1]. The terms ‘‘cost estimation’’ and ‘‘effort
+
+& Mohammadreza Soltanaghaei
+soltan@khuisf.ac.ir
+
+1 Department of Computer Engineering, Isfahan (Khorasgan)
+Branch, Islamic Azad University, University Blvd.,
+Arqavanieh, Jey Street, Isfahan, Iran
+
+2 Department of Computer Science, Faculty of Mathematical
+Sciences, Shahrekord University, Shahrekord, Iran
+
+3 Department of Computer Engineering, Science and Research
+Branch, Islamic Azad University, Tehran, Iran
+
+
+estimation’’ in software development are frequently used
+interchangeably in software engineering research and project management, as effort is the main factor influencing
+cost. In the end, software cost estimation serves as an
+indication of the anticipated effort needed to successfully
+complete a project [2, 3].
+Accurate effort estimation is crucial, yet it comes with
+several inherent challenges. One significant issue is the
+variability in project conditions, such as differences in
+methodologies, team experience, and project scope, which
+complicates standardization. Additionally, software projects often undergo changes during development, introducing unpredictability into the estimation process.
+Another key challenge is the lack of historical data,
+including the knowledge and experience of experts from
+previous projects. When this information is missing or
+incomplete, it makes the estimation process more difficult,
+as accuracy relies heavily on having access to reliable,
+comparable data from past projects. Moreover, the nature
+of software engineering projects—being human-driven,
+non-repetitive, and frequently affected by changes—makes
+## 123
+
+241 Page 2 of 20 Cluster Computing (2025) 28:241
+
+
+it hard to quantify effort. These factors all contribute to the
+complexity of estimating software effort [4].
+Accurate cost estimation helps project managers prioritize and organize software development efforts in line with
+an organization’s overall strategic goals, facilitating
+appropriate resource allocation. Effective estimation is
+crucial not only for budgeting but also for contract negotiations, tendering, scheduling, and project control.
+Underestimation can lead to insufficient budgets and delays
+in project completion, resulting in inadequate resource
+allocation and, consequently, lower software quality [5].
+On the other hand, overestimation can cause a company to
+lose out on tenders or over-allocate resources, making
+projects less competitive [6].
+As outlined in [1, 7], software effort estimation techniques are categorized into algorithmic and non-algorithmic methods. Algorithmic techniques employ
+mathematical equations to estimate software effort and
+cost, often using metrics like source lines of code (SLOC)
+and function points. While algorithmic methods offer
+advantages such as consistency and scalability, they can be
+difficult to apply and require extensive data on the current
+project. Additionally, these techniques can become
+unwieldy when dealing with rapidly changing project
+
+environments or limited data.
+
+In contrast, non-algorithmic techniques are simpler to
+implement but depend significantly on having complete
+and accurate information from previous similar projects.
+These methods create estimates by making comparisons
+and inferences, usually by examining historical data from
+earlier software projects or relevant datasets. Common
+non-algorithmic approaches include analogy-based estimation and expert judgment. Analogy-based estimation
+involves estimating the costs of a new software project by
+comparing it to similar historical projects, using data from
+past projects to forecast the necessary effort. The expert
+judgment method, on the other hand, relies on the knowledge and experience of professionals who have worked on
+similar projects [8]. The effectiveness of this approach
+depends on the expert’s knowledge of similar past projects.
+Nonetheless, expert judgment may be influenced by personal biases and limited access to complete data, which
+makes it especially valuable in situations where gathering
+data is challenging [1].
+Machine learning-based approaches have attracted
+considerable interest in recent years due to their capability
+to model complex, non-linear relationships between variables. These methods provide greater flexibility and accuracy, especially in scenarios where traditional nonalgorithmic techniques may not suffice. By recognizing
+patterns in historical data, machine learning algorithms can
+manage larger datasets and produce more accurate predictions, even when dealing with incomplete or noisy data.
+## 123
+
+
+The popularity of machine learning methods in software
+effort estimation has surged because they can extract
+valuable insights from data through automated learning
+processes. These algorithms excel at modeling complex
+problems that are challenging to program explicitly, closely resembling the human learning process. With the
+recent advancements in predictive algorithms, machine
+learning techniques are now widely utilized in effort estimation [9]. Today, thanks to advancements in predictive
+algorithms, machine learning techniques are commonly
+used for effort estimation. As the need for quicker and
+more precise predictions increases, machine learning
+remains essential, especially when traditional methods face
+challenges with data quality or have to handle incomplete
+information [10].
+
+1.1 Motivation
+
+Accurate software effort estimation is crucial for effective
+
+project management, impacting budget planning, scheduling, and resource allocation. However, traditional estimation methods, whether algorithmic or non-algorithmic,
+often face challenges like data noise, variability in project
+characteristics, and incomplete historical data. These issues
+can result in inaccurate predictions, leading to either underresourced projects or inflated budgets. Driven by the need
+for more reliable and adaptive estimation techniques, this
+study explores the use of stacking ensemble methods in
+machine learning. By combining various models, stacking
+has the potential to tackle the unpredictability and data
+imperfections typical of software development projects,
+with the goal of producing more accurate estimates and
+enhancing project planning and resource allocation.
+
+1.2 Research problem
+
+After all traditional estimation methods did not prove so
+
+successful most of the times because either there is not
+
+enough data or significant noise, wide variability in software project characteristics. Additionally, owners of datasets are hesitant to share completely in a preliminary stage
+which leads to lack of data making estimates unreliable. A
+promising solution is utilizing machine learning-based
+approaches, though they are very sensitive to data imperfections and rely on individual algorithms each with the
+chance of bias causing lack of prediction performance. As
+a way to get around these boundaries, ensemble methods—
+including boosting, bagging, and stacking—have been
+developed to combine multiple models in efforts to
+strengthen overall prediction [11]. This study explores the
+use of a two-level stacking ensemble method, aiming to
+enhance the accuracy of software effort estimation by
+mitigating the effects of data noise and algorithmic bias.
+
+Cluster Computing (2025) 28:241 Page 3 of 20 241
+
+
+1.3 Research objectives
+
+1. To evaluate the effectiveness of stacking ensemble
+methods in improving the accuracy of software effort
+estimation by combining multiple machine learning
+algorithms and to explore how these improvements can
+inform project management practices.
+2. To compare the predictive performance of various
+stacking models with individual models, focusing on key
+evaluation metrics such as Mean Absolute Error (MAE),
+Mean Squared Error (MSE), Mean Magnitude of Relative Error (MMRE), Median Magnitude of Relative Error
+(MdMRE), Percentage relative error deviation (Pred(x)),
+and R [2] score.
+
+3. To identify the most effective combination of base
+models and metamodels in the stacking approach for
+optimal software effort prediction.
+
+1.4 Novelty and contribution
+
+This study sets itself apart from earlier research by examining a wide variety of stacking models, incorporating a
+broad range of machine learning algorithms as both base
+models and meta-models. In contrast to previous studies
+that typically restrict the number of models or concentrate
+on a single meta-model, this research delves into numerous
+stacking configurations, featuring multiple neural networks, Support Vector Regression (SVR), Random Forest,
+AdaBoost, and LASSO, across two separate phases. These
+algorithms were chosen for their complementary abilities
+to handle complex and varied data patterns. By merging
+these models, the stacked ensemble can leverage the distinct advantages of each algorithm, leading to enhanced
+prediction accuracy and robustness. Specifically, this study
+highlights the significance of selecting the right metamodel, thoroughly evaluating different algorithms to
+identify the most effective meta-model for integrating the
+base models—an area that has not been extensively
+explored in prior research. Furthermore, considerable
+efforts have been dedicated to boosting model accuracy
+through careful hyperparameter tuning, utilizing both
+RandomizedSearchCV and GridSearchCV methods. While
+
+earlier studies have often overlooked hyperparameter tuning in stacking models, this research illustrates how optimizing these parameters can significantly improve
+predictive performance.
+This research aims to address the following questions:
+
+Question 1: Do stacking models perform better than
+individual models, and how might these improvements
+benefit project management practices?
+
+
+Question 2: Which of the stacking models has a better
+prediction based on different evaluation criteria?
+Question 3: Using which of the algorithms as a
+metamodel leads to a better prediction?
+
+In the continuation of this paper, in Sect. 2, in the
+background of the research, the ensemble methods and
+machine learning algorithms used in this study are briefly
+introduced. Section 3 provides an overview of related
+research work estimating software development efforts.
+The proposed method has been given in Sect. 4. The results
+and discussion are discussed in Sects. 4 and 6 of this study.
+
+2 Research background
+
+Machine learning algorithms are mainly sensitive to noise
+in the dataset, which affects the accuracy of prediction
+
+[12]. On the other hand, these algorithms have different
+variances and biases in the software effort estimation data.
+
+To overcome the problem of bias, variance, and increase
+the model’s accuracy, ensemble machine learning methods
+are used in which the output of several algorithms are
+combined [12]. There are several ensemble methods,
+including bagging, boosting, and stacking.
+Stacking differs from boosting and bagging in two ways.
+First, a base machine learning algorithm is used in bagging
+and boosting methods. Therefore, several identical base
+models are trained in different ways, and they are called
+homogeneous ensemble techniques. But in the stacking
+method, different types of basic algorithms are used, which
+are called heterogeneous ensemble techniques. Second, the
+stacking method combines the output of base algorithms
+using metamodels. At the same time, bagging and boosting
+use specific algorithms to combine the output of the base
+algorithms. Therefore, developing a stacking model
+requires L base models to train the data and a metamodel to
+
+combine the results.
+
+Prediction results are improved when different machine
+learning algorithms create the stacking model [13]. The
+stacking method combines different algorithms at one or
+more levels [13] and aims to reduce bias [14]. This section
+provides a brief overview of the machine learning algorithms used in this study, namely LASSO, [1] neural network,
+random forest, AdaBoost, and SVR.
+Regression algorithms are widely used in machine
+learning. Using the standard linear regression method may
+lead to overfitting, particularly in the presence of complex
+data patterns [15]. LASSO regression uses regularization to
+prevent overfitting. LASSO is suitable for problems where
+
+1 Least absolute shrinkage and selection operator regression.
+## 123
+
+241 Page 4 of 20 Cluster Computing (2025) 28:241
+
+
+the dataset has many features that may be interdependent
+
+[16].
+The artificial neural network, or ANN, simulates the
+mechanism of the human brain to solve machine learning
+problems and is made up of interconnected nodes in different layers. ANN generally consists of an input layer, an
+output layer, and a hidden layer, and in deep networks,
+neural networks can have more than one hidden layer. In
+numerical prediction problems, the neural network’s task is
+to learn the optimal weight values assigned to each edge in
+the network so that the target variable generates an estimate with minimal residual error [16].
+Random forest, one of the bagging methods, is a model
+consisting of several trees. The trees that make up a forest
+can be shallow or deep. The random forest algorithm is one
+of the popular research techniques due to its theoretical
+support and known performance in a wide range of problems [17].
+AdaBoost is an ensemble boosting method that generates n decision trees during training. When the first decision tree is created, samples incorrectly classified in the
+first model have higher priority, and only these samples are
+sent to the next model. As a result, higher weights are
+assigned to less accurately estimated samples. The model
+focuses on the samples with high weight values [16].
+The Support Vector Machine (SVM) algorithm can be
+applied to both linear and nonlinear classification tasks. In
+linear cases, the algorithm searches for a decision surface
+that separates two classes of input patterns or vectors. The
+
+distance between this decision surface and the nearest data
+
+points, known as support vectors, is maximized to achieve
+optimal separation [18]. For nonlinear data, SVM employs
+the kernel trick, which maps the input data into a higherdimensional space, enabling the algorithm to find a nonlinear decision surface.
+
+Support Vector Regression (SVR) extends the principles
+of SVM to regression problems, allowing it to model both
+linear and nonlinear relationships between input features
+and the target variable. The selection of the kernel function
+plays a critical role in the performance of SVR, influencing
+the model’s ability to capture complex patterns in the data.
+This concept has been explored extensively in [19–21].
+Ref. [22] examines the systematic mapping of the
+ensemble effort estimation methods from 2000 to 2015.
+
+ANN and SVR algorithms are the most widely used base
+models in this study’s ensemble methods of estimating
+software effort. Reference [23] also examines the systematic mapping of estimation effort prediction using machine
+learning methods from 1991 to 2017. ANN and SVR are
+also the most widely used algorithms used in this research.
+The use of a random forest algorithm has also been
+reported. Regression techniques are also mentioned as a
+## 123
+
+
+widely used technique in this research. Therefore, these
+algorithms are used here as well.
+
+3 Related works
+
+This section reviews articles that have used stacked
+
+ensemble learning to estimate software development
+efforts. Table 1 provides more details about the studies
+reviewed in this section. This table presents the year of
+publication, the ensemble method and the machine learning
+algorithm of each ensemble method, the evaluation measures for measuring the model’s efficiency, and the dataset
+used in each of the articles. A summary of the article is also
+given in the last column of the table. The stacking method
+has been used in all these studies. In some of them, the
+stacking method has been compared with other ensemble
+methods, and in others, it has been compared with individual algorithms. The most used algorithms in these
+studies are different types of regression algorithms, SVR,
+neural network, and random forest. Two evaluation criteria,
+
+MAE and MMRE, as well as the ISBSG dataset, are
+
+included in most of these studies.
+
+The table offers a comprehensive overview of existing
+research on software effort estimation, particularly
+emphasizing ensemble methods such as stacking, bagging,
+and boosting. However, a closer examination uncovers
+some limitations within these studies. Although ensemble
+methods are acknowledged for enhancing prediction
+accuracy, many of the cited works overlook the importance
+of hyperparameter tuning, which is crucial for optimizing
+model performance. Moreover, there is a lack of emphasis
+on selecting the metamodel, which significantly impacts
+the final predictions. Additionally, prior studies have only
+explored and compared a limited number of stacking
+models. In contrast, the current research investigates a
+wider array of models to determine the best combination,
+potentially leading to more accurate and reliable predictions. Addressing these shortcomings would offer a more
+comprehensive analysis and better support the methodology employed in this research.
+
+4 Proposed method
+
+Software development projects differ significantly in
+methodologies, sizes, and industry contexts, making
+accurate estimation a complex task that cannot rely on a
+single model. Traditional estimation methods often face
+challenges due to data imperfections like noise, outliers,
+and limited feature sets, which can lead to less accurate
+predictions. Stacking, an effective ensemble learning
+technique, helps overcome these issues by leveraging the
+
+Cluster Computing (2025) 28:241 Page 5 of 20 241
+
+Table 1 Comparison of studies using ensemble methods to estimate the software effort
+
+
+References Year Ensemble
+
+method
+
+used
+
+[24] 2020 - Bagging
+
+      Stacking
+
+
+Algorithms used in Evaluation Dataset Summery
+ensemble method metric
+
+
+
+- Different kinds
+
+of regression
+models
+
+
+
+- MAR [a] - Not Eight different ensemble models have been used to
+mentioned estimate the effort. In each model, three algorithms
+are considered the base model and one regression
+algorithm as the metamodel. The results show that
+the linear regression models presented in this
+research can increase the efficiency and accuracy of
+the model and reduce the error rate
+
+
+
+[25] 2020 - Stacking - Linear
+regression
+
+         Multilayer
+perceptron
+
+               - Random forest
+
+              - AdaBoost
+
+         Four regressor
+
+         
+SVR(metamodel)
+
+[12] 2021 - Stacking - Linear
+regression
+
+               - Random forest
+
+                - Neural network
+
+         SVR (meta
+model)
+
+
+
+- ISBSG Two evolutionary approaches of particle swarm
+optimization and genetic algorithm have been used
+to tune the model hyperparameters. The algorithm
+has been trained using the ISBSG dataset. The
+results show that using particle swarm optimization
+algorithm in tunning hyperparameters leads to higher
+accuracy than setting hyperparameters with a genetic
+algorithm
+
+- ISBSG First, the accuracy of each base model is estimated
+separately, and then the accuracy of these models is
+compared with the accuracy of the stacking method.
+The results show that the accuracy of the stacking
+model is better than the accuracy of each of the three
+base models
+
+
+
+- Desharnais
+
+- Cocomo81
+
+- China
+
+- Maxwell
+
+Miyazaki
+
+- CMI
+
+- KCI
+
+
+COCOMO81
+
+- Desharnais
+
+- Albrecht
+
+- China
+
+
+
+[26] 2021 Averaging
+
+weighted
+
+      
+Averaging
+
+bagging
+
+      Boosting
+
+      Stacking
+
+
+
+- Random forest
+
+- SVR
+
+- Decision tree
+
+- Neural net
+
+Ridge
+
+- LASSO
+
+- Elastic net
+
+Deep net
+
+
+
+- Albrecht
+
+- China
+
+- Desharnais
+
+- Kermere
+
+- Kitchenham
+
+- Maxwell
+
+
+COCOMO81
+
+
+Individual methods including random forest, SVM,
+decision tree, neural network, ridge, LASSO, elastic
+net, and deep net have been compared with ensemble
+algorithms. Ensemble methods are averaging,
+weighted averaging, bagging, boosting, and stacking.
+Among the compared methods, stacking, which uses
+random forest, has better results than other models
+
+
+
+[27] 2021 - Stacking - Decision tree
+
+              - LinearSVR
+
+               - Random forest
+
+[28] 2022 -Stacking - Artificial neural
+network
+
+            - SVR
+
+[29] 2023 -Stacking - Decision tree
+
+         Principal
+components
+Regression
+
+               - Random forest
+
+                - Neural network
+
+           - GLMNET
+
+              - XGBoost
+
+
+
+- MAE
+
+- MMRE
+
+
+Pred(0.25)
+
+- MAE
+
+- MMRE
+
+
+Pred(0.25)
+
+- MAE
+
+- RMSE [b]
+
+
+R-squared
+
+- MAE
+
+- RMSE
+
+- MAR
+
+- MMRE
+
+- MAE
+
+- RMSE
+
+- MSE
+
+
+
+- ISBSG The stacking method is used to estimate enhancement
+maintenance effort in software projects. A
+comparison is made between an individual model
+and an ensemble method. The individual model uses
+
+M5P and the ensemble method uses different
+
+regression models. A correlation-based feature
+selection (CFS) algorithm is used to reduce data
+dimensions. The use of stacking and CFS methods
+improves the MAE and RMSE criteria
+
+
+The stacking method has been investigated with two
+base models of artificial neural network and SVR
+and a metamodel. Then its accuracy is compared
+with the base models. In this study, the performance
+of the stacking method is better than the base models
+
+The performance of the model has been tested by
+combining these basic algorithms with ensemble
+regression methods. Extensive testing in the
+proposed research work with a number of
+metamodels shows that regression is the best
+technique to increase efficiency
+## 123
+
+241 Page 6 of 20 Cluster Computing (2025) 28:241
+
+Table 1 (continued)
+
+
+References Year Ensemble
+
+method
+
+used
+
+
+Algorithms used in Evaluation Dataset Summery
+ensemble method metric
+
+- Earth
+
+- SVR
+
+
+
+[30] 2023 -Stacking - Extreme
+learning machine
+
+            - SVR
+
+
+
+- MAE
+
+- RMSE
+
+- R-value
+
+
+
+- Desharnais The study examines the efficacy of Synthetic Minority
+Over-Sampling Technique for Regression
+(SMOTER) in forecasting software project effort.
+Following the use of SMOTER, a significant
+decrease in model error was noted
+
+
+
+[31] 2024 -Stacking - Decision tree
+
+
+
+[31] 2024 -Stacking - Decision tree - MAE - ISBSG This study investigates the use of Functional Size (FS)
+
+                - Neural network                - RMSE as the main variable for predicting software project
+
+            - SVR             - development costs. It employs ensemble models,
+
+with a focus on a Stacking approach. The results
+
+R-squared
+
+show that the Stacking model performed better than
+the three individual machine learning algorithms
+used separately for cost estimation
+
+[32] 2024 -Stacking - Decision tree - MAE - PROMISE The research focuses on combining various regression
+
+
+
+- MAE
+
+
+
+- Neural network
+
+
+
+- RMSE
+
+
+
+- SVR
+
+
+
+R-squared
+
+
+
+- MAE
+
+
+Principal
+components
+regression (PCR)
+
+- Random forest
+
+- Neural net
+
+- Glmnet
+
+- XGBoost
+
+- Earth
+
+- SVR
+
+
+
+- RMSE
+
+- MSE
+
+
+Pred(0.25)
+
+
+R-squared
+
+
+
+- PROMISE The research focuses on combining various regression
+repository techniques in a stacked ensemble to improve
+prediction accuracy. To address the longer
+computation times associated with ensemble
+methods, a hybrid model was developed that
+combines Principal Component Regression and
+multivariate adaptive regression splines (Earth),
+resulting in accurate predictions with reduced
+computing time
+
+
+a Mean absolute error
+
+b Root mean squared error
+
+strengths of various base models. Each base model presents
+distinct benefits to consider. By using a meta-model that
+effectively combines these varied predictions, stacking can
+minimize both bias and variance, leading to better predictive accuracy. Given how crucial accurate effort estimation
+is for successful project planning and resource allocation,
+stacking methods offer a flexible and adaptive solution that
+can surpass traditional single-model techniques.
+In the following section, we will examine the proposed
+method in more detail. The various steps of the proposed
+method have been summarized in Fig. 1. In this study, a
+large number of stacking models have been investigated
+compared to previous studies. In the continuation of this
+section, the details of the preprocessing stage and the
+proposed model have been presented.
+
+4.1 Dataset
+
+ISBSG Dataset [33] gathering a reliable source of many
+recent software projects from various industries. Version
+## 123
+
+
+R12019 of this dataset, including 253 features (columns)
+and 9178 rows, has been used in this research. Other
+datasets, such as the Promise software engineering repository or the COCOMO dataset, are obsolete or unreliable
+
+[9]. The ISBSG dataset contains several features unrelated
+to software effort estimation and many missing values,
+duplicate data, correlated features, and categorical data.
+Therefore, there is a need for preprocessing operations to
+convert data into an acceptable format of machine learning
+algorithms [12].
+
+4.2 Feature selection
+
+In [34], a systematic mapping study was carried out on 107
+research papers, resulting in the identification of 20 of the
+most commonly used independent features for estimating
+system development effort from the ISBSG dataset. The
+researchers implemented a filtering process to focus on the
+most frequently utilized variables, ensuring that only those
+with a Data Quality Rating of A or B were included to
+
+Cluster Computing (2025) 28:241 Page 7 of 20 241
+
+
+Fig. 1 The process flow
+chart for the proposed stacking
+models
+
+
+
+guarantee data reliability. This analysis reduced the pool of
+71 available variables to 20 essential features, which were
+then analyzed for their usage patterns, distribution, and
+rates of missing data. Following this, features that showed
+high correlation were removed from the machine learning
+process to avoid redundancy and enhance model generalization. In the end, the chosen features, detailed in Table 2,
+were prepared for further preprocessing. This table also
+includes the type of each variable along with a comprehensive description.
+
+4.3 Dataset preprocessing
+
+First, duplicate rows are eliminated from the dataset, 120
+duplicate rows are identified, and 9058 remain. Missing
+values are eliminated or lost data [35]. Researchers have
+extensively studied the impact of missing values on predictions. When data is missing, some information is
+inevitably lost, which diminishes the effectiveness of
+software effort estimation techniques [36]. Therefore,
+managing missing values is essential. One of the techniques for replacing missing values is KNN Imputation.
+This technique was chosen because it maintains the relationships between data points by leveraging the similarity
+
+
+of neighboring values. This makes it more appropriate for
+datasets with complex patterns, unlike simpler methods
+such as mean or median imputation, which can introduce
+bias and oversimplify the data, ultimately distorting predictive models [37].
+This technique is a widely recognized and straightforward method that utilizes samples from the surrounding
+area to replace missing values, filling in continuous
+numerical gaps by averaging the k nearest neighbors [38].
+Samples with available features (those without missing
+values) that are similar are deemed close. In this study, we
+applied the KNN Imputation technique to fill in these
+missing values. To determine the best k, we tested a variety
+of candidate values (such as 3, 5, 7, 9, 11, and 13) using
+fivefold cross-validation. This method divides the dataset
+into five equal segments, using four segments for training
+and one for validation in each fold. We explored different k
+values, implementing KNN imputation and evaluating
+performance metrics like mean squared error (MSE) or
+mean absolute error (MAE). The k value that yielded the
+lowest validation error was chosen as the optimal number
+of nearest neighbors, which in this case is k = 11.
+The next step is to identify outliers, which are data
+points that stand out significantly from other values in the
+## 123
+
+241 Page 8 of 20 Cluster Computing (2025) 28:241
+
+Table 2 Features selected from the ISBSG dataset
+
+Attribute name Type (D.V. = depend variable, Description
+I.V. = independent variable)
+
+Normalised work D.V. (numerical) The reported effort represents the full life-cycle effort for all teams. For projects that
+effort do not span the entire development life-cycle, this value is an estimate of the total
+effort required for the complete development life-cycle. In cases where projects
+cover the full life-cycle or when the extent of life-cycle coverage is uncertain, this
+value is equivalent to the Summary Work Effort
+
+Functional size I.V. (numerical) The unadjusted function point count
+
+Development type I.V. (categorical) Specifies whether the development is categorized as new development, enhancement,
+or re-development
+
+Language type I.V. (categorical) Designates the programming language utilized in the project
+
+Development I.V. (categorical) Specifies the primary development platform used in the project
+platform
+
+Application type I.V. (categorical) A derived field that categorizes the project’s Application Type into a single value
+from a predefined set: Business Application, Real-Time Application,
+Mathematically-Intensive Application, and Infrastructure Software
+
+Resource level I.V. (numerical) Data is collected about individuals contributing to the reported work effort
+
+Industry sector I.V. (categorical) This field aims to condense the project’s organizational type into a single value from
+a predefined set
+
+Relative size I.V. (categorical) Categories the Functional Size by relative sizes
+
+Used methodology I.V. (categorical) Indicates whether the development team followed a specific methodology during the
+software development process
+
+Architecture I.V. (categorical) A derived attribute for the project to indicate if the application is Stand alone, Multitier, Client server, or Multi-tier with web public interface
+
+
+Primary
+programming
+language
+
+
+I.V. (categorical) The primary language used for the development: JAVA, C ? ?, PL/1, Natural,
+Cobol etc
+
+
+Project elapsed I.V. (numerical) Total elapsed time for the project in calendar months
+time
+
+Organisation type I.V. (categorical) This identifies the subset within the organisation being addressed by the project. It
+may be different to the organisation type or the same. (e.g.: Manufacturing,
+Personnel, Finance)
+
+1st data base I.V. (categorical) Where known, this is the primary technology database used to build or enhance the
+system software (i.e. that used for mostof the build effort), otherwise (if known) it is
+whether the project used a DBMS
+
+
+same group. For this purpose, we used DBSCAN (DensityBased Spatial Clustering of Applications with Noise), a
+popular density-based clustering algorithm. We chose
+DBSCAN for outlier detection because it can identify
+clusters of various shapes and handle noise effectively,
+enhancing the quality of the data used in predictive models.
+By accurately detecting and removing outliers, DBSCAN
+minimizes noise that could adversely affect model performance, unlike K-means or hierarchical clustering, which
+have difficulty with non-uniform clusters and outliers [39].
+DBSCAN is particularly effective in detecting outliers
+by measuring the density of points within a given region.
+This method relies on two key parameters: epsilon (e),
+which defines the radius of the neighborhood around each
+data point, and minPts, which specifies the minimum
+number of points required to form a dense cluster [39].
+## 123
+
+
+Choosing appropriate values for e and minPts is crucial, as
+small values of e may fail to group similar data points,
+leading to overly fragmented clusters, while large values
+may merge distinct clusters and misidentify noise points.
+In this research, minPts was set equal to the number of
+features in the dataset, following common best practices for
+DBSCAN implementation [40]. To find the optimal value
+for epsilon (e), we used the Elbow Method, a common
+approach in clustering [40]. We calculated the mean distance between each point and its k-nearest neighbors
+(where k = minPts - 1) and plotted these distances in a
+k-distance graph, with the x-axis showing sorted points and
+the y-axis their distances. The ‘‘elbow’’ of the curve, where
+the rate of distance increase slows down, indicated the
+optimal e. From the plot, we chose e = 100. This allowed
+DBSCAN to identify clusters and detect 135 outliers,
+
+Cluster Computing (2025) 28:241 Page 9 of 20 241
+
+
+which were then removed to improve data quality and
+model performance. The Elbow Method provided a clear
+and visual way to select e, helping DBSCAN handle noise
+and detect clusters effectively.
+In order to facilitate compatibility with various Python
+libraries and machine learning algorithms, categorical
+features are transformed into numeric representations
+through the utilization of the get_dummies method provided by the Pandas library. Since the data attributes span
+different ranges, it’s essential to standardize them to ensure
+all values are on a comparable scale. To achieve this, the
+StandardScaler method is applied. This technique adjusts
+
+the data so that its distribution has a mean of zero and a
+
+standard deviation of one, allowing for consistent comparison across features.
+The preprocessing steps taken in this study were
+essential for improving the quality of the dataset and
+enhancing model performance. By employing KNN
+imputation to address missing values, we maintained the
+integrity and completeness of the data, allowing models to
+
+learn from a more robust and consistent dataset. Stan
+dardizing the data ensured that all features were on the
+same scale, which was especially advantageous for algorithms that depend on properly scaled inputs. Additionally,
+outlier detection and removal using DBSCAN helped
+eliminate noise, enabling the models to concentrate on
+significant patterns. These combined preprocessing efforts
+led to more accurate, stable, and generalizable models, as
+evidenced by improvements in key performance metrics
+like MAE and MSE. In summary, the preprocessing steps
+were crucial in refining the dataset and optimizing the
+performance of the predictive models.
+
+4.4 Proposed model
+
+This paper presents a two-level stacked ensemble method
+aimed at improving the accuracy of software effort estimation through the integration of various machine learning
+models. In the first level, multiple heterogeneous base
+models, each with unique strengths, are trained independently on the same dataset. The predictions generated by
+these base models are then used as new input features for
+the second level, where a meta-model is introduced. The
+meta-model’s purpose is to learn the best way to combine
+the predictions from the base models, utilizing their individual outputs. Acting as the final decision-maker, the
+meta-model refines the combined predictions. This procedure is depicted in Fig. 2. This study has studied and
+compared the stacking models with various machine
+learning algorithms as base models and metamodels.
+As shown in Table 3, this study predicts the software
+effort estimation using ensemble stacking methods in two
+phases. The first phase has used four base models in the
+
+
+first level and one metamodel in the second level. A total of
+5 different two-level stacking models are trained and tested
+in this phase. Here, SVR, random forest, AdaBoost,
+LASSO, and neural network algorithms are used once as
+the second level metamodel, and the rest of the algorithms
+are used in the first level as base models, details of which
+have given in Table 3. Each of these models were chosen
+for their complementary strengths in handling complex and
+diverse data patterns in software effort estimation:
+
+- SVR: effective in capturing non-linear relationships
+between features, making it suitable for datasets with
+complex interactions [18].
+
+- Random forest: robust to overfitting and provides
+stability, especially when there are noisy data points
+
+[41]. Its ability to handle high-dimensional data makes
+
+it ideal for effort estimation tasks.
+
+- AdaBoost: focuses on improving the accuracy of weak
+learners by emphasizing difficult-to-predict instances,
+resulting in improved prediction performance [42].
+
+- LASSO: useful for feature selection and regularization,
+particularly effective when the dataset contains a large
+number of correlated or irrelevant features [43].
+
+- Neural networks: capable of modeling intricate patterns
+due to their ability to learn complex, non-linear
+representations. Neural networks are especially powerful in dealing with large datasets with diverse features,
+as they can capture interactions between variables that
+other models may miss [44].
+
+By integrating these various models, the stacked
+ensemble can take advantage of their unique strengths to
+enhance the overall accuracy and reliability of the predictions. Additionally, neural networks, support vector
+regression (SVR), and random forests are some of the most
+commonly used and precise machine learning algorithms in
+the area of effort estimation [23].
+Two different neural networks at the first level are used
+as base models in the second phase. A deep neural network
+has 8 hidden layers with 1000 neurons in each layer, and
+another neural network has a hidden 30,000-neuron layer, a
+shallow neural network. A total of 4 stacking models are
+examined in the second phase; the details of the base and
+metamodel models of each have been given in Table 3.
+In this article, we use 5-Fold Cross-Validation to assess
+the model’s performance. This technique splits the dataset
+into five equal segments, using four segments for training
+and one for testing in each iteration. This cycle is repeated
+five times, allowing each subset to act as the test set once.
+By averaging the outcomes from all folds, 5-Fold CrossValidation offers a strong and dependable estimate of the
+model’s performance, while minimizing the risk of overfitting and making the most of the available data.
+## 123
+
+241 Page 10 of 20 Cluster Computing (2025) 28:241
+
+
+Fig. 2 Stacking model with
+base models at level one and a
+
+metamodel at level two
+
+
+
+
+
+
+
+
+
+**Level 2 (Meta Model)**
+
+**Level 1 (Base Models)**
+
+Table 3 Different stacking models are trained in two phases with base models and their metamodels
+
+Phase Models
+
+Model1 Model2 Model3 Model4 Model5
+
+Phase1 Base models: Base models: Base models: Base models: Base models:
+
+    - Random forest     - SVR     - SVR     - SVR     - SVR
+
+    - AdaBoost     - AdaBoost     - Random forest     - Random forest     - Random forest
+
+   - LASSO    - LASSO    - LASSO    - AdaBoost    - AdaBoost
+
+    - Neural network     - Neural network     - Neural network     - Neural network     - LASSO
+
+Metamodel: Metamodel: Metamodel: Metamodel: Metamodel:
+
+   - SVR    - Random forest    - AdaBoost    - LASSO    - Neural network
+
+Phase2 Base models: Base models: Base models: Base models:
+
+   -   -   -   Deep neural network Deep neural network Deep neural network Deep neural network
+
+     - Shallow neural network     - Shallow neural network     - Shallow neural network     - Shallow neural network
+
+Metamodel: Metamodel: Metamodel: Metamodel:
+
+   - SVR    - Random forest    - AdaBoost    - LASSO
+
+
+4.5 Adjusting Model hyperparameter
+
+In this study, we conducted hyperparameter tuning in two
+phases, starting with RandomizedSearchCV for initial
+exploration and then moving on to GridSearchCV for more
+precise optimization. We opted for RandomizedSearchCV
+in the first phase because it efficiently searches through a
+large hyperparameter space by randomly sampling combinations. This approach is especially useful in high-dimensional settings, where exhaustive methods like
+GridSearchCV can be both computationally expensive and
+time-consuming. As shown by Bergstra and Bengio [45],
+random search is more likely to uncover high-performing
+hyperparameter settings by covering a broader area of the
+search space without needing to evaluate every single
+combination, making it a smart choice for tuning complex
+models like those in this stacking ensemble.
+## 123
+
+
+After identifying promising ranges with RandomizedSearchCV, we used GridSearchCV to refine our search
+within those areas. This second phase ensured that we
+tested all combinations within the selected ranges exhaustively, increasing the chances of finding the optimal
+hyperparameters. The combination of these two methods
+strikes a balance between exploration and exploitation:
+RandomizedSearchCV quickly narrows down the search
+space, while GridSearchCV guarantees that the final tuning
+is thorough and precise. By utilizing both methods, we
+were able to optimize the performance of the stacking
+models both efficiently and accurately.
+
+4.6 Evaluation measures
+
+In this study, a comprehensive set of evaluation metrics,
+including Mean Absolute Error (MAE), Mean Squared
+Error (MSE), Mean Magnitude of Relative Error (MMRE),
+
+Cluster Computing (2025) 28:241 Page 11 of 20 241
+
+
+Median Magnitude of Relative Error (MdMRE),
+Pred(0.25), and R [2] score, were chosen to ensure robust and
+multidimensional assessment of model performance in
+
+software effort estimation. These metrics were selected for
+
+their ability to capture different aspects of prediction
+accuracy. For example, MAE and MSE provide absolute
+and squared error measurements, respectively, giving
+insight into the average prediction error and penalizing
+larger deviations more heavily. MMRE and MdMRE are
+widely used in software estimation studies as they normalize errors relative to the actual values, making them
+useful for comparing models across different datasets.
+Pred(0.25) measures the percentage of predictions within a
+25% relative error, a critical benchmark in effort estimation
+literature. Lastly, R [2] score evaluates the goodness of fit of
+the model, showing how well the predicted values align
+with actual data. Together, these metrics provide a comprehensive and balanced assessment, covering error magnitude, prediction reliability, and model fit, making them
+highly relevant to software effort estimation.
+Smaller values for MMRE, MdMRE, MSE, MAE, and
+larger values for Pred(0.25) indicate better prediction.
+MMRE, Pred(0.25), MdMRE, MAE are the most widely
+used evaluation measures in estimating software effort
+
+[23]. All of them have been used to evaluate the model in
+this study. In addition, R2score has been used to examine
+
+the results. Below is the formula of each of these evalua
+tion criteria.
+
+Mean magnitude of Relative error (MMRE): in some
+research works, the average difference between the estimated cost of the model and the actual cost for all samples
+is used to evaluate the model’s accuracy and can be calculated using the following formula. N represents the
+number of projects being evaluated.
+
+
+1
+MAE ¼
+
+
+n ð3Þ
+
+[P] jActual Value � Estimated Valuej
+
+ði¼1Þ
+
+
+n
+n [P]
+
+
+Mean Squared Error (MSE): the mean square difference
+between the predicted value and the actual value for all
+data samples and is obtained from the following formula:
+
+n
+MSE ¼ 1=n XðActual Value � Estimated ValueÞ [2] ð4Þ
+
+i¼1
+
+R [2] score: it is a criterion for measuring the fitness of the
+regression line with the data distribution model [46]. This
+measure is calculated from the following formula in which
+l is the mean value of the actual values:
+
+
+R [2] ¼ 1 �
+
+
+n
+P i¼1 ð [Actual Value] n [ �] [Estimated Value] Þ [2] ð5Þ
+P i¼1 ð [Actual Value][ �] [l] Þ [2]
+
+
+Pred (x): this measure indicates that the estimated value
+error for all evaluated samples is less than or equal to x. x
+represents the difference and is considered equivalent to
+0.25 in most research work. n also represents the total
+number of samples evaluated. Therefore, the higher the
+Pred (0.25), the lower the error rate of the evaluated
+algorithm, and the estimated cost for more samples of the
+evaluated data is less than or equal to 0.25. This value is
+obtained from the following formula:
+
+
+n
+
+j j
+1if [ActualValue][ �] [EstimatedValue] � x
+
+X ActualValue
+
+i¼1 ( 0otherwise
+
+
+n
+Pred xð Þ ¼ 1=n X
+
+
+(
+
+
+n
+MMRE ¼ 1=n X
+
+ði¼1Þ
+
+
+jActual Value � Estimated Valuej
+ð1Þ
+Actual Value
+
+
+ð6Þ
+
+5 Results and discussion
+
+In this section, 6 machine learning algorithms used to
+develop stacking models in this study have been evaluated
+individually and alone with 6 measures of MMRE,
+MdMRE, MAE, MSE, Pred(0.25), and R [2] score. MAE is
+measured in person-hours, MSE is measured in personhours [2], MMRE, MdMRE, and Pred(X) are expressed as
+percentages, and R [2] is dimensionless. The prediction
+ability of each algorithm according to different evaluation
+
+measures has been shown in Table 4. The bar chart has also
+
+been shown in Fig. 3 for a simpler comparison of the
+evaluation measures.
+
+The results show that SVR and LASSO were the
+
+strongest performers overall, with SVR excelling in minimizing prediction errors (MMRE, MdMRE) and LASSO
+showing the best results for MSE. Neural networks performed well in reducing MAE, especially the deeper network, while Random Forest achieved the highest
+## 123
+
+
+The median magnitude of relative error (MdMRE):
+another measure for evaluating the accuracy of models
+presented in the field of effort estimation is the median
+error determined by the model, which is obtained from the
+following formula:
+
+jActual Value � Estimated Valuej
+MdMRE ¼ Median
+
+� Actual Value �
+
+ð2Þ
+
+Mean Absolute Errors (MAE): the mean absolute value
+is the difference between the predicted value and the actual
+value for all dataset samples and is calculated from the
+following formula:
+
+241 Page 12 of 20 Cluster Computing (2025) 28:241
+
+
+Table 4 Evaluation of
+
+individual models with different
+
+measures
+
+Fig. 3 Comparison of different
+evaluation measures for
+
+individual models
+
+
+1.8
+
+1.6
+
+1.4
+
+1.2
+
+1
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+0
+
+
+Model MMRE MdMRE Pred(0.25) MAE MSE R [2] Score
+
+SVR 0.428 0.428 74.655 0.449 0.880 0.120
+
+Random Forest 1.729 1.800 77.772 0.682 1.068 -0.068
+
+Ada Boost 1.832 1.863 77.843 0.695 1.058 -0.058
+
+LASSO 0.682 0.596 75.284 0.388 0.776 0.224
+
+ANN (8-layer of 1000 neurons) 0.557 0.429 74.733 0.359 0.814 0.186
+
+ANN (1-layer of 30,000 neurons) 0.780 0.470 75.060 0.390 0.798 0.202
+
+Evalua�on of individual models with different measures
+
+2
+
+
+
+
+SVR Random Forest Ada Boost LASSO ANN (8-layer of ANN (1-layer of
+1000 neurons) 30000 neurons)
+
+Individual Models
+
+
+Pred(0.25), indicating accurate estimates for most projects.
+AdaBoost provided balanced results but was outperformed
+by SVR and LASSO in key metrics. SVR, LASSO, and
+neural networks, according to R [2] score, have better accuracy than regression algorithm.
+In Phase One, we assessed five stacking models, each
+featuring a distinct mix of metamodels, base models, and
+their respective hyperparameters. Table 5 provides a
+comprehensive evaluation of these models, detailing the
+hyperparameters for each metamodel. For every stacking
+model, we applied five different sets of hyperparameter
+adjustments, leading to a total of 25 trained and tested
+stacking models. The performance of these models across
+various evaluation metrics is depicted in the strip plot
+diagram in Fig. 4. To keep the chart clear and straightforward, only the names of the metamodels are shown for
+each model. Each point on the diagram corresponds to a
+unique ensemble stacking model, trained with a specific set
+of hyperparameters.
+For example, the stacking model that utilizes the SVR
+metamodel, which includes Random Forest, LASSO,
+Neural Network, and AdaBoost as base models, is represented by five points—one for each set of trained hyperparameters. We evaluate the models using metrics such as
+MAE, MSE, MMRE, MdMRE, Pred(0.25), and R [2] . Lower
+values in MAE, MSE, MMRE, and MdMRE indicate better
+## 123
+
+
+performance, while higher values in Pred(0.25) and R [2]
+
+reflect more accurate predictions.
+The results shown in Fig. 4 indicate that the stacking
+model utilizing SVR as the metamodel, along with
+LASSO, Random Forest, AdaBoost, and Neural Network
+
+as base models, achieved the lowest values for MAE, MSE,
+MMRE, and MdMRE, surpassing all other stacking models
+evaluated in Phase One. In contrast, the stacking model that
+used AdaBoost as the metamodel—combined with
+
+LASSO, Random Forest, SVR, and Neural Network base
+models—achieved the highest Pred(0.25) score, indicating
+it provided the most precise cost estimates with an error of
+0.25 or less for a larger number of data samples. All five
+models tested demonstrated greater accuracy compared to
+the regression model based on the R [2] score. Furthermore,
+the model with LASSO as the metamodel, paired with
+SVR, Random Forest, AdaBoost, and Neural Network as
+
+base models, recorded the second-lowest MAE and MSE
+values, just behind the SVR-based ensemble model.
+In the second phase of this study, we utilized two neural
+networks as our base models—one featuring a hidden layer
+with 30,000 neurons and the other consisting of eight
+hidden layers, each with 1000 neurons. These base models
+were integrated with SVR, Random Forest, AdaBoost, and
+LASSO as metamodels. We trained each stacking model
+using three different sets of hyperparameters, leading to a
+
+Cluster Computing (2025) 28:241 Page 13 of 20 241
+## 123
+
+241 Page 14 of 20 Cluster Computing (2025) 28:241
+
+
+Fig. 4 This figure shows the performance of five different stacking
+models evaluated in Phase 1 based on six metrics: MAE, MSE,
+MMRE, MdMRE, Pred(0.25), and R [2] score. The strip plot highlights
+that the stacking model using SVR as the metamodel outperforms
+
+total of 12 models being evaluated. The specifics regarding
+the base models, metamodels, and their hyperparameters
+
+can be found in Table 6.
+
+The strip plot in Fig. 5 provides a visual representation
+of the performance of these models. Each point on the plot
+corresponds to a stacking model trained with three unique
+hyperparameter sets. The stacking model that employs
+SVR as the metamodel, along with the two neural networks
+as base models, achieves the best overall performance,
+recording the lowest values in MAE, MSE, MMRE, and
+## 123
+
+
+other models in minimizing MAE, MSE, MMRE, and MdMRE.
+Additionally, the model with AdaBoost as the metamodel achieves
+the highest Pred(0.25) value, indicating that its predictions have lower
+relative error for a larger proportion of the evaluated samples
+
+MdMRE. The LASSO-based stacking model, using the
+same neural network base models, also performs admirably, attaining the lowest MAE and MSE values. Conversely, the model utilizing AdaBoost as the metamodel
+shows the highest Pred(0.25) value, suggesting it provides
+more accurate predictions (with errors less than or equal to
+25%) for a larger number of data samples. According to the
+R [2] score, all ensemble models in this phase outperform the
+individual regression model, further confirming the superiority of these stacking approaches.
+
+Cluster Computing (2025) 28:241 Page 15 of 20 241
+
+Table 6 Evaluation of the stacking models of phase two with different measures along with hyperparameters of each model
+
+Meta Base Metamodel hyperparameter MMRE MdMRE Pred(0.25) MAE MSE R [2] Score
+model models
+
+
+LASSO - Deep
+neural
+
+network
+
+     - Shallow
+
+neural
+
+network
+
+SVR - Deep
+neural
+
+network
+
+     - Shallow
+
+neural
+
+network
+
+Ada - Deep
+Boost neural
+
+network
+
+     - Shallow
+
+neural
+
+network
+
+Random - Deep
+Forest neural
+
+network
+
+     - Shallow
+
+neural
+
+network
+
+
+alpha = 0.01 0.737 0.468 75.009 0.371 0.753 0.247
+
+alpha = 0.02 0.630 0.456 74.896 0.360 0.748 0.252
+
+alpha = 0.008 0.740 0.534 75.061 0.381 0.770 0.230
+
+C = 110,kernel = ’linear’ 0.440 0.292 74.707 0.331 0.722 0.278
+
+C = 0.5,kernel = ’linear’ 0.387 0.275 74.662 0.331 0.729 0.271
+
+C = 1000,kernel = ’linear’ 0.402 0.280 74.685 0.329 0.726 0.274
+
+n_estimators = 90, loss = ’linear’, learning_rate = 0.01 0.614 0.405 74.909 0.384 1.005 -0.005
+
+n_estimators = 76, loss = ’linear’, learning_rate = 0.01 0.691 0.435 75.139 0.407 1.144 -0.144
+
+n_estimators = 125, loss = ’linear’, 0.703 0.513 75.022 0.401 0.840 0.160
+learning_rate = 0.008
+
+
+n_estimators = 2500, max_features = ’sqrt’,
+max_depth = 10, bootstrap = True,
+min_samples_leaf = 4, min_samples_split = 5
+
+n_estimators = 4200, max_features = ’sqrt’,
+max_depth = 10, bootstrap = True,
+min_samples_leaf = 4, min_samples_split = 5
+
+n_estimators = 8000, max_features = ’auto’,
+max_depth = 500, bootstrap = True,
+min_samples_leaf = 4, min_samples_split = 5
+
+
+0.686 0.424 74.897 0.387 0.837 0.163
+
+0.674 0.405 74.961 0.377 0.812 0.188
+
+0.739 0.383 74.961 0.398 0.889 0.111
+
+comparison.The results obtained in this study and studies
+
+[12, 25] show that using the SVR algorithm as a metamodel
+in stacking models can lead to better estimation. This study
+has obtained better prediction than the models studied in
+
+[47], according to MMRE, MdMRE, and Pred (0.25)
+measures. Previous studies compare stacking with individual models and show the superiority of stacking methods, which is consistent with the findings in the current
+work.
+
+The evaluation of various stacking models shows
+notable enhancements in predictive accuracy compared to
+individual machine learning models. For example, stacking
+
+models that use SVR as the metamodel demonstrated better
+
+performance across most evaluation metrics, reflecting a
+greater precision in estimating software effort. These
+advancements have real-world implications for project
+management. The increased accuracy in effort estimation
+allows for more effective resource allocation. With more
+
+reliable predictions, project managers can assign the right
+amount of resources—such as personnel, time, and budget—for each project, which helps to avoid both underresourcing and over-resourcing. Additionally, improved
+## 123
+
+
+The results shown in Tables 5 and 6 indicate that
+
+stacking models using SVR as the metamodel, along with
+LASSO, Random Forest, AdaBoost, and Neural Network
+as base models, as well as configurations where SVR is
+combined with two Neural Networks as base models, yield
+superior predictions compared to individual models. These
+stacking models demonstrate the lowest values for MAE,
+MSE, MMRE, and MdMRE. Furthermore, when we compare the evaluation metrics of individual models presented
+in Table 4 with those of the stacking models analyzed in
+this study (Tables 5, 6), it is evident that the stacking
+models have outperformed the individual ones.
+While many machine learning methods have been
+extensively researched for predicting software development efforts, the variety of models, datasets, and evaluation
+metrics used in these studies complicates direct comparisons and can make them impractical. To align our findings
+with other research, we focused on articles that are closely
+related in scope. As a result, we selected studies published
+between 2020 and 2023 that utilized ensemble machine
+
+learning techniques, employed the ISBSG dataset, and
+
+shared evaluation metrics with our research for
+
+241 Page 16 of 20 Cluster Computing (2025) 28:241
+
+
+Fig. 5 This figure shows the performance of four different stacking
+models evaluated in Phase 2 based on six metrics: MAE, MSE,
+MMRE, MdMRE, Pred(0.25), and R [2] score. The strip plot highlights
+that the stacking model using SVR as the metamodel outperforms
+
+predictive reliability contributes to the development of
+more accurate project timelines. This can help reduce the
+chances of delays and budget overruns by ensuring that
+project milestones are established more realistically, based
+on improved effort estimates. The enhanced prediction
+accuracy also aids in better risk management by identifying
+potential issues early in the project lifecycle, enabling
+proactive adjustments.
+## 123
+
+
+other models in minimizing MAE, MSE, MMRE, and MdMRE.
+Additionally, the model with AdaBoost as the metamodel achieves
+the highest Pred(0.25) value, indicating that its predictions have lower
+relative error for a larger proportion of the evaluated samples
+
+5.1 Statistical analysis
+
+To strengthen our conclusions and address the concern of
+statistical significance when comparing the individual
+models with the stacking models, we conducted several
+statistical tests: the Friedman Test and the Nemenyi PostHoc Test. These non-parametric tests are well-suited for
+our experiment as they enable comparisons across multiple
+models over various datasets or evaluation metrics, without
+requiring the assumption of normality in data distribution.
+
+Cluster Computing (2025) 28:241 Page 17 of 20 241
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+
+We applied the Friedman test to identify significant differences in performance among all models, taking into
+account the six evaluation metrics used: MAE, MSE,
+MMRE, MdMRE, Pred(0.25), and R [2] score. This test was
+selected because it is appropriate for comparing multiple
+models across metrics when the normality assumptions are
+not met, which is the case for software effort estimation
+
+data.
+
+The hypothesis tested was:
+
+- Null hypothesis (H0): there are no significant differences between the individual models and stacking
+
+models.
+
+- Alternative hypothesis (H1): there are significant
+differences between the models.
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+
+For this analysis, the test yielded a test statistic of 43.56
+with 14 degrees of freedom, reflecting the variance in
+performance ranks among the 15 different models evaluated (both individual and stacking configurations). This test
+statistic is calculated from the ranks assigned to each
+model’s performance for each metric, where a higher test
+statistic indicates greater differences in model ranks across
+metrics.
+
+To determine if this observed difference was statistically
+significant, we compared it to the critical chi-square value
+for a significance level of 0.15 (v [2] = 23.685). Since the test
+statistic (43.56) exceeds this critical value (23.685), we
+rejected the null hypothesis, concluding that significant
+differences exist in model performance across the selected
+metrics. This result supports that stacking models generally
+outperformed individual models, justifying the ensemble
+approach used in this study.
+Following the significant result of the Friedman test, we
+applied the Nemenyi post-hoc test to determine which
+specific models differ significantly from each other. The
+Nemenyi test compares the performance of pairs of models
+based on their average ranks across all metrics, with a
+critical difference (CD) value of 7.80, calculated using the
+following formula:
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+
+f
+**f** i f **f** i f **f** i f **f** i f **f** i f **f** i f **f** i f **f**
+k kð þ 1Þ
+
+6n
+
+
+Plugging these values into the formula gives a critical
+difference of 7.80. This means that if the average rank
+difference between any two models exceeds 7.80, that
+difference is statistically significant.
+The Nemenyi test confirms that stacking models, particularly those using SVR as the metamodel, significantly
+outperform individual models like Random Forest and
+AdaBoost in terms of overall predictive performance.
+Thus, the Nemenyi test reinforces the conclusion that SVRbased stacking models yield superior predictive accuracy,
+validating the effectiveness of the ensemble approach for
+
+software effort estimation.
+
+6 Conclusion and future work
+
+This paper examines several stacking models to determine
+which combination of algorithms used to create these
+models has better predictive ability in software effort
+estimation. Then, the base models used in building the
+stacking models are individually evaluated and compared
+with the stacking models. Stacking models have been
+investigated in two phases.
+In the first phase, 4 base models at the first level and one
+
+metamodel at the second level were used. The results show
+
+that when SVR is used as metamodel and LASSO, random
+forest, AdaBoost, and neural network algorithms have been
+used as the base models, the best prediction is made
+according to MAE, MSE, MMRE, and MdMRE measures.
+When AdaBoost is used as the metamodel and LASSO,
+random forest, SVR, and neural network algorithms as the
+base models, the highest value is obtained in the Pred(0.25)
+
+measure.
+
+In the second phase, two different neural networks were
+used as the base model at the first level and a metamodel at
+the second level. The results show that when the stacking
+
+model is combined with SVR metamodel and two neural
+
+networks as base models, the best prediction is made
+according to MAE, MSE, MMRE, and MdMRE measures.
+
+**f** **f** **f** **f** **f** **f** **f** **f** Also, the ensemble model with AdaBoost metamodel and
+
+two neural networks in the first layer has the highest
+Pred(0.25) value. According to the R [2] score measure, all
+models studied in two phases have better accuracy than
+regression. Therefore, according to this research, and previous research, using the SVR algorithm as a metamodel of
+a stacking model can lead to more accurate results based on
+most evaluation criteria, and they have also made better
+predictions than individual models. These findings are
+important for project managers, as they can leverage the
+improved predictions to enhance resource allocation,
+manage project timelines more effectively, and reduce
+
+risks.
+## 123
+
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+CD ¼ q a
+
+where
+
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+r
+
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+ð7Þ
+
+
+**f** **f** **f** **f** **f** **f** **f** **f**
+
+- q a is the critical value from the studentized range
+distribution for the chosen significance level, a = 0.05
+(indicating a 5% risk of observing a significant
+difference by random chance alone). For a = 0.05, q a
+
+is 3.314.
+
+- k represents the number of models being compared
+(here, k = 15).
+
+- n represents the number of evaluation metrics (here,
+n = 6).
+
+241 Page 18 of 20 Cluster Computing (2025) 28:241
+
+
+Statistical analysis through the Friedman Test and
+Nemenyi Post-Hoc Test shows that stacking models,
+especially those utilizing SVR as the metamodel, significantly surpass individual models in terms of MAE, MSE,
+MMRE, and MdMRE. This evidence strongly supports the
+idea that stacking models provide better prediction performance for software effort estimation, offering
+
+notable advancements over traditional models.
+
+Given the numerous hyperparameters associated with
+ensemble models, particularly in multi-level stacking,
+future research could delve into hyperparameter optimization techniques. Approaches like Bayesian optimization or genetic algorithms might be explored to fine-tune
+model parameters efficiently. Properly adjusting hyperparameters is essential for ensuring the robustness and
+accuracy of ensemble methods, and optimizing these can
+greatly enhance prediction outcomes. Future studies could
+also examine the computational aspects of stacking models,
+such as training and inference times, to assess their scalability for larger datasets or real-time applications. Additionally, strategies like model optimization, parallel
+processing, or minimizing the number of base models
+could be investigated to boost computational efficiency
+without sacrificing prediction accuracy. While this study
+concentrated on software effort estimation, there is considerable potential for applying stacking models to other
+vital areas in software engineering, such as software fault
+prediction. Accurate software fault prediction is crucial for
+enhancing software quality by identifying fault-prone
+modules early in the development cycle, which leads to
+more effective testing and debugging efforts.
+
+Author contribution The main idea of the research and the results
+
+were presented by Maryam Hasanali (Ph.D. Candidate) and Dr.
+Mohammad reza Soltan aghaei (supervisor). Dr. Taghi Javdani
+Gandomani (advisor) and Dr. Farsad Zamani Boroujeni (advisor)
+helped in the stages of research, experimental calculations, and controlling the results. Dr. Mohammad reza Soltan aghaei and Dr. Taghi
+Javdani Gandomani controlled the analytical methods and evaluation
+of the results. Dr. Farsad Zamani Boroujeni helped Maryam Hassanali
+write the manuscript and correct its errors. All authors discussed the
+results and contributed to the final manuscript and the preparation of
+the revised version of the manuscript.
+
+Funding The authors did not receive support from any organization
+for the submitted work.
+
+Data availability The dataset analyzed during the current study is
+[available in the ISBSG repository, https://www.isbsg.org/.](https://www.isbsg.org/)
+
+Declarations
+
+Conflict of interest The authors declare no competing interests.
+## 123
+
+
+References
+
+1. Shekhar, S., Kumar, U.: Review of various software cost estimation techniques. Int. J. Comput. Appl.Comput. Appl. 141(11),
+31–34 (2016)
+2. Wen, J., Li, S., Lin, Z., Hu, Y., Huang, C.: Systematic literature
+review of machine learning based software development effort
+estimation models. Inf. Softw. Technol.Softw. Technol. 54(1),
+41–59 (2012)
+3. Kumari, S., Pushkar, S.: Comparison and analysis of different
+software cost estimation methods. Int. J. Adv. Comput. Sci. Appl.
+4(1), 153–157 (2013)
+4. Sehra, S.K., Brar, Y.S., Kaur, K.: Research patterns and trends in
+software effort estimation. Inf. Softw. Technol.Softw. Technol.
+
+91, 1–21 (2017)
+5. Qi, F., Li, M., Wu, Z., Zhou, Z., Zhu, X., Sun, J.: Software effort
+estimation based on open source projects: case study of Github.
+Inf. Softw. Technol.Softw. Technol. 92, 145–157 (2017)
+6. Akhtar, N.: Perceptual evolution for software project cost estimation using ant colony system. Int. J. Comput. Appl. 81(14),
+23–30 (2013)
+7. Butt, S.A., Sami, M., Malik, A.W., Bashir, A.K.: Prediction based
+cost estimation technique in agile development. Adv. Eng. Softw.Softw. 175, 103329 (2023)
+8. Jørgensen, M.: A review of studies on expert estimation of
+software development effort. J. Syst. Softw.Softw. 70(1–2),
+37–60 (2004)
+9. Pospieszny, P., Czarnacka-Chrobot, B., Kobylinski, A.: An
+effective approach for software project effort and duration estimation with machine learning algorithms. J. Syst. Softw.Softw.
+137, 184–196 (2018)
+10. Mahboob, T., Abdullah, R., Sarwar, M., Alam, T., Khan, H.:
+Predictive approach towards software effort estimation using
+evolutionary support vector machine. Int. J. Adv. Comput. Sci.
+Appl. 8(5), 446–454 (2017)
+11. Minku, L.L., Yao, X.: Ensembles and locality: insight on
+improving software effort estimation. Inf. Softw. Technol.Softw.
+Technol. 55(8), 1512–1528 (2013)
+12. Kumar, P.S., Venkatesan, R.: Improving accuracy of software
+estimation using stacking ensemble method. In: Advances in
+Machine Learning and Computational Intelligence, Proc. of
+ICMLCI 2019, pp. 219–227. Springer (2021)
+13. Ribeiro, M.H.D.M., Coelho, L.D.S.: Ensemble approach based on
+bagging, boosting and stacking for short-term prediction in
+agribusiness time series. Appl. Soft Comput.Comput. 86, 105837
+(2020)
+14. Wolpert, D.H.: Stacked generalization. Neural Netw.Netw. 5(2),
+241–259 (1992)
+15. Ranstam, J., Cook, J.: LASSO regression. Br. J. Surg. 105(10),
+1348–1348 (2018)
+16. Phannachitta, P., Matsumoto, K.: Model-based software effort
+estimation–a robust comparison of 14 algorithms widely used in
+the data science community. Int. J. Innov. Comput., Inf. Control
+15(2), 569–589 (2019)
+17. De Abril, I.M., Sugiyama, M.: Winning the kaggle algorithmic
+trading challenge with the composition of many models and
+feature engineering. IEICE Trans. Inf. Syst. 96(3), 742–745
+(2013)
+18. Garcı´a-Floriano, A., Rodrı´guez, M., Villalobos-Pe´rez, D.,
+Romero-Zaldivar, V.: Support vector regression for predicting
+software enhancement effort. Inf. Softw. Technol.Softw. Tech
+nol. 97, 99–109 (2018)
+19. Kovacˇevic´, M., Lozancˇic´, S., Nyarko, E.K., Hadzima-Nyarko,
+M.: Application of artificial intelligence methods for predicting
+the compressive strength of self-compacting concrete with class F
+
+Cluster Computing (2025) 28:241 Page 19 of 20 241
+
+
+[fly ash. Materials 15(12), 4191 (2022). https://doi.org/10.3390/](https://doi.org/10.3390/ma15124191)
+[ma15124191](https://doi.org/10.3390/ma15124191)
+20. Kovacˇevic´, M., Lozancˇic´, S., Nyarko, E.K., Hadzima-Nyarko,
+M.: Modeling of compressive strength of self-compacting rubberized concrete using machine learning. Materials 14(15), 4346
+[(2021). https://doi.org/10.3390/ma14154346](https://doi.org/10.3390/ma14154346)
+21. Kovacˇevic´, M., Ivanisˇevic´, N., Stevic´, D., Markovic´, L.M.,
+Bulajic´, B., Markovic´, L., Gvozdovic´, N.: Decision-support system for estimating resource consumption in bridge construction
+[based on machine learning. Axioms 12(1), 19 (2022). https://doi.](https://doi.org/10.3390/axioms12010019)
+[org/10.3390/axioms12010019](https://doi.org/10.3390/axioms12010019)
+22. Idri, A., Hosni, M., Abran, A.: Systematic mapping study of
+ensemble effort estimation. In: ENASE (2016)
+23. Ali, A., Gravino, C.: A systematic literature review of software
+effort prediction using machine learning methods. J. Softw.:
+Evolut. Process. 31(10), e2211 (2019)
+24. Carvalho, H.: Ensemble regression models for software development effort estimation: a comparative study. Int. J. Softw. Eng.
+Appl. (IJSEA) 11(3), 71–86 (2020)
+25. Palaniswamy, S.K., Venkatesan, R.: Hyperparameters tuning of
+ensemble model for software effort estimation. J. Ambient Intell.
+
+Hum. Comput. 12(6), 1–11 (2020)
+26. Ag, P.V., Varadarajan, V.: Estimating software development
+efforts using a random forest-based stacked ensemble approach.
+Electronics 10(10), 1195 (2021)
+27. Sakhrawi, Z., Sellami, A., Bouassida, N.: Software enhancement
+effort estimation using correlation-based feature selection and
+stacking ensemble method. Cluster Comput. 25(4), 1–14 (2021)
+28. Goyal, S.: Effective Software Effort Estimation using Heterogenous Stacked Ensemble. In: 2022 IEEE International Conference
+
+on Signal Processing, Informatics, Communication and Energy
+Systems (SPICES). IEEE (2022)
+29. Priya Varshini, A., Anitha Kumari, K.: Software effort estimation
+using stacked ensembled techniques and proposed stacking
+ensemble using principal component regression as super learner.
+J. Intell. Fuzzy Syst. (Preprint) 45(6), 1–17 (2024)
+30. Durgesh, D., Saket, M., Ramana Reddy, B.: Improving software
+effort estimation with heterogeneous stacked ensemble using
+SMOTER over ELM and SVR base learners. In: International
+
+Conference on Multi-disciplinary Trends in Artificial Intelligence. Springer (2023)
+31. Sakhrawi, Z., Sellami, A., Bouassida, N., Bejaoui, M.: A stacking
+ensemble learning model for software development cost estimation. Int. J. Comput. Inf. Syst. Industr. Manag. Appl. 16(3), 13–13
+(2024)
+32. PriyaVarshini, A., AnithaKumari, K.: Software effort estimation
+using stacked ensemble technique and hybrid principal component regression and multivariate adaptive regression splines.
+Wirel. Pers. Commun.. Pers. Commun. 134(4), 2259–2278
+(2024)
+33. ISBSG.: International Software Benchmarking Standards Group
+[Dataset. Release 2019 (2019). https://www.isbsg.org](https://www.isbsg.org)
+34. Gonza´lez-Ladro´n-de-Guevara, F., Ferna´ndez-Diego, M., Lokan,
+C.: The usage of ISBSG data fields in software effort estimation:
+a systematic mapping study. J. Syst. Softw.Softw. 113, 188–215
+(2016)
+35. Abnane, I., Idri, A.: Improved analogy-based effort estimation
+with incomplete mixed data. In: 2018 Federated Conference on
+Computer Science and Information Systems (FedCSIS). IEEE
+(2018)
+36. Abnane, I., Idri, A., Abran, A.: Analogy software effort estimation using ensemble KNN imputation. In: 2019 45th Euromicro
+
+
+Conference on Software Engineering and Advanced Applications
+(SEAA). IEEE (2019)
+37. Troyanskaya, O., Cantor, M., Sherlock, G., Brown, P., Hastie, T.,
+Tibshirani, R., Botstein, D., Altman, R.B.: Missing value estimation methods for DNA microarrays. Bioinformatics 17(6),
+520–525 (2001)
+38. Batista, G.E., Monard, M.C.: A study of K-nearest neighbour as
+an imputation method. His. 87(251–260), 48 (2002)
+39. Ester, M., Kriegel, H.P., Sander, J., Xu, X.: A density-based
+algorithm for discovering clusters in large spatial databases with
+noise. In: KDD (1996)
+40. Schubert, E., Sander, J., Ester, M., Kriegel, H.P., Xu, X.:
+DBSCAN revisited, revisited: why and how you should (still) use
+DBSCAN. ACM Trans. Database Syst. (TODS). 42(3), 1–21
+(2017)
+41. Breiman, L.: Random forests. Mach. Learn. 45, 5–32 (2001)
+42. Freund, Y., Schapire, R.E.: A decision-theoretic generalization of
+on-line learning and an application to boosting. J. Comput. Syst.
+Sci.Comput. Syst. Sci. 55(1), 119–139 (1997)
+43. Tibshirani, R.: Regression shrinkage and selection via the lasso.
+J. R. Stat. Soc.: Ser. B (Stat. Methodol.) 58(1), 267–288 (1996)
+44. Nassif, A.B., Capretz, L.F., Ho, D., Ahmed, F.: Neural network
+models for software development effort estimation: a comparative study. Neural Comput. Appl.Comput. Appl. 27, 2369–2381
+(2016)
+45. Bergstra, J., Bengio, Y.: Random search for hyper-parameter
+optimization. J. Mach. Learn. Res. 13(2), 281–305 (2012)
+46. Beysolow II, T.: Introduction to Deep Learning using R: A Stepby-Step Guide to Learning and Implementing Deep Learning
+Models using R. Apress (2017)
+47. Mustapha, H., Abdelwahed, N.: Investigating the use of random
+forest in software effort estimation. Procedia Comput. Sci. 148,
+343–352 (2019)
+
+Publisher’s Note Springer Nature remains neutral with regard to
+jurisdictional claims in published maps and institutional affiliations.
+
+Springer Nature or its licensor (e.g. a society or other partner) holds
+exclusive rights to this article under a publishing agreement with the
+author(s) or other rightsholder(s); author self-archiving of the
+accepted manuscript version of this article is solely governed by the
+terms of such publishing agreement and applicable law.
+
+Maryam Hassanali holds a
+Bachelor’s and Master’s degree
+in Computer Engineering                    Software. Her primary research
+interests lie in artificial intelligence and machine learning.
+She has conducted research in
+
+software effort estimation using
+machine learning techniques.
+## 123
+
+241 Page 20 of 20 Cluster Computing (2025) 28:241
+
+
+Mohammadreza Soltanaghaei
+received the B.Sc. degree from
+the Isfahan University of Technology, Iran, the M.Sc. degree
+in Artificial Intelligence from
+the Shiraz University, Iran, and
+the Ph.D. in Quantum Networks
+and Algorithms from, UPM
+University of Malaysia in 2010.
+Currently, he is working as an
+assistant professor at the
+Department of Computer Engineering, Islamic Azad University of Isfahan. His research
+interests include Quantum Networks and Algorithms, QKD; SDN; IoT, AhHoc, WSN; Introsion
+Detection, Security; Machine and Deep Learning; Cloud Computing.
+
+Taghi Javdani Gandomani
+(Senior Member, IEEE)
+received the joint bachelor’s and
+master’s degrees in computer
+engineering (software) from the
+Isfahan University of Technology and Isfahan University in
+Isfahan, Iran, and the Ph.D.
+degree from Universiti Putra
+Malaysia (UPM), in 2014. Currently, he is an Associate Professor of software engineering
+with Shahrekord University,
+Shahrekord, Iran. In addition to
+his teaching and research duties,
+he leads the Data Science Research Group, Shahrekord University.
+## 123
+
+
+His research interests include agile software development, software
+process improvement, software project management, software cost
+estimation, empirical software engineering, and the application of
+artificial intelligence in software engineering.
+
+Farsad Zamani Boroujeni received his PhD degree in computer science from the
+Universiti Putra Malaysia in
+2013. Currently, he works as an
+assistant professor at the
+Department of Computer Engineering, Science and Research
+Branch, Islamic Azad University, Tehran, Iran. His areas of
+research interest include data
+
+mining, big data analytics and
+computational biology.
+

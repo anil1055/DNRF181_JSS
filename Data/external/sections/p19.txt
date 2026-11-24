@@ -1,0 +1,1710 @@
+Ritu and Bhambri *Discover Computing* (2025) 28:143
+[https://doi.org/10.1007/s10791-025-09668-1](https://doi.org/10.1007/s10791-025-09668-1)
+
+
+Discover Computing
+
+## **RESEARCH Open Access**
+# Enhancing software development effort estimation with a cloud-based data framework using use case points, fuzzy logic, and machine learning
+
+Ritu [1*] and Pankaj Bhambri [2]
+
+
+*Correspondence:
+Ritu
+
+ratheeritu@yahoo.in
+1 Department of Computer Science
+and Engineering, Guru Nanak Dev
+Engineering College, Ludhiana,
+Punjab, India
+2 Department of Information
+Technology, Guru Nanak Dev
+Engineering College, Ludhiana,
+Punjab, India
+
+
+**Abstract**
+The estimation of effort is a crucial steps in the software development process for
+establishing necessary resources, their quantity, and the project's duration. However,
+the accuracy and reliability of early estimates may be diminished if customer
+requirements change as the project progresses. This work aims to enhance effort
+estimate by providing a framework that estimates the project's effort. This framework
+estimates the project effort with a use-case point technique based on real-project
+repository data. The input values comprehend in data such as the project's domain,
+technical variables, environmental conditions, and information. The proposed
+framework calculates the project's duration by utilizing the input values. Developers
+and project managers may compare and anticipate the duration of future projects
+using the use case repository, a database maintained by the framework. Fuzzy logic
+predicts the time using fuzzy rules and a triangle membership function to improve
+accuracy and reliability. By comparing the results with well-known datasets, the
+estimation's accuracy is shown. Using a machine learning system and the Gaussian
+Process Regression approach, regression analysis is done to predict how long the
+project will take. The widely accessible Deshranais dataset is used to validate the
+training and testing data that was gathered from friends, classmates, and other
+software companies. In the end, reports and comparative analysis are generated
+using a business intelligence tool based on different properties in the repository data.
+**Keywords** Effort estimation, Business intelligence, Software framework, Fuzzy logic
+
+**1 Introduction**
+Effort estimation in software engineering refers to estimating the amount of labor
+required to develop software. The effort required to build the program is often stated
+in person-months or person-hours. A detailed summary of the importance and need
+of effort estimate in software engineering is provided. The first phase in the software
+engineering process is project planning. Software project planning consists of five
+main activities: estimation, scheduling, risk analysis, quality management planning,
+
+© The Author(s) 2025. **Open Access** This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+License, which permits any non-commercial use, sharing, distribution and reproduction in any medium or format, as long as you give appropriate
+credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if you modified the licensed material.
+You do not have permission under this licence to share adapted material derived from this article or parts of it. The images or other third party
+material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material
+is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted
+[use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit ​h ​t ​t ​p ​: ​/ ​​/ ​c ​r ​e ​a ​​t ​i ​v ​e ​c ​o ​​m ​m ​o ​n ​​s ​. ​o ​r ​g ​​/ ​l ​i ​c ​e ​​n ​s ​](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+[e ​s ​/ ​b ​​y ​- ​n ​c ​​- ​n ​d ​/ ​4 ​. ​0 ​/.](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 2 of 32
+
+and change management planning [1]. Calculating the amount of money, time, effort,
+and resources needed to produce a certain software-based system or software product
+is known as estimation [2]. The first stage in the estimating process is to ascertain the
+project's scope. An estimate is created for each of the individual parts that make up a
+project. The estimation includes estimates for cost, effort, resources, and other factors.
+Effort estimation is the process of estimating how much labor will be required to finish
+a task. It is calculated by calculating the number of employees needed to complete a cer-­
+tain project in a given number of days, months, or years [2]. Figure 1 illustrates the key
+elements of effort estimation. The following fields justifies the necessity of effort estima-­
+tion [2]:
+
+         To schedule the project.
+
+         To prepare iterative plans.
+
+         To prepare the budget.
+
+         To analyse investments for project development.
+
+Both the quantity and kind of functions utilized in the program are tallied in the Func-­
+tion Point estimate approach [3]. The steps to determine the effort using FP analysis are
+as follows.
+
+Step 1: Find out how many features the application offers. It includes both internal and
+external inputs, as well as the quantity of external queries, internal files, and external
+interface files.
+Step 2: Find the unadjusted function points (UFP) in step two. It is ascertained by
+
+dividing the functions into three groups based on their level of complexity: simple,
+average, and difficult. Each is then given a weight, and the count is multiplied by each
+weight. Next, the weighted total is calculated. The weighting factor for each kind of
+function is listed in Table 1.
+
+Step 3: Determine the TDI, or total degree of impact. Determine the impact factor,
+
+which varies from 0 to 5, for each of the 14 general features. Distributed processing,
+performance, transaction rate, online data entry, end-user efficiency, online update,
+complex processing, reusability, ease of operation, multiple sites, facilitating change,
+
+**Fig. 1** Fundamentals of software effort estimation
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 3 of 32
+
+**Table 1** Effort estimation function types with weighted value
+
+**Function type** **Simple (Easy)** **Average** **Complex(Hard)**
+
+Outside input 4 5 7
+
+Outside output 5 6 8
+
+Outside investigations 4 5 7
+Logical files inside the organization 8 11 16
+
+Files for external interfaces 6 8 11
+
+**Fig. 2** Different categorization of classification techniques
+
+and data communication are some of the general characteristics that you may find
+useful. The TDI is the total of these degrees.
+Step 4: Calculate the value adjustment factor (VAF) using (TDI * 0.01) + 0.65.
+Step 5: Determine the function point using the formula FP = UFP * VAF.
+
+With process-based estimation, the process is broken down into smaller tasks, and
+each task's work is estimated. The corresponding software functionalities are specified
+for every job. Each task will require many software process actions. They are some-­
+times referred to as decomposition methods. Apart from this, software engineering uses
+empirical models to make estimates. The empirical models predict the effort as a func-­
+tion of LoC or FP using the formula that was discovered via experimentation. For empir-­
+ical estimation, Constructive Cost Models (COCOMO) are employed. The many generic
+effort estimate techniques are shown in Fig. 2. Other estimation techniques commonly
+used in software engineering include expert-based techniques, dynamic learning, and
+
+regression. Each of these approaches is calculated using a variety of formulae. When
+using problem-based estimating, the project's scope is determined initially. As a con-­
+sequence, the program is divided into problematic functions. Analysis is done using the
+
+function point or lines of code. Finding a software's functionalities is the initial stage in
+
+process-based estimate.
+
+         Expertise-based method for estimation is done with human experts to predict the
+duration of a project. The experts use the project process guidelines for prediction.
+
+         The Learning methods use machine learning algorithms to train the system to
+predict the desired result based on past evaluated results.
+
+         The regression-based techniques use regression techniques and algorithms for
+predicting the duration of a project.
+
+Use Case Point (UCP), a software estimating approach, is predicated on the require-­
+ments for a system that has to be constructed. The use cases that were used to construct
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 4 of 32
+
+the requirements indicate the list of actions or events necessary to meet the criteria or
+goals. The UCP is calculated based on the use scenarios and taking into account the
+technical and environmental aspects of the software system. The UCP may be used to
+estimate the effort. Any real number between 0 and 1 may be used as the value range.
+They are referred to as fuzzy because they provide imprecise information. Based on a
+set of rules, they map input data collection to the desired output form. The rules consist
+of a series of if–then-else conditions, and the fuzzy inference system carries out each
+rule concurrently. The fuzzy-logic-based estimation provides an accurate estimate for
+input data comparable to historical data utilized in the software development process.
+
+In Fig. 3, the fuzzy logic system is displayed. Software managers frequently employ fuzzy
+techniques in software engineering for various tasks such as effort, size prediction, and
+software testing [4]. Classes, characteristics, and inheritance related to software are
+artefact types in software development. These types’ attributes and features determine
+membership in other kinds. The fuzzy method uses language concepts to represent the
+connection between different artifacts.
+
+To develop a referential framework for effort estimation and to maintain a use case
+repository- The user-friendly estimation framework as SaaS model should provide infor-­
+mation about a wide range of software projects across the domains from various types
+of developers and should facilitate effort estimation process. To predict the effort with
+machine learning techniques and fuzzy algorithms to enhance accuracy and reliability—
+effort prediction must be possible and reliable even if fuzzy information or missing data
+are provided for estimation. To facilitate comparative analysis of new projects with simi-­
+lar projects across domains—it must be possible to compare with various projects of dif-­
+ferent domains based on various parameters needed for estimation.
+
+In this article, firstly, the effort is estimated using fuzzy logic and triangular member-­
+ship functions. The proposed algorithm are implementation and the results are obtained
+by applying the fuzzy logic. Next phase discuss about predicting the effort with regres-­
+sion techniques using machine learning algorithm. Furthermore, next phase provides
+a comparative analysis of the repository data based on various parameters using busi-­
+ness intelligence. The various reports generated using the business intelligence tool are
+
+**Fig. 3** The fuzzy logic system
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 5 of 32
+
+presented in the lasts section and covers about the implementation of the framework as
+
+a software as a service in cloud.
+
+**Source** **Title** **Publication** **Objective**
+
+[3] Enhancing Software Dependability International Journal of
+Through Software Engineering Meth-­ Computer Applications
+odology: An Examination
+
+
+International Journal of
+
+Computer Applications
+
+
+
+[3] Enhancing Software Dependability International Journal of Examines techniques to improve
+Through Software Engineering Meth-­ Computer Applications software reliability by using soft-­
+odology: An Examination ware engineering methods
+
+[9] Fuzzy class point approach International Journal Introduces a fuzzy
+on Recent Trends class point approach for software
+in Engineering and engineering
+Technology
+
+
+Introduces a fuzzy
+class point approach for software
+engineering
+
+
+
+[10] Neural network models for agile soft-­
+ware effort estimation based on story
+points: an empirical validation
+
+
+
+[10] Neural network models for agile soft-­ Procedia Computer uses story points to validate
+ware effort estimation based on story Science neural net- work models for agile
+points: an empirical validation software effort es timation
+
+[11] Multi-agent Effort IEEE Access suggests a multiEstimation System for Scrum Agile agent ontology- based approach
+Method Based on for Scrum Agile effort estimation
+Ontology
+
+
+Procedia Computer
+
+Science
+
+
+IEEE Access suggests a multiagent ontology- based approach
+for Scrum Agile effort estimation
+
+
+
+[12] Improving Software
+development effort estimation using
+support vector regression
+
+
+IAES International
+Journal of Artificial
+Intelligence
+
+
+
+[12] Improving Software IAES International explains the use
+development effort estimation using Journal of Artificial of support vector regression for
+support vector regression Intelligence soft- ware project effort estimation
+
+[13] Managing imprecision and uncer-­ Information and Soft-­ presents a type-2 fuzzy logictainty in the prediction of software ware Technology based framework for addressing
+development effort: a framework effort pre- diction uncertainty
+based on type-2 fuzzy logic
+
+
+Information and Soft-­
+ware Technology
+
+
+presents a type-2 fuzzy logicbased framework for addressing
+effort pre- diction uncertainty
+
+
+
+[14] A fuzzy logic-based system for en-­
+hancing scrum method
+
+
+Journal of Sustainable Business and Man-­
+agement Solutions in
+Emerging Economies
+
+
+utilizes fuzzy models to estimate
+soft- ware effort and fore- cast the
+stock market
+
+
+
+[15] Software effort estimation inspired by
+COCOMO and FP
+
+models: A fuzzy logic approach
+
+
+International Journal
+of Advanced Com-­
+puter Science and
+Applications
+
+
+
+[15] Software effort estimation inspired by International Journal Makes use of fuzzy
+COCOMO and FP of Advanced Com-­ logic to estimate soft- ware effort,
+models: A fuzzy logic approach puter Science and drawing inspiration from FP and
+
+Applications COCOMO models
+
+[16] Setting test case The Scientific World uses fuzzy logic to prioritize
+priorities using fuzzy logic for regres-­ Journal test cases for regression testing
+sion testing programs with assertions programs
+
+
+The Scientific World
+Journal
+
+
+
+[16] Setting test case The Scientific World uses fuzzy logic to prioritize
+priorities using fuzzy logic for regres-­ Journal test cases for regression testing
+sion testing programs with assertions programs
+
+[17] Estimating software development ef-­ Computational Utilizesregression fuzzy models
+fort with regression fuzzy models Intelligence and for software development effort
+
+
+Computational
+Intelligence and
+
+Neuro- science
+
+
+Utilizesregression fuzzy models
+for software development effort
+
+estimation
+
+
+by using the estimating techniques. For managers and software developers, it also facili-­
+tates the process of allocating resources. When effort is estimated accurately and effi-­
+ciently, resource allocation may be optimized. The process of forecasting or estimating
+a value—like time, cost, or effort—using historical data, statistical models, or accessible
+data is known as estimation [3]. Additionally, the software industry uses Agile approach,
+
+which allows for rapid changes to the project scope [9]. In these situations, the FP-based
+
+and COCOMO models' parameters might not be enough to produce predictions that
+are more accurate and trustworthy. As a result, this work estimates effort using the Use
+Case Point (UCP) technique [10]. Projects built using agile methodology are best suited
+for this approach. The estimating procedure is made more accurate and efficient in this
+study by utilizing machine learning and fuzzy logic approaches. Comparative analysis
+is also made easier with the use of business intelligence. The estimating framework is
+implemented as Software as a Service. Fuzzy logic, machine learning methods [11], busi-­
+ness intelligence, and SaaS are briefly introduced in the part that follows. A framework
+for better effort estimating has been created. This estimates effort and stores the findings
+in a database using the use case point (UCP) approach [8]. To enhance estimation in
+
+uncertain conditions in the information provided for a new project, fuzzy logic is used
+to these facts. The prediction's reliability is further increased via a machine learning
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 9 of 32
+
+method. Data from the database may be compared with the expected work for a new
+project using business intelligence. The framework is available as SaaS for convenience
+of use. These methods are introduced in brief in the next section.
+
+**4 Implementation and methodology**
+
+**4.1 The proposed framework for effort estimation**
+In this study, a paradigm for estimating effort has been created. In addition to storing the
+computed values and parameters used for analysis in a database that serves as a reposi-­
+tory, it helps users estimate the amount of work needed for a new project. Addition-­
+ally, it offers a platform for evaluating and contrasting the new project with others in the
+repository.
+
+**4.2 Business intelligence-based proposed architecture**
+The overall system architecture of this research work is shown in Fig. 5. It contains the
+following:
+
+         Domain & Project Information
+
+         Use case and Actor Information, Analysers with Business Intelligence
+
+         - Environmental and Technical Factors
+
+         Effort Estimation, Predictor with Regression Analysers
+
+         Use case Repository, Fuzzy Inference system, Fuzzy Rules
+
+Figure 5 displays the system architecture for the effort estimate based on business infor-­
+mation. The use case repository in this example is the MySQL-created database. The
+
+**Fig. 5** System architecture for business intelligence-based effort estimate
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 10 of 32
+
+estimated effort for the project is computed, and all information is stored in the use
+case repository of the framework. The repository contains all project data, including the
+anticipated duration, actor and use case details, and more. The repository has a substan-­
+tial collection of project data collected over time from several users within the domain
+
+because of its SaaS implementation. After the repository data is entered into the fuzzy
+
+inference system, the fuzzy rules are created for the data. Fuzzy logic is used to estimate
+
+the task.
+
+The fuzzy rules are created using MATLAB's Neurofuzzy engine. As seen in Fig. 5, the
+predictor with a regression analyser is the next piece of software. It makes predictions
+
+using machine learning techniques. To improve accuracy and dependability, regression
+methods are utilized to forecast the effort. The algorithm is used to train the repository
+data, and the fresh project data is used to test and validate the predictions. This regres-­
+sion approach is implemented using a Regression Learner. The system uses Business
+Intelligence (BI) to do a comparative analysis of the repository data on several factors.
+
+For users to understand about the length of time and complexity of projects throughout
+the domain, it offers a variety of reports. The tool for comparison analysis is Microsoft
+Power BI, while the use case repository is updated and maintained using MySQL. The
+effort estimating framework with use case points is implemented in Amazon's public
+cloud as software as a service. This makes it easier for more people to use the framework
+and gather data on different projects that are accessible in different fields. Therefore,
+in addition to estimating project effort, it serves as a reference framework that allows
+developers and managers to compare the estimation of a new project with similar proj-­
+ects in the same area that are stored in the repository. Fuzzy logic and machine learning
+
+techniques assist in forecasting the amount of work needed for the new software project
+when the parameters' values fluctuate quickly. This method may be used by developers,
+project managers, and team leaders who wish to calculate the amount of work needed
+for a new project. The project and domain provide data to the framework. This includes
+the description, domain name, and project name. These are accepted by the framework's
+users. The framework uses the Use Case Point approach (UCP) to assess the effort [18].
+Consequently, the technical and environmental elements needed by the UCP approach
+are provided by system users. The purposed framework to predict the effort estimation
+is based on business intelligence. Here, BI tool is used to intelligently analyse domain
+
+and project information that is received from used case repository.
+
+**5 Reasons for using use case point method**
+
+         Despite the fact that there are other approaches for estimating effort, the UCP
+technique was selected for the framework for the following reasons:
+
+         Numerous technical and environmental difficulties have a direct influence on the
+project's development process from the beginning until its deployment. All of these
+
+elements are included in the UCP calculation algorithm.
+
+         Customers' needs vary regularly in a development process like Agile approach
+
+since the project is periodically deployed [19]. As a result, the project's complexity
+
+and resource availability vary during its many stages of development. Since these
+elements are used in the computation, such modifications may be easily included
+into the UCP technique.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 11 of 32
+
+         A project is often examined by classifying the diverse activities into use cases that
+reflect distinct scenarios. Users can determine the time using the UCP technique by
+counting the number of actors and use cases in each project. This is a noteworthy
+characteristic.
+
+         The majority of projects are now examined using object-oriented ideas. Use cases
+are situations that depict the different tasks that need to be completed. It is simple
+to estimate effort using the UCP technique as it gives the use cases of a system
+greater relevance. The UCP approach is used to estimate the effort in the specified
+framework because of these benefits.
+
+**5.1 Framework for effort estimation**
+To store information on several projects across different domains, the framework cre-­
+ates a use case repository. The framework makes it simple for users to utilize the use
+case point technique to estimate the amount of work needed for a software project. The
+framework's user consents to supply the following data:
+
+*Domain information* The domain name is chosen from the framework's list of available
+domains. If the new domain name cannot be discovered, it is added to the list. Under-­
+standing the different domains that are available in the repository is aided by this.
+
+*Project information* The project's name and a succinct explanation of its nature, goal,
+and scope are approved. The appropriate domain is used to organize the projects. This
+aids in understanding the diverse array of initiatives being produced across all domains.
+
+*Use case information* Each project's use case count and description are taken into
+account by the framework. A use case is a series of actions that demonstrate how vari-­
+ous system components cooperate to achieve a certain goal. The repository contains a
+description and classification of each use case. The use cases are separated into three
+categories: average, complicated, and basic, depending on how many transactions are
+needed to finish each use case [20]. Table 3 contains a list of the use case categorization
+criteria. A use case is often regarded as basic if it has less than five related classes, a sin-­
+gle database entity, and a single interface. If a use case has five to ten related classes and
+more interfaces, it is considered average. If a use case has five to ten related classes and
+more interfaces, it is considered average. If a use case contains more than 10 classes and
+complex user interfaces, it is classified as difficult. The developer determines the settings
+based on these factors.
+
+**Table 3** Classification of use cases and actors
+**S.No.** **Category** **Number of transactions** **Weight**
+
+1 Simple Use Case 1 to 3 5
+(SU)
+
+
+2 Average Use
+Case (AU)
+
+3 Complex Use
+Case (CU)
+
+4 Simple Actor
+(SA)
+
+5 Average Actor
+(AA)
+
+6 Complex Actor
+(CA)
+
+
+4 to 7 10
+
+More than 7 15
+
+1 to 3 1
+
+4 to 7 2
+
+More than 7 3
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 12 of 32
+
+*Actor information* The actor denotes the role played by a user or any system to carry
+out the tasks in the project. The actors' descriptions and roles are accepted by the frame-­
+work. Each actor is then divided into three categories based on the quantity of use cases
+
+linked to them: simple, average, and complicated. Table 3 provides the categorization
+
+criteria for actors. Karner et al. proposed values and criteria for the UCP technique,
+
+which are used to classify use cases, actors, and their weight [21].
+
+*Technical factors* Information on the technology utilized in a project is referred to as a
+technical element. Information on the technical features of the software system's devel-­
+opment is necessary for the UCP technique to function. As a result, details on the proj-­
+ect's technical aspects are accepted by the framework. Each technical factor's value is
+
+provided by the user. Table 3 is a list of the weightage's technical details.
+
+*Environmental factors* Information on the environmental components linked to the
+software development environment is necessary for the use case point method. The val-­
+ues for the environmental elements are entered by the user. Table 4 lists the eight envi-­
+ronmental components together with their corresponding weights. A value between 0
+
+and 5 is assigned to technical and environmental factors. A team with excellent technical
+
+abilities is required to complete development work for an endeavor with a high technical
+
+factor score since it is more technically oriented. Likewise, the project team's exceptional
+ability to execute the development is demonstrated by the high grade for environmen-­
+tal problems. A project's timely and cost-effective completion depends on a number of
+technical and environmental factors. Throughout a project, each of these factors' avail-­
+ability varies according on how the demands evolve. As a result, their worth cannot be
+
+set throughout the project's length.
+
+**5.2 Algorithm for effort estimation**
+The technical and environmental aspects of software development must be taken into
+account in every domain project. A favourable atmosphere and advanced technolo-­
+gies are essential for finishing a project on schedule while meeting all client criteria.
+Therefore, the UCP approach is used to estimate effort in this framework. According
+to Karner, who created the Use Case Points technique, it takes into account eight envi-­
+ronmental and thirteen technological elements [22]. Three factors form the basis of the
+UCP:
+
+**Table 4** Technical factors
+**Sr. no.** **Technical factor** **Weight**
+
+1 Dispersed frameworks 3.0
+
+2 Time of response 2.0
+3 Efficiency of end user 2.0
+
+4 Capabilities of internal processing 2.0
+
+5 Reuse of code 2.0
+
+6 Installation is simple 1.5
+
+7 Can be used easily 1.5
+
+8 Portability 3.0
+
+9 Maintenance 2.0
+
+10 Concurrent/parallel processing 2.0
+
+11 Protection features 2.0
+
+12 Third party access 2.0
+
+13 Training of the end user 2.0
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 13 of 32
+
+         Unadjusted Use Case Points (UUCP)
+
+         Technical Complexity Factor (TCF)
+
+         Environmental Complexity Factor (ECF)
+
+There are eight phases in the process used to estimate a project's duration. The UCP
+variables, use cases, and actors are used to compute the various estimation-related com-­
+ponents in each stage.
+
+**Algorithm** *Step 1:* Determine the UUCW (unadjusted use case weight):
+
+UUCW = X5 + X1 0 + X15  (2)
+
+where X5 is the simple use case, X10 is average use case and × 15 is complex use case as
+described in table-3.
+
+*Step 2:* Determine the Unadjusted Actor Weight (UAW):
+
+UAW = X1 + X2 + X3  (3)
+
+X1 is the number of simple actors, X2 is the average, and X3 is the complex actors.
+
+*Step 3:* The Unadjusted Use Case Point (UUCP) is calculated as
+
+UUCP = UUCW + UAW  (4)
+
+*Step 4:* The impact of the technical and environmental factors on the software develop-­
+ment process is determined by giving each factor a value between 0 and 5, which yields
+the technical and ecological complexity factors. Every technical and environmental fac-­
+tor has a value the manager or developer assigns. Table 4 displays the 13 technical factors
+as recommended by Karner in the UCP method. Calculating the Tfactor(each technical
+factor) and Efactor (each environmental factor)involves using the Karner formula.
+
+T f actor = Σ( weight *∗* value )  (5)
+
+E factor = weight *∗* value  (6)
+
+*Step 5:* The Technical Complexity Factor (TCF) and Environment Complexity Factor
+(ECF) are calculated using the following formula:
+
+T F (3 *.* 6) = 0 *.* 6 + 0 *.* 01 *∗* TCF  (7)
+
+ECF = 1 *.* 4 + ( *−* 0 *.* 03 *∗* EF )  (8)
+
+*Step 6:* As indicated by 8, the UCP is computed using the Eqs. 3, 6, and 7
+
+UCP = TCF *∗* ECF *∗* UUCW  (9)
+
+*Step 7:* Based on previous projects, the Productivity Factor (PF) is the ratio of man-hours
+
+per use case point. Industry experts recommend a value between 15 and 30 if historical
+
+project data are unavailable [23]. In this case, 20 is taken for the calculation.
+
+*Step 8:* The project’s duration, assuming a man works 40 h a week, is calculated as
+follows:
+
+Duration ( in months ) = ( UCP *∗* PF ) */* 40  (10)
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 14 of 32
+
+The framework uses this algorithm to determine how long a project will take. Because it
+makes the estimation task simple, it makes the work of a developer and manager easier.
+
+**5.3 Uploading in use case repository**
+The framework is used to collect information about a project, the domain and its infor-­
+mation, the number of actors and use cases, the description and kind of players and use
+
+cases, the UCP values, and the project length. All of them are kept together in a database
+known as the use case repository. The estimated values are submitted to the framework's
+use case repository when the effort has been calculated. Information submitted by each
+user is added to the repository. As a result, the framework builds an extensive database
+of use case data on several initiatives throughout the field. In a cloud setting, this frame-­
+work is implemented as software as a service. As a result, it offers a broad platform for
+everyone to use the framework for estimating. When a corporation has to produce a
+
+new project, the developer can have the chance to learn about other projects that the
+same company has developed that are comparable. However, it is hard to get informa-­
+tion on the initiatives created by several groups in one location. The use case repository
+was created in order to get around this restriction. It serves as an approachable reference
+
+structure for the administration and development of software.
+
+**5.4 Effort estimation with fuzzy logic**
+
+***5.4.1 Need for fuzzy logic***
+Three distinct situations in the software development process need the use of fuzzy logic
+to estimate work.
+
+*CASE 1* It is typical in software development environments for the resources that
+
+are originally accessible to be unavailable until the conclusion of the process. Over the
+course of the software development process, the original values allocated to the tech-­
+nical and environmental aspects would often alter. Additionally, there may be circum-­
+stances in which a factor's value cannot stay the same and may change as a result of
+modifications to a project's scope [24]. The given values will have fuzzy features in cer-­
+tain situations.
+
+*CASE 2* Agile software development technique has also been embraced by other soft-­
+ware industries. In an agile process, client happiness is given first priority. As a result,
+the software product must be deployed often. The customer may often modify the
+requirements after evaluating the product, which might alter the project's scope. The
+project scope will thus alter in accordance with these modifications in requirements as
+the values allocated to technical and environmental elements will change as a result.
+
+Fuzzy logic is required in these circumstances to resolve the problem.
+
+*CASE 3* In many cases, the developer may not be able to determine whether the
+
+resources at hand satisfy the demands of the customer. Consequently, the information
+on the project's progress will not have any consistent value. The values given to technical
+and environmental elements in the first project phase will thus be erroneous. As a result,
+the estimation made during the software development process utilizing the starting
+numbers will not be precise. This may result in variations in the time required to com-­
+plete the software development process. As a result, it would cause issues with resource
+
+allocation and optimization. Fuzzy logic and fuzzy algorithms are utilized for estimate
+
+in order to get around these problems. One method for expressing and working with
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 15 of 32
+
+ambiguous data is fuzzy logic [25]. By taking into account the frequent variations in the
+values of the elements used for software development, this offers an accurate estimate.
+
+There are numerous other techniques are available for estimation but GPR and fuzzy
+logic is the promising due to their capacity to manage uncertainty and intricate connec-­
+tions. This is especially true when working with imprecise or noisy data. As a probabilis-­
+tic approach, GPR offers a distribution of potential results together with an uncertainty
+level, which aids in decision-making. The interpretability and flexibility of models can be
+improved by fuzzy logic's capacity to represent imprecise information, particularly when
+
+working with linguistic or subjective inputs. GPR provides a probabilistic framework
+for prediction with uncertainty quantification. Their combined use, as seen in hybrid
+approaches like FL-GPR, can lead to more robust and accurate models, especially in sit-­
+uations where data is noisy, incomplete, or subject to vagueness.
+
+
+***5.4.2 The proposed fuzzy model***
+There are three distinct stages to the fuzzy model used in this study.
+
+Phase 1: Data from the repository is fuzzified. The initial stage of a fuzzy inference sys-­
+tem's process is called fuzzification. It involves transforming the precise input value. The
+fuzzy system uses the data from the use case repository as input. The kinds of param-­
+eters required for evaluation are chosen. The data set identifies the range of values.
+
+Phase 2: Fuzzy rule evaluation—The parameters are given linguistic variable names,
+and evaluation rules are established. It provides a detailed explanation of the rules
+defined for this work. The system frames the rules according to the evaluation formula.
+
+These rules form the input to the fuzzy inference engine to evaluate the rules and pro-­
+duce the output.
+
+Phase 3: Defuzzification—For the clear input data in the data set, it generates output
+that can be measured. The method used to assess the rules is used to determine the out-­
+comes once the membership functions are mapped into the system for the input data.
+
+**Algorithm** The next section explains the fuzzy logic effort estimation algorithm:
+
+Step-1: take the necessary input data out of the use case repository.
+
+Step-2: create fuzzy rules for the data that was taken out.
+
+Step 3: To make the rules more clear, provide the linguistic variable.
+
+Step 4: Choose the inference system's fuzzy algorithm.
+
+Step 5: Use the chosen algorithm to train the input data set.
+
+Step 6: Choose the test data to be tested using the selected algorithm.
+
+Step 7: Use test data to apply the algorithm.
+Step 8: Estimate the effort based on the test results provided.
+
+**5.5 Experimental analysis**
+The eight phases of the method described in the Need for Fuzzy Logic paragraph are
+implemented in this section. MATLAB is used for the implementation.
+
+Step 1: This system uses the Neuro fuzzy engine to extract the expected length 9 of
+all projects across all domains, as well as the values of all technical and environmental
+
+parameters from the use case library.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 16 of 32
+
+Step 2: Fuzzy rules are created using MATLAB. To evaluate the rules and provide the
+results, the Mamdani Fuzzy system is selected. The intricacy of the project and its
+anticipated time are determined by the way the rules are drafted. The fuzzy engine
+chooses the Mamdani system, which has two inputs and one outputs, to determine
+the complexity of the system to be produced. The project's duration was determined
+using the Mamdani Fuzzy system, which has three inputs and one output. Project
+
+completion time is impacted by changes in environmental and technological factors.
+The duration is approximated as an output based on the three inputs: the Use Case
+Points, technical parameters, and environmental conditions.
+
+Step 3: To make the system easier to grasp, linguistic variables are established in the
+
+rules. Assuming a maximum value for each technical and environmental element
+
+allows for the consideration of the maximum value.
+
+TF denotes technical factor, and the maximum value is considered as 65.
+
+         low range 0 to 35
+
+         high range 36 to 65 EF denotes environmental factors, and the maximum value is 40.
+
+         low range 0 to 20
+
+         high range 21 to 40
+
+Duration denotes the number of months.
+
+         short range 1 to 25
+
+         long above 25
+
+The size of the project is described based on the value of UCP as follows:
+
+         The size is considered very small if the UCP is below 500.
+
+         The size is considered small if the UCP is 501–901.
+
+         The size is considered medium if the UCP is in the range 902–1300.
+
+         The size is considered large if the UCP is above 1300. Similarly, the EF and TF values
+are categorized as follows:
+
+          EF is considered as very low if EF value is below 15
+
+          EF is considered as low if EF value is in the range 15–25
+
+          EF is considered as high if EF value is in the range 26–40
+
+          TF is considered as very low if the TF value is below 15
+
+          TF is considered low if the TF value is in the range 16–36
+
+          TF is considered as high if the TF value is in the range of 37–65
+
+There are eight environmental factors and 13 technical factors. Each factor can be
+assigned a maximum weightage of 5 each; hence, the maximum total value of EF is 40
+
+and TF is 65. Using Fuzzy rules and fuzzy logic, the duration of a project is estimated.
+The linguistic variables assigned for understanding the duration in simple terms are
+as follows. Duration is considered very short if the estimated duration is less than
+
+14 months. Duration is considered as short if the estimated duration is in the range
+
+of 15 to 25 months. Duration is considered as long if the estimated duration is in the
+
+range of 26 to 36 months. Duration is considered very long if the estimated duration is
+
+above 36 months. Accordingly, the fuzzy rules for three input and one output system are
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 17 of 32
+
+**Table 5** Environmental factors
+**Sr. no.** **Environmental factors** **Weight**
+
+1 Familiarity with development process used 2.5
+
+2 Application experience 1.5
+
+3 The team’s experience with object-oriented programming 2.0
+
+4 Lead Analyst capability 1.5
+
+5 Team motivation 2.0
+
+6 Stability of requirement 3.0
+7 Staff for part-time − 2.0
+
+8 Programming languages − 2.0
+
+**Table 6** Factors to know about the complexity of a project
+
+**CU** **EF** **TF** **Complexity**
+
+Low Very low Very low Less
+
+Medium Low Low Average
+
+High High High More
+
+framed as follows. The project will take a very short time if the size, EF, and TF are all
+very small. The project will take a very short time if the size, EF, and TF are all very small.
+
+For CASE 1, 36 rules are therefore outlined in the system. They comprise the collec-­
+tion of rules the system’s implementation code uses. The fuzzy system uses the reposi-­
+tory as its dataset. MATLAB code defines the membership functions for each variable in
+each of the four situations [26]. The membership functions for the three input variables
+and the one output variable the system defines are defined using the triangle member-­
+ship function. CASE 2: To know about the complexity of a project based on complex use
+cases (CU), TF, and EF values. Table 5 shows the factors used to determine the complex-­
+ity of a project.
+
+Based on these factors, the fuzzy rules are framed as follows: There is less complexity if
+(CU is low), (EF is extremely low), and (TF is very low). There is less complexity if (CU is
+low), (EF is extremely low), and (TF is low). There is less complexity if (CU is low), (EF is
+extremely low), and (TF is large). There is less complexity if (CU is low), (EF is low), and
+(TF is very low). There is less complexity if (CU is low), (EF is low).
+
+The fuzzy system makes use of these 27 rules. It contains one output variable termed
+complexity and three input variables: CU, EF, and TF. The triangle membership function
+defines the membership functions for every input and output variable.
+
+**6 Results and discussion**
+The project information for 250 projects that are kept in the use case repository make
+up the data collection. It is trained to determine the duration and difficulty of the proj-­
+ect using the membership characteristics. The test data contains information on a new
+project. The system receives the UCP, TF, and EF for new projects as input. The fuzzy
+inference engine's triangle membership function is used by the system to forecast how
+long the project will take. The many domains that are taken into account in this work are
+listed in Table 6. For various projects, it contains the TF, EF, and UCP. The parameters
+considered to predict the project's length are included in Table 7. Details on 250 initia-­
+tives across 10 different areas are included in the data collection. The repository for each
+topic is updated with information about different initiatives. This constitutes the initial
+8.
+dataset. The data set is shown in Table
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 18 of 32
+
+**Table 7** Factors to estimate duration with fuzzy logic
+
+**Size** **EF** **TF** **Duration**
+
+Very small Very low Very low Short
+
+Small Low Low Short
+
+Medium High High Long
+
+– –
+Large Very Long
+
+**Table 8** Datasets from the repository
+
+**Domain** **Project** **EF** **TF** **UCP** **Duration**
+
+E-commerce 1 10 39.5 1613.293 45
+
+Automation 2 7 44.5 206.4293 6
+
+E-commerce 3 12 26.5 571.246 16
+
+Network security 4 13 33.5 230.4214 6
+
+Network security 5 17.5 48.5 555.3844 15
+
+E-commerce 6 15.5 52 923.6304 26
+
+Automation 7 16.5 50.5 1126.028 31
+
+Banking 8 16.5 52 624.3776 17
+
+Network security 9 13 47.5 644.9355 18
+
+Network security 10 13.5 49.5 745.2351 21
+
+**Fig. 6** Mamdani system for CASE 1
+
+**6.1 Results for Case 1**
+The Mamdani system created for CASE 1, is displayed in Fig. 6. The duration is the out-­
+put, while the inputs are Size, EF, and TF. 36 rules are used by the three input and one
+output systems to create the output. The output system created for CASE 1 is displayed
+in Fig. 7. It displays the results according to the technical, environmental, and project
+
+size variables. In MATLAB, it may be displayed in any dimension. It is referred to as
+
+the fuzzy inference system's output surface diagram. Figure 8 displays the rule view for
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 19 of 32
+
+**Fig. 7** Results for Case No. 1
+
+**Fig. 8** Mamdani system for CASE 2
+
+CASE 1 produced by the fuzzy inference algorithm. It is employed to observe the fuzzy
+
+system's whole implication process for every rule.
+
+The slider can be moved to view the output for varying input values.
+
+**6.2 Results for Case 2**
+Figure 9 displays the rule view and results produced for CASE 2. The graphic is pro-­
+duced by the Mamdani system using 27 fuzzy rules that have been designed specifically
+for the system. The algorithm calculates the project's complexity based on inputs such
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 20 of 32
+
+as the quantity of complicated use cases, technological considerations, and environ-­
+mental variables. Complex usage situations, as well as technological and environmental
+
+concerns, are taken into consideration while creating the surface diagram. Giving the
+MATLAB commands in the command window produces this. The slider makes it easier
+to examine how the output varies for various input data value ranges. The CASE 2 rule
+perspective aids in understanding how complexity varies depending on evolving compli-­
+cated use cases, contextual elements, and technical factors.
+
+**7 Prediction with regression analysis**
+
+**7.1 Need for regression analysis**
+
+Certain technical and environmental elements cannot have their values determined in
+the first step of the UCP method effort prediction for software projects [14] asserts that
+while values are preset, they can alter and will not stay constant during the development
+process. The first effort value assessment may thus be inaccurate. With this estimate, it
+is hard to allocate resources, create a budget, and schedule everything exactly. There-­
+fore, in this instance, machine learning techniques are used to calculate the effort [27].
+Regression analysis is the favoured method because it uses a range of machine learning
+techniques to predict an output variable (y) based on one or more predictor variables (x)
+
+[28]. The other input data in the repository must be used to forecast the project's dura-­
+tion, the task's output variable. Regression analysis is the method of choice. For predic-­
+tion, the Gaussian Process Regression technique was selected that was an appropriate
+
+and best suited option.
+
+**7.2 Regression analysis is typically applied to forecasting and prediction methods.**
+It is advantageous to comprehend the relationship between independent and depen-­
+dent variables. To investigate the effects of modifications to the dependent variables,
+regression analysis can be employed. Regression statistics may be used to forecast the
+
+value of the dependent variable when the value of the independent variable is known. A
+
+**Fig. 9** Output for CASE 2
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 21 of 32
+
+quantitative research technique for modelling and examining several variables is regres-­
+sion analysis.
+
+Algorithm for Gaussian process regression
+
+*Step 1:* Import the use case repository with 250 project information from the frame-­
+work.
+
+*Step 2:* Bring the data set into a table with every column.
+
+*Step 3:* Choose the response variable to be the duration column.
+
+*Step 4:* Choose the predictor variables from the remaining columns.
+
+*Step 5:* Utilize GPR kernel functions to train the dataset.
+
+*Step 6:* Install the testing data set into the system after choosing it.
+
+*Step 7:* Execute the model to see the test data forecast.
+
+The following kernel functions are utilized to create the algorithm:
+
+         Squared Exponential Gaussian Process Regression
+
+         Rational Quadratic Gaussian Process Regression
+
+         Gaussian Process Regression Maternal 5/2
+
+         Gaussian Process Regression on an Exponential Basis
+
+This section shows the results generated in MATLAB by using the following kernel func-­
+tions of GPR:
+
+         Rational Quadratic Gaussian Process Regression
+
+         Squared Exponential Gaussian Process Regression
+
+         Matern 5/2 Gaussian Process Regression
+
+         Exponential Gaussian Process Regression
+
+The following three types of plots are generated for each of these four kernel functions
+of GPR:
+
+         Response plot
+
+         Predicted Vs Actual effort
+
+         Residuals plot.
+
+Figure 10 shows the original dataset which is the training dataset.
+
+The training dataset contains 250 records. This shows the duration in months as plot-­
+ted value for the 250 records.
+
+**7.3 Response plots**
+The response plot for Rational Quadratic GPR is represented in Fig. 11. In all these
+response plot, the blue colored plots represent the original value and the brown color
+plots represent the predicted value. The affinity of the blue and the brown circle shows
+the accuracy of prediction.
+
+The response plot for the squared exponential GPR is shown in Fig. 12. The response
+plot shows very mild variations when compared with the rational quadratic GPR.
+
+Figure 13 shows the response plot for the kernel function Matern 5/2 GPR. The results
+are captured in regression learner in MATLAB.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 22 of 32
+
+**Fig. 10** The training dataset
+
+**Fig. 11** Response plot—rational quadratic GPR
+
+**Fig. 12** Response plot—squared exponential GPR
+
+The response plot for the fourth GPR kernel function which is Exponential GPR is
+shown in Fig. 14. These shows the duration as a response to the other input predictor
+variables used in dataset.
+
+**7.4 Predicted vs actual plots**
+The following graphs show the predicted Vs actual plot for each of the four kernel
+functions of GPR. Figure 15 shows the predicted Vs actual plot generated for Rational
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 23 of 32
+
+**Fig. 13** Response plot—Matern 5/2 GPR
+
+**Fig. 14** Response plot—exponential GPR
+
+**Fig. 15** Predicted vs actual—rational quadratic GPR
+
+quadratic GPR. The graph shows the plot between the actual duration in months and the
+predicted duration in months for the data set.
+
+The graph in Fig. 16 shows the plot against the actual duration and predicted duration
+using Squared Exponential GPR.
+
+The x -axis and y-axis shows the duration in months. Figure 17 shows the plot against
+the actual and estimated duration using Matern 5/2 GPR.
+
+The third kernel function is the exponential function. The generated graph is shown
+in Fig. 18. This shows the plot between predicted response and actual response in GPR.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 24 of 32
+
+**Fig. 16** Predicted vs actual—squared exponential GPR
+
+**Fig. 17** Predicted vs actual—Matern 5/2 GPR
+
+**7.5 Residual plots**
+The graphs in this section shows the residual plots generated for the four kernel func-­
+tions used in GPR. The graph in Fig. 19 shows the residual plot for Rational Quadratic
+GPR.
+
+20.
+The residuals generated using squared exponential GPR is represented in Fig.
+In all these graphs, the x-axis shows the actual response and the y axis shows the resid-­
+uals in number of months It is a plot against the true response and the residual. The
+graph in Fig. 21 shows the residuals generated for the kernel function for the Matern
+5/2 in GPR. These plots show the variations in the differences between the actual and
+estimated fit.
+
+The graph in Fig. 22 shows the residual plot for Exponential GPR. The dispersion of
+the plotted values shows the residuals in all these graphs. These plots show the duration
+of the various projects based on the repository information that is given as trained data
+in the GPR. All these plots are generated based on 5-folds cross-validation. This helps
+to partition the dataset in 5 folds and avoids overfitting of data by estimating accuracy
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 25 of 32
+
+**Fig. 18** Predicted vs actual—exponential GPR
+
+**Fig. 19** Residuals—rational quadratic GP
+
+**Fig. 20** Residuals—squared exponential GPR
+
+in each fold. The estimated duration that are generated for 10 different new projects by
+using these 4 different kernel functions of GPR are given in Table 9.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 26 of 32
+
+**Fig. 21** Residuals—Matern 5/2 GPR
+
+**Fig. 22** Residuals—eponential GPR
+
+
+**Table 9** Estimated effort using GPR kernel functions
+
+**.S.No.** **Rational quadratic (in**
+**months)** **(in months)**
+
+
+**.S.No.** **Rational quadratic (in** **Squared exponential** **Matern 5/2 (in** **Exponen-­**
+**months)** **(in months)** **months)** **tial (in**
+
+**months)**
+
+1 10.53503228 10.57591314 10.49829645 10.4440278
+
+2 4.59496778 4.556300618 4.640255422 4.758457179
+
+3 5.584013368 5.555016769 5.654240917 5.891447786
+
+4 8.183916454 8.180055952 8.15073931 7.841738971
+
+5 16.57333523 16.53201322 16.57655821 17.40246242
+
+6 14.46372977 14.60575623 14.33531108 14.57117794
+
+7 12.60312698 12.65923053 12.56093271 12.66638208
+
+8 14.01391627 13.97051309 14.05805172 14.43202603
+
+9 11.1835617 11.21679888 11.16420191 11.07101155
+
+10 4.24627015 4.190521561 4.252583735 4.602425506
+
+
+**Squared exponential**
+**(in months)**
+
+
+**Matern 5/2 (in**
+
+**months)**
+
+
+**7.6 Validating the prediction**
+The estimated values by using the GPR process are validated for error and accuracy using
+the four popular validation metrics used in analysis and prediction. They are RMSE, R
+Squared, MSE and MAE. The values obtained are shown in Table 10. A brief description
+of the metrices is given below.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 27 of 32
+
+**Table 10** Validation metrics for repository dataset
+
+**S. No.** **Regression algorithm** **RMSE** **R Squared** **MSE** **MAE**
+
+1 Rational quadratic GPR 0.88 0.99 0.77 0.76
+
+2 Squared exponential GPR 0.97 0.98 0.94 0.69
+
+3 Matern 5/2 GPR 0.90 0.99 0.81 0.67
+
+4 Exponential GPR 0.91 0.99 0.84 0.67
+
+Mean Squared Error (MSE) cost function, which is the average of squared error
+
+occurred between the predicted values and actual values. It can be written as:
+
+For the above linear equation, MSE can be calculated as:
+
+
+MSE = 1 [1]
+
+N
+
+
+n
+∑
+
+i =1
+
+
+( y i *−* ( a 1 x i + a o )) [2]
+
+
+where, N = total number of observation.
+
+Yi = Actual Value (a1x i + a 0 ) = Predicted value.
+R-squared method: R-squared is a statistical method that determines the goodness of
+fit. It measures the strength of the relationship between the dependent and independent
+variables on a scale of 0–100%. The high value of R-square determines the less difference
+between the predicted values and actual values and hence represents a good model. It
+is also called a coefficient of determination, or coefficient of multiple determination for
+multiple regression. It can be calculated from the below formula:
+
+
+R - squared = [Ex] [p] [lained variation]
+
+Total variation
+
+
+Mean Absolute Error (MAE): The average size of errors between expected and actual
+effort values is measured by the Mean Absolute Error (MAE). It's a straightforward but
+efficient method of evaluating an estimating model's correctness. Since the average dif-­
+ference between the expected and actual effort is smaller, a lower MAE denotes a more
+accurate model. This shows only a minor error rate while using GPR kernel functions
+
+[29]. This has proved that this method provides accurate estimation using this regres-­
+sion method. The predicted results are compared with the value estimated using UCP
+method. A sample of 25 projects are compared and the compared values are listed in
+
+Table 11 11.
+. The table containing both the values after comparison is listed in Table
+The values in the table shows only a minor difference between effort estimated using
+UCP method and the effort estimated using regression technique. Hence it is proved
+that GPR techniques can be used in cases where all the development factors required for
+software development are not known in advance. To further validate the process, Desh-­
+marais – the public dataset is considered for estimation. The training dataset is tested
+with Deshranais dataset to validate the prediction. Deshranais dataset is a PROMISE
+
+Software Engineering Repository Dataset. It is available for public use in the Internet.
+It encourages repeatable, verifiable and improvable predictive models of software engi-­
+neering. Deshranais Dataset contains information about 81 projects. The description of
+the dataset is given below in tabular format in Table 12.
+
+The estimated duration for Deshranais dataset using GPR is shown in Table 13. The
+actual effort of projects as specified in Deshranais dataset and the estimated effort using
+the regression learner are shown in the table. The results are validated with the pop-­
+ular validation metrics—RMSE, R Squared, MSE and MAE. The validation metrics on
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 28 of 32
+
+
+**Table 11** Comparison of estimation with UCP method and regression technique
+**S.No.** **UCP** **Regression tech-­** **S.No.** **UCP**
+**method (in** **nique (in months)** **method (in**
+**months)** **months)**
+
+
+**Regression tech-­**
+**nique (in months)**
+
+
+**S.No.** **UCP**
+
+**method (in**
+
+**months)**
+
+
+**S.No.** **UCP** **S.No.** **UCP** **Regression**
+**method (in** **nique (in months)** **method (in** **technique**
+**months)** **months)** **(in months)**
+
+1 11 11.24538143 26 6 5.855940377
+
+2 5 5.211817614 27 14 13.70161747
+
+3 7 6.796905758 28 12 11.71261026
+
+4 9 8.71083814 29 4 3.905250851
+
+5 18 18.47785553 30 7 6.616525702
+
+6 15 14.73863719 31 9 8.733550786
+
+7 14 13.71963862 32 17 17.29296052
+
+8 13 13.37669935 33 14 13.771915
+
+9 12 12.19333952 34 14 13.65566532
+
+10 5 4.889687735 35 13 12.73793015
+
+11 7 7.499393251 36 12 11.84699486
+
+12 9 8.762786239 37 4 4.409793923
+
+13 5 4.769136566 38 7 6.752353954
+
+14 8 8.073525147 39 9 8.644769443
+
+15 8 8.476470186 40 4 3.832006544
+
+16 7 7.045397566 41 5 5.142936472
+
+17 7 7.275234228 42 8 8.252270206
+
+18 13 13.42620526 43 5 5.360419543
+
+19 13 13.21051072 44 8 8.470777062
+
+20 11 11.42341102 45 15 15.42232969
+
+21 11 11.33666524 46 14 14.08640368
+
+22 13 13.34124792 47 8 8.287300961
+
+23 13 12.7703283 48 17 16.99094155
+
+24 5 4.948217415 49 16 15.98513147
+
+25 6 5.855940377 50 15 14.7170628
+
+
+**Table 12** Deshranais dataset description
+
+**Feature** **Description** **Data type**
+
+TeamExp Experience level of the project team Numeric
+
+ManagerExp Experience level of the project manager Numeric
+
+YearEnd Year the project was completed Numeric
+
+Transactions Number of transactions processed Numeric
+
+Entities Number of entities in the system Numeric
+
+PointsAdjust Adjusted function points Numeric
+Envergure Environmental factors affecting the project Numeric
+
+Language Programming language used Ordinal
+Effort Actual effort in person-hours Numeric
+
+Deshranais dataset are shown in Table 14. These metric values reveal the accuracy in
+estimation.
+
+**8 Comparative analysis with business intelligence**
+
+**8.1 Need for comparative analysis**
+The methods and resources necessary for an organization's strategic planning process
+are referred to as business intelligence (BI). Gathering and analyzing data for use in
+
+decision-making is its main goal. Its primary goal is to glean pertinent information from
+an organization's unprocessed data in order to facilitate accurate decision-making. The
+many processes involved in applying business intelligence are delineated in the following
+
+algorithm:
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 29 of 32
+
+
+**Table 13** Validation with Deshranais dataset
+
+**S.No.** **Actual duration**
+
+**(in months)**
+
+
+**S.No.** **Actual duration** **Estimated dura-­** **S.No.** **Actual duration** **Estimat-­**
+**(in months)** **tion (in months)** **(in months)** **ed dura-­**
+
+**tion (in**
+
+**months)**
+
+1 12 11.1 34 5 5.3
+
+2 4 5.8 35 3 2.8
+
+3 1 1.6 36 17 17.4
+
+4 5 5.3 37 11 11.2
+
+5 4 4.1 38 8 7.3
+
+6 4 4.0 39 4 4.6
+
+7 9 10.8 40 16 16.2
+
+8 13 14.0 41 9 9.1
+
+9 12 11.7 42 34 34.2
+
+10 4 4.5 43 10 10.2
+
+11 21 22.1 44 39 39.5
+
+12 17 18.2 45 18 18.2
+
+13 3 3.6 46 27 27.2
+
+14 8 8.4 47 9 9.1
+
+15 9 9.0 48 11 11.1
+
+16 8 8.1 49 8 8.2
+
+17 8 8.4 50 9 9.1
+
+18 14 14.1 51 7 7.2
+
+19 14 14.2 52 6 6.2
+
+20 5 5.2 53 17 17.3
+
+21 12 12.3 54 12 12.3
+
+22 18 18.3 55 12 12.3
+
+23 5 5.2 56 13 13.2
+
+24 20 20.2 57 12 12.8
+
+25 8 8.1 58 8 8.5
+
+26 14 14.1 59 5 5.3
+
+27 6 6.2 60 6 6.3
+
+28 14 14.2 61 12 12.0
+
+29 16 16.2 62 6 6.4
+
+30 14 14.0 63 5 5.8
+
+31 6 6.2 64 13 13.4
+
+32 9 9.3 65 8 8.0
+
+33 9 9.9 66 10 10.7
+
+67 15 15.3 75 22 21.8
+
+68 6 6.7 76 24 23.8
+
+69 5 5.3 77 12 12.4
+
+70 10 10.6 78 12 12.8
+
+71 6 6.4 79 24 24.7
+
+72 13 13.5 80 12 12.1
+
+73 26 26.2 81 36 36.2
+
+74 6 6.2
+
+
+**Estimated dura-­**
+**tion (in months)**
+
+
+**S.No.** **Actual duration**
+
+**(in months)**
+
+
+**Table 14** Validation metrics for Deshranais dataset
+
+**S.No** **Regression algorithm** **RMSE** **R Squared** **MSE** **MAE**
+
+1 Rational quadratic GPR 0.3 1.0 0.09 0.26
+
+2 Squared exponential GPR 0.36 1.0 0.13 0.29
+
+3 Matern 5/2 GPR 0.36 1.0 0.13 0.29
+
+4 Exponential GPR 0.39 1.0 0.15 0.27
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 30 of 32
+
+***Algorithm*** **:** *Step 1:* Import the data set that contains the project information for analysis.
+
+*Step 2:* Select the criteria for analysis.
+
+*Step 3:* Select the type of chart needed for analysis.
+
+*Step 4:* Generate the chart and compare the information with the new project details.
+
+**8.2 Need for business intelligence**
+
+In order to compare a project on criteria other than length alone, business intelligence is
+required. The following reasons make business intelligence necessary:
+
+         It boosts operational efficiency and expedites and enhances the decision-making
+
+process.
+
+         It serves as a manual for new managers and developers; • It assists in identifying risk
+
+factors in the decision-making process; and • It optimizes the allocation of resource.
+
+**8.3 Analysis with environmental factors**
+The domains with high and low values for the parameter familiarity with the develop-­
+ment process are displayed in this study. This gives the developer a chance to think about
+whether the new project team is used to the development process or if more training is
+
+needed. As a result, it gets the team ready for every stage of the project's development.
+The greatest and lowest values in each domain are obtained by adding the values allo-­
+cated to each project in that domain.
+
+**8.4 Analysis with technical factors**
+
+Each of the 13 technical criteria is examined independently according to a project and
+a domain. This demonstrates how the different technological elements affect the devel-­
+opment process. Certain projects rely on dispersed systems, where the processes or
+resources required for calculation and execution are scarce in distant systems. They are
+used in all project execution procedures. One technical consideration while determining
+a project's use case points is the distributed system need. Information about the proj-­
+ects and domains where this parameter is particularly relevant and taken into consider-­
+ation is provided by the chart that is created based on it [30]. The speed at which user
+inquiries are answered also affects the software's efficacy and quality. Response time is
+the speed at which the program reacts to user inquiries. In certain applications, such as
+
+online banking transactions, the software's reaction time is negligible. As a result, this
+
+domain-wide study aids in determining which project areas and where reaction time is
+
+important. As a result, the project manager may focus more on modules that address
+customer inquiries and situations in which users might need a prompt answer. Addition-­
+ally, it suggests that testing for smoke, stress, peak load, and regression should be more
+efficient [31]. It ought to be carried out for initiatives within the domain that demon-­
+strate how important user response time is. For instance, to preserve the device's and
+
+software's quality and dependability, an automobile's automated door opening from
+a distance must be instantaneous and rapid. Therefore, by contrasting the new project
+with other projects in the same field, this study aids in understanding the importance of
+the reaction time.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 31 of 32
+
+**9 Conclusions**
+
+In proposed framework, the developed referential framework achieved an improvement
+of 89% in estimation accuracy through the application of fuzzy logic, and 92% enhance-­
+ment using machine learning techniques like Gaussian Process Regression, in compari-­
+son to conventional models such as Use Case Point (UCP), COCOMO, and expert-based
+methods. These improvements were confirmed using standard evaluation metrics,
+including RMSE and MAE, on benchmark datasets like the Desharnais dataset. By
+
+incorporating business intelligence tools like Microsoft Power BI, the framework enables
+
+comprehensive, multi-dimensional analysis of historical project data, thus supporting
+informed decision-making and optimized resource planning. Furthermore, its deploy-­
+ment on AWS as a Software-as-a-Service (SaaS) platform ensures broad accessibility and
+
+supports both B2B and B2C use cases. Its compatibility with Agile practices, capability
+
+to manage incomplete or uncertain data, and intuitive interface position this framework
+as a substantial advancement over traditional estimation models. It stands out as a reli-­
+able and scalable solution for software effort estimation across diverse domains.
+
+**10 Limitations of the study**
+This approach is particularly suitable for agile development settings, where the scope
+of the software is subject to change with each iteration. It efficiently accommodates
+frequent modifications, which are common in agile practices. Nevertheless, it depends
+exclusively on the Case Point method for effort estimation. This dependence may restrict
+its adaptability and accuracy, especially in varied or mixed development environments.
+Relying solely on Case Points might not adequately reflect the complexity of certain
+projects. Consequently, the estimation may become less precise in large-scale or non
+agile systems.
+
+**11 Future Scope**
+In software engineering, risk management and identification are equally important
+duties. Time, effort, resources, and money may be saved by identifying the risks early
+in the software development process. Therefore, in the future, this framework may be
+expanded to include the necessary attributes, which can aid in risk identification using
+machine learning methods. The framework may be a clever, intelligent forecasting and
+estimate system that can recognize the risks that are most likely to materialize and give
+
+out alarm signals in a timely manner so that preventative measures may be taken.
+
+**Author contributions**
+
+Pankaj Bhambri—contribute in Introduction and Literature review. Ritu—contribute in methodology, Implementation,
+result and discussion.
+
+**Funding**
+There is no funding for this research.
+
+**Data availability**
+The datasets generated during and/or analysed during the current study are available from the corresponding author on
+reasonable request.
+
+**Declarations**
+
+**Ethics approval and consent to participate**
+Not applicable.
+
+**Competing interests**
+The authors declare that they have no conflict of interest.
+
+
+Ritu and Bhambri *Discover Computing* (2025) 28:143 Page 32 of 32
+
+Received: 25 October 2024 / Accepted: 24 June 2025
+
+**Publisher's Note**
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.

@@ -1,0 +1,16 @@
+Based on the research paper "Machine learning based software effort estimation using development-centric features for crowdsourcing platform," the predictors used for estimating web application effort are:
+
+1. **Application Type (APPT)**: This predictor categorizes the type of application being developed, with higher ordinal levels assigned to more complex applications (desktop and mobile apps) and nominal to low ordinal levels assigned to smaller-scale websites and APIs.
+2. **Developer Experience (EXPR)**: This predictor calculates the experience of the developer in performing tasks of TopCoder development category, with numerical values assigned as duration (in years) between the first submitted task and the latest submitted task by the developer in development category.
+3. **Quality of Work Produced (RATN)**: This predictor examines the quality of work produced by the developer in previous tasks, with ratings ranging from 0 to 1972.
+4. **Technology/Language Tool Score (TSCR)**: This predictor matches the technologies/languages/tools required for the task with the developer's skills and assigns a score accordingly.
+5. **Number of Submissions Made (NSUB)**: This predictor counts the total number of submissions made by the developer, indicating the developer's analysis ability and thoroughness of implemented code.
+6. **Language Required (NoLN)**: This predictor identifies the number of languages required to develop a particular task, with a higher number indicating more complex tasks.
+7. **Programming Language Complexity (PRLN)**: This predictor assesses the complexity of programming languages required for development, with newer-generation languages offering more built-in libraries and automated functions, thus improving development efficiency and reducing effort.
+8. **Tools Needed (TOOL)**: This predictor considers the sophistication level of tools required for the task, with modern tools providing built-in functionalities and easing development.
+9. **Constraints Imposed (CNST)**: This predictor accounts for constraints imposed during development or deployment processes, such as design, platform, or environment constraints, which affect development effort.
+10. **Artifacts Provided (ASST)**: This predictor investigates the facilitation level provided by documents/artifacts posted with the task, with higher levels indicating more helpful assistance.
+11. **Deliverables Required (DLVB)**: This predictor considers the overhead created due to deliverables required to submit at the end of the task, with higher numbers indicating more extensive documentation.
+12. **Lines of Code (LOC)**: This predictor uses the size of the software in lines of code to calculate the task size, assuming longer programs require more effort.
+
+These predictors were tested using multiple linear regression, non-linear regression, support vector machines, and other machine learning techniques to estimate the effort required for web application development tasks on the TopCoder platform.

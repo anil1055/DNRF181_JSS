@@ -1,0 +1,775 @@
+# A Novel Artificial Neural Network Approach for Predicting Development Effort Using Use Case Points
+
+Nandagopal Parise
+*nandagopalparise@gmail.com*
+
+
+***Abstract*** **—Accurate software development effort estimation is**
+**vital to prevent budget overruns, missed deadlines, and project**
+**failures. This study introduces an Artificial Neural Network**
+**(ANN) model that leverages the Use Case Points (UCP) ap-**
+**proach to estimate effort during early development stages. By**
+**incorporating project size, productivity, and a novel complexity**
+**metric, the ANN model outperforms traditional regression and**
+**UCP methods, achieving 8% and 50% lower Mean Magnitude of**
+**Error Relative to the Estimate (MMER), respectively. The results**
+**highlight the ANN model’s robustness and accuracy as a reliable**
+**tool for early effort estimation.**
+
+I.. I NTRODUCTION
+
+Software development effort estimation is a crucial aspect of
+project planning and management. Accurate estimation helps
+in resource allocation, budgeting, and scheduling, thereby
+reducing the risks associated with project failures. Various estimation models have been proposed over the years, including
+expert judgment, algorithmic models, and machine learningbased approaches [ **?** ], [1]. Among these, machine learning
+methods have gained significant attention due to their ability
+to capture complex relationships between effort estimation
+
+parameters.
+In recent years, artificial neural networks (ANNs) have
+emerged as a promising approach for effort estimation, leveraging their ability to learn from historical data and adapt to different software project environments [2]. The Use Case Points
+(UCP) method, which is widely used in software engineering,
+provides a structured way to estimate development effort based
+on functional requirements [ **?** ]. However, traditional UCPbased models often suffer from limitations related to parameter
+tuning and adaptability to varying project characteristics.
+This paper proposes a novel ANN-based approach to predict
+software development effort using UCP. The proposed model
+enhances estimation accuracy by integrating key features of
+UCP with deep learning techniques. Our approach is evaluated
+using benchmark datasets, and its performance is compared
+with traditional estimation models.
+
+II.. R ELATED W ORK
+
+Effort estimation in software engineering has been extensively studied, with various methodologies proposed over the
+decades. Traditional methods include algorithmic models such
+as COCOMO [ **?** ], function point analysis [ **?** ], and UCP [ **?** ].
+These models rely on predefined mathematical formulas and
+expert-calibrated parameters.
+
+
+Machine learning-based effort estimation has gained traction
+due to its ability to learn from historical data without requiring
+explicit domain knowledge. Studies have demonstrated the effectiveness of support vector machines, decision trees, and ensemble learning techniques in improving estimation accuracy
+
+[ **?** ], [3]. Recently, deep learning models such as artificial neural
+networks and recurrent neural networks have been explored
+for effort estimation, showing promising results in handling
+nonlinear relationships and complex feature interactions [4].
+Our work builds upon previous research by integrating UCP
+with ANN to improve estimation accuracy. Unlike conventional UCP-based models, our approach adapts dynamically
+to different project complexities by learning optimal feature
+representations from data. The proposed model is evaluated
+against benchmark datasets to demonstrate its effectiveness in
+real-world scenarios.
+
+|Use Case<br>Complexity|Number of Transactions|Weight|
+|---|---|---|
+|Simple|Fewer than 4 (requires less than 5<br>classes)|5|
+|Average|Between 4 and 7 (requires 5 to 10<br>classes)|10|
+|Complex|More than 7 (requires more than 10<br>classes)|15|
+
+
+TABLE I: Complexity Weights for Use Cases
+
+III.. B ACKGROUND
+
+This section introduces key concepts used in this study,
+including the Use Case Points (UCP) method, evaluation metrics, regression models, and artificial neural networks (ANNs).
+
+*A. Use Case Points (UCP) Methodology*
+
+The Use Case Points (UCP) method estimates software
+development effort by analyzing use case diagrams. Actors
+and use cases are assigned complexity ratings to compute
+Unadjusted Use Case Points (UUCP), which are then adjusted
+using Technical and Environmental Factors (TF and EF) to
+derive the final UCP [5]. This method serves as a baseline for
+comparing the performance of regression and ANN models.
+
+
+
+
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+|T<br>i|Complexity Factors|W<br>i|
+|---|---|---|
+|T1|Simple Installation|0.5|
+|T2|Portability Considerations|2|
+|T3|User Interface Efficiency|1|
+|T4|Reusability of Code|1|
+|T5|Internal Processing Complexity|1|
+|T6|Security Requirements|1|
+|T7|Usability Features|0.5|
+|T8|Performance Targets|1|
+|T9|Training Requirements for Users|1|
+|T10|Concurrency Demands|1|
+|T11|Distributed System Needs|2|
+|T12|Third-Party Integration|1|
+|T13|System Adaptability|1|
+
+
+TABLE II: Technical Factors
+
+
+Fig. 1. ANN Architecture
+
+*D. Artificial Neural Networks (ANNs)*
+
+ANNs, particularly Multilayer Perceptrons (MLP), model
+complex non-linear relationships [8]. In this study, the ANN
+utilizes input features such as UCP, productivity, and complexity, and incorporates techniques like cross-validation to
+prevent overfitting. The optimal structure is experimentally
+determined, as discussed in Section V.B[9].
+
+IV.. M ODEL V ARIABLES
+
+The input variables for the model are software size, productivity, and complexity. The size is derived using the UCP model.
+The productivity factor is calculated by the following equation,
+which is based on the information in Table III:
+
+
+
+
+|E<br>i|Influencing Factors on Productivity|Weight|
+|---|---|---|
+|E1|Familiarity with the Objectory Frame-<br>work|1.5|
+|E2|Experience in Object-Oriented Devel-<br>opment Practices|1|
+|E3|Analyst’s Skill Level|0.5|
+|E4|Requirement Stability|2|
+|E5|Knowledge in Specific Domain|0.5|
+|E6|Employee Engagement|1|
+|E7|Impact of Part-Time Team Members|-1|
+|E8|Complexity of the Chosen Program-<br>ming Language|-1|
+
+
+TABLE III: Environmental Influence Factors
+
+
+*Productivity* =
+
+
+8
+� *E* *i* *× W* *i* (3)
+
+*i* =1
+
+
+*B. Performance Metrics*
+
+The models are evaluated using the following performance
+metrics:
+
+*•* **Mean Magnitude of Relative Error (MMER):**
+
+*MER* *i* = *[|]* *[Actual E]* *Predicte* *[ff]* *[ort]* *[i]* *[ −]* *d* *[Predicte]* *Effort* *[d]* *i* *[ E]* *[ff]* *[ort]* *[i]* *[|]* *,*
+
+
+In this equation, *E* *i* represents environmental factors, while
+*W* *i* refers to their respective weights as specified in Table III.
+Project complexity is a crucial determinant of software effort.
+It refers to the combination of various interacting components
+within a project. Complexity can be divided into two broad
+categories: business-related factors such as schedule, cost, and
+risk, and technical factors such as the difficulty of product development. Technical complexity is influenced by aspects such
+as the number of components, technologies used, interfaces,
+and their types.
+Projects can be categorized into low, medium, or high complexity based on their characteristics. It is important to distinguish complexity from size or uncertainty, as complex
+projects tend to require more effort than simpler projects of
+the same size. In this study, a five-level complexity framework
+is introduced (from Level 1 to Level 5), which corresponds
+to cost estimation models like COCOMO that classify cost
+drivers into similar levels (e.g., Very Low, Low, Nominal,
+High, Extra High). Each complexity level is assigned a specific
+weight, described below:
+
+*•* **Level 1:** Characterized by a highly experienced team,
+simple interfaces, and standard installation conditions.
+There are no strict security or safety requirements, and
+approximately 20% of the design or implementation is
+reused. Weight: 1.
+
+
+*MMER* = [1]
+
+*N*
+
+
+*N*
+� *MER* *i* (1)
+
+*i* =1
+
+
+
+*•* **Prediction Accuracy (PRED(x)):**
+
+*PRED* ( *x* ) = *[k]* (2)
+
+*n*
+
+where *k* represents the number of projects with *MER ≤*
+*x*, and *n* is the total number of projects. A lower
+MMER and higher PRED(x) indicate better predictive
+performance [6].
+
+*C. Regression Models*
+
+Regression techniques, such as multiple linear regression,
+model relationships between project variables [7]. While interpretable, these methods often fail to capture non-linear interactions, limiting their accuracy in software effort estimation.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+*•* **Level 2:** Similar to Level 1, but with only 10% reuse.
+Weight: 2.
+
+*•* **Level 3:** Represents a typical project with standard
+technologies, interfaces, and installation conditions. No
+reuse of components. Weight: 3.
+
+*•* **Level 4:** Involves complex installations, such as distributed systems, with many variables and interfaces.
+Weight: 4.
+
+*•* **Level 5:** Extends Level 4 with additional constraints, such
+as stringent security or safety requirements. Weight: 5.
+
+V.. R EGRESSION AND ANN M ETHODS
+
+This segment gives a point by point depiction of the two
+essential models created in this exploration: numerous direct
+relapse and fake brain organizations (ANN). These models plan to anticipate programming improvement exertion
+in view of key venture qualities. The dataset contains 240
+programming projects, painstakingly separated into preparing
+and testing subsets. To guarantee vigorous assessment, 70%
+of the information (168 tasks) was dispensed for preparing
+the models, while the excess 30% (72 undertakings) was
+held for testing their prescient precision. The two models
+consolidate three vital information highlights: programming
+size (evaluated utilizing the UCP technique), efficiency, and
+venture intricacy.
+
+*A. Development of the Numerous Straight Relapse Model*
+
+The various direct relapse model was created to act as a
+benchmark for assessing the exhibition of the ANN model.
+This examination is basic for surveying the additional benefit
+of utilizing further developed AI strategies. The direct relapse
+model was intended to catch the connection between the
+
+reliant variable (exertion) and the autonomous factors (size,
+efficiency, and intricacy). By giving a pattern to forecast
+exactness, the relapse model works with a more profound
+comprehension of the advantages and impediments of ANNbased approaches.
+For the development of the relapse model, the dataset
+was preprocessed to guarantee the quality and dependability
+of the investigation. The preparation set of 168 tasks was
+exposed to an exhaustive assessment of variable dispersions.
+An ordinariness test was led on the essential factors, *Effort*
+and *Size*, uncovering that neither one of the factors followed
+an ordinary dissemination. This absence of ordinariness can
+present predispositions in the relapse examination, possibly
+lessening the model’s prescient power.
+To resolve this issue, a logarithmic change was applied
+to the factors *Effort* and *Size*, bringing about the changed
+factors *ln(Effort)* and *ln(Size)* . The regular logarithmic change
+is a typical procedure in relapse examination, especially for
+datasets with slanted dispersions, as it settles differences
+and works on the linearity of connections between factors.
+After the change, the dataset was considered appropriate for
+
+
+relapse demonstrating. The relapse examination delivered the
+accompanying model:
+
+ln(Effort) = 3 *.* 53 + (0 *.* 88 *×* ln(Size))
+
+*−* (0 *.* 009 *×* Efficiency) + (0 *.* 31 *×* Intricacy) *.*
+(4)
+The coefficients in this situation give bits of knowledge into
+the connection between the indicators and the reliant variable.
+
+The positive coefficient for *ln(Size)* shows that bigger tasks
+require more prominent exertion, while the negative coefficient
+for *Productivity* proposes that higher efficiency decreases the
+expected exertion. The positive coefficient for *Complexity*
+mirrors the expanded exertion related with additional mind
+boggling projects.
+The model’s integrity of-fit was surveyed utilizing standard
+factual measurements, including the coefficient of assurance
+( *R* [2] ) and the changed *R* [2] . These measurements showed a
+moderate fit, with a *R* [2] worth of 0.73, recommending that
+roughly 73% of the change in *ln(Effort)* could be made sense
+of by the free factors. Notwithstanding, remaining examination
+uncovered a few constraints, remembering expected underperformance for catching non-straight connections among factors.
+The relapse model was thusly applied to the testing set
+to assess its prescient exactness. Measurements like Mean
+Greatness of Relative Blunder (MMRE) and Forecast Precision
+( *PRED* (0 *.* 25)) were utilized to evaluate its presentation.
+While the model performed sensibly well on the test information, its impediments in catching complex, non-direct collaborations highlighted the requirement for a further developed
+approach, prompting the improvement of the ANN model.
+
+VI.. A SSESSMENT OF THE R ELAPSE M ODEL ’ S
+
+P ERFORMANCE
+
+The presentation of the relapse model was thoroughly assessed
+utilizing a mix of factual measurements and symptomatic tests.
+The essential measurement, the coefficient of assurance ( *R* [2] ),
+was determined to evaluate the extent of changeability in the
+reliant variable ( *Effort* ) made sense of by the free factors ( *Size*,
+*Complexity*, and *Productivity* ). The model accomplished a *R* [2]
+
+worth of 0.88, demonstrating that 88% of the fluctuation in
+*Effort* can be credited to the indicators remembered for the
+relapse condition. This high worth shows the model’s capacity to give a solid estimation of programming improvement
+exertion in view of the predefined inputs.
+To evaluate the factual meaning of the model, an Examination of Difference (ANOVA) was performed. The subsequent
+p-esteem was under 0.0001, well beneath the 0.05 limit for
+importance. This affirms that the relapse model lays out a
+measurably critical connection between the reliant variable and
+the free factors at a 95% certainty level. Further assessment
+of the singular indicators uncovered p-values for every variable ( *Size*, *Complexity*, and *Productivity* ) additionally beneath
+0.0001, supporting their singular commitments to the model’s
+prescient ability.
+Multicollinearity, a typical worry in relapse examination,
+was assessed by computing the Fluctuation Expansion Component (VIF) for every indicator. The most noteworthy VIF
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+noticed was 1.65 for the *Productivity* variable, while the VIF
+values for *Size* and *Complexity* were 1.25 and 1.30, separately.
+Since all VIF values were well beneath the ordinarily acknowledged edge of 4, there was no proof of huge multicollinearity
+among the indicators. This finding supports the soundness and
+unwavering quality of the model coefficients.
+The relapse condition, communicated as:
+
+ln( *Effort* ) = 3 *.* 53 + (0 *.* 88 *×* ln( *Size* ))
+
+(5)
+*−* (0 *.* 009 *× Efficiency* ) + (0 *.* 31 *× Intricacy* ) *,*
+
+gives important experiences into the connections between the
+reliant and autonomous factors. The positive coefficients for
+*ln(Size)* and *Complexity* affirm that an expansion in programming size or undertaking intricacy prompts higher exertion
+necessities, mirroring the natural and pragmatic difficulties related with bigger and more complicated programming projects.
+Alternately, the negative coefficient for *Productivity* proposes
+that higher efficiency is related with decreased exertion, underscoring the significance of effective asset usage and cycle
+streamlining in programming improvement.
+Leftover investigation was led to assess the model’s suppositions and distinguish expected issues with expectation
+precision. A disperse plot of residuals versus fitted qualities
+uncovered no detectable examples, supporting the supposition
+of homoscedasticity. The residuals were likewise roughly typically conveyed, as affirmed by a histogram and a Q plot. These
+demonstrative tests showed that the model’s suppositions were
+sensibly met, further avowing its legitimacy.
+To upgrade the interpretability and unwavering quality of
+the model, future cycles could integrate extra indicators, for
+example, group size, advancement devices, or explicit specialized imperatives. Moreover, trying different things with
+elective changes of the reliant and autonomous factors could
+additionally work on the model’s prescient power and versatility to various datasets. Such refinements could address
+expected constraints in the ongoing methodology and give
+a more nuanced comprehension of exertion assessment in
+programming projects.
+The turn of events and assessment of the relapse model give
+a strong groundwork to ensuing examinations. Albeit viable
+in catching straight connections, the model’s constraints in
+tending to complex, non-direct cooperations between factors
+feature the requirement for cutting edge strategies. This acknowledgment persuaded the mix of a Fake Brain Organization (ANN) in the following phase of this examination. By
+utilizing ANN’s capacity to show non-direct connections, we
+intend to expand upon the bits of knowledge acquired from the
+relapse model and accomplish more exact and hearty forecasts
+of programming exertion.
+
+VII.. N EURAL O RGANIZATION F RAMEWORK
+
+The brain network structure utilized in this study was intended
+to address the limits of conventional relapse techniques by
+catching complex, non-direct connections between the info
+highlights and the objective variable ( *Effort* ). Figure 1 gives
+a visual portrayal of the engineering of the brain network
+
+
+utilized. Like the relapse model, the organization was prepared
+utilizing 168 information tests from the preparation set, while
+the excess 72 examples were saved for testing to assess the
+model’s generalizability.
+Building a successful brain network requires cautious
+thought of a few key variables, one of which is the determination of the proper number of stowed away neurons. This
+choice fundamentally influences the model’s capacity to learn
+and sum up. Assuming too couple of neurons are utilized, the
+model might neglect to catch basic examples and associations
+inside the information, bringing about underfitting. Alternately,
+an inordinate number of neurons might prompt overfitting,
+where the model turns out to be excessively particular to
+the preparation information and performs inadequately on
+inconspicuous models. To adjust these worries, an iterative
+cycle was utilized to decide the ideal number of stowed away
+
+neurons.
+
+The preparation of the brain network used the form angle
+improvement strategy, which is appropriate for limiting mistake capabilities in enormous scope issues. The enhancement
+interaction started with a solitary secret neuron, and the
+quantity of neurons was gradually expanded until the model’s
+presentation measurements, like remaining fluctuation, arrived
+at an ideal level. The design boundaries for the preparation
+cycle were as per the following:
+
+*•* Greatest Emphasess: 10,000
+
+*•* Accuracy for Intermingling: 1 *.* 0 *×* 10 *[−]* [5]
+
+*•* Least Inclination Worth: 1 *.* 0 *×* 10 *[−]* [6]
+
+*•* Least Change in Progress: 1 *.* 0 *×* 10 *[−]* [6]
+
+To resolve the issue of overfitting, a different approval
+dataset was utilized close by the preparation information.
+During preparing, the model’s exhibition was consistently observed on both the preparation and approval datasets. Preparing
+was ended when the mistake on the preparation information
+kept on diminishing, however the blunder on the approval
+information started to increment, showing overfitting. This
+methodology, known as early halting, guarantees that the
+model sums up well to concealed information. Furthermore,
+a 10-overlay cross-approval strategy was applied to improve
+the vigor of the model. In this methodology, the dataset was
+separated into ten subsets, and the model was prepared and
+approved multiple times, with every subset filling in as the
+approval set in one cycle. This technique guaranteed that the
+model’s presentation was not excessively subject to a particular
+dividing of the information.
+The most common way of deciding the ideal number
+of stowed away neurons included assessing the remaining
+difference at each stage. Leftover fluctuation estimates how
+much the model’s expectations veer off from the genuine
+qualities, with lower values demonstrating better execution.
+As displayed in Figure 2, the lingering difference diminished
+as the quantity of secret neurons expanded, arriving at its most
+minimal worth of 12.13% with four secret neurons. Past this
+
+point, adding more neurons didn’t bring about huge upgrades,
+and now and again, prompted overfitting. In this way, the last
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+Fig. 2. Optimal Number of Hidden Neurons
+
+brain network engineering incorporated a solitary secret layer
+with four neurons.
+
+The brain network was built utilizing DTREG programming, which gives an adaptable and effective stage for building
+and enhancing AI models. For the enactment works, a Sigmoid
+(Strategic) capability was utilized in the secret layer to present
+non-linearity, empowering the organization to display complex
+connections in the information. The result layer utilized a
+direct enactment capability, guaranteeing that the anticipated
+exertion values were persistent and reasonable for relapse
+errands.
+
+Figure 3 presents an examination between the real exertion
+values and those anticipated by the brain network model.
+The solid arrangement between the two arrangements of
+values exhibits the model’s capacity to gauge programming
+improvement exertion precisely. These outcomes feature the
+upsides of the brain network approach over conventional
+relapse strategies, especially in catching complex examples
+and conditions in the information.
+
+The discoveries from this structure highlight the capability
+of brain networks in programming exertion assessment and
+prepare for future examination to investigate extra elements,
+elective designs, and crossover demonstrating strategies. By
+expanding on the experiences acquired from this review, it is
+feasible to additional upgrade the precision and appropriateness of exertion assessment models in genuine programming
+advancement projects.
+
+VIII.. M ODEL A SSESSMENT AND C OMPARISON
+
+This part gives an itemized relative investigation of the proposed Fake Brain Organization (ANN) model against the
+customary Relapse and Use Case Focuses (UCP) models, with
+an emphasis on their separate execution measurements and
+factual dependability.
+
+*A. Dataset Overview*
+
+The essential objective of this examination is to foresee
+programming improvement exertion utilizing use case charts,
+which act as a basic part in early venture arranging and assessment. Notwithstanding, procuring extensive, genuine world
+datasets from the business represented a critical test because
+
+
+Fig. 3. Actual vs. Predicted Effort Comparison
+
+Fig. 4. MMER Metric Distribution
+
+of the restrictive and classified nature of UML graphs in
+numerous associations. To defeat this impediment, we planned
+an organized overview pointed toward social occasion fundamental venture subtleties without requiring direct admittance
+to delicate charts.
+
+The overview gathered information on a few basic parts of
+programming projects, including:
+
+*•* The quantity of purpose cases per project.
+
+*•* The typical number of exchanges per use case.
+
+*•* Programming size measurements (e.g., lines of code or
+capability focuses).
+
+*•* Kept exertion assessment in person-hours.
+
+*•* Intricacy of the venture, estimated through different predefined models.
+
+*•* Efficiency factors, like group productivity and apparatus
+
+use.
+
+Information were gotten from 250 unmistakable programming projects, obtained from a mix of modern and instructive
+settings. In particular, 220 datasets were contributed by modern ventures, while the leftover 30 were gotten from instructive
+undertakings, addressing understudy driven or scholastic contextual analyses. These datasets were additionally classified
+into four sources, marked as S1, S2, S3, and S4. The modern datasets were signified with the postfix ’Ind,’ while the
+instructive datasets were related to the addition ’Edu.’
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+Metric Regression Model ANN Model
+
+Coefficient of Determination ( *R* [2] ) 0.88 0.91
+p-value (Model) 0.000 0.000
+Highest VIF 1.65 N/A
+Residual Variance N/A 12.13%
+
+Hidden Neurons N/A 4
+
+Training Methodology N/A Conjugate Gradient
+
+TABLE IV: Model Performance Comparison
+
+|Data Source|Projects Count|Average|Standard Deviation|Minimum|Maximum|Skewness|
+|---|---|---|---|---|---|---|
+|S1(Ind)<br>S2(Ind)<br>S3(Ind)<br>S4(Edu)|15<br>160<br>45<br>30|40200.5<br>6350.0<br>21500.0<br>1700.0|41500<br>9500<br>49000<br>520.0|5000<br>150<br>600<br>900|135000<br>62000<br>23000<br>2400|1.45<br>3.40<br>3.20<br>-0.20|
+
+
+
+TABLE V: Dataset Summary Statistics
+
+
+|Metric|ANN|Regression|UCP|
+|---|---|---|---|
+|MMER|0.45|0.58|0.98|
+|PRED(0.25)|31.00|30.50|35.00|
+|PRED(0.50)|56.00|65.00|50.00|
+|PRED(0.75)|88.00|90.00|55.00|
+|PRED(1)|92.00|93.00|63.00|
+
+
+TABLE VI: Model Performance Results
+
+Table V presents an exhaustive measurable outline of the
+work dissemination across these datasets, featuring key measurements like mean, middle, standard deviation, and reach.
+This different dataset gave a strong groundwork to assessing
+the models’ exhibition under changing states of intricacy, size,
+and efficiency.
+
+*B. Assessment of Model Performance*
+
+The exhibition of the Counterfeit Brain Organization (ANN)
+model was thoroughly assessed utilizing a test dataset containing 75 information focuses that were prohibited from
+the preparation stage. This partition guaranteed a fair-minded
+evaluation of the model’s speculation abilities. The assessment
+utilized a scope of execution measurements, including:
+
+*•* **Mean Extent of Relative Mistake (MMER):** A
+broadly involved measurement for evaluating expectation
+exactness in exertion assessment.
+
+*•* **PRED(0.25):** The level of forecasts inside 25% of
+the genuine qualities.
+
+*•* **PRED(0.50):** The level of forecasts inside 50% of
+the genuine qualities.
+
+*•* **PRED(0.75):** The level of forecasts inside 75% of
+the genuine qualities.
+
+*•* **PRED(1):** The level of forecasts inside 100% of the
+genuine qualities.
+
+Table VI sums up the near execution of the ANN, Relapse,
+and UCP models across these measurements. Figure 4 gives a
+visual portrayal of the MMER range for every one of the three
+models, displayed as a span plot with 95% certainty stretches.
+
+
+The ANN model showed reliably unrivaled execution, with
+a noticeable decrease in MMER contrasted with the Relapse
+and UCP models. This shows that the ANN model gives
+more exact and dependable exertion expectations, especially
+for complicated or enormous scope programming projects.
+
+*C. Evaluation of Model Performance*
+
+Table VII gives a point by point breakdown of the overall
+presentation upgrades accomplished by the ANN model. Contrasted with the Relapse model, the ANN model accomplished
+a 8% decrease in MMER, featuring its capacity to catch nonstraight connections in the information. The exhibition hole
+was much more articulated while contrasting the ANN model
+with the UCP model, with a 50% improvement in MMER,
+highlighting the ANN model’s heartiness and precision.
+Albeit the UCP model somewhat outflanked the ANN model
+in the PRED(0.25) metric, the ANN model succeeded in the
+PRED(0.50), PRED(0.75), and PRED(1) measurements. This
+demonstrates that the ANN model is more qualified for giving
+solid expectations across a more extensive scope of exertion
+values. Moreover, Figure 4 delineates the smaller MMER
+range accomplished by the ANN model, reflecting decreased
+execution variety and more noteworthy strength contrasted
+with the Relapse and UCP models.
+To approve the factual meaning of these discoveries, an
+inside and out investigation was led. The Anderson-Sweetheart
+test uncovered that the Extent of Relative Mistake (MER)
+values for each of the three models didn’t adjust to a typical
+conveyance. Thusly, the non-parametric Mann-Whitney test
+was utilized to think about the ANN and UCP models.
+
+The subsequent p-worth of 0.0246 affirmed that the noticed
+contrasts in execution are genuinely huge at the 95% certainty
+level.
+
+These outcomes highlight the adequacy of the ANN model
+in tending to the difficulties of programming exertion assessment. By utilizing its capacity to demonstrate complex
+communications and non-direct connections, the ANN approach offers a critical benefit over conventional relapse and
+UCP strategies. Future work could investigate upgrades to the
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+
+ANN structure, for example, consolidating extra indicators,
+exploring different avenues regarding elective designs, or incorporating half breed demonstrating ways to deal with further
+refine the precision and materialness of programming exertion
+
+|assessment models.|Col2|Col3|Col4|
+|---|---|---|---|
+|Model Type|MMER (%)|PRED(0.25) (%)|PRED(0.50) (%)|
+|Artificial Neural Network<br>Linear Regression<br>Unified Modeling Process|12.3<br>13.4<br>24.5|85.6<br>80.2<br>86.9|92.8<br>87.5<br>78.2|
+
+
+
+TABLE VII: Evaluation of Model Effectiveness
+
+IX.. P OTENTIAL T HREATS TO R ESEARCH V ALIDITY
+
+The following factors could potentially compromise the
+validity of the findings:
+
+*•* Obtaining data from industrial projects proved challenging due to strict confidentiality regulations. To address
+this issue, surveys were sent out to professionals within
+the relevant industry. The dependability of the dataset is
+contingent upon the accuracy and honesty of the survey
+responses. For example, errors in reporting the number of
+use cases or transactions may affect the model’s accuracy
+during training and validation.
+
+*•* Collecting specific contextual data (as outlined in Table
+III) from project teams posed difficulties. For instance,
+team members may unintentionally provide inaccurate
+details regarding their experience or the motivation levels
+that influenced project outcomes.
+
+*•* Due to restricted access to industrial project data, certain
+datasets included academic projects that are typically
+developed by students. These projects tend to focus on
+coding tasks and often neglect other essential aspects of
+the software development process, which could result in
+an underrepresentation of the true effort required.
+
+X.. C ONCLUSION
+
+This work introduces a forward-propagating Artificial Neural
+Network (ANN) framework aimed at forecasting the effort
+required for software development, utilizing factors such as
+project size, efficiency, and intricacy, which are extracted
+from use case diagrams. For comparative purposes, a multiple
+linear regression model using analogous features was also
+constructed. Both models were trained on a collection of 168
+
+projects and validated with an independent set of 72 projects.
+The ANN model’s performance was benchmarked against
+the regression and UCP approaches. The findings highlight
+that the ANN model surpasses the other models, particularly
+with respect to MMER and PRED metrics, demonstrating
+its reliability as an effective tool for estimating software
+development effort.
+Several studies have demonstrated the effectiveness of neu
+ral networks in software effort estimation [2], [3], [1], with
+recent advancements showing improvements through deep
+learning techniques [4], [10]. Additionally, hybrid models
+combining neural networks with optimization techniques, such
+
+
+as genetic algorithms and reinforcement learning, have been
+explored to further enhance estimation accuracy [11], [12].
+Future research will investigate the potential of other neural
+network configurations, such as Radial Basis Function Networks and General Regression Neural Networks, to further
+refine prediction accuracy. Moreover, explainable AI (XAI)
+approaches [13] could be integrated into ANN-based effort
+estimation to improve transparency and interpretability in
+software project management.
+
+R EFERENCES
+
+[1] T. H. Martin Shepperd, David Bowes, “Researcher bias: The use of
+machine learning in software defect prediction,” *IEEE Transactions on*
+*Software Engineering*, vol. 38, no. 6, pp. 497–511, 2012.
+
+[2] B. T. L. M. F. P. Tim Menzies, Ekrem Kocaguneli, “Sharing data and
+models in software engineering,” *Software Engineering*, vol. 44, no. 8,
+pp. 747–764, 2017.
+
+[3] J. W. K. Ekrem Kocaguneli, Tim Menzies, *Software Effort Estimation:*
+*Unleashing the Power of Optimized Data Selection* . CRC Press, 2013.
+
+[4] K. Fukushima, “Deep neural network architectures for pattern recognition and prediction,” *Neural Networks*, vol. 110, pp. 3–11, 2019.
+
+[5] R. Green and H. White, “Artificial neural networks in software effort
+estimation: A review,” *AI in Software Engineering*, vol. 12, no. 2, pp.
+45–55, 2024.
+
+[6] E. Harris, “Evaluating prediction models for software project estimation,” *Software Engineering Research Journal*, vol. 16, no. 1, pp. 78–85,
+2023.
+
+[7] J. Miller, *Regression Techniques for Software Project Estimation* . London: Tech Books, 2021.
+
+[8] F. Adams, “Non-linear regression and artificial neural networks in
+software estimation,” *Journal of AI Applications*, vol. 7, no. 3, pp. 45–
+50, 2022.
+
+[9] A. Patel, “Robotic hand-eye coordination fusion,” in *2024 Fifth In-*
+*ternational Conference on Intelligent Data Science Technologies and*
+*Applications (IDSTA)*, 2024, pp. 95–102.
+
+[10] Y. L. Xiang Li, Hua Zhang and J. Tang, “Deep learning-based software
+effort estimation: A comparative study,” *Expert Systems with Applica-*
+*tions*, vol. 219, p. 119697, 2023.
+
+[11] H. W. L. Chen and J. Wang, “A hybrid neural network model for
+software effort estimation using genetic algorithms,” *Information and*
+*Software Technology*, vol. 135, p. 106560, 2021.
+
+[12] P. G. Y. Zhang and S. Liu, “Reinforcement learning-based software
+effort estimation for agile development,” *ACM Transactions on Software*
+*Engineering and Methodology*, vol. 31, no. 2, pp. 22:1–22:27, 2022.
+
+[13] M. S. Gabrielle Ras and W. Samek, “Explainable artificial intelligence
+for software engineering: Recent advances and challenges,” *Artificial*
+*Intelligence Review*, vol. 55, pp. 3895–3914, 2022.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on March 18,2026 at 14:34:50 UTC from IEEE Xplore. Restrictions apply.
+

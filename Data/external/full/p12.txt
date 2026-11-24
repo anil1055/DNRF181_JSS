@@ -1,0 +1,584 @@
+# **A Predictive Model for Story Points ** **Leveraging Features Like Readability ** **and Sentiment from User Story ** **Description **
+
+Giseldo da Silva Neo [1,2(] [B] [) ], J. Antão B. Moura [2 ],
+Alana Viana Borgesda Silva Neo [2,3 ], and Evandro de Barros Costa [4 ]
+
+1 Federal Institute of Alagoas, Maceió, AL, Brazil
+giseldo.neo@ifal.edu.br
+2 Federal University of Campina Grande, Campina Grande, PB, Brazil
+antao@computacao.ufcg.edu.br
+3 Federal Institute of Mato Grosso do Sul, Corumbá, MS, Brazil
+
+alana.neo@ifms.edu.br
+4 Computing Institute, Federal University of Alagoas, Maceió, AL, Brazil
+
+evandro@ic.ufal.br
+
+**Abstract.** Software development effort estimation is strategic for organizations. In Agile methodologies, Story Points (SP) are commonly used
+to measure the effort required to complete a user story. While machine
+learning techniques have been explored for effort estimation, existing
+models, especially those using Deep Learning, can be time-consuming for
+feature extraction and training. This study addresses the research gap
+by proposing and validating a Story Point predictor. The model uses features extracted from user story titles and descriptions, specifically focusing on readability, sentiment, and subjectivity indicators. The study used
+an experimental methodology with a quantitative approach, validated
+on a dataset of 34 open-source projects. Evaluation was performed using
+the Mean Absolute Error (MAE) metric and the Wilcoxon test for statistical significance. Two baselines, Mean-Based Regression (MbR) and
+TFIDFSE, were used for comparison. The results show that the model
+achieved a better (lower) apparent MAE than MbR and TFIDFSE in
+most of the projects. Furthermore, the proposed approach for feature
+extraction and training is significantly faster than the baselines. Extracting readability, sentiment, and subjectivity features from user stories
+shows promise in improving estimation accuracy and efficiency.
+
+**Keywords:** Effort estimation *·* User Story *·* Story Points *·* readability
+
+**1** **Introduction**
+
+Some managers believe that software estimation is an unsolvable problem [27],
+while others consider that estimates are reasonably accurate in some projects
+
+*⃝* c The Author(s), under exclusive license to Springer Nature Switzerland AG 2026
+S. Graf and A. Markos (Eds.): ITS 2025, LNCS 15724, pp. 274–284, 2026.
+[https://doi.org/10.1007/978-3-031-98284-2](https://doi.org/10.1007/978-3-031-98284-2_21) _ 21
+
+A Predictive Model for Story Points Leveraging Features 275
+
+[10]. Despite some professionals’ disbelief, using estimates is strategic in organizations. For example, the Brazilian government uses Function Point (FP) as a
+standard for its estimates in software engineering public contracts [13]. FP is a
+template that uses the algorithm technique [22]. However, the need to document
+the features extracted from the FP model creates barriers to its adoption.
+
+Agile software development (ASD) is a methodology that can provide flexibility in delivering products through multiple iterations of development [5]. A
+core component of ASD is the planning step and the estimation of the effort.
+Story points (SP) are the basis for the measurement in this methodology [28].
+SP measures how much effort is required to complete a user story compared to
+previous user stories of the same project. SP is usually measured in numbers
+on the Fibonacci scale [23]. However, nothing prevents the team from assigning
+points on other scales.
+
+Several studies have sought to solve the estimate of software development effort using machine learning techniques [1,4,18,20]. For example, some
+researchers concluded that the features extracted from the title and description
+of the user story and more information from the development team can be used
+to estimate the project efforts [20].
+
+Models that extract features from the title and description of user stories with
+Deep Learning can take 2 to 8 h of training per project [17], so there is a research
+gap in predictive models that can extract features with speed. A solution is the
+use of some traditional machine learning methods, such as TFIDF with SVM.
+An example of this approach is the model that we call in this article TFIDFSE,
+a model used to predict SP from the title and description of the user story [18]
+created by Porru and other researchers. This model is was used as a baseline
+when new models are proposed [4].
+
+Various features can be extracted from the title and description of the user
+story. One of these features is the readability indicators (for example, the Fog
+Index [9]). They have already been used to predict the delivery capacity of
+the team that develops software projects [3] and predict some characteristics of
+financial statements [12]. However, to our knowledge, it has not been specifically
+used to solve the effort estimation problem.
+
+The objective of this study is to propose and validate a Story Point predictor
+model that uses user story titles and descriptions of the user story as input (aka
+NEOSP). This model was validated on a data set collected from GitLab top opensource projects. For predictive attributes, readability, sentiment, and subjectivity
+indicators extracted from the user story title and description were used. Two
+baselines are used for performance comparison purposes, Mean-Based Regression
+(MbR) and TFIDFSE [4]. The assumption is that SP can be estimated from the
+user story titles and descriptions if readability and sentiment indicators are used
+as feature extraction.
+
+The research questions that guide this article are as follows: How well does a
+model with readability, sentiment, and subjectivity extracted from the title and
+description of tasks (aka NEOSP) perform compared to a MbR baseline?; And,
+how well does NEOSP perform compared to the TFIDFSE model?
+
+276 G. da Silva Neo et al.
+
+**2** **Background**
+
+**2.1** **NLP Readability Indicators**
+
+The readability indicators used in the model were Gunning Fog, Flesch Reading
+Ease, Flesch-Kincaid Grade Leve, Coleman Liau Index, Linsear Write Formula,
+Dale-Chall Readability Formula, and Automated Readability Index.
+
+**Gunning Fog.** The Gunning Fog Index is an indicator assigned to a given
+text. The higher the value, the more complex it is. The Gunning-Fog formula is
+presented in Eq. 1 [26].
+
+
+*words* *complex words*
+.\bALT{} 0.4 \left[\left(\frac{words}{sentences}\right)+100\left(\frac{complex~words}{words}\right)\right] \label{eq:equationspsfogspsindex}\eALT{} 0 *.* 4 + 100
+�� *sentences* � � *words*
+
+
+��
+
+
+(1)
+
+
+**Flesch Reading Ease.** Another text readability indicator is the FRE [26].
+The higher the value, the more complex the text to read. Its maximum value is
+
+.121.22 121 *.* 22. There is no minimum value, and negative scores are also valid. Equation 2
+
+presents the FRE calculation.
+
+
+*total words*
+.\bALT{} 206,835 -1.015 \left(\frac{total ~ words}{total ~ sentences}\right) -84.6 \left(\frac{total ~ syllables}{total ~ words}\right) \label{eq:fre}\eALT{} 206 *,* 835 *−* 1 *.* 015 � *total sentences*
+
+
+*−* 84 *.* 6 *total syllables*
+� � *total words*
+
+
+�
+
+
+(2)
+
+
+**Flesch-Kincaid Grade Level.** Returns the Flesch-Kincaid Grade of the text
+
+[26]. See Eq. 3.
+
+
+*total words* *total syllables*
+.\bALT{} 0.39 \left(\frac{total ~ words}{total ~ sentences}\right) +11.8 \left(\frac{total ~ syllables}{total ~ words}\right) -15.59 \label{eq:fcgl}\eALT{} 0 *.* 39 + 11 *.* 8
+� *total sentences* � � *total words*
+
+
+*−* 15 *.* 59 (3)
+�
+
+
+**Coleman Liau Index.** Returns another complexity indicator using Eq. 4 [26].
+
+. L *L* is the average number of letters per 100 words, and . S *S* is the average number
+of sentences per 100 words.
+
+.\bALT{} CLI= 0.0588\,L - 0.296\,S - 15.8\label{eq:cli}\eALT{} *CLI* = 0 *.* 0588 *L −* 0 *.* 296 *S −* 15 *.* 8 (4)
+
+**Linsear Write Formula.** Another indicator is the Linsear Write Formula [26].
+The .Lw *Lw* metric needs at least 100 words of text. The algorithm works as follows:
+1. For each simpler word, defined as words that are only 2 (two) syllables or
+less, add a dot; 2. For each more difficult word, defined as a word of 3 syllables
+or more, add 3 points; 3. Divide the points by the number of sentences in the
+100-word sample; 4. Adjust the temporary value of r: if .r > 20 *r >* 20 then .Lw = r / 2 *Lw* = *r/* 2;
+otherwise .r < 20 *r <* 20 then .Lw = r / 2 - 1 *Lw* = *r/* 2 *−* 1
+
+A Predictive Model for Story Points Leveraging Features 277
+
+**Dale–Chall Readability Formula.** This indicator uses a lookup table of the
+3000 most used English words [26]. Equation 5 shows this calculation.
+
+
+*dificult words* *total words*
+.\bALT{} 0.1579 \left( \frac{dificult~words}{total~words} \times 100 \right) +0.0496 \left( \frac{total~words}{total~sentences} \right) \label{eq:dcrf}\eALT{} 0 *.* 1579 *×* 100 + 0 *.* 0496
+� *total words* � � *total sentences*
+
+
+�
+
+
+(5)
+
+
+**Automated Readability Index.** Returns the automated readability index
+from Formula 6 [26].
+
+
+*characters* *words*
+.\bALT{} 4.71 \left( \frac{{characters}}{{words}} \right) +0.5 \left( \frac{{words}}{{sentences}} \right) -21.43 \label{eq:ari}\eALT{} 4 *.* 71 + 0 *.* 5
+� *words* � � *sentences*
+
+
+*−* 21 *.* 43 (6)
+�
+
+
+**2.2** **Subjectivity and Polarity**
+
+In addition to readability indicators, two other features were extracted from the
+title and description of the tasks: Subjectivity and Polarity. Sentiment analysis
+is a technique for identifying and categorizing opinions expressed in textual data
+to determine the underlying emotional tone or attitude (positive, negative, or
+neutral) towards a topic in a text. Subjectivity also helps in this context and
+refers to the linguistic expression of personal feelings, views, beliefs [16].
+
+**2.3** **Evaluation Metrics**
+
+Several measures are used in the literature on the estimation of software devel
+opment effort estimation to measure the precision of estimation models. These
+measurements generally use the predicted and actual values in their calculation
+
+[24]. The Mean Absolute Error (MAE) has already been used in other studies
+
+[11,19,21,24], so we adopt this measure as a model evaluation parameter. The
+MAE is calculated according to Eq. 7. .E_{actual} *E* *actual* is the current effort, .E_{predicted} *E* *predicted* is
+the predicted effort, and . n *n* is the number of observations [26].
+
+
+.\bALT{} \label{equ:MAE} MAE = \dfrac{1}{n} \sum_{i=1}^{n{}} {\left| E_{actual} - E_{predicted} \right|}\eALT{} *MAE* = [1]
+
+*n*
+
+**3** **Methodology**
+
+
+*n*
+� *|E* *actual* *−* *E* *predicted* *|* (7)
+
+*i* =1
+
+
+The study employs an experimental methodology with a quantitative approach.
+The main steps include the following: Model Proposal and Evaluation; Data
+Collection and Preparation; Feature Extraction; Model Building and Training.
+Some of the steps of the machine learning workflow techniques suggested by
+Google were also used (Fig. 1).
+
+The entire experiment was implemented in the Python language with Jupyter
+Notebooks and is available for reproduction on GitHub [1] . To calculate the metrics, cross-validation (k-fold with 10 partitions) was used. For comparison, the
+
+1
+[https://github.com/giseldo/neosp.](https://github.com/giseldo/neosp)
+
+278 G. da Silva Neo et al.
+
+**Fig. 1.** Machine learning steps from Google. Source [https://cloud.google.com/ai-](https://cloud.google.com/ai-platform/docs/ml-solutions-overview)
+[platform/docs/ml-solutions-overview](https://cloud.google.com/ai-platform/docs/ml-solutions-overview)
+
+selected metric was MAE because it was used in some related research [3,8,24].
+Two baselines were used, an MbR and another technique previously presented as
+a solution to the same problem, the TFIDFSE [4]. The Wilcoxon test was used
+with the confidence interval calculation to compare the MAE of the models. The
+proposed model extracted features from the user story, with the support of the
+library “textstat” and “textblob” [25,26], and the predictive algorithm used was
+SVR (SVM for Regression) from Scikit-learn for the regression model.
+
+The sentiment classification algorithm used was PatternAnalyser, available in
+the Pattern library, specifically in the Pattern.en module of “textblob” Python
+library [25]. This classification method uses an extended vocabulary from the
+WordNet3 dictionary, called the Duch sentiment lexicon. This dictionary has
+approximately 5,750 adjectives annotated with their respective sentiment polarity indicators and was trained with more than 1000 manual annotations; the
+remaining adjectives were annotated with the help of the unsupervised K-NN
+technique. The PatternAnalyser algorithm for sentiment analysis was chosen due
+to its speed and availability of use compared to other algorithms.
+
+In this study a data set called NEODATASET [14,15] was used to evaluate the model. This dataset, extracted between January 2023 and April 2023,
+includes data from 34 projects of the top open source projects in GitLab [15].
+They have different characteristics and cover various programming languages,
+business domains, and other geographic locations of the team. The selected
+projects employ agile software development methodologies and have recorded
+task sizes in Story Points [15]. Only user stories with the attribute “State”:
+“closed” and that have the attribute “weight” populated were collected, because
+this field is used to record effort in story points. The data set was stored in
+CSV format and is available on GitHub [2] . An example of the data is presented
+in Table 1.
+
+One model was created for each project in this data set. This implies that . 34 34
+models were created. So, the proposed model is the architecture plus data from
+older user stories from the same project. It was not one big model trained with
+data from all .34 34 the project. Because Story points do not make sense outside
+the context of that team and should not be compared between teams.
+
+The variables originally considered in the dataset are the columns: issuekey,
+create, title, description, and storypoint (Table 2). IssueKey is a unique identifier
+created by the system when registering a Story Point. Created is the creation
+
+2
+[https://github.com/giseldo/neodataset.](https://github.com/giseldo/neodataset)
+
+A Predictive Model for Story Points Leveraging Features 279
+
+**Table 1.** Example of a User Story from project 7764 from NeoDataset
+
+
+
+
+|issuekey|created|title|description|story points|
+|---|---|---|---|---|
+|29688087|17/01/20 00:50|Update<br>templates<br>for<br>website<br>merge<br>requests|... Automatically add<br>relevant details if possible<br>(labels, pings, etc.) * Improve<br>clarity of issues * Reduce<br>grooming time * Ensure that<br>all issues contain the [The<br>Five W’s] ...|1|
+|29682716|16/01/20 19:21|Make<br>sure that<br>we<br>Capture<br>... feature<br>compari-<br>son<br>pages|... We need it to be added to<br>the feature comparison page,<br>let’s check if there are other<br>items missing. > Sid: Which<br>plan is it in? Can’t find on<br>=> Add here. ## Tasks - [ ]<br>Add elastic search to the<br>feature comparison page ...|1|
+
+
+date of the User Story. The title is a short text in one sentence. The description
+is a more detailed text of what should be done. Story Point is a measure of effort
+assigned by the developer.
+
+**Table 2.** Data set variables
+
+|Name|Type|Predict or Label|
+|---|---|---|
+|issuekey|categorical|removed from model|
+|created|date|removed from model|
+|title|text|Predict variable before extracted feature|
+|description|text|Predict variable before extracted feature|
+|storypoints|discrete number|Label|
+
+
+
+First, the “title” and the “description” of the user story were joined into a new
+column called “context”. From this new column, preprocessing techniques were
+applied(Table 4), and then the 11 characteristics (or features) were extracted
+from the context. The extracted features are presented in Table 3.
+
+The *textstat* [26] library was used to extract the readability attributes and the
+textblob [25] library was used to analyze the sentiment of the User Story. They
+are used in the text in the column contex (title + description). The language
+used for the experiment was Python with the sckit-learn library. The use of
+libraries to extract the readability indicator and sentiment with polarity is very
+simple and straightforward.
+
+280 G. da Silva Neo et al.
+
+**Table 3.** Predictive Attributes extracted from user story text (title and description)
+
+|ID|Feature Name|Library and Method used|
+|---|---|---|
+|1|gunning_fog|textstat.gunning_fog|
+|2|flesch_reading_ease|textstat.flesch_reading_ease|
+|3|flesch_kincaid_grade|textstat.flesch_kincaid_grade|
+|4|smog_index|textstat.smog_index|
+|5|coleman_liau_index|textstat.coleman_liau_index|
+|6|automated_readability_index|textstat.automated_readability_index|
+|7|dale_chall_readability_score|textstat.dale_chall_readability_score|
+|8|difficult_words|textstat.difficult_words|
+|9|linsear_write_formula|textstat.linsear_write_formula|
+|10|polarity|textblob.sentiment.polarity|
+|11|subjectivity|textblob.sentiment.subjectivity|
+
+
+
+**Table 4.** Preprocessing technique used in the user story text (title and description)
+
+|Name of technique|Regular Expression|
+|---|---|
+|remove stopwords|-|
+|remove extra whitespace tabs|\s+|
+|remove punctuation|[\w\s]|
+|remove numbers|\b\w*\d\w*\b|
+|remove special characters|[ˆA-Za-z0-9\s]|
+|remove html tags|<[ˆ>]+>|
+|remove URLs content|http\S+|www\S+|
+
+
+
+**4** **Results and Discussion**
+
+**NEOSP vs. MbR** : The NEOSP model achieved an MAE (apparently) better
+than an MbR regressor (a dummy mean regressor) in almost all designs. However,
+in . 1 1 out of .34 34 projects, MbR performed better than NEOSP. More research is
+needed to understand this point, analyzing this project individually. NEOSP
+had a better (or lower) MAE than MbR in .33 33 projects out of . 34 34. However,
+having a better MAE does not necessarily mean that one model is better or
+worse than another, as this is an apparent measure. So, the Wilcoxon test was
+used to obtain the result of the 10 MAE returned from cross-validation. For . 27 27
+projects, the Wilcoxon test had a p-value lower than .0.1 0 *.* 1 when comparing the
+mean MAE of the NEOSP model with the MAE of the MbR model. In these . 27 27
+projects, we reject the null hypothesis that there is no difference between means.
+The alternative hypothesis of the test is that there is a difference between the
+means. The null hypothesis was rejected, so we accept the alternative hypothesis.
+
+A Predictive Model for Story Points Leveraging Features 281
+
+Therefore, for all these .27 27 projects, the NEOSP MAE was better than the MbR
+MAE with statistical significance.
+
+**NEOSP vs. TFIDFSE** : The NEOSP model achieved an MAE (apparently)
+better than the TFIDFSE in almost all designs. In the .34 34 projects, .29 29 had a
+better MAE for NEOSP and . 5 5 had a better MAE for TFIDFSE. Having a
+better average MAE does not necessarily mean that a model is different, better,
+or worse, as this is an apparent measure. So, the Wilcoxon test was used. For . 12 12
+projects of . 34 34, the Wilcoxon test had a p-value lower than .0.1 0 *.* 1 when comparing
+the MAE average of the NEOSP model with the TFIDFSE model. So in these . 12 12
+(eight) projects, we reject the null hypothesis that there is no difference between
+the means.
+
+**Implications** : There is no significant difference between the TFIDFSE
+approaches [18] and Deep Learning (DeepSE) [4], as reproduced by other
+researchers [24], who compared the two approaches with other data (TAWOS
+Dataset). Therefore, since NEOSP had results close to TFIDFSE, similar results
+would be found if the technique was reproduced and compared with DeepSE,
+but this experiment must be performed to confirm this hypothesis.
+
+**Rutime** : In a couple of seconds, all features were extracted from the title
+and description of the tasks of all projects. One project with the most tasks took
+more than half the total time. The proposed approach is much faster than the
+baseline compared. The 34 models were created, and the metrics were extracted
+in a couple of seconds.
+
+**5** **Related Works**
+
+Some studies with proposals to predict the estimation of effort in agile projects
+are presented in this section.
+
+[1]: This study created an SP predictor based on the description of the user
+story. Regression Models, Neural Networks [2], and Support Vector Machine for
+Regression (SVR) were evaluated using cross-validation [6] and metrics such as
+RMSE, MRE, and PRED(x) [7]. The study used two case studies with 1,325 and
+13 user stories, respectively. The features extracted from the user story description included character count, frequency of the 15 most common words, and
+priority (total of 17 features). The results were better in the smaller case study,
+which had more structured texts, leading to the conclusion that the structure
+of the text improves prediction. SVR and Linear Regression achieved the best
+RMSE results in this case.
+
+[18]: This work developed an SP predictor based on the user story description,
+comparing algorithms such as SVM, KNN, Decision Tree, and Naive Bayes. They
+used accuracy and MMRE [28] as metrics, with the ZeroR algorithm as a baseline. SVM showed the best MMRE results. The sample consisted of 5,607 user
+stories from JIRA projects (after filtering from 16,523). The title and description were combined (“Context”) and the feature extraction was performed using
+TFIDF after the code was separated from the text. The approach was classification (SP as classes), not regression. They concluded that the user story
+
+282 G. da Silva Neo et al.
+
+description contains relevant information and that training with more than 300
+user stories leads to a better MMRE (>0.61).
+
+[20]: This study analyzed features extracted from the developer (reputation,
+workload, total capacity) to predict SP. They compared models using only developer features, only text features, both, and baselines such as Random Guessing,
+Mean, and Median. They used Accuracy, MAE, and Standard Accuracy for evaluation. The sample was 4,142 tasks (after cleaning from 15,155), using the same
+data set as [18]. They also used a classification strategy with SVM, similar to
+
+[18]. They concluded that the model with developer features outperforms the
+model based solely on text features.
+
+**6** **Threats to Validity**
+
+The data set used may not represent all characteristics of the project. By definition, a project is unique, but may share common characteristics; using projects
+with diverse characteristics is necessary to confirm the predictive results of the
+proposed model.
+
+There are indications that the task of estimating story points is a task that
+depends on more information than is available in the task description, according
+to [20]. More studies are needed to confirm these findings that isolate other
+variables.
+
+The experimental evaluation lacks comparisons with more complex and standard architectures. A fair comparison with modern LLM (both considering computational costs and achieved quality) would be highly beneficial. Finally, one
+can argue that building a more accurate model, which could be applied for years
+resulting in improving the efficiency of software engineering in a company, is
+definitely worth a higher training time in a trade-off for accuracy.
+
+**7** **Final Considerations**
+
+We proposed a Story Points predictive model that extracts readability features
+from task titles and descriptions. The model was trained with open source
+projects extracted from GitLab. For some projects, NEOSP performed better
+with project estimation than MbR regression and TFIDFSE.
+
+The proposed model demonstrates significant improvements over the baselines, particularly in terms of MAE. The use of features such as readability, sentiment, and subjectivity in user story descriptions is interesting and shows promise
+for improving the accuracy of the estimation. In addition, NEOSP requires less
+time to extract readability features and train the model, which is much more
+efficient than the compared baselines.
+
+For future research, we suggest new techniques to improve model performance
+through other text representation and normalization strategies and comparison
+with other baselines, like LSTM-based approaches, pre-trained Transformerbased architectures such as BERT and LLM GPTs. Further research could
+
+explore the applicability of NEOSP in different development environments and
+conditions in other data sets.
+
+A Predictive Model for Story Points Leveraging Features 283
+
+**Artifact Availability**
+
+The source code for reproduction of NEOSP is available at [https://github.com/](https://github.com/giseldo/neosp)
+[giseldo/neosp.](https://github.com/giseldo/neosp) The data set NEODATASET at [https://github.com/giseldo/](https://github.com/giseldo/neodataset)
+[neodataset](https://github.com/giseldo/neodataset)
+
+**Acknowledgements.** This work was carried out with the support of the Coordination
+for the Improvement of Higher Education Personnel - Brazil (CAPES) - Financing Code
+001.
+
+**References**
+
+1. Abrahamsson, P., Fronza, I., Moser, R., Vlasenko, J., Pedrycz, W.: Predicting
+development effort from user stories. In: 2011 International Symposium on Empirical Software Engineering and Measurement. pp. 400–403 (2011). [https://doi.org/](https://doi.org/10.1109/ESEM.2011.58)
+[10.1109/ESEM.2011.58](https://doi.org/10.1109/ESEM.2011.58)
+2. Bishop, C.M.: Neural Network for Pattern Recognition (1995)
+3. Choetkiertikul, M., Dam, H.K., Tran, T., Ghose, A., Grundy, J.: Predicting delivery
+capability in iterative software development. IEEE Trans. Softw. Eng. **44** (6), 551–
+573 (2018). [https://doi.org/10.1109/TSE.2017.2693989](https://doi.org/10.1109/TSE.2017.2693989)
+4. Choetkiertikul, M., Dam, H.K., Tran, T., Pham, T., Ghose, A., Menzies, T.: A
+deep learning model for estimating story points. IEEE Trans. Softw. Eng. **45** (7),
+637–656 (2019). [https://doi.org/10.1109/TSE.2018.2792473](https://doi.org/10.1109/TSE.2018.2792473)
+5. Cohn, M.: Agile Estimating and Planning (2005)
+6. Faceli, K., Lorena, A.C., Gama, J., de Carvalho, A.C.: Inteligência artificial: uma
+abordagem de aprendizado de máquina, 1st edn. LTC - Livros Técnicos e Científicos
+Editora LTDA, Rio de Janeiro (2011)
+7. Foss, T., Stensrud, E., Kitchenham, B., Myrtveit, I.: A simulation study of the
+model evaluation criterion MMRE. IEEE Trans. Softw. Eng. **29** (11), 985–995
+(2003). [https://doi.org/10.1109/TSE.2003.1245300](https://doi.org/10.1109/TSE.2003.1245300)
+8. Fu, M., Tantithamthavorn, C.: GPT2SP: a transformer-based agile story point
+estimation approach. IEEE Trans. Softw. Eng. **49** (2), 611–625 (2023). [https://doi.](https://doi.org/10.1109/TSE.2022.3158252)
+[org/10.1109/TSE.2022.3158252](https://doi.org/10.1109/TSE.2022.3158252)
+9. Gross, P.P., Sadowski, K.: FOGINDEX: a readability formula program for microcomputers. J. Read. **28** (7), 614–618 (1985)
+10. Kitchenham, B., Lawrence Pfleeger, S., McColl, B., Eagan, S.: An empirical study
+of maintenance and development estimation accuracy. J. Syst. Softw. **64** (1), 57–77
+(2002). [https://doi.org/10.1016/S0164-1212(02)00021-3](https://doi.org/10.1016/S0164-1212(02)00021-3)
+11. Langdon, W.B., Dolado, J., Sarro, F., Harman, M.: Exact mean absolute error
+of baseline predictor, MARP0. Inf. Softw. Technol. **73**, 16–18 (2016). [https://doi.](https://doi.org/10.1016/j.infsof.2016.01.003)
+[org/10.1016/j.infsof.2016.01.003](https://doi.org/10.1016/j.infsof.2016.01.003)
+12. Lo, K., Ramos, F., Rogo, R.: Earnings management and annual report readability.
+J. Account. Econ. **63** (1), 1–25 (2017). [https://doi.org/10.1016/j.jacceco.2016.09.](https://doi.org/10.1016/j.jacceco.2016.09.002)
+[002](https://doi.org/10.1016/j.jacceco.2016.09.002)
+13. Ministério do Planejamento, D.e.G.: Roteiro Métricas de Software do SISP (2018)
+14. Neo, G.S., Moura, J., Almeida, H., Neo, A., Freitas Júnior, O.: User story tutor
+(UST) to support agile software developers. In: Proceedings of the 16th International Conference on Computer Supported Education - Volume 2: CSEDU, pp.
+51–62. INSTICC, SciTePress (2024). [https://doi.org/10.5220/0012619200003693](https://doi.org/10.5220/0012619200003693)
+
+284 G. da Silva Neo et al.
+
+15. Neo, G.S., Neo, A.V.B.d.S., Filho, K.J.A.G., Moura, J.A.B., Junior, O.d.G.F.:
+NeoDataset: um conjunto de dados com user stories e story points. Revista dos
+Mestrados Profissionais **133** (2), 194–211 (2024). [https://doi.org/10.51359/2317-](https://doi.org/10.51359/2317-0115.2024.265431)
+[0115.2024.265431](https://doi.org/10.51359/2317-0115.2024.265431)
+
+16. Pang, B., Lee, L., et al.: Opinion mining and sentiment analysis. Found. Trends
+Inf. Ret. **2** (1–2), 1–135 (2008)
+17. Phan, H., Jannesari, A.: Heterogeneous graph neural networks for software effort
+estimation. In: Proceedings of the 16th ACM/IEEE International Symposium
+on Empirical Software Engineering and Measurement, pp. 103–113. ESEM 2022.
+Association for Computing Machinery, New York (2022). [https://doi.org/10.1145/](https://doi.org/10.1145/3544902.3546248)
+[3544902.3546248](https://doi.org/10.1145/3544902.3546248)
+
+18. Porru, S., Murgia, A., Demeyer, S., Marchesi, M., Tonelli, R.: Estimating story
+points from issue reports. In: Proceedings of the The 12th International Conference
+on Predictive Models and Data Analytics in Software Engineering. PROMISE 2016.
+Association for Computing Machinery, New York, NY, USA (2016). [https://doi.](https://doi.org/10.1145/2972958.2972959)
+[org/10.1145/2972958.2972959](https://doi.org/10.1145/2972958.2972959)
+19. Sarro, F., Petrozziello, A., Harman, M.: Multi-objective software effort estimation.
+In: Proceedings of the 38th International Conference on Software Engineering,
+ICSE 2016, pp. 619–630. Association for Computing Machinery, New York, NY,
+USA (2016). [https://doi.org/10.1145/2884781.2884830](https://doi.org/10.1145/2884781.2884830)
+20. Scott, E., Pfahl, D.: Using developers’ features to estimate story points. In: Proceedings of the 2018 International Conference on Software and System Process,
+ICSSP 2018, pp. 106–110. Association for Computing Machinery, New York, NY,
+USA (2018). [https://doi.org/10.1145/3202710.3203160](https://doi.org/10.1145/3202710.3203160)
+21. Shepperd, M., MacDonell, S.: Evaluating prediction systems in software project
+estimation. Inf. Softw. Technol. **54** (8), 820–827 (2012). [https://doi.org/10.1016/j.](https://doi.org/10.1016/j.infsof.2011.12.008)
+[infsof.2011.12.008](https://doi.org/10.1016/j.infsof.2011.12.008)
+
+22. Sudarmaningtyas, P., Mohamed, R.: A review article on software effort estimation
+in agile methodology. Pertanika J. Sci. Technol. **29** (2), 837–861 (2021). [https://](https://doi.org/10.47836/pjst.29.2.08)
+[doi.org/10.47836/pjst.29.2.08](https://doi.org/10.47836/pjst.29.2.08)
+23. Tamrakar, R., Jørgensen, M.: Does the use of Fibonacci numbers in planning poker
+affect effort estimates? In: 16th International Conference on Evaluation & Assessment in Software Engineering, EASE 2012, pp. 228–232 (2012). [https://doi.org/](https://doi.org/10.1049/ic.2012.0030)
+[10.1049/ic.2012.0030](https://doi.org/10.1049/ic.2012.0030)
+24. Tawosi, V., Moussa, R., Sarro, F.: Agile effort estimation: have we solved the
+problem yet? Insights from a replication study. IEEE Trans. Softw. Eng. **49** (4),
+2677–2697 (2023). [https://doi.org/10.1109/TSE.2022.3228739](https://doi.org/10.1109/TSE.2022.3228739)
+25. TextBlob: TextBlob: Simplified Text Processing (2024). [https://textblob.](https://textblob.readthedocs.io/en/dev/)
+
+[readthedocs.io/en/dev/](https://textblob.readthedocs.io/en/dev/)
+26. Textstat: textstat/textstat: Python package to calculate readability statistics of a
+text object - paragraphs, sentences, articles (2023). [https://github.com/textstat/](https://github.com/textstat/textstat)
+
+[textstat](https://github.com/textstat/textstat)
+
+27. Uc-Cetina, V.: Recent Advances in Software Effort Estimation using Machine
+Learning, pp. 1–10 (2023). [http://arxiv.org/abs/2303.03482](http://arxiv.org/abs/2303.03482)
+28. Usman, M., Mendes, E., Weidt, F., Britto, R.: Effort estimation in agile software
+development: a systematic literature review. In: Proceedings of the 10th International Conference on Predictive Models in Software Engineering, PROMISE 2014,
+pp. 82–91. Association for Computing Machinery, New York, NY, USA (2014).
+[https://doi.org/10.1145/2639490.2639503](https://doi.org/10.1145/2639490.2639503)
+

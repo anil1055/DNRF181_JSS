@@ -1,0 +1,1304 @@
+Iran Journal of Computer Science (2024) 7:735–754
+https://doi.org/10.1007/s42044-024-00194-9
+
+**RESEARCH**
+# **Forecasting the software engineering model’s effort estimation using** **constructive cost estimation models**
+
+**Mohammed Naif Alatawi** **[1]**
+
+Received: 24 January 2024 / Accepted: 24 May 2024 / Published online: 13 June 2024
+© The Author(s), under exclusive licence to Springer Nature Switzerland AG 2024
+
+**Abstract**
+
+Machine learning models are increasingly being developed to solve various problems in academic and corporate settings.
+However, data scientists encounter multiple challenges during model development that require software engineering methodologies to overcome. In many cases, developers working on machine learning projects may need to fully realize the benefits
+of adhering to the steps outlined in the Software Engineering Development Lifecycle. It is essential to recognize that the
+development processes for machine learning systems differ from those of traditional software systems. Therefore, it is crucial
+to investigate how software engineering principles can be adapted or applied to the machine learning workflow. This paper
+explores such practices and problems from a software engineering perspective. To achieve this, we utilized the COCOMO
+II Model to predict a software engineering model’s effort estimation and effort estimation incorporating machine learning
+hybrid techniques. Specifically, we employed a Genetic Algorithm-based Support Vector Regressor, which yielded the highest
+PRED value for effort estimation using the COCOMO II Model. Overall, this study provides insights into the application of
+software engineering methodologies for building machine learning models and highlights the importance of incorporating
+these practices to optimize the development process and achieve more accurate effort estimation.
+
+**Keywords** Machine learning · Software engineering · Artificial neural network
+
+
+**1 Introduction**
+
+Software development projects often face challenges in accurately estimating the time and effort required for completion.
+The primary responsibility of software engineering is effort
+estimation based on analogies. The effort required for new
+software projects was calculated for the corresponding development and management using the existing histories [1].
+Over the years, various models and methodologies have
+been developed to address this issue, with the COCOMO
+(Constructive Cost Model) being one of the most prominent. COCOMO has undergone several iterations to adapt to
+the evolving landscape of software development practices.
+Constructive Cost Model is widely used for software project
+cost prediction because it improves capital accuracy [2–4].
+
+B Mohammed Naif Alatawi
+
+alatawimn@ut.edu.sa
+
+1 Information Technology Department, Faculty of Computers
+and Information Technology, University of Tabuk, Tabuk
+City, Saudi Arabia
+
+
+COCOMO I, also known as COCOMO’81, provided a foundational framework for estimating software development
+costs, primarily based on the waterfall lifecycle. However,
+the need for a more comprehensive estimation model became
+apparent as software development methodologies evolved
+to include rapid development processes, reuse-driven techniques, and object-oriented approaches. This led to the
+development of COCOMO II, which incorporates modern
+lifecycle processes and capabilities. COCOMO II introduces
+three distinct models: the Application Composition Model,
+the Early Design Model, and the Post-Architecture Model.
+These models cater to different stages of the software development lifecycle, addressing prototyping, system layout,
+and code creation, respectively. One of the most critical
+tasks in software development is software development effort
+estimation or SDEE. The success of software projects is significantly impacted by accurate work estimation in the early
+stages of the software design life cycle.
+The parameters of the parametric, data-driven SDEE
+model COCOMO (Constructive Cost Model) must be
+adjusted using local data from the organization to provide an
+appropriate estimate [5–7]. By considering factors such as
+## 123
+
+
+736 Iran Journal of Computer Science (2024) 7:735–754
+
+
+software reuse, reengineering, and various effort multipliers,
+COCOMO II aims to provide more accurate and versatile
+cost estimation. This paper focuses on the COCOMO II
+Post-Architecture Model and its application in estimating
+software development efforts. We delve into the dataset used
+for validation, NASA 93, which includes effort multipliers
+and other parameters crucial for COCOMO II calculations.
+Additionally,weexploreusingmeta-heuristictechniqueslike
+genetic algorithms (GA) for feature selection and support
+vector regression (SVR) for refining effort estimation. Our
+analysis highlights the effectiveness of integrating machine
+learning approaches with established software engineering
+models like COCOMO II. By leveraging the strengths of
+both disciplines, we strive to enhance the accuracy and reliability of software development effort estimation, ultimately
+contributing to more successful project planning and man
+agement.
+The digital revolution makes possible data- or modeldriven digital goods and services. This paves the way for
+cutting-edge technologies like machine translation, driverless cars, and preventative maintenance [8]. Data-driven
+software components are fundamental to these kinds of
+products. An example of a data-driven software component performs a specific task (such as image segmentation,
+sentiment analysis, classification, etc.) using data science
+techniques. Data-driven software components have some or
+all of their functionality derived (learned) from data rather
+than defined (coded) by the programmer in the traditional
+sense [9, 10].
+The model concept is essential to every software module
+that relies on data (or several models coupled in a pipeline).
+The software component’s input and output relationship
+is typically nonlinear, marking a fundamental difference
+in behaviour from conventional (i.e., not data-driven) software. Because of this, even a seemingly insignificant change
+in the inputs can result in significant output differences.
+Uncertainty in results for unseen data arises because this
+input–output relationship is defined only for some of the data
+(or when the modelled system changes, i.e. if there is concept
+drift). Various algorithms exist for accomplishing any given
+goal (for example, neural networks, support vector machines,
+and decision trees can all solve classification tasks) [11, 12].
+Understanding the behaviour of a data-driven software
+component requires more than just familiarity with the algorithm(s) used to develop it. Before anything else, the training
+and inference data must be taken into account (i.e., runtime)
+
+[13, 14]. As a second point, standard software engineering
+development principles like encapsulation and modularity
+must be re-examined. To retrain a data-driven component, for
+instance, one must alter its application context (its intended
+scope), the sort of model employed, or the internal parame
+ters.
+## 123
+
+
+Standards establish necessary effort estimation properties of a software system and its components to assure the
+intended effort estimation of the system. ISO/IEC 25010
+(ISO/IEC, 2011) is one standard that provides effort estimation models for software and systems, i.e. a hierarchy
+of effort estimation features of interest and how to quantify
+and assess them. Due to their unique characteristics, these
+effort estimation models cannot be used directly, as with
+data-driven software components. Several require revisions
+to their definition (such as the reusability of trained models),
+and others should be added (e.g., trustworthiness, fairness).
+We also need to be specific about which characteristics are
+essential for certain features of the whole system. The methods used to run a model are often secondary in importance
+to other factors in data-driven software systems, such as the
+type of model or the data utilized for training and testing.
+One must be familiar with the use case’s application context and the specific data-driven approach to create helpful
+effortestimationmodels.Inthispost,weprovideasystematic
+approach to building effort estimation models for Machine
+Learning (ML) systems, using a real-world application as our
+inspiration.
+The problem addressed in this research revolves around
+the challenge of accurately estimating the effort required for
+software development projects. The hypothesis proposed to
+tackle this problem is that integrating a hybrid algorithm
+combining Support Vector Regression (SVR) and Genetic
+Algorithm (GA) can enhance the accuracy and reliability of
+effort estimation models in software engineering. By leveraging the complementary strengths of SVR and GA, the hybrid
+algorithm aims to optimize feature selection and parameter tuning, thereby improving the predictive performance of
+effort estimation models. This hypothesis forms the basis of
+our proposed solution, which has been explored and validated through empirical experimentation and analysis in this
+
+research.
+
+The paper’s significant contribution is in investigating
+the application of software engineering methodologies to
+developing machine learning models. Specifically, the paper
+explores the challenges and best practices for building
+machine learning models from a software engineering perspective, focusing on improving the development process’s
+efficiency and accuracy. To achieve this, the paper applies
+the COCOMO II Model to predict a software engineering
+model’s effort estimation and effort estimation that incorporates machine learning hybrid techniques. The paper uses
+a Genetic Algorithm-based Support Vector Regressor to
+estimate the effort required for building machine-learning
+models. This approach allows developers to assess better the
+time and resources necessary for building machine learning
+models, which can improve project planning and management. The paper aims to provide insights into integrating
+software engineering methodologies and machine learning
+
+
+Iran Journal of Computer Science (2024) 7:735–754 737
+
+
+workflows, enabling developers to build more reliable, scalable, and maintainable models. This can help overcome
+challenges associated with developing machine learning
+models, such as data quality, model selection, and hyperparameter tuning, and make the development process more
+efficient and effective.
+The contributions of this paper can be outlined as follows:
+
+- Development of a Novel Hybrid Algorithm:
+We introduce a novel hybrid algorithm combining Support
+Vector Regression (SVR) and Genetic Algorithm (GA) to
+estimate software effort. This hybrid approach capitalizes
+on the strengths of both techniques to improve the accuracy
+and reliability of effort estimation models.
+
+- Integration of Feature Selection and Parameter Optimiza
+tion:
+
+Our algorithm integrates feature selection and parameter
+optimizationwithinasingleframework.ByemployingGA
+for feature selection, we identify the most relevant features
+for effort estimation while simultaneously optimizing the
+parameters of the SVR model to enhance predictive per
+formance.
+
+- Comprehensive Evaluation Framework:
+We establish a comprehensive evaluation framework for
+assessing the proposed algorithm’s performance. This
+framework includes various performance metrics, such
+as Mean Magnitude of Relative Error (MMRE) and
+Predicted Value (PRED), thoroughly analyzing the algorithm’s effectiveness and reliability.
+
+- Comparison with Existing Approaches:
+We compare our algorithm with existing approaches to
+software effort estimation. By benchmarking against stateof-the-art methods, we demonstrate our hybrid algorithm’s
+superior accuracy and robustness.
+
+- Insights into Software Engineering Practices:
+Through our research, we provide insights into applying
+machine learning techniques in software engineering practices. By bridging the gap between machine learning and
+software engineering, our algorithm offers valuable contributions to advancing both fields.
+
+Overall, this paper’s contributions lie in developing an
+innovative hybrid algorithm, integrating feature selection
+and parameter optimization, establishing a comprehensive
+evaluation framework, conducting comparative analyses
+with existing approaches, and providing insights into software engineering practices. These contributions collectively
+advance the state-of-the-art in software effort estimation and
+
+pave the way for future research in the field.
+Furthermore, this research is divided into five sections.
+Section 1 introduces the current research with problem
+formulation and objectives. Section 2 shows the literature
+related to the current study. Section 3 shows the current
+
+
+research methodology. Section 4 shows the results of current
+research with discussion and limitations, while Sect. 5 shows
+
+the conclusions of this research with recommendations and
+
+future work.
+
+**3 Materials and methods**
+
+This section explains the methodology of current research.
+Estimating a software project’s cost is crucial in any software management plan. Accurate cost estimating is vital
+because it allows for the proper categorization and prioritization of development initiatives, facilitating resource
+allocation and optimizing utilization. Management effectivenessisdependentontheprecisionofthesoftwareengineering
+specifications. Estimation of work, time to create, cost, team
+size, risk assessment, etc., are all examples of such variables.
+These forecasts are often made during the earliest stages
+of a project’s development. Therefore, a reliable model is
+required to determine these values. Having fewer disagreements later in the project’s development is possible with an
+early and accurate estimation methodology.
+Based on the COCOMO model, this work proposes a GASVR method to estimate software costs using the perceptron
+learning algorithm. Research has shown that GA-SVR is one
+of the most effective methods for evaluating software prices.
+Many experts in the field are currently focusing their attention on improving GA-SVR-based software cost estimation
+
+methods.
+
+**3.1 Software cost estimation**
+
+To provide a rough estimate of the amount of time and
+money that will be required to finish a software engineering
+project, the purpose of software cost estimates is to provide that estimate. Estimating software expenses may appear
+straightforward in theory, but doing it in practice brings several problems and complications that must be overcome. The
+vast majority of methods for estimating the cost of software
+development emphasize the human component, and they provide estimates in terms of person-months worked. It does
+so by computing the time and effort required to complete a
+software project, considering various criteria such as deadlines, the acquisition of resources, and the limits imposed
+by cost. Accurate estimates are needed to design software
+successfully and efficiently. Experts in the software business
+have created various strategies for cost estimation over several decades. Yet, the primary challenge faced by those in
+software engineering has remained the same. Early software
+
+
+estimating models were founded on the principles of regression analysis and mathematical derivations. The COCOMO
+II model is the one that sees the most excellent use among
+these several approaches. Examples of modern modelling
+techniquesincludesimulation,neuralnetworks,geneticalgorithms, soft computing, and fuzzy logic modelling, to name
+just a few. In this study, we optimize the existing coefficients
+that calculate the best estimate of the future effort required to
+develop software utilizing the COCOMO II model by applying the most prevalent genetic algorithm in conjunction with
+the support vector machine method. This method was chosen because it has become increasingly popular in recent
+years. In evolutionary computing, genetic algorithms are a
+type of algorithm for optimizing populations. They were initially invented in 1975 by a scientist from the Netherlands.
+It is a heuristic algorithm that is derived from nature, and
+it has the capability of producing approximative as well as
+precise outcomes when it is put to use. To incrementally
+improve upon the previously obtained best answer, this algorithm works with a solution set rather than a single solution.
+
+**3.2 Genetic algorithm**
+
+The genetic method (GA) is a search algorithm that randomly
+explores solutions for the best one. Like biological genes,
+they act similarly. Once the examination is complete, it will
+be restored to mint condition. Gene expression analysis (GA)
+displays genes about chromosomal status. The chromosomes
+should be free to exchange, mutate, and self-select. These
+answers are improved after the competition because of the
+selection process. All of the chromosomes are generated at
+random. The objective function determines the fitness value
+it receives. The chromosome will recombine, change, and
+be selected by its fitness. In a crossover, two parents (sets
+of chromosomes) are chosen randomly, and their genes are
+swapped. Then, a new set of chromosomes, a “child,” will
+be produced. To mutate is to alter one or more chromosomes
+arbitrarily. More chromosomes can be generated via crossing and mutation, and their relative fitness can be determined.
+Then, we randomly choose from among them using a roulette
+wheel. The chosen chromosomes will be used in the subse
+quent assessment.
+Soft computing techniques such as neural networks,
+genetic algorithms, fuzzy logic modelling, and others are
+the foundation of today’s software development effort estimation models. These models are used to find the most
+accurate and precise predictions regarding software development time and effort. The neural networks and fuzzy
+approaches are challenging to apply due to the absence of
+any definitive guidelines for their creation. The genetic algorithm can potentially be a valid extra tool for software effort
+estimation, and it can significantly improve accuracy. This
+technique is known as a nonparametric one since it does
+## 123
+
+
+742 Iran Journal of Computer Science (2024) 7:735–754
+
+**Fig. 1** Support vector regression
+
+
+not presuppose anything about how the data are organized.
+Instead, it develops equations based solely on the values fitted to the data. A genetic algorithm is an evolved strategy
+to estimate the required work. The solution is obtained by
+employing a cycle of generations of candidate solutions;
+
+each whittled down based on the criterion of “survival of
+
+the fittest.” Genetic Programming, sometimes known as GP,
+is a method of global search that reduces the likelihood of
+being mired in the local optimal solution. This method is
+unique compared to others, such as neural networks and gradient descent, which are susceptible to forming local optimal
+values. It is beneficial for challenging tasks, mainly when
+minimal information is available about the underlying search
+space and the concept is simple to grasp.
+
+**3.3 Support vector regressor**
+
+Vapnik introduced the support vector machine, which is
+based on the notion of minimizing structural risk and the
+Chervonenkis dimension.
+
+Let’s pretend we have the following data set: *(xi*, *yi)...*
+*(Xi*, *yi)*, *xi Rn*, *yi R*, *i* � 1, 2, 3 *...l* . Knowing that *y* �
+*f* ( *x* ) in *R* space, we can zero in on the target function *f* ( *x* ) in
+*Rn* space. *yi* �−1or1 Indicates a categorization difficulty.
+Figure 1 depicts the case where it is an actual number, as in
+a regression problem.
+It is assumed that there is little difference between *f* ( *x* )
+and *yi* when *f* ( *x* ) � *w* ∗ *x* + *b* .
+In that case, we can provide the most accurate prediction
+possible. And the best plane that can be found using SVR is
+
+*w* .
+
+We successfully address the regression issue by combining the *ξ* -tube with conventional SVR. However, as
+demonstrated in Fig. 2, exceptional cases always complicate
+even the most straightforward tasks.
+## 123
+
+
+**Fig. 2** ξ-tube with conventional SVR
+
+Linear support vector regression is used in this study. As
+an illustration of the regression issue, consider (1):
+
+
+*l*
+� *ξ* *o*, (1)
+
+*i* �1
+
+
+1
+min *w*, *bξ*, *ε* *o* 2 *[w]* *[t]* *[w]* [ +] *[ ε]*
+
+
+*l*
+� *ξ* + *ε* *o*
+
+*i* �1
+
+
+where [1]
+
+2 *[w]* *[t]* *[w]* [ is the complexity model,] *[ ξ]* [ is a variable, and] *[ ε]*
+is the regression tube.
+
+**3.4 Hybridization**
+
+This study employs a hybrid method that combines the
+genetic algorithm with support vector regression. SVR predictionscanbeimprovedbyfindingoptimalparametersusing
+GA after hybridizing the models (1) becomes:
+
+
+1
+min *w*, *bξ*, *ε* *o* 2
+
+
+� *a* − *a* [+] [�] *[t]* *Q* � *a* − *a* [+] [�]
+
+
+*l*
+�
+
+*i* �1
+
+
+*a* + *a* [+] [�] *.*
+�
+
+
+(2)
+
+
++ *ε*
+
+
+*l*
+�
+
+*i* �1
+
+
+� *a* − *a* [+] [�] + *ε* *o*
+
+
+**3.4.1 Chromosomes**
+
+The chromosome was placed in a *Q* - array. The number of
+chromosomes, or *Q*, and the number of bits, or *a*, in a single
+chromosome, respectively. We have x chromosomes and y
+bits in each chromosome if we have n unknowns to solve.
+
+When this is the case, we may use Fig. 3 to determine that
+our array size is between [ *x*, *n* ∗ *y* ].
+
+
+Iran Journal of Computer Science (2024) 7:735–754 743
+
+
+**Fig. 3** Array of chromosomes
+
+**3.4.2 Crossover**
+
+In this scenario, we only use a single crossover point. Let’s
+randomly choose two chromosomes and set their length to 1.
+In a normal distribution, the crossover point is between − 1
+and 1. Two new chromosomes are produced when we switch
+
+what’s on either side of the crossover site.
+
+**3.4.3 Mutation**
+
+The analysis in this paper uses a point mutation. We will
+randomly select some DNA from a chromosome, changing
+a 0 in a bit to a 1 if it is present. If the bit value is 1, then
+change it to 0. Systems employing mechanisms conceptually
+comparable to a roulette wheel are utilized.
+
+**3.4.4 Features selection**
+
+Every chromosome can be assigned a fit value by applying
+the fit function. This is fantastic news if the fit value is significant. Because it requires less space on the steering wheel.
+Additionally, we utilize probabilistic logic to pick the chro
+mosomal.
+
+**3.4.5 GA-SVR**
+
+GASVR accepts the following flags in its command line output: -s (SVR type), -t (kernel type), -c (cost), -g (gamma), and
+-p (precision) (epsilon). We use epsilon-SVR with a radial
+
+basis function kernel for the SVR.
+
+In this study, the three variables employed to solve the
+problem are metaphorically represented as chromosomes.
+
+
+Crossover, mutation, and natural selection are then applied to
+the chromosome. After a few generations, the best setting for
+SVR’s parameters emerges. If appropriately used, SVR has
+the potential to produce the most reliable prediction model
+and result. The process flowchart is shown in Fig. 4.
+Thus, attempts to broaden the models’ applicability typically result in mediocre performance. We need a technique
+that can handle this situation without requiring human
+intervention. Machine learning will always be the answer.
+Nowadays, it’s easier and faster than ever to learn new information, classify data, spot trends, etc. This work explored
+ways to improve software project timeline estimates by
+applying Machine Learning techniques within the Software
+Engineering discipline. We may employ an SVR to model
+complex relationships between your dependent and independent variables. When work is considered a dependent
+property and cost and software size are treated as independent
+elements, SVRs become helpful machine-learning tools.
+Data for the COCOMO model’s training cost parameters (size, effort, cost, time, and quality) will be obtained
+from Kaggle.com and pre-trained. In this research, we built
+an estimation model for COCOMO using a support vector
+regression and a genetic algorithm. We are employing the
+SVR model to create a software effort estimation model. The
+
+GA’s compressed data representation is sufficient for dimensionality reduction and feature selection applications.
+The GA architecture that enables reduced representation
+is essential to the learning process. The best layout minimizes
+the reconstruction error for these two variables (RMSE).
+The buried layer’s combined weight expression needs to
+be more intuitively apparent. In this example, we’ve kept
+things on the bare minimum. When a node *j* was triggered,
+the significance of a variable d at that node was crucial. The
+greater the importance of a variable, the more significant its
+weight.
+This means that the importance of a variable across all J
+
+nodes
+
+*w* *[d]* *j* [�] [altogether][ �] *[w]* *dj* *[dj][w]* � alto *jw* *[d]* *j* *[.]* (3)
+
+The median value was taken into account across all *J*
+
+nodes. A variable with a low *w djdjw* is less important than
+one with a high alto *jw jd* . Specific attributes can be chosen
+as independent variables if their weights are more significant
+than a predetermined threshold.
+The genetic algorithm makes use of the following:
+Step 1. Establish chromosome number, rate of generation,
+mutation, and rate of crossover
+
+[1] � [ *a* ; *b* ; *c* ; *d* ] � [12; 05; 23; 08][ *a* ; *b* ; *c* ; *d* ] *.* (4)
+## 123
+
+
+744 Iran Journal of Computer Science (2024) 7:735–754
+
+**Fig. 4** Proposed flowchart
+
+
+Step 2. Generate population chromosome numbers and
+gene chromosome initialization with a random value. Step 2.
+
+*F* _obj [1] � Abs ((12 + 2 ∗ 05 + 3 ∗ 23 + 4 ∗ 08) − 30)
+
+� Abs ((12 + 10 + 69 + 32) − 30)
+
+� Abs (123 − 30) � 93 *.*
+
+Step 3. Process steps 4–7 until the number of generations
+
+is met
+
+Fitness [1] � 1 */* (1 + *F* _ *obj* [1]) � 1 */* 94 � 0 *.* 0106 *.*
+
+Step 4. Evaluation of fitness value of chromosomes by
+calculating objective function
+
+*Chromosome* [1] � [02; 05; 17; 01] *.* (5)
+
+Step 5. Chromosomes selection
+
+total_ *gen* � number_of_gen_in_Chromosome
+
+∗ number of populations � 4 ∗ 6 � 24
+
+Step 6. Crossover
+
+Chromosome [1] � [02; 05; 17; 01] *.* (6)
+## 123
+
+
+Step 7. Mutation
+
+total_gen � number_of_gen_in_Chromosome
+
+∗ number of populations � 4 ∗ 6 � 24
+
+Step 8. Solution (Best Chromosomes)
+
+*a* + 2 *b* + 3 *c* + 4 *d* � 307 + (2 ∗ 5) + (3 ∗ 3) + (4 ∗ 1) � 30
+
+The *a*, *b*, *c*, and *d* variables have values the genetic algorithm can solve for. After optimized parameters, the support
+vector machine algorithm makes predictions.
+
+**3.5 Methodological theorem**
+
+The evolutionary algorithm has been proposed to achieve this
+optimization of the COCOMO II Post Architecture model
+coefficients.Below,webreakoutthealgorithm’smostcrucial
+
+components:
+
+Generate individuals randomly,
+
+*e.g.xxxx* | *xxxx* | *xxxx* | *xxxxabcd*
+
+Four genes exist for each of the four coefficients listed
+above, and their products are positive integers between zero
+and nine. The first gene in a coefficient represents an integral
+value, whereas the other three represent fractional values.
+
+
+Iran Journal of Computer Science (2024) 7:735–754 745
+
+
+Use the coefficients from a single individual i to anticipate
+how much work will go into developing each Project *j* in the
+
+dataset.
+
+Using the following equation, we may determine whether
+or not Person I is physically capable of completing Task *j* .
+
+Fitness *i j* � [|][Actual][ −] [Estimated] *[i ]* *[j]* [|], (7)
+
+Actual *j*
+
+*i* —the individual number, *j* —the project number, *Actual* −
+*isactualsof twareprojectef f ort Estimatedi j.*
+Itistheestimatedorpredictedsoftwareprojecteffortusing
+
+individual i.
+
+For a project’s actual effort to be greater than its predicted
+effort, the fitness value must be greater than zero, while the
+opposite is valid for a negative fitness value [8].
+To determine an individual’s fitness level, we take the
+mean of their attained fitness levels across all Projects. The
+fitness worth is proportional to the discrepancy between
+actual and anticipated development effort. Because of this,
+the value of the fitness function should be decreased.
+
+*Fitnessi* � *n* [1] [∗] � *Fitnessi j*, *j* � 1 *. . . n*, (8)
+
+*i* —the individual number, *j* —the project number, *n* —the
+number of projects.
+Whenever the halting condition is met, the algorithm is
+finished running. Instead, a population’s optimal (minimum)
+and mean fitness levels can be employed.
+The selection process is a competition.
+
+Individuals are used to create new individuals based on
+
+the criteria chosen in an earlier step. The standard crossover
+method is implemented.
+In mutation, no individuals or a few individuals are chosen randomly. The odds of being chosen should be modest,
+usually hovering around 10%. A unique pattern of random
+gene mutations is established for each person.
+Once the new population has been produced, the best individuals from both the parent and offspring populations are
+selected using the same criteria. Including elitism in the plan
+is one way to ensure the best possible answer is not over
+looked.
+
+The main differences between the proposed algorithm
+and existing approaches lie in the methodology, optimization techniques, and performance metrics utilized. Here are
+the key distinctions:
+Hybridization Technique
+Our proposed algorithm combines Support Vector Regression (SVR) with Genetic Algorithm (GA) in a hybrid
+approach. This hybridization leverages the strengths of both
+techniques, with GA used for feature selection and parameter
+optimization while SVR handles the actual estimation task.
+
+
+In contrast, other algorithms may rely solely on SVR or
+other regression techniques without incorporating GA-based
+feature selection and optimization.
+
+Feature Selection
+
+In our approach, GA enables efficient feature selection
+by identifying the most relevant features to improve effort
+estimation accuracy. GA explores the search space to identify
+optimal feature subsets that contribute most significantly to
+the estimation process.
+Many existing algorithms may use traditional feature
+selection methods or may not emphasize feature selection
+as prominently as our approach does.
+Optimization Parameters
+Our algorithm optimizes both the features selected for
+estimation and the parameters of the SVR model using GA.
+This comprehensive optimization process aims to improve
+the effort estimation model’s overall accuracy and robust
+ness.
+
+Other algorithms may focus solely on optimizing model
+parameters or use different optimization techniques that do
+
+not involve feature selection.
+
+Performance Metrics
+
+We evaluate our algorithm’s performance using metrics
+such as Mean Magnitude of Relative Error (MMRE) and
+Predicted Value (PRED). These metrics provide insights into
+the accuracy and reliability of the effort estimation model.
+While other algorithms may also use performance metrics
+for evaluation, the specific metrics chosen and their interpretation may vary.
+Overall, the proposed algorithm stands out due to its innovative hybridization approach, emphasis on feature selection
+using GA, comprehensive optimization of model parameters,
+and rigorous performance metrics evaluation. These differences contribute to our algorithm’s unique effectiveness and
+performance compared to existing approaches in software
+
+effort estimation.
+
+**4 Results and discussions**
+
+The datasets utilized in the research experiments include the
+NASA 93 dataset, commonly used in software engineering
+research for cost estimation purposes. This dataset provides
+valuable information on various software projects, including
+project size, effort, and other relevant metrics. The general
+results of the research experiments include improvements
+in the accuracy and reliability of effort estimation models
+using the proposed hybrid algorithm. The hybrid algorithm,
+combining Support Vector Regression (SVR) and Genetic
+Algorithm (GA), demonstrated superior performance compared to traditional methods, as evidenced by reduced Mean
+Absolute Error Magnitude (MMRE) and Mean Magnitude
+of Relative Error (MdMRE) values.
+## 123
+
+
+746 Iran Journal of Computer Science (2024) 7:735–754
+
+
+The equations presented in the research paper repre
+sent mathematical formulations derived from established
+
+methodologies such as COCOMO II and the proposed hybrid
+algorithm. These equations are designed to capture the
+relationships between various factors influencing effort estimation in software engineering. The intuition behind each
+equation lies in its ability to model the complex interactions
+between project attributes, algorithm parameters, and predictive accuracy. The selection of parameter values for the
+algorithm is based on a combination of empirical experimentation,domainexpertise,andalgorithmicconsiderations.
+Parameters are chosen to optimize the algorithm’s performance, balancing factors such as computational efficiency,
+predictive accuracy, and robustness. Detailed justifications
+for parameter selections are provided to ensure transparency
+and reproducibility of the research findings. The study’s
+main findings include developing and validating a hybrid
+algorithm combining Support Vector Regression (SVR) and
+Genetic Algorithm (GA) for software effort estimation. The
+hybrid algorithm demonstrated improved accuracy and reliability compared to traditional methods, as evidenced by
+reduced error metrics and enhanced predictive performance
+across various software projects. The study’s strengths lie in
+its comprehensive approach to addressing the challenge of
+software effort estimation, including the development of a
+novel hybrid algorithm and empirical validation using realworld datasets. However, limitations include the reliance on
+specific datasets and assumptions inherent in the modelling
+approach, which may affect the generalizability of the findings to different contexts.
+
+**4.1 COCOMO model II**
+
+Costs associated with creating software can be estimated
+using the regression-based COCOMO model. In 1981, Dr.
+Barry Boehm was the first to use it. This is one of the
+most widely used and thoroughly explained approaches to
+calculating the time and effort required to create software.
+COCOMO I, also known as COCOMO’81, was an influential model back then. Software development is based on the
+waterfall lifecycle [4]. Cost estimates for software developed
+usingmodernlifecycleprocessesandcapabilities,suchasthe
+rapid-development process model, reuse-driven techniques,
+and object-oriented approaches, have been a source of contention for the company. In light of these needs, COCOMO
+II, the most recent iteration, was developed. COCOMO II can
+measure the size of an object in KLOC, FP, or OP. COCOMO
+II takes into account software reuse and reengineering. A
+large-scale, ongoing data collection and analysis project is
+built on the new model to refine and calibrate its estimation
+capabilities. The three separate models that make up this
+
+whole are described in detail below:
+## 123
+
+
+**4.1.1 Application composition model**
+
+The Application Composition Model uses prototyping
+to address high-risk issues. Potential areas for development include interfaces, software/system interactions, performance, and technological developments. Point values
+assigned to objects are used for scaling.
+
+**4.1.2 Early design model**
+
+Investigating various software and system layouts is a necessary part of the Early Design Model. Function points and
+several other cost drivers must be considered to size the system properly.
+
+**4.1.3 Post-architecture**
+
+The post-architecture (PA) Model focuses on creating and
+keeping working code. The size of a program can be roughly
+estimated by counting the number of source instructions and
+function points used in its development. This Figure is then
+adjusted for factors such as software redeployment and the
+
+likelihood of errors. Since not all COCOMO II extensions
+
+have been calibrated, treating them all as experiments is currently safest. The calibrated program only works with the
+
+Post Architecture model.
+
+**4.2 Dataset description NASA 93**
+
+COCOMO II NASA 93’s cost estimation model uses cal
+endar months and 152 h (and includes development and
+management hours). COCOMO predicts a nonlinear increase
+in effort proportional to the size of the software (months �
+*a* - KSLOC *b* - *c* ). More than a dozen "effort multipliers" are
+added to arrive at c, and KSLOC is computed directly or
+through function point analysis. The values for ( *a*, *b* ) are
+specific to the area under investigation. To rephrase, the equation for calculating months is as follows: (KSLOC *b* ) * *a* (EM1* EM2* EM3*…) is a valid expression. Intensity fac
+tors include the ones listed below. The Table 2 below shows
+
+the effort multipliers in the first column while the next columnshowstheeffortestimatedconditionsnamedasverylow,
+low, nominal, high, very high, extra high, and productivity
+high range:
+In COCOMO I, KSLOC’s exponent ranged from 1.05 to
+1.2; today, there is only one such value. Concerns like “Have
+we constructed this kind of system before?” were modelled
+in COCOMO II by decomposing the exponent “b” into a
+constant and the sum of five “scaling factors.” Comparable
+effort multipliers were introduced in COCOMOII, although
+specific parameters were removed, renamed, or added (for
+“required level of reuse”, “multiple-site development”, and
+“schedule pressure”). All effort multipliers can be broken
+
+
+Iran Journal of Computer Science (2024) 7:735–754 747
+
+**Table 2** Dataset description NASA 93
+
+The effort multipliers Very low Low Nominal High Very high Extra high Productivity high range
+
+acap (analysts capability) 1.46 1.19 1 0.86 0.71 2.06
+
+pcap (programmer capability) 1.42 1.17 1 0.86 0.7 1.67
+
+asp (application experience) 1.29 1.13 1 0.91 0.82 1.57
+
+mode (modern programming practices) 1.24 1.1 1 0.91 0.82 1.34
+
+tool (use of software tools) 1.24 1.1 1 0.91 0.83 1.49
+
+vexp (virtual machine experience) 1.21 1.1 1 0.9 1.34
+
+lexp (language experience) 1.14 1.07 1 0.95 1.2
+
+sced (schedule constraint) 1.08 1 1.04 1.1
+
+stor (primary memory constraint) 1 1.06 1.21 1.56 − 1.21
+
+data (database size) 1 1.08 1.16 − 1.23
+
+time (time constraint for cpu) 1 1.11 1.3 1.66 − 1.3
+
+turn (turnaround time) 0.87 1 1.07 1.15 − 1.32
+
+virt (machine volatility) 0.87 1 1.15 1.3 − 1.49
+
+cplx (process complexity) 0.88 1 1.15 1.4 − 1.87
+
+rel y (re q uired software reliabilit y ) 0.7 0.85 1 1.15 1.3 1.65 − 2.36
+
+down into three classes: adding more work, subtracting more
+work, and those that are time-related. The *U* -shaped relationship between “sced” and effort in COCOMO II shows that
+giving too much and too little time to developers can severely
+affect the final product’s quality.
+
+The COCOMO II Post-Architecture model uses the
+
+described 17 Effort Multipliers (EMs). Table 3 provides a
+high-level overview of the COCOMO II effort multipliers or
+cost drivers, broken down by Product, Computer, Personnel,
+and Project categories, along with their respective rating values. We have five products in the dataset, three computers,
+five personnel products, and four projects.
+
+**4.3 Features ranking using GA**
+
+
+The adoption of a meta-heuristic like the genetic algorithm,
+which can select features on its own, would make the search
+more objective. However, with so many potential permutations in the solution space, it’s fair to question whether
+or not an optimal solution is possible when the number of
+characteristics is enormous. Genetic algorithms employ an
+evolutionary technique to provide optimal solutions. A population should be constructed utilizing subsets of the available
+features as a starting point for feature selection. Subsets of
+this group are then evaluated using the prediction model. The
+criteria used to rank features are displayed in Fig. 5.
+Table 4 shows the ranking and scores of each feature using
+GA. The ranking and scores of each feature using GA. The
+ranking score varies between 0.3 and 0.5 in products, 0.5–0.7
+in computers, and 0.1–0.7 in personnel, while in projects, it
+varies from 0.3 to 0.75.
+
+
+**Fig. 5** Feature ranking by GA
+
+Figure 6 presents the rankings and scores obtained using
+GA for each feature. The rankings and total points earned
+by each feature according to GA are detailed in Table 5. The
+## 123
+
+
+748 Iran Journal of Computer Science (2024) 7:735–754
+
+
+**Table 3** Ranking and scores of each feature using GA
+
+Cost Description Type Ranking score
+drivers (0–1)
+
+
+REPLY Required
+software
+
+reliability
+
+
+Product 0.3
+
+
+DATA Data size Product 0.45
+
+RUSE Reusability Product 0.5
+
+DOCU Documentation Product 0.24
+
+CPLX Complexity Product 0.6
+
+TIME Time Computers 0.78
+
+STOR Storage Computers 0.5
+
+POOL Program Computers 0.7
+volatility
+
+ACAP Analyst Personnel 0.7
+capability
+
+PCAP Program Personnel 0.3
+capability
+
+APEX Application Personnel 0.5
+execution
+
+PLEX Platform Personnel 0.1
+
+experience
+
+LTEX Language and Personnel 0.7
+tool execution
+
+PCON Personal Project 0.78
+continuity
+
+TOOL Software tools Project 0.46
+
+SITE Site development Project 0.4
+
+SCED Development Project 0.3
+schedule
+
+ranking score can range from 0.3 to 0.5 for products, 0.5 to
+0.7 for computers, and 0.1 to 0.7 for individuals; meanwhile,
+it can range from 0.3 to 0.75 for projects.
+
+**4.4 Effort estimation**
+
+According to the research presented in the article [9],
+the COCOMO II post-architecture technique computes the
+amount of work put into developing software (measured in
+person months) by utilizing the following equation:
+
+Effort � *A* × *(* SIZE *)E* × *�i* EMi *.* (9)
+
+A multiplicative constant with a value of 2.94 adjusts the
+work required for the project based on its unique circumstances. Size is the estimated size of a project expressed
+either in unadjusted function points or in kilo source lines
+of code. E is an exponential factor that accounts for the relative economies of scale a software project faces as its size
+
+increases. E can also account for the relative diseconomies of
+## 123
+
+
+**Table 4** High-level overview of the COCOMO II effort multipliers
+
+Cost Drivers Description Type
+
+REPLY Required Software Reliability Product
+
+DATA Data size Product
+
+RUSE Reusability Product
+
+DOCU Documentation Product
+
+CPLX Complexity Product
+
+TIME Time Computers
+
+STOR Storage Computers
+
+POOL Program Volatility Computers
+
+ACAP Analyst Capability Personnel
+
+PCAP Program Capability Personnel
+
+APEX Application Execution Personnel
+
+PLEX Platform Experience Personnel
+
+LTEX Language and Tool Execution Personnel
+
+PCON Personal Continuity Project
+
+TOOL Software Tools Project
+
+SITE Site Development Project
+
+SCED Develo p ment Schedule Pro j ect
+
+scale. Effort multipliers are abbreviated as EMi. The predefined scale factors (SFi) are given weights, and the coefficient
+E is calculated by adding those weights together using the
+following equation:
+
+*E* � 0 *.* 91 + 0 *.* 01 � *i* SFi *.* (10)
+
+The following equation can be used to calculate the development time (TDEV), which is obtained from the amount of
+
+effort:
+
+TDEV � *C* × *(* Effort *)F.* (11)
+
+The most recent calibration of the method reveals that the
+
+multiplier C is equivalent to 3.67, and the coefficient F is
+found in a manner analogous to that of the scale exponent by
+using the following equation:
+
+*F* � 0 *.* 28 + 0 *.* 002 � *iSFi.* (12)
+
+After taking into account all of the factors and multipliers
+with their standard values, the formulae for the amount of
+work and the time required to do it are as follows:
+
+Effort � 2 *.* 94 × *(* Size *)* 1 *.* 1, (13)
+
+Duration : TDEV � 3 *.* 67 × *(* Effort *)* 3 *.* 18 *.* (14)
+
+
+Iran Journal of Computer Science (2024) 7:735–754 749
+
+
+**Fig. 6** Feature ranking score
+(0–1)
+
+**Table 5** Features ranking
+
+
+
+0.9
+
+
+Ranking Score (0-1)
+
+
+
+
+Ranking Score (0-1)
+
+
+
+
+
+
+
+
+
+
+
+Features Project Actual Calculated
+size effort using
+simple GA
+
+
+Calculated
+
+effort using
+simple
+GA-SVR
+
+
+REPLY 8 8.2 6.5 7
+
+DATA 12 11 7.5 7
+
+RUSE 4 6 3.5 4
+
+DOCU 7 3 6 6
+
+CPLX 4 6 7 6
+
+TIME 6 5 4 6
+
+STOR 5 4 6 5
+
+POOL 8 5 5.7 6
+
+ACAP 4.3 5 6.4 6
+
+PCAP 4.2 4.2 7.5 8.6
+
+APEX 4 5.2 4.4 7.5
+
+PLEX 12 14.2 7.5 5.3
+
+LTEX 8 8 7.4 4
+
+PCON 5 6 3.5 6
+
+TOOL 4.5 7 7.5 6
+
+SITE 7.3 6 4.6 6
+
+SCED 3.5 6 5 5
+
+COCOMO II combined the Delphi method and algorithmic cost-estimating methodologies, making it a straightforward and efficient calibration process. It is also an objective
+and supportive tool. This model can be replicated and adapted
+
+[6]. However, most of its extensions are still in the experimental stage and need to be correctly calibrated, which is one
+
+of its limitations.
+
+
+Everything that could be done with the implemented tool
+has been done. The uniform crossover technique, tournament
+selection mechanism, and mutation rate 0.15 are the GA tuning parameters for optimizing the COCOMO II PA model
+coefficients. After several iterations, the optimal solution, as
+measured by the fitness function, is found among a group of
+candidate solutions. Figure 7 shows the GASVR Features of
+
+COCOMO II Effort Estimation Prediction.
+
+This research presents a GA-SVR technique to estimate
+software expenses using the perceptron learning process. The
+COCOMO model was used as the basis for this proposal.
+According to the findings of recent studies, the GA-SVR
+method is one of the most accurate approaches to evaluating the cost of software. Numerous industry professionals
+are currently concentrating their efforts on developing GASVR-based software cost estimation methodologies that are
+more accurate. Figures 5 and 6 display the estimated work
+andtimerequiredtobuildanythingusingthecurrentandoptimized version of COCOMO-II, respectively, and the amount
+of work and time needed to develop something. As the results
+show, there has been an increase in accuracy in estimating
+both the amount of work and the amount of time required.
+While the improvement in the work estimation is intangible,
+the improvement in the time estimation is significant. It is
+also noteworthy that although the estimated amount of effort
+for some projects is very different from the actual amount
+of effort for those projects, the estimated amount of time
+required for development is very accurate. In potential future
+research, the reasons for this could be investigated further.
+
+**4.5 Performance metrics**
+
+As part of this study, we tested the COCOMO model. For
+COCOMO, we must first pre-process the data because each
+## 123
+
+
+750 Iran Journal of Computer Science (2024) 7:735–754
+
+
+**Fig. 7** GASVR features of
+COCOMO II effort estimation
+
+prediction
+
+
+10
+
+
+Effort Es�mated by GASVR
+
+
+
+
+
+
+
+
+
+
+
+Calculated Effort using Simple GA Calculated Effort using Simple GA-SVM
+
+
+**4.6 Performance of GASVR**
+
+Table 7 shows the comparison of MRE on Models with all
+projects. For the first project, the effort was 8.2. GA estimated
+23, while SVR MRE was estimated at 17. However, when we
+had GASVR, MRE was predicted at 6.
+Figure 8 shows the training set MMRE and MDMRE values. At 200 iterations, MMRE was 0.77, and MdMRE was
+
+0.8111, while on the last iteration, 1000, MMRE was 0.55,
+and MdMRE was 080. For the testing set (see Fig. 9), MMRE
+at 200 iterations was 0.75, while MdMRE was 0.79. At the
+
+end of the 1000 iteration, MMRE was 0.74, and MdMRE
+
+was 0.82.
+
+Figure 10 depicts several PRED values, including 0.5 at
+
+the 800th iteration.
+
+The evaluation process employed every one of the 93
+projects in the NASA data set. Table 8 shows the evaluation of
+the models. It displays the mean of magnitude relative error
+(MRE) of effort estimation and development time estimation
+## 123
+
+
+752 Iran Journal of Computer Science (2024) 7:735–754
+
+
+**Fig. 11** COCOMO different
+models
+
+
+0.6
+
+
+COCOMO Different Models
+
+
+
+
+
+BATGSA ANN SCE GA Hybrid SVR and
+GSA
+(Hypertuned)
+
+
+Dataset PRED
+
+
+for COCOMOII using the existing and optimized version of
+the coefficient.
+Comparatively, our model is better than other previous
+models, as shown in the table below. Table 9 shows that Ref.
+
+[11] has used BATGSA on the COCOMO dataset with a
+PRED 0.3 value. Meanwhile, Ref. [13] ANN has shown a
+PRED value of 0.4. Reference [10] used the SCE technique
+with a PRED value of 0.25. In Ref. [8], GA was used on
+the COCOMO dataset with a 0.5 PRED value. In the last,
+
+our model GASVR has shown the best value of 0.55, which
+shows that the model is very efficient:
+Figure 11 shows different COCOMO-based models.
+BATDSA has a 0.3 PRED value, ANN has a 0.4 PRED value,
+
+and SCE has a 0.25 PRED value. GA has a 0.5 PRED value,
+while our model has a 0.55 PRED value, showing the best
+
+result.
+
+**5 Conclusions**
+
+In developing machine learning models to address diverse
+issues confronting businesses and educational institutions,
+data scientists are required to surmount several obstacles
+related to Model Development in the context of Software
+Engineering. Developers working on Machine Learning frequently need to be made aware of how much better off they
+would be if they stuck to the processes described in the Software Engineering Development Lifecycle. This is a common
+problem. This is because the procedures for constructing
+machine learning systems will be distinct from those utilized
+by more conventional software systems. This article analyses
+these difficulties and practises from a software engineering perspective to better understand how developers could
+apply or adapt the standard software engineering approach
+to the Machine Learning workflow. In this study, we used
+## 123
+
+
+the COCOMO II Model to forecast a software engineering
+model’s effort estimate and effort estimation utilizing a mix
+ofmachinelearningapproaches.Thesetechniqueswerecombined with machine learning. Using the COCOMO Model II,
+our Genetic Algorithm Support Vector Regressor model has
+demonstrated the highest PRED value for effort estimation.
+
+**Declarations**
+
+**Conflict of interest** The author declares that there are no conflicts of
+interest regarding the publication of this research paper. The research
+was conducted in an unbiased manner, and there are no financial or
+personal relationships that could have influenced the findings or interpretations presented herein.
+
+**Research involving human participants and animals** This research
+study solely involves the use of historical datasets. No human participants or animals were involved in the collection or analysis of data for
+this study. As a result, ethical approval was not required.
+
+**Informed consent** No informed consent procedures were conducted
+since this research study did not involve human participants or animals.
+The data used for analysis was publicly available and did not require
+informed consent. The authors affirm their commitment to conducting
+research using the highest ethical standards and ensuring the presented
+findings’ accuracy, transparency, and reliability.
+
+
+Iran Journal of Computer Science (2024) 7:735–754 753
+

@@ -1,0 +1,857 @@
+[Latest updates: hps://dl.acm.org/doi/10.1145/3674805.3695402](https://dl.acm.org/doi/10.1145/3674805.3695402)
+
+RESEARCH-ARTICLE
+**On the Accuracy of Effort Estimations based on COSMIC Functional**
+**Size Measurement: A Case Study**
+
+**[ERSIN ERSOY](https://dl.acm.org/profile/99659201965)**
+
+**[SELAMI BAGRIYANIK](https://dl.acm.org/profile/99658985701)** [, Bahcesehir University, Istanbul, Turkey](https://dl.acm.org/institution/60021379)
+
+**[HASAN SOZER](https://dl.acm.org/profile/81488663078)** [, Ozyegin University, Istanbul, Turkey](https://dl.acm.org/institution/60086558)
+
+**[Open Access Support](https://libraries.acm.org/acmopen)** provided by:
+
+**[Ozyegin University](https://dl.acm.org/institution/60086558)**
+
+**[Bahcesehir University](https://dl.acm.org/institution/60021379)**
+
+
+**PDF Download**
+
+**3674805.3695402.pdf**
+**18 March 2026**
+
+**Total Citations:** 2
+
+**Total Downloads:** 439
+
+**Published:** 24 October 2024
+
+**[Citation in BibTeX format](https://dl.acm.org/action/exportCiteProcCitation?dois=10.1145%2F3674805.3695402&targetFile=custom-bibtex&format=bibtex)**
+
+[ESEM '24: ACM / IEEE International](https://dl.acm.org/conference/esem)
+[Symposium on Empirical Soware](https://dl.acm.org/conference/esem)
+[Engineering and Measurement](https://dl.acm.org/conference/esem)
+
+*October 24 - 25, 2024*
+*Barcelona, Spain*
+
+**Conference Sponsors:**
+[SIGSOFT](https://dl.acm.org/sig/sigsoft)
+
+
+ESEM '24: Proceedings of the 18th ACM/IEEE International Symposium on Empirical Soware Engineering and Measurement (October 2024)
+hps://doi.org/10.1145/3674805.3695402
+ISBN: 9798400710476
+
+.
+
+# **On the Accuracy of Effort Estimations based on COSMIC** **Functional Size Measurement: A Case Study**
+
+
+[Ersin Ersoy](https://orcid.org/0000-0002-6100-9514) [∗]
+
+Paycell
+Turkey
+ersin.ersoy@turkcell.com.tr
+
+**Abstract**
+
+
+[Selami Bagriyanik](https://orcid.org/0000-0002-5561-4283)
+Singularity Software Technologies
+Turkey
+Bahcesehir University
+Turkey
+selamibagriyanik@gmail.com
+
+
+[Hasan Sozer](https://orcid.org/0000-0002-2968-4763)
+
+Ozyegin University
+Turkey
+hasan.sozer@ozyegin.edu.tr
+
+
+Early effort estimation is both essential and challenging in software
+development projects. Accurate effort estimation mainly relies on
+accurate software sizing. COSMIC Function Point (CFP) is a means
+for measuring the functional size of software. It is a standardized
+method that can be applied to obtain size measurements based
+on early artifacts such as the software architecture design. In this
+paper, we present an industrial case study conducted to evaluate
+the correlation between CFP measurements performed at the architecture design phase and the actual development efforts. The study
+is performed in the context of a FinTech company that develops
+a system comprising a backend, a native iOS application, and a
+native Android application. We collect CFP calculations that are
+performed at the architecture design phase of the corresponding
+project. We also collect measurements regarding the actual effort
+for 12 months. Then, we investigate the correlation between CFP
+calculations and the measured effort. The actual effort can vary
+for some development tasks that are associated with the same CFP
+calculations. We analyze the relation of these variations with the
+level of developer experience and the type of target platform. Our
+results show that there is a significant correlation between size estimations made with CFP and the actual effort. The variance in effort
+per CFP among varying types of platforms is statistically significant.
+We also observe variance in effort per CFP among developers of
+varying expertise levels.
+
+**CCS Concepts**
+
+- **Software and its engineering** → **Software creation and man-**
+**agement** ; **Software development process management** ; **Soft-**
+**ware development techniques** .
+
+**Keywords**
+
+COSMIC function point, software sizing, effort estimation, software
+architecture, industrial case study
+
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+*ESEM ’24, October 24–25, 2024, Barcelona, Spain*
+© 2024 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM ISBN 979-8-4007-1047-6/24/10
+[https://doi.org/10.1145/3674805.3695402](https://doi.org/10.1145/3674805.3695402)
+
+528
+
+
+**ACM Reference Format:**
+
+Ersin Ersoy, Selami Bagriyanik, and Hasan Sozer. 2024. On the Accuracy
+of Effort Estimations based on COSMIC Functional Size Measurement: A
+Case Study. In *Proceedings of the 18th ACM / IEEE International Symposium*
+*on Empirical Software Engineering and Measurement (ESEM ’24), October*
+*24–25, 2024, Barcelona, Spain.* [ACM, New York, NY, USA, 10 pages. https:](https://doi.org/10.1145/3674805.3695402)
+[//doi.org/10.1145/3674805.3695402](https://doi.org/10.1145/3674805.3695402)
+
+**Lay Abstract**
+
+This paper discusses a study on estimating how much effort is required to build a software system. In particular, the study aims at
+observing the link between effort estimations and size estimations.
+The method called COSMIC Function Point (CFP) is used as a tool
+for measuring the size of a software project from its initial design
+stage. The research was applied on a financial mobile application
+system in a fintech company. The researchers compared the estimated work, based on the CFP measurements taken at the design
+stage, to the actual work it took to complete the project over 12
+months. They found that the same CFP measurement could mean
+different amounts of work, depending on factors like how experienced the developer is or what platform the software is being built
+for. The study found a strong link between the size estimations
+made using CFP and the actual amount of work needed.
+
+**1** **Introduction**
+
+Estimating the cost and effort for a software development project
+is one of the biggest challenges in software engineering. It impacts
+several critical decisions like budget allocation, size of the development team, and schedule. Despite standardization efforts [ 12, 16 ]
+for benchmarking development productivity, the current practice
+mainly favors subjective estimation approaches (e.g., story points)
+based on experience and requirement analysis rather than quantification based on design artifacts [15, 17].
+Accurate estimation of cost and effort requires accurate quantification of the size of software in an early stage of the development
+life-cycle [ 2 ]. COSMIC Function Point (CFP) is a means for measuring the functional size of software [ 3 ]. It is a standardized method
+that can be applied to obtain size measurements based on early artifacts such as the software architecture design. Despite its success
+potential proven by research results, the adoption of CFP in the
+software development industry is still limited [ 15 ]. Consequently,
+there is a lack of industrial case studies reported in this domain
+except a few [7, 13, 32].
+In this paper, we present an industrial case study conducted for
+analyzing the correlation between CFP measurements performed
+
+ESEM ’24, October 24–25, 2024, Barcelona, Spain E. Ersoy et al.
+
+
+at the architecture design phase and the actual development efforts.
+Our goal is to evaluate the accuracy of effort estimations performed
+based on architecture-based CFP measurements. The study is performed in the context of a FinTech company that develops a system
+comprising a backend, a native iOS application, and a native Android application. We collect CFP calculations that are performed
+at the architecture design phase of the corresponding system. We
+also collect measurements regarding the actual effort for 12 months.
+Then, we investigate the correlation between CFP calculations and
+the measured effort using the Pearson Correlation Coefficient [ 25 ].
+The actual effort can vary for some development tasks that are
+associated with the same CFP calculations. We analyze the relation
+of these variations with the level of developer experience categorized as *junior*, *senior*, and *expert* . We also analyze the impact of
+the target platform, which requires software development with particular programming languages. The considered platforms include
+the backend (Java), iOS (Objective C and Swift), and Android (Java
+and Kotlin). We employed Kruskal-Wallis test [ 11, 21 ] to evaluate
+statistical significance.
+Our results show that there is a significant correlation between
+size estimations made with CFP and the actual effort. The variance
+in effort per CFP among varying types of platforms is statistically
+significant. We also observe variance in effort per CFP among developers of varying expertise levels; however, statistical significance
+cannot be inferred due to the lack of enough data samples for this
+comparison.
+The remainder of this paper is organized as follows. We provide
+background information on COSMIC CFP in the following section.
+We summarize related studies in Section 3. We introduce our indus
+trial case study in Section 4. We present and discuss the results in
+Section 5. Finally, we discuss future work and conclude the paper
+in Section 6.
+
+**2** **COSMIC Function Point**
+
+COSMIC stands for Common Software Measurement International
+
+Consortium, and COSMIC Function Point is recognized as a standard (ISO/IEC 19761: 2011) for measuring the functional size of software [ 3 ]. CFP can be calculated early in the software development
+life-cycle based on the software’s requirements and architecture
+design, without needing to consider the implementation details.
+It has been used for sizing software development projects [ 29 ] by
+various companies [9, 14, 26, 27].
+As an example consider the system architecture in Figure 1 and
+a user scenario where *“the user wants to see all payment methods*
+*that active in the system."* . The first step in the execution of this
+scenario involves the movement of a data group containing user
+intention (i.e., listing payment methods) from the user to the native
+mobile application (iOS App or Android App) interface. This is
+an Entry (E) data movement. The user information is sent to the
+backend layer (Backend) in the second step. Since a boundary is
+assumed between the mobile applications and the backend layer,
+this transfer is considered as an Exit (X) data movement for the
+mobile application and an Entry (E) data movement for the backend
+layer. Setting a boundary is crucial for measurement coherence in
+multi-layer or multi-tier architectures. Boundary configurations for
+several application architectures are documented in Measurement
+
+529
+
+
+Strategy Patterns Guideline [ 28 ]. These architectural measurement
+patterns ensure that CFP functional size measurements may be
+compared. The third step collects information from the database
+regarding the payment methods and saves the request for logging
+purposes. These two activities are categorized as a Read (R), and a
+Write (W) data movements, respectively. Next, the collected data is
+sent to the applications (X data movement for the backend layer
+and E data movement for mobile applications). Finally, payment
+methods are listed on the mobile application (X data movement).
+Note that there are two different native mobile applications and
+hence they must be measured separately. Additionally, E and X
+data movements for the backend layer are counted just once since
+the same service is reused for both iOS and Android mobile applications. The total size is the sum of iOS App data movements,
+Android App data movements and Backend (including Database)
+data movements as 4 CFP + 4 CFP + 4 CFP = 12 CFP. In the follow
+ing, we summarize related studies, in particular those that apply
+software sizing and effort estimation based on CFP measurements
+at the software architecture design phase.
+
+**3** **Related Work**
+
+An examination of the literature on software size measurement and
+
+effort estimation reveals two fundamental areas of research. The
+first of these is the work on automatic and semi-automatic measurement or approximation of CFP using requirements and architectural
+artifacts such as UML models or requirements ontologies [2, 6, 19,
+23, 30 ]. In one of these studies, Object-Oriented Method Function
+Points (OOmFP) [ 2 ] was introduced as a new method for functional
+size measurement based on conceptual schemas of object-oriented
+systems. There are also studies [ 19 ] that propose approaches for
+performing COSMIC measured based on the structural information
+provided in UML diagrams. However, these approaches are only
+illustrated for measuring functional size. These studies do not investigate the correlation between the obtained measures and external
+attributes such as software development effort.
+The second fundamental area of research is the work on effort
+prediction using CFP or other functional size metrics [ 4, 7, 10, 17, 18,
+33 ]. Jovin and Dragan [ 17 ] conducted an empirical study based on a
+selected set of small and medium size real-world Web applications.
+They have evaluated several standardized functional measurement
+and analysis methods including CFP. They observed a linear relationship between the size of functionalities expressed in CFP and
+the required effort recorded in hours. This result is also supported
+by other cited studies above, such as the one conducted by Gencel [ 10 ], where three small-scale information systems were used as
+experimental objects. Furthermore, some of these studies revealed
+that the strength of relationship between CFP measurements and
+effort can vary [ 4, 10 ]. Additionally, it is found that relationships
+between effort and the other software size metrics can also be inferred [ 33 ]. Commeyne et al. [ 7 ] compared story points with CFP
+and concluded that function points yield more objective results.
+Unlu et al. [ 33 ] compared the effectiveness of three size measures
+including CFP, Event Points, and Line of Code (LOC). Their findings suggest that the event-based method offers more accurate
+effort estimations than the CFP and LOC-based methods in agile,
+microservice-based architecture projects.
+
+On the Accuracy of Effort Estimations based on COSMIC Functional Size Measurement: A Case Study ESEM ’24, October 24–25, 2024, Barcelona, Spain
+
+
+E
+
+
+E
+
+
+iOS App Android App
+
+
+X
+
+
+
+
+
+
+Backend
+
+X E
+
+External
+
+Domain
+
+
+Application Data movement(E:Entry, X: Exit,
+## KEY Platform
+Boundary R: Read, W: Write)
+
+**Figure 1: A high level architectural view of the object system.**
+
+
+The first group of studies discussed above includes an architectural level analysis, while the second group does not relate measurements to the architectural design, basic architectural components,
+and essential boundary assumptions that are necessary for CFP
+measurement in case studies. Consequently, the consistency of the
+project data used in the studies is difficult, if not impossible, to
+verify. Hence, it is not possible to utilize these as a benchmark.
+In this study, we focus on CFP measurements based on architectural components and boundary configurations that are explicitly
+defined. We present an industrial case study as explained in the
+following.
+
+**4** **Industrial Case Study**
+
+We conducted an industrial case study in the context of a Fintech [ 24 ] company, specifically Paycell [1] (a company of the Turkcell [2] group). In this case study, development tasks of the Paycell
+mobile application, which has been downloaded more than twenty
+million times, are measured by CFP and actual effort for 12 months.
+The usage of the CFP method in this company is well established. It
+has been used for effort estimation and software procurement since
+2015. It has also been used as a velocity and value metric within
+some agile teams in the company.
+Figure 1 shows an architectural view of the object software
+system. The client layer comprises two separate mobile applications,
+each tailored for the iOS and Android platforms, respectively. The
+iOS application was developed using Objective C and Swift, in
+contrast, the Android application was constructed employing Kotlin
+and Java. Also, there is a Java based backend application which
+
+1 https://paycell.com.tr/
+2 https://turkcell.com.tr/
+
+530
+
+
+serves as middle layer between client layers and other systems.
+Other components include databases and domain services.
+
+**4.1** **Research Questions**
+
+The first goal of our study is to investigate if there is any correlation
+between size estimations made with CFP and the actual effort. That
+is, we would like to know if CFP can be a reliable proxy measure or
+input for effort estimation. The second concern is about the affect
+of developer expertise on development effort. Since CFP is a sizing
+measure, the effort to implement features with the same CFP can
+differ based on expertise. We would like to know to what extent
+it does so. The final concern is related to the affect of the type of
+platforms on development effort. We would like to know if the effort
+for implementing features with the same CFP for various platforms
+such as iOS, Android and backend differ, and if so, to what extent it
+does. We formulate our research questions in alignment with these
+concerns as follows:
+
+  - **RQ1:** Is CFP a reliable proxy measure for effort estimation?
+
+  - **RQ2:** How is the effort affected by the level of developer
+experience?
+
+  - **RQ3:** How does the effort differ for various platforms?
+
+**4.2** **Data Collection**
+
+We compiled a dataset from the Jira tool [ 1 ] that was being used
+for tracking tasks in the project. The dataset includes 330 tasks that
+were developed during 12 months. Table 3 lists a sample snippet
+from the dataset. The first two columns list the Jira ID and the
+(enumerated) name of the task. The other information collected
+per task is collected in 4 columns, which are repeated for each
+platform, Backend, Android, and iOS. The first two of these columns
+
+ESEM ’24, October 24–25, 2024, Barcelona, Spain E. Ersoy et al.
+
+
+**Table 1: Properties of experimental subjects (* partial role in**
+**other mobile platform).**
+
+**Subject** **Developer** **Programming** **Developer**
+
+**ID** **Platform** **Language(s)** **Seniority**
+
+S1 Backend Java Junior
+
+S2 Backend Java Senior
+
+S3 Backend Java Senior
+
+S4 Backend Java Senior
+
+S5 Backend Java Expert
+
+S6 Backend Java Senior
+
+S7 Backend Java Senior
+
+S8 Backend Java Senior
+
+S9 Backend Java Senior
+
+S10 Backend Java Expert
+
+S11 Backend Java Junior
+
+S12 Android Kotlin, Java Expert
+
+S13 Android Kotlin, Java Senior
+
+S14 Android Kotlin, Java Expert
+
+S15 Android Kotlin, Java Junior
+
+S16 Android Kotlin, Java Junior
+
+S17 Android Kotlin, Java Senior
+
+S18 Android Kotlin, Java Junior
+
+S19* Android Kotlin, Java Junior
+
+S20 iOS Kotlin, Java Expert
+
+S21 iOS Objective C, Swift Senior
+
+S22 iOS Objective C, Swift Senior
+
+S23 iOS Objective C, Swift Expert
+
+S24* iOS Objective C, Swift Expert
+
+S25 iOS Objective C, Swift Junior
+
+S26 iOS Objective C, Swift Junior
+
+list the (anonymized) name and the seniority of the developer,
+who completed the task. The last two columns list the calculated
+CFP and the actual effort for completing the task. We see *NA (Not*
+*Applicable)* in some cells of the table because not all tasks involve
+development for all the platforms. Figures 6-9 plot charts regarding
+effort measurements that are performed every month. Our analysis
+results presented in the following section are based on average
+effort measurements.
+Table 1 lists experimental subjects of the study. There are three
+different development roles focusing on three platforms, Backend,
+Android and iOS as listed in the second column. The third column
+
+lists the programming languages used and the last column lists
+the seniority level of the developer. Seniority levels of the subjects
+were determined based on the team’s own assessment of expertise.
+Two of the subject IDs (S19 and S24) are marked (with *) to indicate
+that the corresponding developers work on two mobile platforms
+although their expertise focus on one of the two. So, an Android
+
+531
+
+
+developer (S19) can also provide support for iOS development tasks
+and vice versa (S24).
+
+**4.3** **Evaluation Methods and Metrics**
+
+We measured the correlation between CFP measurements and ac
+tual effort measurements to answer the first research question. The
+correlation between two variables quantifies the strength and direction of their relationship. In statistics, the Pearson Correlation is a
+commonly used measure of this relationship, and it has previously
+been utilized in effort estimation studies [ 5 ]. In particular, we employed Pearson Product-Moment Correlation Coefficient (Pearson’s
+r) [ 25 ] by the formula given in Equation 1 and then the statistical
+significance is evaluated with an online p-value calculator [3] .
+
+*𝑟* = � *𝑛* *𝑖* = 1 [(] *[𝑥]* *[𝑖]* [−] *[𝑥]* [¯][)(] *[𝑦]* *[𝑖]* [−] *[𝑦]* [¯][)] (1)
+
+*𝑛* *𝑛*
+~~√~~ ︃� *𝑖* =1 [(] *[𝑥]* *[𝑖]* [−] *[𝑥]* [¯][)] [2] ~~√~~ ︃� *𝑖* =1 [(] *[𝑦]* *[𝑖]* [−] *[𝑦]* [¯][)] [2]
+
+The *𝑟* value represents the correlation coefficient, which ranges
+from -1 to 1. An *𝑟* value of -1 indicates a perfect negative correlation between the two variables, while an *𝑟* value of 1 indicates a
+perfect positive correlation. An *𝑟* value of zero indicates no linear
+relationship between the two variables. Generally, it is accepted
+that *𝑟* values between 0.5 and 1.0 indicate a strong correlation [8].
+To address the second research question, we grouped the involved subjects based on their seniority levels for each platform
+and calculated effort per unit CFP (measured in hours) for each
+group and for each platform. We also grouped effort measurements
+for tasks with the same CFP to test the statistical significance of
+differences among these measurements for the three groups of
+seniority levels.
+Finally, we analyzed the variance in effort per unit CFP in hours
+to answer the last research question. We calculated average effort
+per CFP for each platform and compared these calculations. We
+also tested the statistical significance of differences among measurements performed for the three platforms. We applied Kruskal-Wallis
+test [ 11, 21 ] for testing statistical significance to answer the last
+two questions. The Kruskal-Wallis test is a non-parametric statistical method used to compare three or more independent groups to
+determine if there are statistically significant differences between
+them. It is particularly useful when the assumptions for a one-way
+analysis of variance are not met. As a non-parametric test, it does
+not require the data to be normally distributed.
+
+**5** **Results and Discussion**
+
+We present and discuss the results in this section. Each of the
+following three subsections focuses on a research question. We
+conclude the section with a discussion of threats to validity.
+
+**5.1** **RQ1 – Using CFP for effort estimation**
+
+We calculated Pearson’s r and checked their significance with .05
+significance level for each of the three platforms, Backend, Android
+and iOS. The results are listed in Table 2. The sample size is listed
+for each platform in the second column. The third column lists the
+Pearson’s *𝑟* values, which are calculated as .82, .76, and .75, for the
+Backend, Android, and iOS platforms, respectively. We see in the
+
+3 [https://www.socscistatistics.com/pvalues/pearsondistribution.aspx](https://www.socscistatistics.com/pvalues/pearsondistribution.aspx)
+
+On the Accuracy of Effort Estimations based on COSMIC Functional Size Measurement: A Case Study ESEM ’24, October 24–25, 2024, Barcelona, Spain
+
+**Table 2: Pearson’s r and significance test results regarding**
+***RQ1*** **, where sample size refers to the number of effort mea-**
+**surements collected for development tasks on each platform.**
+
+**Platform** **Sample Size** **Pearson’s r** **p-value**
+
+Backend 157 .82 <.00001
+
+Android 210 .76 <.00001
+
+iOS 206 .75 <.00001
+
+**Figure 3: Effort per unit CFP in hours for the Android plat-**
+**form.**
+
+**Figure 2: Effort per unit CFP in hours for the Backend plat-**
+**form.**
+
+
+last column that the p-value is less than *.* 00001 for all the platforms.
+We conclude based on these results that CFP sizing and calculated
+efforts are highly correlated and statistically significant for each
+platform.
+
+**5.2** **RQ2 – Impact of experience on effort**
+
+The second group of results are related to the seniority level of
+developers as a potential factor that impacts the development efforts. We calculated hourly cost per unit CFP in the whole dataset
+based on seniority level for each of the three platforms separately.
+Results are depicted in Figures 2, 3, and 4, for Backend, Android
+and iOS platforms, respectively. We can see in these charts that unit
+cost decreases for all platforms when seniority level increases. The
+amount of differences in effort for the three seniority levels varies
+among the three platforms as discussed in the following.
+We see in Figure 2 that the efforts per unit CFP for the Backend platform are calculated as 3.56 hours, 3.48 hours, and 2.16
+hours for junior, senior and expert seniority levels, respectively.
+The difference in average effort is not high between junior and
+senior developers but we observe a significant reduction for expert
+developers. The main reason for this result would be that the development activities are generally simple and similar to each other on
+the Backend side. These activities mainly aim at forming a bridge
+between native platforms and external services. Therefore, expert
+developers can complete their tasks faster by using their dexterity.
+We see in Figure 3 that the efforts per unit CFP for the Android
+platform are 5.14 hours, 4.28 hours, and 3.91 hours for junior, senior
+and expert seniority, respectively. This time, the difference of effort
+
+532
+
+
+**Figure 4: Effort per unit CFP in hours for the iOS platform.**
+
+between senior and expert developers is less than the difference
+between the junior and senior developers. We see a similar result
+for the iOS platform, where the difference in effort between junior
+and senior developers is much larger than the difference between
+senior and expert developers. Figure 4 lists the efforts per unit CFP
+for the iOS platform are 6.85 hours, 4.35 hours, and 4.01 hours for
+junior, senior and expert seniority, respectively. We also intended
+to apply a non-parametric test, namely Kruskal-Wallis test [ 11, 21 ]
+to test the statistical significance of differences in effort for varying
+seniority levels of developers. However, the size of our data samples
+turned out to be insufficient ro infer statistical significance. As a
+result, regarding *RQ2*, we conclude that significant effort differences
+are observed among developers with varying seniority levels in our
+case; however, statistical significance of these differences cannot be
+tested due to the lack of enough data samples for this comparison.
+
+**5.3** **RQ3 – Impact of platform on effort**
+
+Figure 5 depicts a bar chart for effort per unit CFP, calculated as
+3.43 hours, 4.47 hours and 4.34 hours for the Backend, Android
+and iOS platforms, respectively. We observe that efforts differ for
+each platform. Although the amount of difference is not high between the Android and iOS platforms, the measured effort is significantly lower for the Backend in comparison with the other two
+
+ESEM ’24, October 24–25, 2024, Barcelona, Spain E. Ersoy et al.
+
+**6** **Conclusion and Future Work**
+
+
+**Figure 5: Effort per unit CFP in hours of each platform.**
+
+platforms. We also applied a non-parametric test, namely KruskalWallis test [ 11, 21 ], which can be used even if the data are not normally distributed. The p-value turned out to be 6 *.* 5 × 10 [−][3], which
+is much lower than the critical value, 0 *.* 05. This shows that the
+difference is statistically significant as well.
+
+**5.4** **Threats to Validity**
+
+Our study is subject to validity threats and limitations. One of these
+threats is related to the external validity [ 31 ] since the study is
+conducted in the context of a single organization and it focuses
+on a specific software system. The study can be conducted across
+different application domains and organizations to increase the
+generalizability of our results. However, this poses a significant
+challenge due to the lengthy and intensive data collection process
+it would require, along with the sustained support needed from
+the organization. Despite the 12 months period considered for this
+study, the data samples collected were not sufficient to test statistical significance for one of the research questions. Another threat
+to our study is related to internal validity [ 31 ] concerning our CFP
+measurements. Triangulation [ 22 ] was employed to mitigate this
+threat, where multiple data sources are utilized for validation. Measurements were validated by two independent sources: the team
+members and an independent department within the organization.
+Finally, the categorization of subjects presents a potential threat to
+the validity of this study. The seniority levels of developers (junior,
+senior, expert) were determined based on the team’s self-assessment
+of their expertise, and we have adopted their definitions directly.
+In this study, we did not explicitly addressed Non-functional
+Requirements (NFR) and their impact on effort estimations. There
+are two primary considerations regarding NFR. First, NFRs (such
+as security requirements) may initially appear difficult to measure
+using CFP. However, this perception often changes with more indepth analysis, where a set of derived user stories actually map to
+functional requirements to satisfy a particular NFR, each of which
+can be measured using CFP. Second, while some other requirements
+(e.g., satisfying a comment/code ratio) cannot be measured by CFP
+but they typically affect the unit cost. As a result, NFRs are indeed a
+significant factor that contributes to increased development effort;
+however they are sometimes indirectly reflected to the development
+
+costs.
+
+533
+
+
+We presented an industrial case study to evaluate the accuracy of effort estimations at the architecture design phase based on COSMIC
+Functional Points (CFP) size measurements. The study is performed
+in the context of a FinTech company that develops a system comprising a backend, a native iOS application, and a native Android
+application. We collected CFP calculations that are performed at
+the architecture design phase. We also collected measurements
+regarding the actual effort for 12 months. Our results show that
+there is a significant correlation between size estimations made
+with CFP and the actual effort. The development effort can vary for
+some tasks that are associated with the same CFP calculations. We
+
+analyzed the relation of these variations with the level of developer
+experience and the type of target platform. We observed significant
+effort differences among developers with varying seniority levels
+in our case; however, statistical significance of these differences
+could not be tested due to the lack of enough data samples. We also
+observed significant differnces in effort per CFP among varying
+types of platforms and these differences turned out to be statistically
+significant as well.
+For future research, it would be beneficial to conduct analogous
+case studies, incorporating a diverse range of teams and systems
+from different application domains to improve the generalizability
+of the results. Tool support can be utilized for (semi-)automated
+CFP calculations based on standard and/or customized architectural
+views. Previously, there have been attempts [ 20 ] to create domainspecific UML profiles for this purpose. Tools can be integrated
+with development environments to estimate and track the effort
+throughout the software development life-cycle.
+
+**Acknowledgments**
+
+We extend our gratitude to the developers and project managers at
+Paycell for their support in our case study.
+
+**References**
+
+[1] [[n. d.]. Atlassian Jira Issue and Project Tracking Software. https://www.atlassian.](https://www.atlassian.com/software/jira)
+[com/software/jira. Accessed in April 2024.](https://www.atlassian.com/software/jira)
+
+[2] S. Abrahão, G. Poels, and O. Pastor. 2006. A functional size measurement method
+for object-oriented conceptual schemas: design and evaluation issues. *Software*
+*Systems and Modelling* 5, 1 (2006), 48–71.
+
+[3] A. Abran, P. Fagg, and A. Lestherhuis (Eds.). 2020. *COSMIC Measurement Manual*
+*for ISO 19761* (5th ed.). The Common Software Measurement International
+[Consortium (COSMIC). Available at http://cosmic-sizing.org/.](http://cosmic-sizing.org/)
+
+[4] Sousuke Amasaki. 2012. A study on the use of COSMIC BFCs for effort estimation. In *2012 Fourth International Workshop on Empirical Software Engineering in*
+*Practice* . IEEE, 58–60.
+
+[5] T. Erçelebi Ayyıldız and A. Koçyiğit. 2014. An Early Software Effort Estimation
+Method Based on Use Cases and Conceptual Classes. *Journal of Software* 9, 8
+(2014), 2169–21692173.
+
+[6] Selami Bagriyanik and Adem Karahoca. 2016. Automated COSMIC Function
+Point measurement using a requirements engineering ontology. *Information and*
+*Software Technology* 72 (2016), 189–203.
+
+[7] C. Commeyne, A. Abran, and R. Djouab. 2016. Effort estimation with story points
+and cosmic function points-an industry case study. *Software Measurement News*
+21, 1 (2016), 25–36.
+
+[8] C. DeSanto, M. Totoro, and R. Moscartelli. 2010. *Introduction to Statistics* (9 ed.).
+Pearson.
+
+[9] Cihangir Ertaban, Erkan Sarikaya, and Selami Bagriyanik. 2018. Agile performance indicators for team performance evaluation in a corporate environment.
+In *Proceedings of the 19th International Conference on Agile Software Development* .
+1–3.
+
+[10] Cigdem Gencel. 2008. How to use cosmic functional size in effort estimation
+models?. In *Software Process and Product Measurement. Mensura MetriKon IWSM*
+*2008 2008 2008. Lecture Notes in Computer Science* . Springer, 196–207.
+
+On the Accuracy of Effort Estimations based on COSMIC Functional Size Measurement: A Case Study ESEM ’24, October 24–25, 2024, Barcelona, Spain
+
+
+
+[11] J.D. Gibbons. 1993. *Nonparametric Statistics: An Introduction* . SAGE Publications,
+London, UK.
+
+[12] International Software Benchmarking Standards Group. [n. d.]. ISBSG Repository.
+[https://www.isbsg.org/. Accessed: 31-08-2024.](https://www.isbsg.org/)
+
+[13] T. Hacaloglu and O. Demirors. 2019. Measureability of Functional Size in Agile
+Software Projects: Multiple Case Studies with COSMIC FSM. In *Proceedings of the*
+*45th Euromicro Conference on Software Engineering and Advanced Applications* .
+204–211.
+
+[14] Tuna Hacaloglu and Onur Demirors. 2019. Measureability of functional size in
+Agile software projects: Multiple case studies with COSMIC FSM. In *2019 45th*
+*Euromicro Conference on Software Engineering and Advanced Applications (SEAA)* .
+IEEE, 204–211.
+
+[15] T. Hacaloğlu, H. Ünlü, A. Yıldız, and O. Demirörs. 2024. Software Size Measurement: Bridging Research and Practice. *IEEE Software* (2024), 1–9.
+
+[16] ISO Central Secretary. 2017. *Systems and software engineering – Information*
+*technology project performance benchmarking framework* . Standard ISO/IEC 291551:2017. International Organization for Standardization, Geneva, Switzerland.
+[https://www.iso.org/standard/74062.html](https://www.iso.org/standard/74062.html)
+
+[17] P. Jovan and B. Dragan. 2012. A comparative evaluation of effort estimation
+methods in the software life cycle. *Computer Science and Information Systems* 9,
+1 (2012), 455–484.
+
+[18] Anureet Kaur and Kulwant Kaur. 2022. A COSMIC function points based test
+effort estimation model for mobile applications. *Journal of King Saud University*
+*– Computer and Information Sciences* 34 (2022), 946–963.
+
+[19] L. Lavazza. 2017. Model-Based Measurement of Software Layers Using the
+COSMIC Method. In *Proceedings of the 11th European Conference on Information*
+*Systems Management* . 157–167.
+
+[20] K. Lind, R. Heldal, T. Harutyunyan, and T. Heimdahl. 2011. CompSize: Automated Size Estimation of Embedded Software Components. In *Proceedings of the*
+*21st International Workshop on Software Measurement and the 6th International*
+*Conference on Software Process and Product Measurement* . 86–95.
+
+[21] Patrick E McKight and Julius Najab. 2010. Kruskal-wallis test. *The corsini*
+*encyclopedia of psychology* (2010), 1–1.
+
+[22] A.J. Mills, D. Gabrielle, and W. Elden. 2010. *Encyclopedia of Case Study Research* .
+SAGE Publications, Inc.
+
+[23] Mirosław Ochodek, Sylwia Kopczyńska, and Miroslaw Staron. 2020. Deep learning model for end-to-end approximation of COSMIC functional size based on
+use-case names. *Information and Software Technology* 123 (2020).
+
+[24] Thomas Puschmann. 2017. Fintech. *Business & Information Systems Engineering*
+59 (2017), 69–76.
+
+[25] Marie-Therese Puth, Markus Neuhäuser, and Graeme D Ruxton. 2014. Effective
+use of Pearson’s product–moment correlation coefficient. *Animal behaviour* 93
+(2014), 183–189.
+
+[26] Zaineb Sakhrawi, Asma Sellami, and Nadia Bouassida. 2022. Support vector
+regression for enhancement effort prediction of Scrum projects from COSMIC
+functional size. *Innovations in Systems and Software Engineering* 18, 1 (2022),
+137–153.
+
+[27] Murat Salmanoglu, Tuna Hacaloglu, and Onur Demirors. 2017. Effort estimation
+for agile software development: Comparative case studies using COSMIC functional size measurement and story points. In *Proceedings of the 27th International*
+*Workshop on Software Measurement and 12th International Conference on Software*
+*Process and Product Measurement* . 41–49.
+
+[28] C. Symons. 2013. Guideline for ‘Measurement Strategy Patterns’. Available at
+[http://cosmic-sizing.org/.](http://cosmic-sizing.org/)
+
+[29] Sylvie Trudel and Luigi Buglione. 2010. Guideline for sizing Agile projects with
+COSMIC. In *Proceedings of International Workshop on Software Measurement* . 47.
+
+[30] Erdir Ungan, Colin Hammond, and Alain Abran. 2018. Automated COSMIC
+Measurement and Requirement Quality Improvement Through ScopeMaster®
+Tool. In *IWSM-Mensura* . CEUR.
+
+[31] C. Wohlin, P. Runeson, M. Host, M.C. Ohlsson, B. Regnell, and A. Wesslen. 2012.
+*Experimentation in Software Engineering* . Springer-Verlag, Berlin, Heidelberg.
+
+[32] H. Ünlü, T. Hacaloglu, F. Büber, K. Berrak, O. Leblebici, and O. Demirörs. 2022.
+Utilization of Three Software Size Measures for Effort Estimation in Agile World:
+A Case Study. In *Proceedings of the 48th Euromicro Conference on Software Engi-*
+*neering and Advanced Applications* . 239–246.
+
+[33] Hüseyin Ünlü, Tuna Hacaloglu, Fatma Büber, Kıvılcım Berrak, Onur Leblebici,
+and Onur Demirörs. 2022. Utilization of three software size measures for effort
+estimation in agile world: a case study. In *2022 48th Euromicro Conference on*
+*Software Engineering and Advanced Applications (SEAA)* . IEEE, 239–246.
+
+534
+
+
+**A** **A Sample Snippet from the Dataset and**
+**Monthly Effort Measurements**
+
+In this appendix section, we first provide a sample snippet from the
+dataset that is collected for the case study. Then, we present charts
+regarding monthly measured effort per unit CFP for each platform
+separately. Effort measurments are collected separately for junior,
+senior and expert developers. Finally, we share a chart that plots
+overall effort measurements for the 3 platforms: Backend, Android,
+and iOS.
+
+ESEM ’24, October 24–25, 2024, Barcelona, Spain E. Ersoy et al.
+
+|T-1 T-2 T-3 T-4 T-5 T-6 T-7 T-8 T-9 T-10 T-11 T-12 T-13 T-14 T-15 T-16 T-17 T-18 T-19 T-20 T-21 T-22 T-23 T-24 T-25 T-26 T-27 T-28 T-29 T-30 T-31 T-32 T-33 T-34 T-35 T-36 T-37 T-38 T-39 T-40|Jira Id|
+|---|---|
+|Task 1 Task 2 Task 3 Task 4 Task 5 Task 6 Task 7 Task 8 Task 9 Task 10 Task 11 Task 12 Task 13 Task 14 Task 15 Task 16 Task 17 Task 18 Task 19 Task 20 Task 21 Task 22 Task 23 Task 24 Task 25 Task 26 Task 27 Task 28 Task 29 Task 30 Task 31 Task 32 Task 33 Task 34 Task 35 Task 36 Task 37 Task 38 Task 39 Task 40|Task Name|
+|NA NA NA Backend Dev 1 NA Backend Dev 2 NA NA NA NA NA Backend Dev 2 Backend Dev 2 NA Backend Dev 3 Backend Dev 1 Backend Dev 2 Backend Dev 3 Backend Dev 1 Backend Dev 1 Backend Dev 2 Backend Dev 1 NA Backend Dev 2 Backend Dev 1 Backend Dev 2 Backend Dev 2 Backend Dev 2 NA Backend Dev 2 Backend Dev 1 Backend Dev 1 Backend Dev 2 Backend Dev 1 NA NA Backend Dev 1 Backend Dev 1 NA NA|Backend Developer Name|
+|NA NA NA Junior NA Senior NA NA NA NA NA Senior Senior NA Senior Junior Senior Senior Junior Junior Senior Junior NA Senior Junior Senior Senior Senior NA Senior Junior Junior Senior Junior NA NA Junior Junior NA NA|Backend Developer Seniority|
+|NA NA NA 6 NA 2 NA NA NA NA NA 3 36 NA 4 3 1 5 3 3 2 6 NA 2 22 1 1 6 NA 2 2 8 2 7 NA NA 6 6 NA NA|Backend CFP|
+|NA NA NA 23 NA 8 NA NA NA NA NA 10 110 NA 12 10 3 20 9 12 6 18 NA 8 67 3 3 18 NA 7 6 32 6 22 NA NA 21 18 NA NA|Backend Effort (hrs)|
+|Android Dev 1 Android Dev 2 Android Dev 2 Android Dev 3 Android Dev 2 Android Dev 4 Android Dev 5 Android Dev 4 Android Dev 3 Android Dev 4 Android Dev 3 Android Dev 3 Android Dev 3 Android Dev 5 NA NA NA NA Android Dev 3 Android Dev 4 Android Dev 5 Android Dev 2 Android Dev 5 Android Dev 7 Android Dev 4 Android Dev 3 Android Dev 3 NA Android Dev 5 NA Android Dev 4 Android Dev 2 Android Dev 5 NA Android Dev 5 Android Dev 3 NA Android Dev 2 NA NA|Android Developer Name|
+|Expert Senior Senior Expert Senior Junior Junior Junior Expert Junior Expert Expert Expert Junior NA NA NA NA Expert Junior Junior Senior Junior Senior Junior Expert Expert NA Junior NA Junior Senior Junior NA Junior Expert NA Senior NA NA|Android Developer Seniority|
+|26 3 8 5 7 3 7 4 10 3 3 5 39 14 NA NA NA NA 2 2 2 7 6 2 72 14 14 NA 8 NA 2 18 2 NA 5 2 NA 5 NA NA|Android CFP|
+|104 14 39 20 37 14 37 22 31 16 12 18 120 74 NA NA NA NA 8 10 10 34 29 12 350 56 43 NA 39 NA 11 87 11 NA 24 7 NA 24 NA NA|Android Efo f rt (hrs)|
+|iOS Dev 1 iOS Dev 2 iOS Dev 3 iOS Dev 4 iOS Dev 3 iOS Dev 1 iOS Dev 1 iOS Dev 1 iOS Dev 4 iOS Dev 1 iOS Dev 4 iOS Dev 4 iOS Dev 2 iOS Dev 1 NA iOS Dev 4 NA NA iOS Dev 4 iOS Dev 4 iOS Dev 1 iOS Dev 2 iOS Dev 1 iOS Dev 2 iOS Dev 3 iOS Dev 4 iOS Dev 1 NA iOS Dev 1 NA iOS Dev 1 iOS Dev 2 iOS Dev 3 NA iOS Dev 1 iOS Dev 4 NA iOS Dev 3 NA iOS Dev 3|iOS Developer Name|
+|Senior Senior Expert Expert Expert Senior Senior Senior Expert Senior Expert Expert Senior Senior NA Expert NA NA Expert Expert Senior Senior Senior Senior Expert Expert Senior NA Senior NA Senior Senior Expert NA Senior Expert NA Expert NA Expert|iOS Developer Seniority|
+|26 3 8 5 7 3 7 4 10 3 3 5 25 14 NA 3 NA NA 2 2 2 7 6 2 72 14 14 NA 8 NA 2 18 2 NA 5 2 NA 5 NA 3|iOS CFP|
+|113 13 35 22 30 13 30 17 43 13 13 22 108 61 NA 13 NA NA 9 9 9 30 26 9 312 61 61 NA 35 NA 9 78 9 NA 22 9 NA 22 NA 4|iOS Effort (hrs)|
+
+
+
+535
+
+On the Accuracy of Effort Estimations based on COSMIC Functional Size Measurement: A Case Study ESEM ’24, October 24–25, 2024, Barcelona, Spain
+
+**Figure 6: Monthly effort per unit CFP in hours for the Backend platform.**
+
+**Figure 7: Monthly effort per unit CFP in hours for the Android platform.**
+
+536
+
+ESEM ’24, October 24–25, 2024, Barcelona, Spain E. Ersoy et al.
+
+**Figure 8: Monthly effort per unit CFP in hours for the iOS platform.**
+
+**Figure 9: Monthly effort per unit CFP in hours for each platform.**
+
+537
+

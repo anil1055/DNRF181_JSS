@@ -1,0 +1,2018 @@
+[Egyptian Informatics Journal 33 (2026) 100914](https://doi.org/10.1016/j.eij.2026.100914)
+
+Contents lists available at ScienceDirect
+# Egyptian Informatics Journal
+
+[journal homepage: www.sciencedirect.com](https://www.sciencedirect.com)
+
+Full Length Article
+## Advanced effort estimation in software projects using ensemble-based fusion techniques
+
+Ritu [a][,][*], Pankaj Bhambri [b], Mudassir Khan [c][,][*], Barga Mohammed Mujahid [d]
+
+a *Department of Computer Science & Engineering, Guru Nanak Dev Engineering College, Ludhiana, Punjab, India and Department of Computer Science & Engineering, I.K.*
+*Gujral Punjab Technical University, Jalandhar, Punjab, India*
+b *Department of Information Technology, Guru Nanak Dev Engineering College, Ludhiana, Punjab, India*
+c *Department of Computer Science, College of Computer Science, Applied College Tanumah, King Khalid University, Abha, Saudi Arabia*
+d *Department of Computer Science, Applied College Khamish Mushaiyt, King Khalid University, Abha, Saudi Arabia*
+
+
+A R T I C L E I N F O
+
+*Keywords:*
+
+Effort estimation
+
+Machine learning
+Software development
+
+China datasets
+
+**1. Introduction**
+
+
+A B S T R A C T
+
+The software development process heavily relies on effort estimation, which is crucial for determining the
+development approach and methodology. This research aims to propose a methodology to enhance effort esti-­
+mation, ensuring that initial work estimation remains precise and reliable. In such cases, a fusion approach using
+an ensemble of Machine Learning (ML) techniques is proposed. The proposed methodology uses linear regression
+and random forest ML algorithms. The results are cross-checked against well-known datasets to demonstrate
+their estimation accuracy. A ML method is used to forecast the project’s effort, as some parameters required for
+work estimation may not be determinable at the beginning of the process. The model is trained using parametric
+training with fixed-size parameters, with the use case repository data serving as the training set and the China
+dataset as the test set. The proposed work uses an ensemble model to compute the fusion approach’s result,
+which is then inputted into a linear regression model. All regression models are then run individually to calculate
+the effort, and the efficiency of the proposed model is 94% which is a great improvement as compared to the
+individual model’s performance which is 74% only.
+
+
+Effort estimation in Software Engineering refers to the process of
+predicting the amount of work (usually measured in person-hours,
+person-days, or person-months) required to complete a software devel-­
+opment task, Project, or phase. Accurate effort estimation is crucial
+because it helps project managers, developers, and stakeholders plan,
+allocate resources, set timelines, and manage risks effectively. Estima-­
+tion approaches can be categorized into a wide range of groups. The sizecentered estimation approach serves as the foundation for the formal
+estimating model's investigations of Function Point Analysis (FPA), Class
+Point Analysis (CPA), and Use Case Point Analysis (UCP). The Estima-­
+tion Effort, or necessary effort, for completing the SD(software Devel-­
+opment) is determined using UCP. The estimation effort for the UCP
+approach (UC) is based on the modeling software with use cases.
+Multiplying UCP by the Effort Rate (ER) number yields the Estimation
+Effort. The ER, which is determined using the previously mentioned
+project information, is used to determine the total number of human
+
+ - Corresponding author.
+
+
+resources needed for a project. The only reason CPA is used in this case is
+that the class point is assumed to be a class diagram, which is one of the
+most significant Unified Modeling Language (UML) diagrams. The pri-­
+mary benefit of utilizing CPA as opposed to FPA is that the class point is
+established during the SDLC's design phase, whereas the total FP is
+calculated during the coding phase. As a result, estimating can be
+completed early in the SDLC. The software Development Efforts Esti-­
+mation (SDEE) serves as the foundation for project planning and bid-­
+ding. The consequences of inadequate budgets and plans can be more
+severe; that is, being overly optimistic can result in notable losses while
+being overly pessimistic can lead to the loss of business possibilities.
+
+In addition to being helpful for project yield analysis, cost and time
+estimations are also important for project completion throughout the
+development phase. Accurate project estimates are essential for the SP to
+be administered properly. The PM(Person Month) should foresee any
+potential issues and provide an appropriate fix. Estimating the time and
+resources required is another important task for the project manager.
+The SP manager needs to sketch out the sensitive success factors that
+
+
+*E-mail addresses:* [ratheeritu@yahoo.in (Ritu), pkbhambri@gmail.com (P. Bhambri), mkmiyob@kku.edu.sa (M. Khan), mmogahed@kku.edu.sa (B.M. Mujahid).](mailto:ratheeritu@yahoo.in)
+
+[https://doi.org/10.1016/j.eij.2026.100914](https://doi.org/10.1016/j.eij.2026.100914)
+Received 9 September 2025; Received in revised form 27 January 2026; Accepted 6 February 2026
+
+Available online 17 February 2026
+1110-8665/© 2026 THE AUTHORS. Published by Elsevier BV on behalf of Faculty of Computers and Arti�cial Intelligence, Cairo University. This is an open access
+[article under the CC BY-NC-ND license ( http://creativecommons.org/licenses/by-nc-nd/4.0/ ).](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+drive the project's design and administration. Avoiding project failure
+requires it to overcome the limitations of developing the SP. The soft-­
+ware engineering factors, which are controlled by the precise EE(Effort
+Estimation) of the program, must carry out the SD team execution
+process and resource allocation. Inconsistencies in the execution process
+are also corrected by the PM. To accomplish the requirements for that
+particular assignment, the PM applies the necessary methodologies
+while accounting for the estimated effort. The success of the SP would
+benefit from the use of project records. Furthermore, the estimation can
+be performed in a somewhat reliable manner.
+
+EE plays a crucial role in SPM. There are some serious problems as a
+result of the incorrect development effort estimation. Software firms are
+under serious pressure to deliver the highest-quality product within the
+allotted time and financial constraints in today's competitive environ-­
+ment [1]. If the development effort is undervalued, it will impair the
+company's generosity and competitiveness; if it is overvalued, it will
+result in a less-than-optimal use of valuable human resources, which will
+reduce cost-effectiveness. By estimating, it is possible to estimate the SP
+effort's most precise size, such as the number of months needed to build
+software, or the number of resources required to finish the project on
+schedule. In the end, it is converted to money [2]. The crucial aspects of
+effort estimation are mentioned in Fig. 1.
+
+The most challenging problem facing the software industry is still the
+less effective management of SD budget predictions. Due to this, various
+aspects (such as incorrect requirement engineering, unclear resource
+elicitation, uncertain cost, and EE) must now be addressed by modern
+SD organizations. These factors ultimately cause the development pro-­
+cess to fail. To deal with these problems that cause chaos, the SD en-­
+terprise must act as its anticipated aspect and create a counter
+mechanism. Creating an early estimate of the entire process and deter-­
+mining whether the resulting project can be implemented using only the
+resources at hand are effective ways to address this problem. SEE cal-­
+culates the amount of time required to accomplish the SD project or
+procedure. The EE is crucial in the process of determining how much of
+the relevant value of software is produced. SDEE is the process of
+calculating the most realistic amount of labor per person-month
+required to develop or maintain unfinished software based on inputs
+like FP, size, software needs, UCP, and other factors [3]. The EE is also
+
+
+used as input for the iteration plan, investment analysis, budgets, project
+plan, pricing processes, and bidding rounds. The research has primarily
+concentrated on developing formal SEE models or merely considering
+UC or FP for the estimation of size or development effort, but it hasn't
+taken the SRS of the programmed into account for such calculations [4].
+As a result, it is necessary to develop a method that can estimate the SD
+effort due to the proposed software's requirement-centered complexity
+
+[5]. SEE models are split into two major categories. i) algorithmic and ii)
+non-algorithmic. The former methods utilize a formula to estimate the
+SC, for instance, COCOMO and FP. Conversely, the latter one doesn’t
+utilize a formula for estimation, for instance, an analogy method.
+Analogy methods estimate by comparing the fundamental facets of the
+new project with the preceding finished one. This can also be applied to
+projects that require just modifying the existing software to satisfy new
+needs. For the precise estimation of the SC, the selection of a suitable
+method and factor is important. Therefore, the SC as well as the project
+profile, as of every chief factor encompassing project factors, customer
+factors, software factors as well and team factors were studied and
+analyzed. Algorithmic Model: This provides some mathematical for-­
+mulas for Software estimation that are based on research and historical
+data and makes use of inputs like the number of functions to be per-­
+formed, the quantity of Source Lines of Code (SLOC) as well as other
+Cost-Drivers (CD) such as skill levels, risk assessments, design approach,
+language, etc. Many algorithmic models, including COCOMO models,
+the Putnam model, and FP centred models, were developed. These
+models are required as inputs because they provide accurate estimations
+of certain factors, such as line of code (LOC), intricacy, and other factors,
+which are challenging to ascertain in the early stages of an SD project.
+One of the algorithmic schemes that Boehm starts is COCOMO. To
+calculate the schedule, size, effort, and duration, COCOMO is used. The
+three models that make up COCOMO are the Fundamental, Transitional,
+and In-depth Models. Basic COCOMO calculates the effort for an SP that
+ranges from smaller to medium that kind quickly and haphazardly. In-­
+termediate and detailed COCOMO approaches to alter the code size into
+the project in one month and at the most duration in a month. NonAlgorithmic models: During the early '90 s, this model was developed
+for projecting cost estimation. Researchers have concentrated on
+different approaches, which are centered upon soft computing
+
+
+**Fig. 1.** Some crucial aspects of effort estimation.
+
+2
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+methodology, for instance, artificial neural networks, fuzzy logic models
+along with genetic algorithms-centered implementations. Neural Net-­
+works (NN) can generalize as of the trained dataset. The crucial aspects
+related to the prediction of effort are mentioned in Fig. 2. This work
+
+–
+proposes a hybrid fusion based effort estimation framework that sys-­
+tematically combines linear regression, decision tree, and random forest
+models with hyperparameter optimization to improve prediction accu-­
+racy. Unlike prior studies that rely on a single dataset or environment,
+this study explicitly analyzes the impact of dataset diversity by vali-­
+dating the model across multiple repositories such as China,
+COCOMO81, PROMISE, and Kaggle. The proposed approach addresses
+the poor generalization of existing models when tested on unseen
+datasets. Additionally, comprehensive evaluation using multiple error
+metrics (MAE, RMSE, MMRE, PRED, and R [2] ) provides a more robust
+performance assessment than most earlier works. The integration of
+model fusion with optimized learning distinguishes this study from
+
+–
+traditional standalone and expert judgment based estimation tech-­
+niques. In this article, a detailed description for literature survey is
+discussed with the help of tables in section-2. Research methodology and
+implementation is done in section 3 and section 4. The result discussion
+is discussed in detail in section 5. The subsequent section, section 6 and
+section 7 contain conclusion and future scope.
+
+**2. Literature review**
+
+Over time, approaches for estimating software development efforts
+have evolved, from traditional methods like function point analysis and
+
+
+COCOMO to Machine Learning (ML) methods including ensemble
+methods, decision trees, and linear regression. Accuracy is increased via
+model fusion, and choosing and creating the appropriate characteristics
+is crucial. Even yet, problems with project dynamics and data quality
+necessitate ongoing improvement and adjustment of effort estimate
+models. Table 1 mentions the comprehensive survey of the literature.
+
+–
+The year wise since (2010 2023) bibliographic representation of
+effort estimation is graphically represented in Fig. 3. This includes an
+article related to the computation of effort with traditional techniques
+like function point, COCOMO model and expert judgment method. In
+addition to this, it also utilizes computation of effort using various ML
+techniques.
+
+**3. Research methodology**
+
+The methodology of the suggested work entails the study of different
+ML techniques from their complexity and accuracy point of view. For
+estimating the effort necessary for a software product, various meth-­
+odologies will be employed. The impact of various data sets as well as
+various surroundings will be investigated. The actual data related to
+software projects will be accessed from Kaggle, COCOMO81, Promise
+data Repository, and other repositories. The process of software esti-­
+mation is to accurately predict the effort required to develop a software
+product. The models already developed give good results, only for
+projects, which are similar to one used for training the model and their
+results deviate when tested using different data sets. The motive of this
+work is to analyze the effect of using diverse data sets on software
+
+
+**Fig. 2.** Effort estimation aspects analysis.
+
+3
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Table 1**
+
+A detailed review of existing literature.
+
+Ref Author Methodology Main Findings Summary
+
+
+
+[6] Z. Abdelali et al.(2019) Random forest for effort
+
+estimation
+
+
+
+[6] Z. Abdelali et al.(2019) Random forest for effort Improved accuracy in effort The use of Random Forest to estimate software effort is investigated in
+
+estimation estimation this work.
+
+[7] Azeem et al.(2019) Meta-analysis of code smell Identified effective ML techniques Thorough examination and *meta* -analysis of ML methods for
+detection techniques identifying code smells.
+
+
+Improved accuracy in effort
+
+estimation
+
+
+
+[7] Azeem et al.(2019) Meta-analysis of code smell Identified effective ML techniques Thorough examination and *meta* -analysis of ML methods for
+detection techniques identifying code smells.
+
+[1] A. Banimustafa et al ML models for effort prediction Successful application of ML in Software effort estimation prediction using ML techniques.
+(2018) effort estimation
+
+
+ML models for effort prediction Successful application of ML in
+
+effort estimation
+
+
+Software effort estimation prediction using ML techniques.
+
+
+
+[2] Bansal et al. (2017) Improved criteria-based
+
+selection of models
+
+
+Decision-making approach for
+
+model selection
+
+
+Methodology for choosing the software effort estimating model.
+
+
+
+[3] Bedell et al.(2020) Certificate of completion in a
+certain context
+
+
+
+[3] Bedell et al.(2020) Certificate of completion in a − Bert Blocken's completion of a course or certification in a related
+certain context subject is demonstrated by this document.
+
+[4] T.R. Benala et al. Differential Evolution in Effort Improved results using analogy- Differential evolution in analogy-based software de-velopment effort
+(2018) Estimation based estimation estima-tion.
+
+
+
+[4] T.R. Benala et al. Differential Evolution in Effort Improved results using analogy- Differential evolution in analogy-based software de-velopment effort
+(2018) Estimation based estimation estima-tion.
+
+[5] S, Dai et al.(2018) ML for High-Level Synthesis Fast and accurate quality ML-based quality estimation of high-level synthesis results.
+estimation in synthesis
+
+
+Differential Evolution in Effort
+
+Estimation
+
+
+Improved results using analogy
+based estimation
+
+
+ML-based quality estimation of high-level synthesis results.
+
+
+Improved software effort
+estimation using optimization
+
+
+
+[8] N. Ghatasheh et al.
+
+(2015)
+
+
+
+[8] N. Ghatasheh et al. Improved software effort To improve model performance, a naturalistic method was presented
+(2015) Optimization estimation using optimization for optimizing software effort estimating models through the
+
+application of the Firefly Algorithm.
+
+[9] H. Faris et al. (2019) Optimization with Firefly Enhanced optimization approach Firefly Algorithm was used to optimize software effort estimation
+Algorithm in a later publication models.
+
+
+Firefly Algorithm for Model
+Optimization
+
+
+
+[9] H. Faris et al. (2019) Optimization with Firefly Enhanced optimization approach Firefly Algorithm was used to optimize software effort estimation
+Algorithm in a later publication models.
+
+[10] V. Goar et al. (2021) − Advancements in Information An overview of the latest developments in computer and information
+Communication Technology communication technology.
+
+
+Enhanced optimization approach
+in a later publication
+
+
+
+[10] V. Goar et al. (2021) − Advancements in Information An overview of the latest developments in computer and information
+Communication Technology communication technology.
+
+[11] M. Gultekin et al. Story Point-Based Model for Enhanced approximation using Uses ML techniques to propose a narrative point-based effort
+(2020) Effort Estimation narrative points estimation model that supports agile software development
+
+
+
+[11] M. Gultekin et al. Story Point-Based Model for Enhanced approximation using Uses ML techniques to propose a narrative point-based effort
+(2020) Effort Estimation narrative points estimation model that supports agile software development
+
+methodologies.
+
+[12] M. D. Hannel et al. Feature Localization with ML Quick and precise localization of It demonstrates possible applications in particle analysis by examining
+(2018) features in holography
+
+
+Story Point-Based Model for
+
+Effort Estimation
+
+
+Enhanced approximation using
+narrative points
+
+
+
+[12] M. D. Hannel et al. Feature Localization with ML Quick and precise localization of It demonstrates possible applications in particle analysis by examining
+(2018) features in holography ML approaches for effective feature localization in holographic pictures
+
+of colloidal particles.
+
+[13] M. Hosni et al. (2017) Ensemble Learning with Feature Improved accuracy using Investigated the use of filter feature selection in heterogeneous
+Selection
+
+
+Feature Localization with ML Quick and precise localization of
+features in holography
+
+
+
+[13] M. Hosni et al. (2017) Ensemble Learning with Feature Improved accuracy using Investigated the use of filter feature selection in heterogeneous
+Selection heterogeneous ensembles ensembles to increase the accuracy of software effort estimate.
+
+[14] V. S. Ionescu ML in software development A new method for effort estimate Contributed to the field of intelligent computing by introducing a
+is proposed. unique method
+
+
+Improved accuracy using
+heterogeneous ensembles
+
+
+Contributed to the field of intelligent computing by introducing a
+unique method
+
+
+
+[15] H. Jang (2019) Decision support framework for
+R and D budget allocation
+
+
+Enhanced decision-making using
+ML and optimization
+
+Overview of ML techniques in selforganizing networks
+
+
+A decision support framework was proposed for robust research.
+
+
+
+[16] P. V. Klaine et al.
+
+(2017)
+
+
+
+[16] P. V. Klaine et al. Survey of ML Techniques in Overview of ML techniques in self- summarizes developments and trends in the area while surveying the
+(2017) Cellular Networks organizing networks use of ML techniques
+
+[17] T. Menzies et al. Exploration of negative results in Identification and discussion of Provided insights into the difficulties and constraints of the current
+(2017) effort estimation non-successful attempts models by presenting negative outcomes.
+
+
+Survey of ML Techniques in
+
+Cellular Networks
+
+
+
+[17] T. Menzies et al. Exploration of negative results in Identification and discussion of Provided insights into the difficulties and constraints of the current
+(2017) effort estimation non-successful attempts models by presenting negative outcomes.
+
+[18] N. Padhy et al. (2018) Metrics estimation for software Algorithms and models for Described models, optimization strategies, and algorithms for
+reusability estimating reusability metrics. calculating software reusability metrics. This work contributed to
+
+
+Exploration of negative results in
+
+effort estimation
+
+
+Identification and discussion of
+non-successful attempts
+
+
+
+[18] N. Padhy et al. (2018) Metrics estimation for software Algorithms and models for Described models, optimization strategies, and algorithms for
+reusability estimating reusability metrics. calculating software reusability metrics. This work contributed to
+
+software engineering practices.
+
+[19] S. M. Satapathy et al. Empirical Assessment of ML Evaluation of ML models using Used story points as a measure to empirically evaluate ML models for
+(2017) models in agile development story points in agile development agile software development effort estimation.
+
+
+Algorithms and models for
+estimating reusability metrics.
+
+
+
+[19] S. M. Satapathy et al. Empirical Assessment of ML Evaluation of ML models using Used story points as a measure to empirically evaluate ML models for
+(2017) models in agile development story points in agile development agile software development effort estimation.
+
+[20] S. K. Sehra et al. FAHP and Weighted Kernel Improved effort estimation using Used the weighted kernel LSSVM machine and FAHP to estimate
+(2019) LSSVM for effort estimation hybrid techniques program effort. Also, a hybrid approach was introduced to enhance
+
+
+Empirical Assessment of ML
+models in agile development
+
+FAHP and Weighted Kernel
+
+LSSVM for effort estimation
+
+
+Evaluation of ML models using
+story points in agile development
+
+Improved effort estimation using
+hybrid techniques
+
+
+
+[20] S. K. Sehra et al. FAHP and Weighted Kernel Improved effort estimation using Used the weighted kernel LSSVM machine and FAHP to estimate
+(2019) LSSVM for effort estimation hybrid techniques program effort. Also, a hybrid approach was introduced to enhance
+
+estimation accuracy.
+
+[21] N. Kaur et al. (2017) Analysis of patterns and trends in Overview of patterns and trends in Examined patterns and trends in the assessment of software work. It
+
+research on effort estimation research on effort estimation
+
+
+Overview of patterns and trends in
+
+research on effort estimation
+
+
+Examined patterns and trends in the assessment of software work. It
+provided a comprehensive overview of the evolving landscape.
+
+
+
+[22] A. Sharma et al. (2017) Survey of ML in stock market
+prediction
+
+
+Overview of ML approaches in
+stock market prediction
+
+
+An assessment of ML algorithms for stock market prediction in order to
+compile the state of the art in this subject is provided in this work.
+
+
+
+[23] D. Sharma et al. (2019) Research on ML trends Identification of trends in ML
+research using topic models
+
+
+
+[23] D. Sharma et al. (2019) Research on ML trends Used topic models and the Mann-Kendall test to conduct a trend
+research using topic models analysis of ML research. It provided insights into the evolving
+
+landscape of ML.
+
+[24] R. R. Sinha,et al. ML for effort estimation Application of ML techniques in Examined the assessment of software effort using ML techniques,
+(2021) software effort estimation potentially contributed to advancements in estimation models.
+
+
+
+[24] R. R. Sinha,et al. ML for effort estimation Application of ML techniques in Examined the assessment of software effort using ML techniques,
+(2021) software effort estimation potentially contributed to advancements in estimation models.
+
+[25] D. Spikolet al. (2018) Supervised ML in learning Estimation of project success Contributed to educational technology research by using supervised
+analytics for project success using multimodal learning ML in multimodal learning analytics to estimate project-based learning
+
+
+ML for effort estimation Application of ML techniques in
+
+software effort estimation
+
+
+
+[25] D. Spikolet al. (2018) Supervised ML in learning Estimation of project success Contributed to educational technology research by using supervised
+analytics for project success using multimodal learning ML in multimodal learning analytics to estimate project-based learning
+
+analytics achievement.
+
+[26] N. Stephenson et al. Survey of ML techniques in drug Overview of ML techniques Outlined the state of the art and possible uses in pharmaceutical
+(2018) discovery applied in drug discover research while assessing ML approaches in drug development.
+
+
+Estimation of project success
+using multimodal learning
+analytics
+
+
+
+[26] N. Stephenson et al. Survey of ML techniques in drug Overview of ML techniques Outlined the state of the art and possible uses in pharmaceutical
+(2018) discovery applied in drug discover research while assessing ML approaches in drug development.
+
+[27] C. Thirumalai et al. Decision-making system for Improved decision-making using Proposed a ML-based decision-making system for heart attack
+(2017) heart attack prediction ML and Pearson correlation prediction and Pearson correlation, contributed to healthcare decision
+
+
+Survey of ML techniques in drug
+discovery
+
+
+Overview of ML techniques
+applied in drug discover
+
+
+
+[27] C. Thirumalai et al. Decision-making system for Improved decision-making using Proposed a ML-based decision-making system for heart attack
+(2017) heart attack prediction ML and Pearson correlation prediction and Pearson correlation, contributed to healthcare decision
+
+support systems.
+
+[28] K. Usharani et al. An analysis of software effort Overview of different techniques Surveyed the estimation of software effort, providing a comprehensive
+(2016) estimation surveys in effort estimation overview of techniques and trends in the field.
+
+
+Decision-making system for
+heart attack prediction
+
+
+Improved decision-making using
+
+ML and Pearson correlation
+
+
+An analysis of software effort
+estimation surveys
+
+
+Overview of different techniques
+
+in effort estimation
+
+
+Surveyed the estimation of software effort, providing a comprehensive
+overview of techniques and trends in the field.
+
+
+
+[29] M. Vyas et al. (2018) Review of techniques for agile
+development
+
+
+
+[29] M. Vyas et al. (2018) Review of techniques for agile Overview of cost and effort A review of effort estimation methods for agile development is
+development estimation techniques in agile presented. It summarized existing approaches and their applicability.
+
+[30] Z. Wang et al. (2017) Failure prediction in optical Improved prediction using ML and It focused on optical network failure prediction using time series and
+network using ML time series analysis ML analysis, contributing to the field of network reliability.
+
+
+Overview of cost and effort
+
+estimation techniques in agile
+
+
+Improved prediction using ML and
+time series analysis
+
+
+It focused on optical network failure prediction using time series and
+ML analysis, contributing to the field of network reliability.
+
+
+( *continued on next page* )
+
+
+4
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Table 1** ( *continued* )
+
+Ref Author Methodology Main Findings Summary
+
+
+
+[31] C. J. Wu et al. (2019) ML for inference at the edge Understanding inference at the
+edge using ML
+
+
+
+[31] C. J. Wu et al. (2019) ML for inference at the edge Understanding inference at the It examined ML at Facebook with a particular emphasis on
+edge using ML comprehending edge inference, providing insights into large-scale ML
+
+deployments.
+
+[32] J. Xie et al.(2019) Survey of ML techniques in Overview of ML techniques in Reviewed ML methods used with SDN, highlighting problems.
+software-defined networking SDN and associated challenges
+
+
+Overview of ML techniques in
+SDN and associated challenges
+
+
+Reviewed ML methods used with SDN, highlighting problems.
+
+
+
+[33] H. Yoganarasimhan
+et al. (2020)
+
+
+Personalization in search using
+
+ML
+
+
+Enhanced search personalization
+using ML
+
+
+Explored search personalization using ML, contributing to the field of
+information retrieval and user experience optimization.
+
+
+**Fig. 3.** Year-wise bibliographic aspects of effort estimation.
+
+
+estimation models. Project managers have traditionally found it difficult
+to estimate effort. Numerous researchers have made various sorts of
+
+models to assist them. It has already been noted that no project can be
+effective in every environment or for every kind of endeavor. Most
+software development companies are still using expert judgment for
+software estimation, which has the problem of being biased and
+subjective.
+
+*3.1. Effort estimation using machine learning hybrid approach*
+
+In SD, the EE is important for the customers and developers.
+Underestimating the effort may pave the way for the management to
+approve the systems that could go beyond their budgets, with poorly
+developed functions in addition to deprived quality. This may finally
+lead to failure in task completion in the pre-set time frame. In all
+computer-centric systems, the software is considered as the heart of the
+system. This vital part is developed with proper guidelines. The top
+priority for every firm is to produce software solutions efficiently. The
+correct calculation of the effort required to complete the projects is the
+main objective. Numerous studies have demonstrated that projects often
+end up costing more than expected and taking longer to complete than
+anticipated. In an SD process, effective EE is the most alarming activity
+in modern computing. Here, a new framework is proposed for the EE.
+
+
+The EE is done utilizing a hybrid fusion based approach. The utilization
+of the fusion approach helps in estimating the efforts of the software
+with less cost and failure rates. The proposed approach is employed
+together with optimization to attain an enhanced outcome. The opti-­
+mization process is done while utilizing the linear regression, decision
+tree and random forest ML algorithms which aids in the improved per-­
+formance of the model. Various parameters like RE, MRE, MMRE, Mean
+Absolute Relatives Error (MARE), and also Percentage of Prediction
+(PRED) are calculated to screen the performance of the model, and the
+resulting effort is compared with various existing models to confirm the
+proposed system efficiency. The proposed system could be elucidated
+further using the block diagram.
+
+*3.1.1. Dataset description*
+
+The given dataset contains information about various software
+development projects. Here is a description of the columns in the dataset
+[(https://www.kaggle.com/datasets/gpreda/chinese-mnist): Depending](https://www.kaggle.com/datasets/gpreda/chinese-mnist)
+on the application, there are vast variations in the datasets used in ML,
+particularly for the Random Forest, Linear Regression and Decision Tree
+algorithms. For example, a dataset may contain attributes like location,
+number of bedrooms, and square footage when predicting home values.
+As an ensemble approach, Random Forest gains from a variety of data-­
+sets covering various facets of the issue. For datasets where there is an
+
+
+5
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+approximately linear connection between the independent and depen-­
+dent variables, linear regression is a helpful approach. This makes it
+suitable for uses like using previous data to anticipate stock prices.
+Because decision trees are versatile in processing both numerical and
+categorical data, they are effective in datasets with complicated decision
+boundaries, such as those that categorise medical illnesses based on
+multiple symptoms. The datasets that are used in the healthcare sector
+for ML applications vary according to the specific job that is being
+performed. For example, a dataset may include demographics, medical
+history, and other health markers to forecast how a disease would
+
+progress.
+
+Because Random Forest can handle complex relationships and highdimensional data, it performs well in scenarios such as these. To ascer-­
+tain the linear association between variables like age, cholesterol, and
+heart disease risk, one can do linear regression analysis on datasets.
+Decision trees are often employed in healthcare datasets to identify risk
+factors for conditions since they are interpretable and capable of
+handling a wide range of data types. The datasets' richness and rele-­
+vance, which mirror the intricacy of the real-world issues these algo-­
+rithms are meant to solve, are ultimately what determine how successful
+these algorithms will be. The datasets utilised by ML systems in the
+healthcare industry differ based on the task being carried out.
+
+To predict how an illness might proceed, for instance, a dataset may
+contain demographics, medical history, and other health indicators.
+Random Forest works effectively in situations like this because it can
+handle high-dimensional data and intricate interactions. One may do
+linear regression analysis on datasets to determine the linear connection
+between variables such as age, cholesterol, and heart disease risk. De-­
+cision trees are often employed in healthcare datasets to identify risk
+factors for particular conditions since they are interpretable and capable
+of handlang a wide range of data types. The description of all the used
+attributes from the dataset is elaborated in Table 2.
+
+The dataset appears to contain information about multiple software
+development projects, including details such as the size of the project,
+the number of inputs/outputs/interfaces, lines of code added/changed/
+deleted, resource allocation, duration, development type, and effort
+
+estimation.
+
+*3.2. Machine learning*
+
+Within artificial intelligence (AI), ML is a revolutionary field that is
+changing how computers analyze information and make judgments.
+Fundamentally, ML enables computers to recognize patterns in data,
+learn from them, and adapt without the need for explicit programming.
+
+**Table 2**
+
+Description of the attribute used from the China dataset.
+
+Attributes Description
+
+AFP Represents the Application Function Points, which is a metric used to
+measure the size and complexity of a software application.
+Input Indicates the number of inputs or data elements used in the application.
+Output Represents the number of outputs or data elements generated by the
+application.
+Inquiry Indicates the number of inquiries or queries handled by the application.
+File Represents the number of files used in the application.
+Interface Indicates the number of interfaces or connections with external systems.
+Added Represents the number of lines of code added in the development
+
+process.
+Changed Indicates the number of lines of code changed or modified during the
+development process.
+Deleted Represents the number of lines of code deleted or removed during the
+development process.
+Resource Indicates the number of resources or individuals assigned to the project.
+Duration Represents the duration or time taken to complete the project.
+DevType Indicates the type of development, whether it is a new development or
+maintenance of an existing application.
+AdjFactor This represents an adjustment factor applied to the effort estimation.
+Effort Indicates the effort or work required to complete the project.
+
+
+The foundation of this field is made up of three elements: data, algo-­
+rithms, and models. The cornerstone, data, is the source of insights and,
+because of its superior quality, has a major effect on how successful
+models are. The workhorses of computing are the three groups of al-­
+gorithms: supervised, unsupervised, and reinforcement learning para-­
+digms. In supervised learning, models that map inputs to outputs are
+trained using labelled datasets. Reinforcement learning, on the other
+hand, makes use of environmental interaction to guide agents towards
+the optimal decisions, whereas unsupervised learning analyses unla-­
+belled data to discover underlying structures. The finished output,
+models, capture learnt patterns to enable predictions on new data.
+Models range from complicated NN to decision trees, and they are
+available in various levels of complexity to meet a variety of needs.
+
+The field of ML is rife with challenges and ethical quandaries.
+Because faulty or biased datasets can distort model findings, data quality
+is essential. It may be challenging to comprehend decision-making
+processes when evaluating complex models, which are commonly
+referred to as “black boxes,” especially in crucial industries like
+healthcare. Ethical issues arise when biases in ML outcomes are inad-­
+vertently amplified. Finding the right balance between model accuracy
+and fairness requires ongoing effort. Computational resources are
+another crucial component; deep learning models with high resource
+requirements might be challenging for smaller organisations to deploy.
+However, a variety of businesses are using ML, showcasing its revolu-­
+tionary potential.
+
+
+*3.2.1. Linear regression algorithm*
+
+A fundamental approach in statistics and ML, linear regression pos-­
+tulates a linear connection to explain the relationship between an output
+and one or more inputs. The coefficients and the bias term that char-­
+acterize this line establish the model's parameters. The linear regression
+algorithm works simply. Initially, a hypothesis function is constructed,
+and parameters are initialized, frequently at random. The algorithm
+then uses an optimization approach, usually gradient descent, to itera-­
+tively alter the parameters to minimize a cost function. Better model fit
+is indicated by lower values. Regularization techniques penalize com-­
+plex models, hence preventing overfitting. There are several fields in
+which linear regression is used, including as biology, engineering, eco-­
+nomics, and finance. Because of its simplicity and ease of interpretation,
+it is advised for use as a baseline model and for preliminary study. It
+might not be appropriate, nonetheless, for datasets with non-linear
+patterns or extremely complex interactions. The performance of linear
+regression algorithm w.r.t the China dataset is shown in Fig. 9.
+
+It's critical to remember that linear regression presupposes a linear
+connection between the target variable and the input data. The best
+approach might not be linear regression if the connection is non-linear,
+and more complex regression models, such as polynomial regression or
+nonlinear regression, might be required. Additionally, there are varia-­
+tions of linear regression, such as multiple linear regression (when there
+
+
+ML has a wide range of applications. In the medical profession, it aids
+in illness diagnosis, medication development, and treatment planning.
+ML based demand forecasting, inventory control, and customized mar-­
+keting are advantageous for retail. It is essential to the development of
+autonomous vehicles in the automobile sector because it improves
+perception, navigation, and decision-making.
+
+Several factors are reshaping the ML field as we look to the future.
+Explainable AI (XAI) is becoming more and more popular as a solution to
+the interpretability problem since it makes model decision-making
+processes transparent. Federated learning is a decentralized model
+training technique that protects privacy by storing raw data locally on
+devices. By combining edge computing with ML, models can run directly
+on devices, eliminating the need for continuous data transfer to
+centralized servers. Research on continuous learning is still in progress,
+to enable models to adjust to new data without losing track of previously
+learned information. The AI community is placing more emphasis on
+ML's ethical aspects, such as bias reduction and justice.
+
+
+6
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+are multiple input features), ridge regression (for handling multi-­
+collinearity), and lasso regression (for feature selection and regulariza-­
+tion). These variations extend the basic linear regression algorithm to
+address specific challenges or requirements in different scenarios. The
+working architecture of linear regression is mentioned in Fig. 4. The
+performance measure of linear regression corresponding to eq(1) is
+mentioned below.
+
+
+y = *mx* + *b* (1)
+
+where:
+
+The dependent variable is called y, the independent variable is
+called x, the slope of the line is called m, and the y-intercept is b. The
+
+
+**Fig. 4.** Architecture with precise flowchart of linear regression.
+
+7
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+proposed algorithm for ML fusion concept is outlined in Algorithm-1.
+
+**Algorithm-1:**
+
+
+Step-1. Input Data: Represents the input data X (independent variables) and Y
+(dependent variable).
+Step-2. Initialize Parameters: Initializes the parameters θ0,θ1,…,θn randomly or with
+predefined values.
+Step-3. Hypothesis Function: Represents the linear relationship between input
+features and the predicted output.
+Step-4. Calculate Cost: Computes the cost function J(θ) using the mean squared error.
+Step-5. Verifies whether the algorithm has converged via a convergence check. If the
+process converges, it is over. Go on to the following stages if convergence is not
+
+achieved.
+
+Step-6. Gradient Descent: This step applies the gradient descent technique to update
+
+parameters.
+Step-7. Update the settings according to the gradient descent step
+Step-8. Loop Back: For the subsequent iteration, returns to the Hypothesis Function.
+Step-9. Training Complete: Signifies that the training period has come to a close.
+Step-10. Prediction: Makes predictions on fresh data using the trained model.
+
+
+*3.2.2. Random forest algorithm*
+
+An ensemble learning approach called Random Forest combines
+many decision trees to produce a prediction model that is more reliable
+and accurate. It is applicable to jobs involving both classification and
+regression. Here's a detailed explanation of the Random Forest algo-­
+rithm along with a diagram: To build a Random Forest model, first
+gather a dataset including the input features and the matching output
+variable. Then carefully prepare the data by removing missing values,
+removing outliers, and performing any necessary normalization or
+transformations. A decision tree ensemble is constructed using a
+Random Forest, which effectively mitigates overfitting by training each
+tree on a random fraction of the data and features. The use of
+
+
+**Fig. 5.** Working Architecture of Random Forest Algorithm.
+
+8
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+bootstrapping, which generates numerous training sets by randomly
+sampling the dataset with replacement, and random feature selection at
+decision tree nodes are noteworthy techniques used to improve the
+model variety and lower inter-tree correlation. Building decision trees in
+the forest requires splitting points and features through recursive opti-­
+mization based on Gini impurity or information gain. Post-construction,
+predictions are made for each tree, and for classification tasks, the ma-­
+jority voting principle is applied, while regression tasks utilize aver-­
+aging. Metrics like accuracy, precision, recall, F1-score (for
+classification), mean squared error, and Mean Absolute Error (MAE) (for
+regression) are used to thoroughly assess the model's performance.
+
+The general idea can be represented as follows in Eq. (2):
+
+
+*F* ( *X* ) [1]
+*N*
+
+where:
+
+
+*N*
+∑
+
+*i* =
+
+
+*f* *i* ( *X* ) (2)
+
+
+uncertainty or impurity in the data, such as information gain or Gini
+impurity. Part of the structure of a decision tree is the algorithm's ability
+to make intelligent choices at each branching point. The essential parts
+of the decision tree are the internal and leaf nodes.
+
+Each internal node represents a decision based on a particular
+feature, acting as a gatekeeper to guide the traversal of the tree. On the
+other hand, leaf nodes, which stand for the destination of a journey, are
+associated with class labels in classification tasks or numerical values in
+regression tasks. Decision trees provide itself to easy interpretation, so
+practitioners may learn how the model makes decisions.
+
+The splitting criteria, which comprise information gain and Gini
+impurity, are the primary factors that guide the algorithm's decisions
+throughout the building of the decision tree. These criteria are crucial
+for determining the best feature and split point for each internal node in
+order to appropriately capture patterns and relationships within the
+data. Recursion is one characteristic that distinguishes the decision treebuilding approach.
+
+The algorithm repeatedly divides the input into subsets at each in-­
+ternal node, creating a structure that captures ever-more-specific pat-­
+terns. This recursive process continues until a halting criteria is met. The
+halting condition can be set to a maximum tree depth, a minimum
+number of samples at a leaf node, or other predefined conditions. This
+deliberate stopping helps to maintain a fair trade-off between general-­
+isation and model complexity by preventing overfitting. The decision
+tree's last phase is prediction. Predictions are formed by going from the
+root node to the leaf node of the tree and based on the values of the input
+characteristics.
+
+Whereas regression tasks produce a numerical value associated with
+the leaf node as the projected output, classification tasks use the class
+label linked with the leaf node as the predicted class. This final step in
+the decision tree's creation turns it into an effective tool that can make
+
+defensible predictions based on discovered patterns in the data.
+
+
+F(x) is the final prediction,
+N is the number of trees in the forest,
+f i (x)is the prediction of the \(i\)-th tree.
+Each tree is built independently, and the randomness in both data
+and features helps to decorate the trees and improve the overall per-­
+formance of the model. Although there are just two decision trees in the
+Random Forest illustration, a Random Forest usually has more than two
+decision trees. Every tree undergoes separate training using a different
+subset of the training set, and each tree's predictions are generated
+uniquely. The average (regression) or majority vote (classification) of
+each individual tree forecast determines the final prediction. When
+managing noisy or missing data, capturing non-linear correlations, and
+handling high-dimensional data, Random Forests work well. Addition-­
+ally, they offer you insights on feature significance, which let you know
+how significant each feature is in relation to the others throughout the
+prediction process.
+
+The working diagram along with an explanation embedded in Fig. 5.
+
+
+Threshold 2
+Threshold 2 [Decision][ =]
+
+
+⎧
+⎨
+
+⎩
+
+
+Class 1 *,* if Feature 1 ≤ Threshold 1 and Feature 2 ≤
+Class 2 *,* if Feature 1 *>* Threshold 1 and Feature 3 ≤ Threshold 3
+
+Class 3 *,* otherwise
+
+
+*3.2.3. Decision tree algorithm*
+
+Regression and classification problems are two applications for the
+supervised learning technique known as the Decision Tree algorithm.
+With the properties of the incoming data, it builds a tree-like model of
+decisions and their potential outcomes. Building a decision tree for ML
+requires several basic processes, all of which are essential to converting
+unprocessed data into a predictive model. The process begins with data
+collection, which assembles a large dataset consisting of the related
+output variable, also called the dependent variable or goal, and input
+characteristics, also called independent variables. The previously
+described dataset serves as the foundation for the subsequent stages of
+the decision tree construction process. The process continues with data
+preparation, which is a crucial step that includes cleaning the data and
+ensuring it's ready for analysis, once it has been gathered. This stage
+includes handling outliers, managing missing values, and performing
+any necessary data transformations or normalisation processes. Through
+careful preparation of the dataset, practitioners provide the foundation
+for a dependable and strong decision tree model.
+
+The decision tree construction procedure revolves around the tree
+creation phase. Now, the decision tree algorithm begins its recursive
+journey by carefully segmenting the data into subgroups based on the
+input feature values. Each node's data must be partitioned using an
+optimal characteristic selected by the algorithm. This decision is sup-­
+ported by assessment measures that measure how well a split decreases
+
+
+This represents a simplified decision tree with three classes and three
+features. The conditions in each case are based on comparing the fea-­
+tures to certain thresholds.
+
+The decision tree in the diagram is created by repeatedly dividing the
+data according to several criteria and thresholds. Every leaf node rep-­
+resents a class label or a numerical value, and every interior node re-­
+flects a judgment based on a particular characteristic. The Working
+Architecture for the Decision Tree algorithm is mentioned in Fig. 6. The
+tree starts with a root node that asks a question about Feature A. If the
+answer is “yes” (Feature A *<* 5), the tree moves to the left and assigns
+Class 1. If the answer is “no,” the tree moves to the right and asks another
+question about Feature B. The process continues until a leaf node is
+reached, and the corresponding class or value is assigned as the pre-­
+diction. Decision trees can handle categorical and numerical informa-­
+tion and are interpretable. They are susceptible to overfitting, though,
+particularly if the tree gets too big. Methods like pruning and setting
+appropriate stopping criteria can help mitigate overfitting and improve
+generalization.
+
+*3.2.4. Spatial Arrangement*
+
+The size of an output volume is regulated by the 3 hyper-parameters
+like depth, stride and zero-padding.
+
+Depth is a hyperparameter of an output volume. It refers to the
+
+
+9
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+are described by variables that are generated and internally learned
+from the dataset that is presented. These are referred to as model pa-­
+rameters, and we have no control over how they vary as they rely on the
+kind of data. 'M' and 'C' in a linear equation, for example, represent the
+coefficient values found in the given dataset. Hyperparameters are the
+name for a collection of adjustable parameters that control how an al-­
+gorithm or model behaves and result in an optimized model with
+optimal performance. The one-word response for Hyperparameters is
+Configuration. “Train-Test Split Ratio (80–20)” is the hyperparameter
+for our model of straightforward linear regression.
+
+*3.2.6. Hyperparameter space*
+
+For every selected algorithm(s), there is a list of HPs; our task is to
+identify the ideal combination of HPs and to get the best outcomes by
+carefully modifying them. We will be able to reach the Hyperparameter
+Space by this technique, and this combination will surely produce the
+finest optimum outcomes; but locating this combination will need
+scanning the whole space. In this context, any possible combination of
+the selected HP value is called a “MODEL,” and it needs to be assessed
+right away. GridSearch CV and RandomSearch CV are two general
+
+“crossmethods for efficiently exploring the HP space as a result. Here,
+validation” (CV) is used.
+
+
+**Fig. 6.** Working Architecture for Decision Tree Algorithm.
+
+number of filters used in the learning to search for something new in an
+input. For instance, if the initial CL takes the raw image as input, then
+disparate particles along the depth dimension. Fig. 4 shows the archi-­
+tecture details of Linear Regression algorithms. In this architecture,
+firstly, input is passed to the model and other parameters that are
+necessary for functioning are initialized. With the help of hypothesis
+function effort is being computed and training of model is done. Later,
+the model is tested with the input. Fig. 5 shows the architecture details
+of Random Forest algorithm. In this algorithm, for each of the tree
+randomly select subsets of the features and to create a sample tree using
+bootstrap sampling. This process continues till the tree is fully ready and
+for each tree in the forest make a prediction in terms of output. The
+output will be captured in the yes, no form might activate the avail-­
+ability of various blobs of color or oriented edges. The article seems to
+view the same area of input in the form of a depth column (it could also
+be referred to with the word, fiber).
+
+Next, the filter is moved following the stride. Those filters are shifted
+one pixel at a time if the stride value is high. The filters leap two pixels at
+a time as they are moved around if the stride equals two (or, in excep-­
+tional cases, three or more). This would generate spatially small output
+volumes.
+
+Sometimes, it would be easy to pad an input volume with 0 s around
+its border. It stands as a hyperparameter concerning its size. Its feature is
+that it would permit control of the spatial output size. It would be uti-­
+lized to precisely maintain the spatial size of an input volume hence the
+input's and output's w and h are the same.
+
+*3.2.5. Hyper-parameter tuning*
+
+The process of modifying the model's parameters, known as hyper-­
+parameter tuning, is essentially a drawn-out one. Understanding the
+importance of “Hyperparameter Tuning (HPs-T)” is essential for every
+ML engineer and data scientist when selecting the optimal deep learning
+or ML model and optimizing the model's performance (s).
+
+Make it simple, as selecting the right collection of hyperparameters is
+the only thing that may make selecting a ML model a challenging
+endeavor. For a model to be trained, each of these is required. Ulti-­
+mately, better hyperparameter tweaking and selection strategies lead to
+an improvement in the ML model's performance. It always refers to the
+chosen model's parameters, which you should always remember are
+required before the model moves on to the training phase and cannot be
+inferred from the data. Predictions, classification, and other operations
+
+
+*3.2.7. Steps to perform hyperparameter tuning*
+
+1. Choose the appropriate class of model.
+2. Review the model's parameter list and create the HP space.
+3. Identifying the techniques for hyperparameter space search
+4. Utilizing a cross-validation methodology
+
+To evaluate the model, calculate the model score.
+**Train Test Split Estimator-** The test and train size for the given
+dataset are set using permutations, which, when combined with the
+random state, produce the same set of splits. If this step is skipped, a
+different set of test and train sets will be produced, making it difficult to
+trace your model's behavior during evaluation. To stabilize the model,
+the random number generator receives its seed from the random state.
+The two most effective ways to tune hyperparameters are as follows:
+
+ - GridSearchCV
+
+ - RandomisedSearchCV
+
+*3.2.7.1. GridSearchCV.* The GridSearchCV method is used to evaluate
+the artificial intelligence model for various hyperparameter settings.
+This method is termed GridSearchCV because it looks at a grid of
+hyperparameter values to find the optimal set of hyperparameters. As-­
+sume, for instance, that we wish to select two distinct sets of values for
+the Logistic Regression Classifier model's hyperparameters, C and Alpha.
+The grid search method will be used to build the ideal model using a
+variety of different hyperparameter combinations.
+
+*3.2.7.2. RandomisedSearchCV.* GridSearchCV has limitations because it
+only considers a finite set of hyperparameter parameters. Random-­
+izedSearchCV addresses these limitations. It wanders randomly around
+the grid in search of the perfect set of hyperparameters. This method gets
+rid of unnecessary calculations.
+
+**4. Implementation**
+
+To increase the precision and dependability of effort estimates in
+software development or project management, a hybrid fusion strategy
+that uses ML to forecast effort often combines many predictive models or
+approaches. The practice of projecting how much money and resources
+are needed to finish a development project is called effort estimation.
+
+
+10
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Fig. 7.** Proposed Methodology.
+
+
+Increasing the precision of estimations for software development pro-­
+jects is the aim of this study. To do this, a system will be developed and
+applied to accessible datasets utilizing a range of machine-learning
+techniques. In this paper, we suggest boosting as a method to improve
+software development project effort estimation accuracy. By fitting
+several models, each with a low error rate, and then merging them into
+an ensemble that could perform better, the process known as “boosting”
+can raise the accuracy of any learning system.
+
+Many algorithms have been used to estimate effort which ranges
+from linear regression, decision tree, and random forest algorithm.
+Here's a general outline in Fig. 7 of how fusion approach will work. Mean
+Squared Error (MSE): It seems to have been an apostrophe used after
+“MSE”. MSE in statistics and ML does not have a standard notation called
+
+“MSE'”. The average of the squared differences between the predicted
+and actual values is known as the mean squared error, or MSE.
+
+The formula for MSE is:
+
+
+MSE = [1]
+n
+
+
+∑ ni=1 [(][y] [i] [ −] ŷ i ) [2] (2)
+
+
+Mean Absolute Error (MAE): One statistic used to assess a regression
+model's performance is the MAE. It calculates the mean absolute dif-­
+ference between the expected and actual (observed) values. The
+following is the formula for MAE:
+
+
+MAE = [1]
+N
+
+
+n
+∑
+
+i = 1
+
+
+|y i − ŷ i | (3)
+
+
+Root Mean Squared Error (RMSE): The Root Mean Squared Error, or
+RMSE, is one statistic used to evaluate the performance of a regression
+model. In this variation, the square root is calculated in addition to the
+MSE. The RMSE formula is as follows:
+
+
+the data, reprocessing techniques are used to handle missing values,
+outliers, and inconsistencies. The feature selection and engineering step
+next uses data analysis and domain experience to determine the most
+critical project qualities, finding relevant features that impact work
+estimation. The next step is algorithm selection, where a set of ML al-­
+gorithms is chosen to model the effort prediction with an emphasis on
+regression.
+
+In addition to more complex techniques like gradient boosting or
+NNs, these algorithms include support vector machines, decision trees,
+random forests, and linear regression. In the individual model training
+stage, each selected technique is trained using a subset of the historical
+data by dividing the data into training and validation sets. Hyper-­
+parameters are adjusted for optimal model performance. The process
+then shifts to model fusion, where various methods of combining the
+output of many models are examined. Taking into account are hybrid
+models that integrate the best features of many algorithms and ensemble
+approaches such as weighted or averaged averaging (e.g., a neural
+network that mixes traditional data with outputs from other regression
+models).
+
+In testing and validation, regression metrics like as MAE and RMSE
+are employed to evaluate the model's performance on an alternative test
+dataset. This assessment also provides information on the forecast ac-­
+curacy and ensures that the model may be used with fresh data. The
+feedback loop offers a way to continuously monitor and update when
+new project data becomes available. Retraining the model on a regular
+basis helps it increase forecast accuracy over time and adapts to
+changing project dynamics. Analysing forecast mistakes and seeking
+advice from subject matter experts is part of the ongoing process of
+iterative improvement, which aims to make the approach better.
+Experimenting with different feature combinations, algorithms, and
+fusion techniques can assist to increase accuracy.
+
+This comprehensive method demonstrates how project effort esti-­
+mation is dynamic and necessitates ongoing improvement.
+
+Through the integration of ML methodologies and domain knowl-­
+edge, this approach aims to create resilient and flexible models for
+project effort prediction that accurately reflect the dynamic nature of
+software development projects. Subheadings can be used to break up
+each part. It should give a clear and simple explanation of the experi-­
+mental findings, their meaning, and any inferred experimental
+implications.
+
+**5. Results and discussion**
+
+This section shows the results of the experiments that ran utilizing
+the three ML approaches on the previously described datasets. All of the
+tests were conducted using the most recent version of the Python
+
+
+RMSE =
+
+
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+
+√n1∑ ni=1 [(][y] [i] [ −] ŷ i ) [2]
+
+
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+n1∑ ni=1 [(][y] [i] [ −] ŷ i ) [2]
+
+
+∑ ni
+
+
+(4)
+
+
+Coefficient of Determination (R-squared): The percentage of the vari-­
+ance of the dependent variable that can be predicted from the inde-­
+pendent variables is known as the Coefficient of Determination in a
+regression model. It sheds light on the model's quality of fit of the model.
+
+
+R [2] = 1 −
+
+
+n ̂
+∑ i=1 [(][y] i [−] y i ) [2]
+n (5)
+∑ i=1 [(][y] i [−] [y][)] [2]
+
+
+But gathering and preparing data is just the beginning of a systematic
+sequence of steps involved in using ML to estimate project effort. His-­
+torical project data, such as lines of code, complexity, team size, and
+prior work, is gathered during this initial phase. To ensure the quality of
+
+
+11
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Fig. 8.** Confusion metrics for proposed methodology.
+
+**Fig. 9.** Graphical analysis of linear regression.
+
+12
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+software, which is well-known for being simple to use, intuitive, and
+packed with a ton of pre-built routines. Confusion metrics for the pro-­
+posed methodology are shown in Fig. 8. As previously noted, the 499
+software projects in the China dataset are subjected to the aforemen-­
+tioned ML approaches to determine which one is the best and assess its
+accuracy. First of all, the dataset is cleaned properly to make it work
+with all the mentioned algorithms to get an efficient and optimized
+result. In the next part, a heatmap of the correlation matrix of the Data
+Frame using Seaborn is created. The heatmap visually represents the
+strength and direction of linear relationships between pairs of columns
+in the data frame. Stronger positive correlations are shown by warmer
+hues, stronger negative correlations by cooler hues, and little to no as-­
+sociation is indicated by values near zero. To give more quantitative
+details regarding the interactions between variables, the numeric cor-­
+relation coefficients are also shown in the heatmap's cells. To determine
+the Variance Inflation Factor (VIF) for every feature in a data frame, a
+function called mulcol is built. Regression model multicollinearity is
+found using VIF. “Features” and “VIF” will be the two columns in a data
+frame that is formed. It computes the VIF using the variance inflation
+factor function from stats models for each column in the standardized
+array arr. In the final data frame, rows are created using the VIF values
+and accompanying feature names. Using the variance inflation factor
+function, the nested list comprehension iterates through each column in
+the standardized array to determine the VIF. The feature name (obtained
+from x.columns[col]) and its related VIF value are contained in the inner
+list [x.columns[col], variance inflation factor(arr, col)]. Using range(arr.
+shape[6]), the outer list comprehension loops through each column
+index in the standardized array. Two columns are present in the
+generated Data Frame: “Features” and “VIF”. The names of the charac-­
+teristics are listed in the “Features” column, and the corresponding VIF
+values are listed in the “VIF” column. computes the maximum scores
+after that.
+
+*5.1. Algorithm analysis on various parameters*
+
+Table 3 displays the analysis table on various parameters using linear
+regression that is produced after the dataset is analyzed using various
+ML techniques, such as random forests, decision trees, and so on.
+
+Obtained from different regression models and created a data frame
+to store and display these maximum scores along with the names of the
+
+**Table 3**
+
+Analysis based on different parameters using linear regression.
+
+
+**Table 4**
+
+Performance of various algorithms w.r.t China dataset.
+
+Index Algorithm Score
+
+0 Linear Regression 0.69128194
+1 Decision Tree Regressor 0.599021107
+2 Random Forest Regressor 0.749893264
+
+3 SVR − 0.033144804
+
+4 K Neighbor Regressor 0.571531513
+5 Xgboost 0.659206245
+
+corresponding algorithms. The performance table for the Individual al-­
+gorithm w.r.t China dataset is shown in Table 4. Based on the perfor-­
+mance that is shown in Table 4 best performing three algorithms are
+selected to predict the effort. In this scenario, the three selected algo-­
+rithms that is linear regression, random forest, and decision tree are
+implemented concerning the China dataset.
+
+Now, it is the time to train the model. Here, to trains multiple De-­
+cision Tree Regressor models with varying complexity parameters
+(ccpalpha) and then plot the scores of these models over iterations. To
+Create an instance of the DecisionTreeRegressor class with the specified
+ccpalpha value. Fits the model to the training data (xtrain and ytrain).
+Appends the trained model to the dt ccpalpha list. Calculates the score of
+the model on the test data (xtest and ytest) using the.score() method and
+appends the score to the score list. plt.plot(score, 'r-+') creates a line plot
+of the scores. The 'r-+' format specifies that the line should be red ('r'),
+solid ('-'), and have markers ('+') at data points. plt.xlabel('iteration') sets
+the label for the x-axis. plt.ylabel('score') sets the label for the y-axis.
+Overall, the purpose is to train a series of Decision Tree Regressor
+models with varying ccp alpha values, which control the complexity of
+the tree by introducing cost-complexity pruning. Next, plots the scores of
+these models over iterations. This visualization can help you understand
+how the model's performance changes with different complexity
+parameter values. A graphical view of Performance for the Individual
+algorithm w.r.t China dataset is shown in Fig. 10. To implement the
+fusion approach using a hybrid approach the VIP score is calculated
+which is shown in Table 5. Metrics are a crucial parameter to analyze an
+algorithm in terms of precision, accuracy, and other factors to determine
+its efficiency. An algorithm should be tested using these parameters.
+
+In the next step, hyperparameter tuning is applied. In this first of all a
+parameter is set up that is a grid for hyperparameter tuning of a ML
+
+
+Index AFP Input Output Inquiry File Added Duration Effort
+
+0 1587 774 260 340 128 1502 4 7490
+
+1 260 9 4 3 193 53 17 4150
+
+2 15 25 33 28 42 163 9 668
+
+3 252 151 28 8 39 69 4.0 3238
+
+4 292 93 0 194 20 0 13.0 2994
+
+5 83 63 0 24 0 0 4.0 1333
+
+6 79 24 0 23 30 0 6.0 1607
+
+7 97 0 108 7 0 120 7.0 1158
+
+8 116 0 23 58 14 81 6.0 1243
+
+9 52 39 7 0 0 0 7.0 3372
+
+10 465 209 129 24 83 460 9.0 10,200
+
+11 67 32 5 16 7 25 7.0 1704
+
+12 199 0 115 57 0 214 7.0 2640
+
+13 176 13 54 54 40 168 26.0 3348
+
+14 391 208 26 81 25 38 7.0 676
+
+15 263 65 45 101 42 176 3.0 911
+
+16 42 12 15 3 7 52 6.4 2496
+
+17 190 98 20 16 63 160 10.0 1171
+
+18 245 105 28 18 58 19 13.0 3532
+
+19 77 28 0 42 0 0 1.0 436
+
+20 355 278 0 73 0 0 4.0 909
+
+21 3156 2075 525 97 0 28 6.0 9094
+
+22 46 0 28 0 25 28 6.0 344
+
+23 56 14 12 15 7 53 3.02 296
+
+24 106 65 4 12 14 35 13.0 3503
+
+13
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Fig. 10.** Graphical view of Performance for various algorithms w.r.t china dataset.
+
+**Table 5**
+
+VIP score for the hybrid proposed approach.
+
+Index Algorithm Score
+
+0 Linear Regression 0.691282
+1 Decision Tree Regressor 0.599021
+2 Random Forest Regressor 0.749893
+
+3 SVR − 0.033145
+
+4 K Neighbor Regressor 0.571532
+5 Xgboost 0.65920
+
+**Fig. 12.** Representation of performance metrics score in graphical form.
+
+
+**Fig. 11.** Representation of the analysis of the resultant score graphical form.
+
+model, most likely a decision tree or a random forest, using a grid search
+technique. This grid search will be used to find the best combination of
+hyperparameters for the model. Representation of the analysis of the
+resultant score in graphical form is shown in Fig. 11. Here the following
+parameters are used to get the best result. 'criterion': This is a hyper-­
+parameter that specifies the criterion used to measure the quality of a
+split in a decision tree or random forest. The code is considering four
+different criteria: “squared error,” “absolute error,” “poison,” and “en-­
+tropy.” These show many metrics for assessing a split's quality. “max
+depth”: The decision tree's maximum depth is managed by this hyper-­
+parameter. It is configured to be an inclusive range from 2 to 19,
+meaning that for hyperparameter tweaking, the code will experiment
+with various tree depths between 2 and 19. “max features”: This
+hyperparameter regulates how many features are taken into account in a
+decision tree or random forest split. The typical choices for this
+
+
+hyperparameter, “auto” and “log2,” are taken into consideration by the
+code. Using “log2 ″ means taking the number of characteristics and
+squaring it with the base-2 logarithm; using ”auto“ means taking
+advantage of every attribute. Leaf sample, min. This hyperparameter
+specifies the minimum number of samples required at a leaf node. The
+code will experiment with different numbers since it is programmed to
+range from 1 to 9 in order to find the minimum number of samples
+required at each leaf node. The absolute minimal number of samples
+required to divide an internal node is indicated by the hyperparameter
+”min samples split“. The code will experiment with different values for
+the minimum number of samples required to split a node, with its range
+set at 2 to 9. Estimators 'n': This hyperparameter controls the number of
+trees in the forest.Fig. 12..
+
+There are four different values for the number of trees in the random
+
+forest that the algorithm considers. When you execute a grid search
+using this parameter grid, the software will systematically evaluate the
+model's performance for every possible combination of these
+
+**Table 6**
+
+Value for error metrics in hybrid approach.
+
+Index Error_type Value
+
+0 Mean Absolute Error 1931.2804
+
+1 Root Mean Square Error 2800.345138
+2 Mean Square Log Error 1.136237387
+
+3 R2_Score 0.809724505
+
+
+14
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Table 7**
+
+Dataset view and analysis for testing and training the China dataset.
+
+Index Random State Training Data Shape (X) Training Data Shape (Y) Test Data Shape (X) Test Data Shape (Y) Training Score Test Score
+
+0 1 399,7 399 100,7 100 0.550191161 0.719241371
+
+1 2 399,7 399 100,7 100 0.550191161 0.719241371
+
+2 3 399,7 399 100,7 100 0.550191161 0.719241371
+
+3 4 399,7 399 100,7 100 0.550191161 0.719241371
+
+4 5 399,7 399 100,7 100 0.550191161 0.719241371
+
+5 6 399,7 399 100,7 100 0.550191161 0.719241371
+
+6 7 399,7 399 100,7 100 0.550191161 0.719241371
+
+7 8 399,7 399 100,7 100 0.550191161 0.719241371
+
+8 9 399,7 399 100,7 100 0.550191161 0.719241371
+
+9 10 399,7 399 100,7 100 0.550191161 0.719241371
+
+10 11 399,7 399 100,7 100 0.550191161 0.719241371
+
+11 12 399,7 399 100,7 100 0.550191161 0.719241371
+
+12 13 399,7 399 100,7 100 0.550191161 0.719241371
+
+13 14 399,7 399 100,7 100 0.550191161 0.719241371
+
+14 15 399,7 399 100,7 100 0.550191161 0.719241371
+
+15 16 399,7 399 100,7 100 0.550191161 0.719241371
+
+16 17 399,7 399 100,7 100 0.550191161 0.719241371
+
+17 18 399,7 399 100,7 100 0.550191161 0.719241371
+
+18 19 399,7 399 100,7 100 0.550191161 0.719241371
+
+19 20 399,7 399 100,7 100 0.550191161 0.719241371
+
+20 21 399,7 399 100,7 100 0.550191161 0.719241371
+
+21 22 399,7 399 100,7 100 0.550191161 0.719241371
+
+22 23 399,7 399 100,7 100 0.550191161 0.719241371
+
+23 24 399,7 399 100,7 100 0.550191161 0.719241371
+
+24 25 399,7 399 100,7 100 0.550191161 0.719241371
+
+
+hyperparameters. It will train and assess the model using crossvalidation or an alternative validation method for each combination.
+
+Depending on the particular issue being handled, the objective is to
+determine which combination of hyperparameters yields the highest
+performance on the selected evaluation measure, such as accuracy or
+mean squared error. This procedure can assist in optimizing the model's
+performance on the provided dataset. Fig. 11 illustrates the performance
+metrics score in a graphical style. Table 6 displays the Metrics Error for
+the suggested hybrid strategy.
+
+The dataset view and analysis for testing and training before analysis
+is shown in Table 7. Before training and testing the value of the random
+state, training data shape(x), training data shape(y), test data shape(x),
+test data shape(y), training score, and test score were different and were
+inaccurate. After testing the China dataset the value is accurate and the
+accuracy was changed.
+
+Fig. 13 displays a graphical depiction of the dataset view and analysis
+for training and testing before training testing analysis. This visual
+analysis, which was created using the China dataset, provides a clear
+understanding of the analysis that was conducted by using several
+
+
+supervised ML algorithms to train and evaluate the data. A graphical
+representation of the Dataset view and analysis for testing and training
+after analysis is shown in Fig. 14.
+
+**6. Conclusion**
+
+In conclusion, precise effort estimation continues to be a major dif-­
+ficulty in the ever-changing field of software development. Over time,
+initial projections become less trustworthy due to the inherent unpre-­
+dictability in the software development process and changing customer
+expectations. To improve effort estimate, this research study has pro-­
+posed an approach that makes use of ensemble methods and ML,
+particularly random forest algorithms and linear regression. Using a
+fusion strategy, which combines predictions via stacking, has been a
+crucial component of our process. This method offers a more precise and
+reliable estimate of project work in addition to accommodating the
+dynamic requirements of agile projects. We have made sure that our
+results are reliable by training the model on a large dataset from the
+China dataset repository. In addition, we have combined the output of
+
+
+**Fig. 13.** Graphical representation of dataset view and analysis for testing and training before analysis.
+
+15
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+**Fig. 14.** Graphical representation of dataset view and analysis for testing and training after analysis.
+
+
+the ensemble model with a linear regression model to further improve
+the estimate procedure. This stage has allowed us to further validate the
+efficacy of our strategy by allowing us to compare the efficiency of our
+suggested model with specific regression models. In conclusion, it is
+impossible to exaggerate the importance of accurate and reliable effort
+assessment in software development. This research has shown that a
+fusion strategy, which combines ensemble techniques with ML, has
+potential to increase the accuracy of effort assessment at different phases
+of the software development life cycle. These results open the door to
+more trustworthy and knowledgeable decision-making in software
+project management, which will eventually help software development
+projects succeed.
+
+**7. Future scope**
+
+Future software development effort estimation might benefit from a
+trajectory towards more flexibility, complexity, and ethical concerns
+when ensemble ML techniques and fusion approaches are used. To in-­
+crease accuracy and robustness, researchers and practitioners will likely
+look into more complex ensemble approaches in the future. They will
+likely go beyond conventional models and employ cutting-edge tech-­
+
+—
+niques. Hybrid models which fuse ML with other strategies like rule
+—
+based systems or expert opinion may emerge. Moreover, there is a
+growing emphasis on improving model interpretability and incorpo-­
+rating domain-specific knowledge to ensure that effort estimation
+closely aligns with the nuances of various organisations. It is possible
+that in the future, dynamic models that adjust instantly to the dynamics
+of projects and continuous learning processes that improve forecasts
+based on continuous input will be developed. The focus will shift to
+addressing biases and guaranteeing fair and equitable predictions as
+ethical concerns become more prominent. Other trends that should be
+expected are the combination of effort estimation models with DevOps
+practices, benchmarking standards, and international cooperation for
+data sharing. Additionally, areas that might see more attention include
+estimating the impact of technical debt and taking forecast uncertainties
+into account. Essentially, a comprehensive and cooperative approach
+that prioritizes ongoing development, moral issues, and the incorpora-­
+tion of new technologies characterizes the future of effort estimation in
+software development.
+
+**Data availability**
+
+The corresponding author can provide the datasets created during
+and/or analysed in the current study upon reasonable request.
+
+
+**Funding**
+
+The research is supported by the King Khalid University, Saudi
+Arabia.
+
+**CRediT authorship contribution statement**
+
+**Ritu:** . **Pankaj Bhambri:** Supervision. **Mudassir Khan:** Funding
+acquisition. **Barga Mohammed Mujahid:** Funding acquisition.
+
+**Declaration of competing interest**
+
+The authors declare that they have no known competing financial
+interests or personal relationships that could have appeared to influence
+the work reported in this paper.
+
+**Acknowledgment**
+
+The authors extend their appreciation to the Deanship of Research
+and Graduate Studies at King Khalid University, KSA, for funding this
+work through the Large Research Project under grant number RGP2/
+
+164/46.
+
+**References**
+
+[[1] Banimustafa. Predicting software effort estimation using machine learning](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0015)
+[techniques. In: 2018 8th Int. Conf. Comput. Sci. Inf. Technol. CSIT 2018; 2018.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0015)
+[p. 249–56.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0015)
+
+[[2] Hariyanti E, Paradista MA, Goyayi MLJ, Arthalia A, Shabirina DA, Nurjanah E,](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0020)
+[Yahrani FAS. The implementation of machine learning for software effort](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0020)
+[estimation: A literature review. Khazanah Informatika: Jurnal Ilmu Komputer dan](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0020)
+[Informatika 2024;10:47–57.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0020)
+
+[3] S. Bedell and P. Terheggen, “Certificate of Completion Presented by Bert Blocken,”
+2020.
+
+[[4] Sunda N, Sinha RR. Correlation of traditional technique and ML-based technique](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0030)
+[for efficient effort estimation: in agile frameworks. In: International conference on](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0030)
+[universal threats in expert applications and solutions. Singapore: Springer Nature](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0030)
+[Singapore; 2024. p. 247–61.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0030)
+
+[[5] Dai S, Zhou Y, Zhang H, Ustun E, Young EFY, Zhang Z. Fast and accurate estimation](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0035)
+[of quality of results in high-level synthesis with machine learning. In: Proc. - 26th](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0035)
+[IEEE Int. Symp. Field-Programmable Cust. Comput. Mach. FCCM 2018; 2018.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0035)
+[p. 129–32.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0035)
+
+[[6] Abdelali Z, Mustapha H, Abdelwahed N. Investigating the use of random forest in](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0005)
+[software effort estimation. Proc Comput Sci 2019;148:343–52.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0005)
+
+[[7] Azeem MI, Palomba F, Shi L, Wang Q. Machine learning techniques for code smell](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0010)
+[detection: a systematic literature review and meta-analysis. Inf Softw Technol](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0010)
+[2019;108(4):115–38.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0010)
+
+[[8] Rane N, Choudhary SP, Rane J. Ensemble deep learning and machine learning:](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0040)
+[applications, opportunities, challenges, and future directions. Stud Med Health Sci](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0040)
+[2024;1(2):18–41.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0040)
+
+
+16
+
+*Ritu et al.* *Egyptian* *Informatics* *Journal* *33* *(2026)* *100914*
+
+
+
+[9] N. Ghatasheh, H. Faris, I. Aljarah, and R. M. H. Al-Sayyed, “Optimizing software
+effort estimation models using firefly algorithm,” arXiv, no. March, pp. 133–142,
+2019.
+
+[10] V. Goar, M. Kuri, R. Kumar, and S. (Editors) Tomonobu, Advances in Information
+Communication Technology and Computing (Proceedings of AICTC 2019). 2021.
+
+[[11] Gultekin M, Kalipsiz O. Story point-based effort estimation model with machine](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0055)
+[learning techniques. Int J Softw Eng Knowl Eng 2020;30(1):43–66.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0055)
+
+[[12] Hannel MD, Abdulali A, O’Brien M, Grier DG. Machine-learning techniques for fast](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0060)
+[and accurate feature localization in holograms of colloidal particles. Opt Express](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0060)
+[2018;26(12):15221.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0060)
+
+[[13] Abdu A, Zhai Z, Abdo HA, Algabri R, Al-Masni MA, Muhammad MS, et al. Semantic](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0065)
+[and traditional feature fusion for software defect prediction using hybrid deep](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0065)
+[learning model. Sci Rep 2024;14(1):14771.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0065)
+
+[[14] Ionescu VS. An approach to software development effort estimation using machine](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0070)
+[learning. In: Proc. - 2017 IEEE 13th Int. Conf. Intell. Comput. Commun. Process.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0070)
+[ICCP 2017; 2017. p. 197–203.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0070)
+
+[[15] Jang H. A decision support framework for robust R&D budget allocation using](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0075)
+[machine learning and optimization. Decis Support Syst 2019;121(April):1–12.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0075)
+
+[[16] Klaine PV, Imran MA, Onireti O, Souza RD. A survey of machine learning](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0080)
+[techniques applied to self-organizing cellular networks. IEEE Commun Surv](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0080)
+[Tutorials 2017;19(4):2392–431.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0080)
+
+[[17] Menzies T, Yang Y, Mathew G, Boehm B, Hihn J. Negative results for software](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0085)
+[effort estimation. Empir Softw Eng 2017;22(5):2658–83.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0085)
+
+[[18] Kathole AB, Lonare S, Katti J, Vhatkar K, Dharmale G. Efficient fuzzy ranking with](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0090)
+[ensemble machine learning network for attack detection and classification in](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0090)
+[VANET. Expert Syst Appl 2025;279:127295.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0090)
+
+[19] estimation: Algorithms, models and optimization techniques,” Comput. Electr.
+Eng., vol. 69, pp. 653–668, 2018.
+
+[[20] Pandey M, Litoriya R, Pandey P. Applicability of machine learning methods on](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0100)
+[mobile app effort estimation: validation and performance evaluation. Int J Softw](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0100)
+[Eng Knowl Eng 2020;30(1):23–41.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0100)
+
+[[21] Pospieszny P, Czarnacka-Chrobot B, Kobylinski A. An effective approach for](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0105)
+[software project effort and duration estimation with machine learning algorithms.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0105)
+[J Syst Softw 2018;137:184–96.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0105)
+
+
+
+[[22] Li J, Liu P, Chen L, Pedrycz W, Ding W. An integrated fusion framework for](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0110)
+[ensemble learning leveraging gradient boosting and fuzzy rule-based models. IEEE](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0110)
+[Trans Artif Intel 2024.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0110)
+
+[[23] Sarro F, Petrozziello A. Linear programming as a baseline for software effort](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0115)
+[estimation. ACM Trans. Softw. Eng. Methodol. 2018;27(3).](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0115)
+
+[[24] Satapathy SM, Rath SK. Empirical assessment of machine learning models for agile](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0120)
+[software development effort estimation using story points. Innov Syst Softw Eng](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0120)
+[2017;13(2–3):191–200.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0120)
+
+[[25] Ritu, Bhambri Pankaj. Software effort estimation with machine learning – a](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0125)
+[systematic literature review. In: Hooda Susheela, editor. Agile Software](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0125)
+[Development. 1st ed. Wiley; 2023. p. 291–308. DOI.org (Crossref), https://doi.org/](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0125)
+[10.1002/9781119896838.ch15.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0125)
+
+[[26] Hameed Shaima, et al. An optimized case-based software project effort estimation](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0130)
+[using genetic algorithm. Inform. Soft. Technol. 2023;153:107088. DOI.org](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0130)
+[(Crossref), https://doi.org/10.1016/j.infsof.2022.107088.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0130)
+
+[27] Oshaibi M, Farah, et al. Software effort estimation using ensemble learning.
+[preprint. DOI.org (Crossref) Compu Sci Math 2024. https://doi.org/10.20944/prep](https://doi.org/10.20944/preprints202403.0437.v1)
+[rints202403.0437.v1.](https://doi.org/10.20944/preprints202403.0437.v1)
+
+[[28] Sharma D, Kumar B, Chand S. A trend analysis of machine learning research with](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0140)
+[topic models and Mann-Kendall test. Int J Intell Syst Appl 2019;11(2):70–82.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0140)
+
+[[29] Sinha RR, Gora RK. Software effort estimation using machine learning techniques.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0145)
+[Lect Notes Networks Syst 2021;135:65–79.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0145)
+
+[[30] Spikol D, Ruffaldi E, Dabisias G, Cukurova M. Supervised machine learning in](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0150)
+[multimodal learning analytics for estimating success in project-based learning.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0150)
+[J Comput Assist Learn 2018;34(4):366–77.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0150)
+
+[[31] Stephenson N, et al. Survey of machine learning techniques in drug discovery. Curr](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0155)
+[Drug Metab 2018;20(3):185–93.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0155)
+
+[[32] Thirumalai C, Duba A, Reddy R. Decision making system using machine learning](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0160)
+[and Pearson for heart attack. In: Proc. Int. Conf. Electron. Commun. Aerosp.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0160)
+[Technol. ICECA 2017; 2017. p. 206–10.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0160)
+
+[[33] Usharani K, Ananth VV, Velmurugan D. A survey on software effort estimation. Int](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0165)
+[Conf Electr Electron Optim Tech ICEEOT 2016;2016:505–9.](http://refhub.elsevier.com/S1110-8665(26)00031-9/h0165)
+
+
+17
+

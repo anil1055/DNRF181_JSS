@@ -1,0 +1,1326 @@
+Automated Software Engineering      (2026) 33:60
+[https://doi.org/10.1007/s10515-026-00607-y](https://doi.org/10.1007/s10515-026-00607-y)
+## **Effort estimation in scrum using AI**
+
+**Maria Rasheed** **[1]** **· Iman Fatima** **[1]** **· Darain Fatima** **[1]** **· Muhammad Hamid** **[1]** **·**
+**Fahima Hajjej** **[2]**
+
+Received: 4 June 2025 / Accepted: 14 February 2026
+© The Author(s), under exclusive licence to Springer Science+Business Media, LLC, part of Springer Nature
+2026
+
+**Abstract**
+Scrum, an agile methodology emphasizing iterative development and adaptive plan-­
+ning, facilitates high-quality software delivery. However, achieving accurate effort
+estimation (measured in story points) for Scrum projects is often challenged by fac-­
+tors such as shifting requirements, varying task complexities, and inherent biases in
+traditional estimation techniques. To address these limitations, this study proposes
+and rigorously evaluates an ensemble Machine Learning (ML) model, integrating
+Ridge Regression (RR), Extra Trees (ET), and Multi-Layer Perceptron (MLP). The
+model’s efficacy was confirmed through a multi-faceted evaluation. Firstly, on a
+public dataset of 140 user stories, it achieved strong performance Mean Absolute
+Error (MAE) of 0.68, Mean Square Error (MSE) of 0.74, Root Mean Square Error
+(RMSE) of 0.86. This improvement was demonstrated to be statistically significant
+(p < 0.05) via the Wilcoxon signed-rank test. Secondly, to address the critical re-­
+search gap of generalizability, the model’s robustness was validated on a secondary,
+real-world dataset of 159 user stories, where it maintained its superior performance
+(MAE=0.70, MSE=0.90, RMSE=0.95). Finally, a detailed error analysis provides
+actionable insights for practitioners, linking the model’s performance to the agile
+best practice of decomposing large user stories. The findings validate that the pro-­
+posed ensemble model offers a statistically robust, generalizable, and practically
+applicable data-driven solution for enhancing sprint planning and resource alloca-­
+tion in agile project management.
+
+**Keywords** Agile · Ensemble model · Effort estimation · Machine learning ·
+Scrum · User story
+
+Muhammad Hamid
+
+mhamid@gcwus.edu.pk
+
+1 Department of Computer science, Government College Women University, Sialkot,
+Pakistan
+
+2 Department of Information Systems, College of Computer and Information Sciences,
+Princess Nourah bint Abdulrahman University, Riyadh, Saudi Arabia
+# `1 3`
+
+60 Page 2 of 24
+
+**1 Introduction**
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+Software engineering refers to the process of creating software using structured
+approaches and processes to meet scope, cost, time and quality requirements of
+projects. Traditionally, the waterfall paradigm was used to develop projects, which
+involves sequential phases of analysis, design, implementation, testing and deploy-­
+ment (Hohl et al. 2018). However, this sequential lifecycle is inappropriate for mod-­
+ern software development, as it requires an upfront definition of all requirements,
+delays user feedback and provides little flexibility in meeting changing project
+requirements. Recognizing these limitations, a new approach of software develop-­
+ment based on the agile Manifesto, was introduced by a group of software experts
+in 2001 (Hohl et al. 2018; Tawosi et al. 2022). Consequently, agile methodology has
+become popular in the software development process because of flexible workflow, a
+focus on fast information exchange, and iterative cycles (Tawosi et al. 2022). This is
+an iterative method that enhances faster development, better quality output, and user
+satisfaction via feedback and collaboration. Scrum is one of the most popular agile
+methodologies employed in practice today. Scrum methodology provides a highly
+structured yet flexible method of managing the development phases of the com-­
+plex projects from inception to completion. Its fundamental principles are repeated
+development of progress, flexibility to change, and strong collaboration, which is
+specifically effective for projects with dynamic requirements (Sánchez et al. 2023).
+In the scrum methodology, requirements are defined in form of user stories. These
+user stories are organized and prioritized in the product backlog which is a dynamic
+repository of all the work that should be completed. A user story itself is a concise,
+non-technical description of a software requirement articulated from the end- user’s
+perspective, typically adhering to the structure:“As a [user type], I want [goal] so that
+
+[reason or benefit]”. Effort estimation is a critical phase in user story development
+(Sánchez et al. 2023; Alsaadi and Saeedi 2024). In order to estimate the effort needed
+to complete user stories, developers take into consideration a number of different fac-­
+tors such as resource requirements and the complexity of user stories. Accurate effort
+estimation, often measured in story points, is an essential part of agile software devel-­
+opment because an inaccurate estimate can cause serious barriers to the project. The
+estimation of effort can be divided into two methods: expert-based methods, relying
+on the knowledge and past experience of the team members along with the project
+data and the data-driven methods, which rely on historical information of similar
+completed projects. This historical data includes information of user stories, related
+subtasks, complexities, and overall rate of resource utilization, enabling predictive
+models to estimate efforts in new projects (Alsaadi and Saeedi 2024). While team
+members in Scrum estimate effort during sprint planning, traditional methods often
+prove inadequate, leading to inaccuracies. These inefficiencies with the traditional
+effort estimation pose a consistent problem in Scrum projects. Other causes of inac-­
+curate estimates include the biases in human nature (e.g., optimism or pessimism),
+the subjective estimates, and the inconsistent application of estimating techniques
+across different teams or projects. These imprecise estimations of story points, which
+are directly used to inform sprint scoping and commitment, may trigger serious
+problems, such as poor sprint planning, inefficient resource allocation, inability to
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 3 of 24 60
+
+
+achieve sprint goals, project overruns, and massive budget overruns. Such unreli-­
+ability compromises one of the strengths of agile project management; its predictable
+and incremental delivery of value (Tawosi et al. 2022; Chauhan et al. 2021). Thus,
+one of the major issues in Scrum practice is the need of more precise, objective and
+reliable approaches for the estimation of user story effort. To satisfy this need, the
+trend shifted from expert-based approaches to data driven methods especially ML
+(Sudarmaningtyas and Mohamed 2021). Initial work in this field typically used a
+single model of ML (e.g., Decision Tree, SVR) on past data. Although these single
+models were promising, they often had their own flaws, which included a high sensi-­
+tivity to data distribution, a tendency to overfit, or a natural bias towards a particular
+type of patterns (Alsaadi and Saeedi 2024). As a result, their generalizability to other
+projects was frequently low. This study explores the use of an ensemble learning
+method in order to address the limitations of these single models. The main idea of
+an ensemble is to combine the predictions of different models so that the weaknesses
+of one model can be counterbalanced by the strength of another. The objective of this
+technique is to generate a single and stronger and highly generalizable model to make
+effective effort estimations However, proposing a new model is not enough rather it
+should be strictly tested to overcome the research gaps of statistical significance and
+generalizability that were encountered in the earlier studies. To guide this rigorous
+investigation, this study seeks to answer the following research questions:
+
+- RQ1: To what extent can the proposed ensemble ML model accurately predict the
+effort of user stories?
+
+RQ2: Which effort drivers are the most influential in the model’s prediction pro-­
+cess, and what is their relative importance?
+
+To answer these questions systematically, the research contributions of the paper are
+as follows:
+
+1. Proposed a novel ensemble model that strategically integrates three methodolog-­
+
+ically diverse ML models a regularized linear model (RR), a randomized treebased method (ETs), and a neural network (Multi-Layer Perceptron) to improve
+predictive accuracy and robustness by mitigating the biases of individual models.
+2. Added a level of statistical rigor by conducting the Wilcoxon signed-rank test
+
+in order to statistically prove that the improvements in the performance of the
+proposed model are statistically significant ( *p <* 0 *.* 05 ).
+3. Fills in the key research gap of generalizability by conducting an intensive cross
+dataset validation. The model was tested on a secondary and real-world dataset,
+which indicated that it could preserve high performance in different setting and
+indicated that it is practically applicable.
+4. Provides practical, data driven insights to agile practitioners by connecting an in
+depth analysis of errors with the agile best practice of breaking down large user
+stories. This converts the findings of this model into useful recommendations of
+enhancing the accuracy of estimation in the real-life sprint planning.
+# `1 3`
+
+60 Page 4 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+The rest of this paper is organized as follows. Section 2 presents a literature review.
+Section 3 provides a detailed description of the methodology. Section 4 contains
+results and discussion and conclusion is given in Section 5.
+
+**2 Related work**
+
+In Scrum, effort estimation is a critical issue, particularly when using user stories
+to estimate the development effort. Over the years, researchers have investigated
+expert-based, statistical and AI based methods to enhance the accuracy of estima-­
+tions and reduce biases. Conventional agile effort estimation methods, however, tend
+to be inconsistent and biased. As an example, a remarkable work by Tawosi et al.
+(2022) analyzed the correlation between Story Points (SPs) and real development
+effort in open-source agile projects. Empirical investigation of 37 projects revealed
+that the correlation was high in only 7 percent of instances, and indicates that manual
+story point assignment is not always a strong proxy of actual effort. Building on the
+limitations of conventional approaches, Chauhan et al. (2021) further investigated
+several agile SP judgment approaches including Planning Poker and T-Shirt Sizing.
+In their work, they have pointed out pitfalls that are overestimations, further support-­
+ing the argument of more objective data-driven techniques. Sudarmaningtyas and
+Mohamed (2021) also reported the need of systematic improvement in a systematic
+literature review that concluded that the ML methods had a significant potential to
+improve the accuracy, opening the way to the empirical research. As the shortcom-­
+ings of human-based estimation became evident, researchers moved to the AI-based
+solutions. In his Master thesis, Morais (2022), examined deep learning (DL) mod-­
+els with Natural Language Processing (NLP). This work showed the potential of
+deriving features from requirements text directly, but most importantly De Morais
+also pointed out the biggest limitation such models could not be generalized which
+would be a consistent problem in many studies that do not validate their models on a
+variety of different data sets. Therefore, Shidiq et al. (2023) evaluated different ML
+techniques and found Gradient Boosting as one of the most accurate models (R2
+= 0.966). Their results, however promising, were not accompanied by statistically
+significant tests (e.g., Wilcoxon signed-rank) and, as such, it was hard to determine
+whether or not the improvements reported were statistically significant or just came
+as a result of randomness. The search for more sophisticated approaches persisted.
+To deal with uncertainty, El Beggar (2024) proposed an Intuitionistic Fuzzy Expert
+Judgment Method (IFEJM). Although effective, this approach has such a limitation
+as it is based on the Analytic Hierarchy Process (AHP), which still needs substantial
+expert intervention, which is the goal of fully data-driven methods. Another direc-­
+tion that turned out to be promising was hybrid AI models. Arora (2022) analyzed an
+Adaptive Neuro- Fuzzy Inference System (ANFIS) combined with a new algorithm
+named EEBAT, and it reached a high accuracy. Such hybrid systems, however, have
+a number of complexities that can bring up the issue of interpretability and over-­
+fitting which is greatly increased when the models are tested on just one dataset.
+Sánchez et al. (2023) utilized similar approaches such as the Random Forest with
+an accuracy level of 96.92%. As they observed, however, their work was limited by
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 5 of 24 60
+
+
+the size of their datasets and, similar to many others, they have not established the
+statistical superiority of their best model over other ones, which makes the asser-­
+tions of improvement provisional. Turić et al. (2023) created a powerful Bayesian
+Network (BN) that was very much effective in modeling probabilistic dependencies
+but was not useful in granular prediction, a trade-off between modeling dependencies
+and high-resolution prediction. There were also intelligent broader decision support
+systems. The IRDSS created by Hamid et al. (2020) was a successful tool, but it
+highlighted the necessity to introduce a more advanced and end-to-end ML model
+instead of a simpler recommender system. In more recent years, the field has begun
+to explore the opportunities of large language models (LLMs) and DL, which were
+not part of the initial review. To provide an example, other more recent studies have
+investigated the use of pre-trained models such as BERT to generate rich embeddings
+in the text of user stories. Although these methods can be used to learn semantic
+subtlety, they are computationally expensive and their assertiveness about high per-­
+formance is often anchored on a single proprietary dataset, and thus it is questionable
+whether they can be applied in practice. Generative models have also been applied
+to other types of exploratory work, such as direct story point estimation using GPT,
+although these models are also susceptible to hallucinations and sensitivity to prompt
+wording, so their usefulness is a matter of serious concern without mass validation
+and statistical rigor. The analysis of the literature shows that there are two significant
+and extensive gaps in the existing research. First, as affirmed by Alsaadi and Saeedi
+(2024), most of the studies verify their models on one dataset which significantly
+reduces the viability of their arguments concerning their generalization. Secondly,
+most papers report better error metrics without showing statistical evidence of their
+importance. Even methodologies that seek to shift towards objectivity, like the devel-­
+oper-based strategy suggested by Butt et al. (2022), tend to re-introduce subjectivity
+and fail to be validated in other project settings. Although models such as the one
+by V. Dave et al. (2021) are designed to close the gap between estimated and real
+effort, they frequently have the same limitation as single-dataset validation, and lack
+statistical rigour. The proposed study is clearly designed to fill these two important
+gaps. This paper does not only suggest a new combination of various learners (ET,
+RR and MLP) but also directly verifies its performance by (1) testing it on another,
+separate dataset to ensure that it can be generalized, and (2) conducting statistical sig-­
+nificance tests to formally demonstrate that the proposed ensemble model is superior.
+This combined emphasis on generalizability and statistical rigor, when it comes to a
+practical, interpretable model, offers a more robust and dependable contribution to
+the scrum effort estimation research.
+
+**3 Methodology**
+
+The methodology involves 5 primary stages 1) Data collection, 2) Data Preprocess-­
+ing that transforms data into a form understandable by ML algorithms, 3) Feature
+extraction, 4) Model development to estimate effort, and 5) Evaluations of the model.
+1
+Figure shows the Workflow of proposed Methodology.
+# `1 3`
+
+60 Page 6 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+**Fig. 1** Workflow of proposed Methodology for effort estimation in scrum
+
+**3.1 Data collection**
+
+The dataset used in this study is the User_stories_dataset (Alsaadi and Saeedi 2024),
+which is a publicly available dataset found on Mendeley Data. It is a dataset of 140
+instances representing a unique user story and its characteristics. For each user story,
+the dataset offers 12 input features, usually known as effort drivers. These features
+can be classified as follows:
+
+**3.1.1 Numerical features (6)**
+
+- **Team members:** The number of team members involved.
+
+- **Experience:** The average experience of team members in months.
+
+- **Size:** A numeric value indicating the size of the user story (1-5 with 1 indicating
+small size and 5 indicating large size).
+
+- **Complexity:** A numeric description of the complexity of the user story (1 to 5,
+where 1 is low and 5 is high).
+
+- **Priority:** A numerical value of the priority of the user story.
+
+- **No of tasks:** The sub-tasks of the user story.
+
+**3.1.2 Categorical features (6)**
+
+- **PL:** The language (e.g. C#, Java, python, html).
+
+- **Development type:** The type of development (e.g. ‘M’ Mobile, Hardware devel-­
+opment, web, DL Model, database).
+
+- **platform:** The target platform (e.g. ‘Android Studio, Unity, IOS, python, .net,
+Google Colab, etc.).
+
+- **External hardware:** A binary value (0 or 1) of external hardware need.
+
+- **Related technologies:** Certain technologies used (e.g., ‘AR’, ‘Location’, ‘AI’,
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 7 of 24 60
+
+
+‘IoT’, ‘Voice recognition’, ’Computer vision, ’Gamification, ’LBT, or 0, in case
+not).
+
+- **DBMS:** The database management system (e.g. ‘Unity’, ‘Vuforia’, ‘Firebase’,
+‘none’, ‘SQL’, ‘Place note’).
+
+The target variable is the effort. The measure of effort in this dataset is in story points.
+These story points are numbered values that development teams use to measure how
+much work they will have to do to implement a user story and which often have a
+Fibonacci-like structure (e.g. 1, 2, 3, 5, 8, 13, 21).
+
+**3.1.3 The cross-validation dataset (generalizability resource)**
+
+In order to fill the critical research gap of model generalizability, a second, indepen-­
+dent dataset was gathered and used to provide strong validation. This resource, a sig-­
+nificant element of the generalizability analysis of this study, was obtained from 36
+real-world software projects of professional software houses after a rigorous multistep process.
+
+The data collection procedure was carried out in three phases:
+
+
+1. **Identification of Effort Drivers:** 13 main effort drivers were identified using
+
+two-fold methodology. An extensive Literature Review identified 12 general
+factors related to Team (Experience, Team members), Story (Size, Complexity,
+Priority, No of tasks), and Technical context (PL, Platform, DBMS, etc.). Impor-­
+tantly, Industry Insights obtained through the consultation with Scrum Masters
+and the assessment of the actual software projects revealed one more crucial
+factor: ’Requirements Volatility’. The inclusion of this factor makes the dataset
+more reflective of the actual risks in projects.
+2. **Structured Data Compilation:** A structured and detailed questionnaire was
+
+designed to capture the relevant data. This tool was used to gather data (in Fibo-­
+nacci Story Points) of 160 user stories obtained through completed projects,
+ensuring that the data were real development scenarios.
+3. **Quality Assurance:** A systematic quality assurance process was used to ascer-­
+
+tain the validity of the dataset. All user stories were assessed according to atomi-­
+city, uniqueness and completeness requirements. Such a meticulous screening
+has led to a curated list of 159 user stories which were used in cross-validation.
+
+This secondary data is entirely different compared to the publicly available resource
+(User stories dataset). It was not used to train the model. It is the source of the strong
+Cross-Dataset Validation, which was conducted in Section 4.2, which provides evi-­
+dence of the practical applicability and stability of the ensemble model in an unseen
+environment.
+
+**3.2 Data preprocessing**
+
+Preprocessing of data is a very important step to convert raw data into a form that can
+be used by the ML algorithm. Since this dataset has a number of categorical variables
+# `1 3`
+
+60 Page 8 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+(e.g., Platform, PL, Development type, DBMS, etc. listed in Section 3.1), they had
+to be transformed into a numerical form. For this standard One-Hot Encoding (OHE)
+was used (Samuels 2024). OHE is a popular method of transforming non- ordinal cat-­
+egorical variables into a binary matrix format. In this process every distinct category
+in a feature is converted into a new binary (0 or 1) feature. 1 means the presence of
+that category of an instance and 0 means absence of it. This change causes ML mod-­
+els not to make false inferences about an ordinal relationship between categories that
+2
+do not exist (e.g. falsely assuming that Android Studio > Unity). Figure is a demon-­
+stration of one such standard encoding process on a hypothetical categorical feature.
+
+**3.3 Feature selection**
+
+One of the key steps to optimizing the performance of the model is feature selection,
+in which the most relevant features (effort drivers) are selected and irrelevant features
+are discarded. In this study, Mutual Information (MI) has been selected to evaluate
+the importance of features and to control the selection process [18]. As compared
+to simple correlation coefficients, which are mostly used to identify linear relation-­
+ships, MI can be used to quantify both linear and non-linear associations between the
+input features and the target variable (’effort, story points). This is especially critical,
+because the factors affecting software effort tend to interact in complex, non-linear
+fashion. MI is a measure of the quantity of information learned about a single vari-­
+able (e.g., ‘effort’) by observing another variable (e.g., ‘complexity’), and is simply
+a direct measure of the relevance of a feature. Greater MI scores are an indication
+
+of stronger dependencies and consequently, more predictive power. This research
+utilized the non-parametric MI estimation method proposed by Ross (2014), which
+employs a KNN technique suitable for the mixed data types present in this data-­
+set after one-hot encoding of categorical variables. The results of this analysis, per-­
+formed strictly on the training data to prevent information leakage, are visualized in
+Fig. 3. This graph presents the overall importance of each feature, with scores for
+categorical variables aggregated for clarity. Based on this ranking, the top 5 features,
+namely Complexity, Size, related technologies, PL, and platform, were selected for
+model development.
+
+**3.4 Model development**
+
+To estimate the effort of agile user stories, an ensemble voting regressor model was
+created, which combines multiple supervised ML algorithms trained on the data-­
+set to overcome individual model’s limitations. The top-performing algorithms are
+selected, and their results are averaged to produce the final estimation. The following
+ML algorithms are used in this study.
+
+**Fig. 2** An illustration of the One-Hot Encoding process applied to a categorical feature
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+**Fig. 3** Overall feature importance based on aggregated MI scores
+
+**3.4.1 Ridge regression (RR)**
+
+
+Page 9 of 24 60
+
+
+RR is a regularized linear regression technique that incorporates an L2 penalty term
+
+
+*α* [1]
+
+2
+
+
+*n*
+∑
+
+*i* =1
+
+
+*θ* *i* [2] [ into the cost function, where ] *[α]* [ controls the regularization strength and ] *[θ]* *[i]*
+
+
+represents the model coefficients. This penalty term shrinks the coefficients, reducing
+their magnitude and mitigating overfitting, particularly in scenarios with high-dimen-­
+sional or multicollinear data. RR achieves model generalization by balancing bias
+and variance, which makes it ideal for effort estimation because robust and stable pre-­
+dictions are vital to these tasks. The model performance can be enhanced by adjusting
+the regularization parameter *α* for predicting accurate and credible efforts in software
+development or project management contexts.
+
+**3.4.2 Extra trees (ET)**
+
+Extremely Randomized Trees is a tree-based ensemble learning technique, which is
+similar to Random Forest, but with a higher degree of randomization in the splitting.
+ET picks the thresholds randomly in the process of splitting and this gives it a balance
+of high bias and low variance. With the adoption of this method, ET is able to train
+quicker than the traditional Random Forest training methods. ET can be useful in the
+effort estimation process since it constructs several decision trees that realize good
+generalization across the user stories with effective computational efficiency.
+# `1 3`
+
+60 Page 10 of 24
+
+**3.4.3 Decision tree (DT)**
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+The hierarchical model of DTS is used in the classification and regression functions.
+The models spread data through decision points and have evaluation criteria includ-­
+ing Gini impurity or entropy, thereby making them human-readable and intuitive.
+These models exhibit distinct value in the effort estimation process since they exhibit
+complicated associations between user story attributes and estimated work time. The
+models are prone to overfitting, and this can be reduced through pruning algorithms
+as well as rule constraints, which specify maximum depth.
+
+**3.4.4 Random forest (RF)**
+
+RF is a collection of DTs that introduces randomness in the process of enhancing
+generalization. The method constructs many decision trees based on individual data
+sets and then it applies input averaging to generate combined predictions. Random
+Forest balances accuracy and overfitting through their implementation process. A
+RF model manages several user stories by finding vital characteristics that define the
+level of precision in estimations and contains story complexity and team experience
+as the important factors.
+
+**3.4.5 Support vector regressor (SVR)**
+
+SVR functions as a regression model derived from Support Vector Machines (SVM)
+for making predictions about continuous outputs. The approach creates prediction
+areas that extend throughout the estimated value region by up to epsilon. The algo-­
+rithm applies kernel functions (linear, polynomial, RBF) to raise data dimensions so
+a linear regression model can operate effectively. Through kernel functions, SVR
+establishes complex connections between project features and predicted effort values.
+
+**3.4.6 K-Nearest neighbors (KNN)**
+
+KNN is a non-parametric instance-based learning algorithm that predicts outcomes
+based on the nearest training examples. It predicts based on the similarity (distance)
+between data points. For a given data point, it finds the KNN in the training set. For
+classification, it assigns the most common class among the neighbors. For regression,
+it averages the values of the neighbors. The distance metric (e.g., Euclidean, Manhat-­
+tan) determines how similarity is measured.
+
+**3.4.7 Multi-layer perceptron (MLP)**
+
+MLP is an artificial neural network that comprises multiple layers of neurons. It can
+detect intricate data patterns related to the estimation of effort. The functions of acti-­
+vation such as ReLU and backprop are used in MLPs. Within the context of user story
+effort estimation, MLP is able to model complex feature-estimated effort relation-­
+ships, and is useful when the decision boundaries are not readily determined using
+tree-based models.
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+**3.4.8 Ensemble model**
+
+
+Page 11 of 24 60
+
+
+An ensemble model is a method of ML, which integrates the predictions of vari-­
+ous single models to enhance the performance, the accuracy, and the resilience. It
+combines the strengths of various models and reduces weaknesses of each of the
+models leading to more reliable predictions. An ensemble model was also created
+in this study by combining three ML algorithms, which include ET, RR and MLP.
+The ensemble model combines the outputs of the individual models, and experimen-­
+tal outcomes revealed that it performed better than individual models in estimating
+efforts.
+
+**3.4.9 Hyperparameter optimization**
+
+A systematic process of hyperparameter tuning was implemented in order to maxi-­
+mize the predictive performance of every model. The data were optimized by employ-­
+ing a Grid Search strategy on the training sub-set of data. The aim of this procedure
+was to determine the set of parameters that gave the lowest MAE of each algorithm.
+Table 1 shows the final optimized parameters obtained after this process.
+
+**Table 1** Optimal Hyperparameters for Evaluated Models
+Model Hyperparameter Search Space Values
+RR alpha [0.01, 0.1, 1.0, 10, 100]
+solver [‘ *auto* *[′]* *,* ‘ *svd* *[′]* *,* ‘ *lsqr* *[′]* *,* ‘ *sag* *[′]* ]
+ET n_estimators [100, 200, 500]
+max_depth [ *None*, 10, 20, 30]
+min_samples_split [2, 5, 10]
+DT criterion [ *[′]* *squared* _ *error* *[′]* *,* *[′]* *absolute* _ *error* *[′]* ]
+max_depth [ *None*, 10, 20, 30]
+min_samples_split [2, 10, 20]
+RF n_estimators [100, 200, 500]
+max_depth [ *None*, 10, 20, 30]
+min_samples_split [2, 5, 10]
+SVR C [0.1, 1, 10, 100]
+kernel [‘ *linear* *[′]* *,* ‘ *rbf* *[′]* *,* ‘ *poly* *[′]* ]
+Gamma [‘ *scale* *[′]* *,* ‘ *auto* *[′]* ]
+KNN n_neighbors [3, 5, 7, 9]
+weights [‘ *uniform* *[′]* *,* ‘ *distance* *[′]* ]
+metric [‘ *euclidean* *[′]* *,* ‘ *manhattan* *[′]* ]
+MLP hidden_layer_sizes [(50, 50), (100, ), (100, 50)]
+activation [‘ *relu* *[′]* *,* ‘ *tanh* *[′]* ]
+solver [‘ *adam* *[′]* ]
+alpha [0.0001, 0.001, 0.05]
+# `1 3`
+
+60 Page 12 of 24
+
+**3.5 Evaluation phase**
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+The final phase of the methodology is the evaluation of the model. For performance
+evaluation, the dataset was partitioned into a training set and a testing set using a
+fixed 80/20 split. Specifically, 80% of the data (112 instances) was randomly selected
+for training the models, and the remaining 20% (28 instances) was held out for test-­
+ing and evaluating their generalization performance. To ensure the randomness and
+reproducibility of the split, a fixed random seed was used during the partitioning
+process. The models were trained solely on the training set, and their predictive per-­
+formance was then assessed on the unseen testing set using the evaluation metrics.
+Different evaluation metrics exist for effort estimation. The evaluation metrics used
+in this paper are described below.
+
+**3.5.1 Mean absolute error (MAE)**
+
+MAE (Qi et al. 2020) measures the average absolute differences between predicted
+values and actual values. It is less sensitive to large errors than RMSE and provides a
+straightforward interpretation of model error. MAE is optimal for models with Lapla-­
+cian error distributions. The formula for MAE is:
+
+
+MAE = [1]
+
+*n*
+
+
+*n*
+∑
+
+*i* =1
+
+
+*|* ActualEffort *i* *−* PredictedEffort *i* *|*  (1)
+
+
+Where n is the number of user stories, ActualEffort is the true value, and PredictedEf-­
+fort is the value estimated by the model. Performance results using MAE for indi-­
+vidual models with varying K feature selections are presented in Table 2.
+
+**3.5.2 Mean squared error (MSE)**
+
+MSE (Varshini and Kumari 2020) is a commonly used metric in regression analysis
+to measure the average squared difference between the observed (actual) values and
+the predicted values. It quantifies the accuracy of a predictive model by calculating
+the average of the squared errors, where the error is the difference between the actual
+and predicted values. The formula for MSE is:
+
+**Table 2** MAE for individual models for different k features
+Algorithms 3 4 5 6 7 8 9 10 11 12
+
+RR 0.507 0.463 0.691 0.568 0.637 0.742 1.038 0.746 0.371 0.671
+
+ET 0.669 0.681 0.705 0.699 0.695 0.687 0.695 0.697 0.701 0.700
+
+MLP 0.728 0.785 0.735 0.862 0.874 1.003 0.931 0.905 0.952 1.040
+
+KNN 0.790 0.689 0.883 0.796 0.744 0.722 0.756 0.769 0.842 0.876
+
+RF 0.908 0.954 0.922 0.660 0.719 0.817 0.781 0.667 0.676 0.813
+
+DT 1.043 1.015 1.046 0.965 0.984 1.003 1.022 1.042 1.061 1.080
+
+SVR 1.262 1.171 1.112 1.190 1.214 1.238 1.262 1.286 1.310 1.333
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 13 of 24 60
+
+
+**Table 3** MSE for individual models for different k features
+Algorithms 3 4 5 6 7 8 9 10 11 12
+
+RR 0.426 0.294 0.948 0.532 0.820 3.220 5.412 1.476 0.044 1.205
+
+ET 1.706 1.128 1.008 1.000 0.982 0.980 0.982 0.986 0.992 0.982
+
+MLP 1.447 2.719 2.955 2.557 2.667 3.226 3.089 2.829 3.229 3.215
+
+KNN 2.050 1.369 2.976 1.957 2.229 1.899 2.214 2.335 1.860 1.863
+
+RF 2.878 2.943 3.080 3.283 3.151 3.331 3.042 3.056 3.312 3.389
+
+DT 4.064 4.203 3.972 4.186 4.268 4.351 4.520 4.605 4.688 1.592
+
+SVR 6.880 5.424 4.550 4.516 4.605 4.696 4.789 4.883 4.977 5.073
+
+**Table 4** RMSE for individual models for different k features
+Algorithms 3 4 5 6 7 8 9 10 11 12
+
+RR 0.653 0.543 0.974 0.730 0.906 1.795 2.328 1.215 0.210 1.098
+
+ET 1.306 1.062 1.004 1.000 0.991 0.990 0.991 0.993 0.996 0.991
+
+MLP 1.203 1.649 1.719 1.599 1.633 1.796 1.758 1.682 1.797 1.793
+
+KNN 1.432 1.170 1.725 1.399 1.493 1.378 1.488 1.528 1.364 1.365
+
+RF 1.697 1.716 1.755 1.812 1.775 1.825 1.744 1.748 1.820 1.841
+
+DT 2.016 2.050 1.993 2.046 2.066 2.086 2.126 2.146 2.165 1.262
+
+SVR 2.623 2.329 2.133 2.125 2.146 2.167 2.188 2.209 2.229 2.249
+
+
+MSE = [1]
+
+*n*
+
+
+*n*
+∑
+
+*i* =1
+
+
+(ActualEffort *i* *−* PredictedEffort *i* ) [2]  (2)
+
+
+The MSE values for different models with various numbers of selected features are
+summarized in Table 3.
+
+**3.5.3 Root Mean Squared Error (RMSE)**
+
+RMSE is the square root of MSE (Hodson 2022), converting the error back to the
+same unit as the target variable. The formula for RMSE is:
+
+
+RMSE =
+
+
+~~�~~
+�
+�
+
+*n*
+
+� [1]
+
+
+*n*
+� (ActualEffort *i* *−* PredictedEffort *i* ) [2]  (3)
+
+*i* =1
+
+
+The RMSE results for various models with different K feature inputs are summa-­
+rized in Table 4. The performance metrics presented are the results obtained from the
+evaluation on the fixed, held-out test set (28 instances).
+
+**4 Results and discussion**
+
+To provide meaningful comparison of Scrum effort estimation techniques, it is nec-­
+essary to analyze not only the numerical accuracy, but also the ability of the meth-­
+ods to demonstrate statistical reliability and generalizability. The estimation method
+can only be considered dependable when their performance is tested on more than
+# `1 3`
+
+60 Page 14 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+a single dataset and supported by rigorous statistical testing. The discussion below
+adheres to this principle, as it first establishes the performance of the proposed
+model and then explains these results within the broader context of existing litera-­
+ture. A comparative summary of the suggested ensemble approach with a several
+major studies is presented in Table 5. The comparison does not limited to number
+measures (MAE and RMSE); it also highlights that previous research had consid-­
+ered Statistical Significance Testing and Generalizability Validation, two attributes
+to fruitful empirical assertions. As demonstrated, the proposed model achieves the
+best numerical results (MAE 0.68, RMSE 0.86). More importantly, the comparison
+shows critical gaps in previous research. As an example, Shidiq et al. (2023) found
+Gradient Boosting a good performer (MAE 0.90, RMSE 1.70), but no statistical test
+was conducted, leaving the claims of improvement to chance. Similarly, Sánchez
+et al. (2023) used Random Forest and AdaBoost with relatively good accuracy (MAE
+0.81, RMSE 1.20), which admittedly were not as large because the dataset used is
+relatively small, but again did not confirm that the improvements were significant.
+Dave et al. (2021) introduced a Neuro-Fuzzy model (MAE 0.80, RMSE 1.23) but
+the validation remained confined to single dataset, which limited the generalization.
+Likewise, the ensemble model, developed by Alsaadi and Saeedi (2024) (MAE 0.78,
+RMSE 1.15), was tested on a single public dataset, which undermines its flexibility
+assertion.
+
+These shortcomings are directly tackled by the proposed study. Through the inte-­
+gration of the ET, RR and MLP with the validation of the ensemble using a Wilcoxon
+signed-rank test and Cross-Dataset Validation, this piece of work provides a robust
+and verifiable benchmark of Scrum effort estimation. A systematic feature selection
+and model evaluation procedure was conducted to come up with the final ensemble.
+Subsets of features with *k* = 3 to *k* = 12 were evaluated, and the relevance of the
+features was ranked by MI. Each ML models, including ET, RR, MLP, KNN, Ran-­
+
+
+**Table 5** Comparison with State
+of the Art (Rotated Table)
+# `1 3`
+
+
+Author Methodology Results Statistical Generalizabil-­
+Testing ity analysis
+
+Sán-­ Single ML (RF, 0.81 / No (Claims No (Single
+chez AdaBoost) 1.20 tentative) Dataset)
+et al.
+(2023)
+
+
+Author Methodology Results Statistical
+Testing
+
+
+Single ML (RF,
+AdaBoost)
+
+
+0.81 /
+
+1.20
+
+
+No (Claims
+tentative)
+
+
+No (Single
+Dataset)
+
+
+Sán-­
+chez
+et al.
+(2023)
+
+Shidiq
+et al.
+(2023)
+
+Dave
+et al.
+(2021)
+
+Pro-­
+posed
+Model
+
+
+Ensemble
+
+(KNN+ET+
+MLP)
+
+Single ML (Gra-­
+dient Boosting)
+
+Hybrid (NeuroFuzzy + DT)
+
+Ensemble (RR +
+ET + MLP)
+
+
+0.78 /
+
+1.15
+
+0.90 /
+
+1.70
+
+0.80 /
+
+1.23
+
+0.68 /
+
+0.86
+
+
+No No (Single
+Dataset)
+
+No No (Single
+Dataset)
+
+No No (Single
+Dataset)
+
+
+Yes
+
+(Wilcoxon
+SignedRank, p <
+0.05)
+
+
+Yes (CrossDataset)
+
+Automated Software Engineering      (2026) 33:60
+
+**Fig. 4** Result of individual models
+
+
+Page 15 of 24 60
+
+
+**Table 6** Performance of indi-­
+vidual and proposed Ensemble
+Model
+
+
+Algorithms MAE MSE RMSE
+
+RR 0.69 0.95 0.97
+
+ET 0.71 1.01 1.00
+
+MLP 0.74 2.96 1.72
+
+KNN 0.88 2.98 1.73
+
+RF 0.92 3.08 1.76
+
+DT 1.05 3.98 1.99
+
+SVR 1.11 4.5 2.13
+
+Proposed Ensemble Model **0.68** **0.74** **0.86**
+
+
+dom Forest, Decision Tree and SVR, were tested on each features subset. Tables 2,
+3, 4 give detailed results (MAE, MSE, RMSE) of all models and all feature counts.
+Across these experiments, a consistent trend emerged there was a sub set of five
+features that yielded the least error measures with most models. These five features
+were Complexity, Size, related technologies, PL, and platform. The performance of
+all individual learners is visualized in Fig. 4.
+
+Considering this optimal five feature subset specifically, a further assessment of
+each model revealed that RR was particularly successful with an MAE of 0.691,
+MSE of 0.974 and RMSE of 0.974. Its strength is mostly due to stabilizing effect
+of regularization, which serves to reduce overfitting. ET also performed well (MAE
+0.705, MSE 1.004, RMSE 1.004), having the advantage of being built by randomly
+selecting trees, and thus minimizing variance. MLP achieved MAE 0.735, MSE
+1.719 and RMSE 1.719, which was competitive, but with a slightly higher error,
+because of the sensitivity to network structure and data size. Other models (KNN,
+RF, Decision Tree) gave higher values of error, and the SVR gave the highest errors,
+probably because it uses hyperparameters that are highly tuned. According to this
+analysis, RR, ET, and MLP were chosen as the most trustworthy candidates for the
+ensemble. The ensemble was constructed then based on these three models that had
+been trained specifically on the identified five-feature subset.
+
+The ensemble had an MAE of 0.68, MSE of 0.74, and RMSE of 0.86 as indicated
+in Table 6 and in Fig. 5. The wider view of all metrics and models performance is
+# `1 3`
+
+60 Page 16 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+**Fig. 5** Ensemble Model Vs Individual Models
+
+presented with the help of line graphs in Table 6. Though these enhancements seem
+noteworthy, the formal check of whether the differences are statistically significant
+is necessary. The ensemble is strong due to the complementary nature of the com-­
+ponents. RR offers a predictable linear base with high regularization; ET offers the
+capability of modeling the nonlinear interaction but retains one with a low variance
+and MLP offers the capacity to model complex and non-linear relationships in the
+data. Their predictive errors are likely to counteract when combined, making more
+stable and reliable estimations possible.
+
+The selected features are also significant: Size and Complexity characterize the
+intrinsic scale of the story, related technologies shows the team familiarity with the
+technologies it needs, PL captures effects that are specific to a programming lan-­
+guage, and platform affects the development environment. All these together make up
+a powerful, interpretable, and informative set of features. Although the improvement
+of the MAE between the best individual model (RR with 0.691) and the ensemble
+model is relatively small, the significant decrease in MSE (0.974 to 0.74) and RMSE
+(0.974 to 0.86) show that the ensemble suppresses larger errors better. This implies
+that the ensemble does not only improve the average accuracy, but also improves
+reliability by lowering the high-impact misestimations. The proposed approach pro-­
+vides a better predictive ability in a variety of Scrum estimation problems through
+its targeted feature selection, designed model combination, and regularization using
+RR (Fig. 6).
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+**Fig. 6** Performance comparison of all models across different metrics
+
+
+Page 17 of 24 60
+# `1 3`
+
+60 Page 18 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+**Algorithm 1** **Pseudocode for the Proposed Ensemble Effort Estimation Model** .
+
+**4.1 Statistical testing**
+
+A formal statistical analysis was carried out to collect empirical evidence needed to
+answer the research questions in the study. This section focus on RQ1, which chal-­
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 19 of 24 60
+
+
+**Table 7** Statistical Significance
+Testing of the Ensemble Model
+against Individual Components
+
+**Table 8** Performance of All
+Models on the New Real World
+
+Validation Dataset
+
+
+Comparison Wilcoxon Statistic (W) P-value
+
+Ensemble vs. RR 137.0 0.049
+
+Ensemble vs. ET 129.0 0.029
+
+Ensemble vs. MLP 118.0 0.014
+
+Model MAE MSE RMSE
+
+RR 0.76 1.05 1.02
+
+ET 0.79 1.82 1.35
+
+MLP 0.81 1.45 1.20
+
+KNN 0.83 1.57 1.25
+
+RF 0.93 1.55 1.24
+
+DT 0.98 2.53 1.59
+
+SVR 1.16 4.04 2.01
+
+Ensemble Model 0.70 0.90 0.95
+
+
+lenges the level of the proposed ensemble model predictive accuracy and superior-­
+ity. To overcome this, the Wilcoxon signed-rank test was employed to compare the
+paired prediction errors of the ensemble model with each of the three constituent
+models; ET, RR, and MLP. The test was conducted on the held-out test set of 28
+instances per pairing. Table 7 presents the results of these statistical comparisons and
+serves as conclusive evidence on the performance of the model. The p-value in all
+three comparisons is lower than the significant level of 0.05.
+
+- The comparison with the RR ( *p* = 0 *.* 049 ), the most successful individual model,
+demonstrates a near, but significant, advantage of the ensemble.
+
+- The dominance is further increased as compared to ETs ( *p* = 0 *.* 029 ) and MultiLayer Perceptron ( *p* = 0 *.* 014 ), which has a lower baseline performance.
+
+This consistent level of statistical significance of all components proves that the
+improved performance of the ensemble model is not by chance. This gives good
+statistical evidence to support the answer to RQ1 and confirm that the ensemble pro-­
+posed is a valid and reliable addition to that of its constituent components. The main
+hypothesis of RQ2 is also supported by the evidence as the capacity of the model to
+deliver this higher performance is directly related to the effective implementation of
+the most critical drivers of effort found in the research.
+
+**4.2 Cross-dataset validation and generalizability analysis**
+
+In order to resolve the pressing issue of model generalization, a cross-dataset valida-­
+tion was carried out. The models that had been trained on small public data set of 140
+user stories were tested on a new, more diversified real-world set of 159 user stories.
+The aim of this rigorous test was to evaluate the capability of the models to perform
+on totally unknown data in the new context. Table 8 summarizes the performance of
+all the individual models and the proposed ensemble model on this new validation
+dataset.
+# `1 3`
+
+60 Page 20 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+The findings of the cross-dataset validation, which are discussed in Table 8, are
+strong arguments of the strength and high generalizability of the proposed ensem-­
+ble model. The ensemble model again scored the least error rates in all metrics
+( MAE = 0 *.* 70, RMSE = 0 *.* 95 ), clearly performing better than each of the individual
+models on this new and unseen data, which confirm that it is effectiveness in not just
+limited to a single dataset. One crucial observation can be made when comparing
+these results to the original results on the 140-story dataset, where the performance
+difference between the ensemble ( MAE = 0 *.* 68 ) and the optimal single model, RR
+( MAE = 0 *.* 691 ) was extremely close. The performance of the single models dete-­
+riorated on this new and more challenging real-world data more; e.g. the MAE of
+the RR model increase to 0.76. Conversely, the ensemble model performance was
+highly consistent and its MAE only slightly improved to 0.70 as illustrated in Fig. 7.
+This fact is highly indicative of the fundamental assumption of ensemble model: the
+individual models could work fine on the data that they were trained on, but they can
+be fragile and ineffective when exposed to data of another distribution. By averaging
+the predictions of a variety of models, the ensemble model manages to overcome
+these individual weaknesses, smooth prediction errors, and achieve a high level of
+accuracy, and is more resilient and generalizable.
+
+The cross-dataset validation is a strong indication of the usefulness of the proposed
+ensemble model in real-world situations. Its capability to sustain high performance
+on an entirely different dataset confirms its potential to be a robust and generalizable
+instrument in estimating effort utilized in real agile projects, directly mitigating the
+major flaw of using models that were tested on one, small dataset.
+
+**Fig. 7** MAE comparison of Model performance on Both datasets
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+**Fig. 8** Ensemble model error analysis across story complexity and size
+
+**4.3 Error analysis**
+
+
+Page 21 of 24 60
+
+
+In order to get deeper insight into the performance and to understand the limitations
+of the model, an error analysis was done in details. The purpose of this analysis was
+to determine whether the errors in the model were systematically related to certain
+features attributes. The MAE was compared at varying levels of the two most pow-­
+erful features: ’Complexity’ and ’Size’. Graphical representation of the results in
+Fig. 8(a) and (b) shows a very clear and stable trend. The mean prediction error is
+insignificant when it comes to low-complexity, low-size user stories (levels 1 and 2),
+which shows that there is an outstanding accuracy for standard, well-defined tasks.
+However, the average error is most evidently growing with the increase of both the
+complexity and size, and the maximum average errors were found between the most
+complex and the largest user stories. This result implies that the proposed ensemble
+model is most effective with most user stories, but its accuracy deteriorates slightly
+when applied to unusually large and complex tasks. This is typical issue in effort
+estimation, probably because such outlier stories are rarer in the training data, which
+gives fewer examples to learn. This analysis confirms not only the robustness of
+the model when dealing with typical and smaller user stories but also gives a clear
+direction on the future work and practical implementation. One of the practical impli-­
+cations of this finding is that this model is suitable in estimating effort of small to
+medium sized user stories. The findings have solidly affirmed the agile best practice
+of dividing large and complex user stories (epics) into smaller and manageable ones.
+In this way, teams will be able to use this model to produce highly accurate estimates
+of the effort of these smaller stories. The practice would not only make the sprint
+planning more accurate but also consistent with the agile ideas of iterative develop-­
+ment and reduction of risks.
+
+**4.4 Answers to research questions**
+
+This part reiterates the research questions that this paper set and gives answers
+according to the empirical findings derived.
+# `1 3`
+
+60 Page 22 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+**RQ1: To what extent can the proposed ensemble ML model accurately predict the**
+**effort of user stories?** **Answer:** The results indicate that the proposed ensemble
+model has the ability to predict user story effort with a high level of accuracy. On the
+main dataset, the model had a MAE of 0.68, a MSE of 0.74, and a RMSE of 0.86.
+More importantly, it is not just numerically better than the individual constituent
+models but statistically significant as well. A Wilcoxon signed-rank test, as described
+in Statistical Testing (Section 4.1) was used to verify that improvement of the ensem-­
+ble against the best of the individual models could be verified ( *p <* 0 *.* 05 ). Moreover,
+the model was validated in terms of its robustness and generalizability with the help
+of a strict cross-dataset validation. The discussions in Section 4.2 indicate that the
+
+ensemble continued to be superior on an entirely novel, unseen dataset, which is
+an important test of the practical viability of the ensemble. Altogether, these results
+are a complete solution to RQ1: the ensemble method is the most appropriate to
+resolve individual model biases and provides credible estimation instrument to use
+with Scrum teams.
+
+**RQ2: Which effort drivers are the most influential in the model’s prediction pro-­**
+**cess?** **Answer:** The feature importance analysis, which is explained in Section 3.3
+(Fig. 3), answers this question directly. The results showed that the most important
+predictors of effort are Complexity and Size. These major drivers followed by related
+technologies, PL and platform based on their relative influence on the predictions
+of the model. The importance of the Complexity and Size is further supported by
+the Error Analysis (Section 4.3). This comparison showed that the increase in these
+two features is directly correlated with the increase in prediction error, and hence
+these characteristics are predominant in predicting difficulty. This observation aligns
+with the agile development principal, wherein the scope and complexity of a task are
+thought to be the primary drivers of effort. The capability of defining these significant
+drivers introduces transparency and assists teams to concentrate on the most impor-­
+tant issues when planning sprints and discussing estimation.
+
+**5 Conclusion and future work**
+
+This study has successfully created, validated, and contextualize an ensemble learn-­
+ing model to deal with the problem of inaccurate estimation of effort in Scrum proj-­
+ects. The experiment showed that an integration of regularized linear model (RR),
+randomized tree-based approach (ETs) and a neural network MLP can produce a
+predictive model that is not only accurate but also statistically sound and practically
+generalizable. The effectiveness of this method was confirmed by a multi- faceted
+evidence-based process. The ensemble model had a good predictive performance
+on the main public dataset of 140 user stories with a MAE of 0.68, MSE of 0.74
+and RMSE of 0.86. This numerical superiority was subsequently statistically dem-­
+onstrated to be statistically significant, which is an important step that had been
+omitted in previous research. A Wilcoxon signed-rank test, indicated a substantial
+advantage over not only the weaker constituent models ET ( *p* = 0 *.* 029 ) and MLP
+( *p* = 0 *.* 014 ) but also the most successful individual model RR ( *p* = 0 *.* 049 ). More-­
+# `1 3`
+
+Automated Software Engineering      (2026) 33:60
+
+
+Page 23 of 24 60
+
+
+over, the critical research gap of generalizability was addressed directly in the study
+by conducting a rigorous cross-dataset validation. The model was tested on a second,
+real-world data of 159 user stories and it was found to retain its high quality per-­
+formance ( MAE = 0 *.* 70, MSE = 0 *.* 90, RMSE = 0 *.* 95 ), significantly beating all the
+other single models whose performance was deteriorated in new context. Lastly, the
+study offered practical recommendations to practitioners by connecting an in-depth
+analysis of errors to the agile best practice of breaking large user stories, thus taking
+the empirical results of the model and applying them practically to real-life sprint
+planning. Therefore, the study provides a full-end-to-end contribution in the sense
+that it proposes a new algorithm and then thoroughly statistically validates it, tests its
+generalizability, and presents an actual application of the new algorithm as a reliable,
+validated, and powerful tool that Scrum teams can use to enhance their effectiveness
+in managing projects. Based on this solid foundation, the future work will be aimed
+at incorporating more developed Al methods. The next logical step is to consider
+the application of Natural Language Processing (NLP) and Large Language Models
+(LLMs) to derive deep semantic elements directly out of the textual descriptions of
+the user stories.
+
+**Acknowledgements** This work was supported by Princess Nourah bint Abdulrahman University
+Researchers Supporting Project number (PNURSP2026R236), Princess Nourah bint Abdulrahman Uni-­
+versity, Riyadh, Saudi Arabia.
+
+**Author Contributions** M.R. and I.F. wrote the main manuscript text. D.F. and M.H. developed and imple-­
+mented the machine learning models. M.R. and M.H. prepared and analyzed the dataset and contributed
+to figures and tables. F.H. contributed significantly to the corrections and revisions. All authors reviewed
+and approved the final manuscript.
+
+**Funding** This declaration is not applicable.
+
+**Data Availability** The dataset analyzed during the current study is publicly available in the Mendeley Data
+[repository [https://dat ​a.mendeley. ​com/dataset ​s/k8y3y5 ​ggrj/1].](https://data.mendeley.com/datasets/k8y3y5ggrj/1)
+
+**Materials Availability** Not applicable.
+
+**Declarations**
+
+**Conflict of interest/Competing interests** The authors have no competing interests to declare that are rel-­
+evant to the content of this article.
+
+**Ethics approval and consent to participate** Not applicable. This study does not involve human participants
+or animals.
+
+**Competing interests** The authors declare no competing interests.
+
+**References**
+
+Alsaadi, B., Saeedi, K.: Ensemble effort estimation for novice agile teams. Inf. Softw. Technol. **170**,
+
+[107447 (2024). https://doi.org/10.1016/j.infsof.2024.107447](https://doi.org/10.1016/j.infsof.2024.107447)
+# `1 3`
+
+60 Page 24 of 24
+
+
+Automated Software Engineering      (2026) 33:60
+
+
+[Alsaadi, B., Saeedi, K.: User_stories_dataset (Effort estimation). Mendeley Data (2024). ​h ​t ​t ​p ​s ​: ​/ ​/ ​d ​o ​i ​. ​o ​r ​g ​/ ​1 ​](https://doi.org/10.17632/v42jh4nfzh.1)
+
+[0 ​. ​1 ​7 ​6 ​3 ​2 ​/ ​v ​4 ​2 ​j ​h ​4 ​n ​f ​z ​h ​. ​1 ​ ​​​ ​​​](https://doi.org/10.17632/v42jh4nfzh.1)
+Arora, M., Verma, S.: An efficient anfis-eebat approach to estimate effort in scrum projects. Sci. Rep.
+
+
+**12** [(1), 7974 (2022). https://doi.org/10.1038/s41598-022-11565-2](https://doi.org/10.1038/s41598-022-11565-2)
+Butt, S.A., Khan, A., Khan, U., Butt, F.Z., Jamil, A.: A software-based cost estimation technique in scrum
+
+using a developer’s expertise. Adv. Eng. Softw. **171** [, 103159 (2022). ​h ​t ​t ​p ​s ​: ​​​/ ​​/ ​d ​o ​​i ​. ​o ​r ​​g ​/ ​​1 ​0 ​. ​​1 ​0 ​​1 ​​6 ​​/ ​j ​. ​a ​d ​v ​​e ​](https://doi.org/10.1016/j.advengsoft.2022.103159)
+[n ​g ​s ​​o ​​f ​t ​. ​​​2 ​0 ​2 ​2 ​. ​1 ​0 ​3 ​1 ​5 ​9](https://doi.org/10.1016/j.advengsoft.2022.103159)
+Chauhan, C., Shrivastava, R., Saxena, N., Gupta, R.: Story point estimation methods and challenges. Int.
+
+J. Agile Syst. Manag. **14** (3), 202–215 (2021)
+Dave, C.V., Patel, A., Keshri, U.: An efficient framework for cost and effort in scrum project. Int. J. Res.
+
+Appl. Sci. Eng. Technol. (IJRASET). **9** [(XI), 1481–1490 (2021). ​h ​t ​t ​p ​s ​: ​/ ​/ ​d ​o ​i ​. ​o ​r ​g ​/ ​1 ​0 ​. ​2 ​2 ​2 ​1 ​4 ​/ ​i ​j ​r ​a ​s ​e ​t ​. ​2 ​0 ​](https://doi.org/10.22214/ijraset.2021.39281)
+[2 ​1 ​. ​3 ​9 ​2 ​8 ​1 ​ ​​​ ​​​](https://doi.org/10.22214/ijraset.2021.39281)
+El Beggar, O.: Ifejm: New intuitionistic fuzzy expert judgment method for effort estimation in agile soft-­
+
+ware development. Arab. J. Sci. Eng. **49** [(4), 2887–2908 (2024). ​h ​t ​t ​p ​s ​: ​/ ​/ ​d ​o ​i ​. ​o ​r ​g ​/ ​1 ​0 ​. ​1 ​0 ​0 ​7 ​/ ​s ​1 ​3 ​3 ​6 ​9 ​- ​0 ​2 ​](https://doi.org/10.1007/s13369-023-07711-1)
+[3 ​- ​0 ​7 ​7 ​1 ​1 ​- ​1 ​ ​​​ ​​​](https://doi.org/10.1007/s13369-023-07711-1)
+Hamid, M., Zeshan, F., Ahmad, A., Ahmad, F., Hamza, M.A., Khan, Z.A., Munawar, S., Aljuaid, H.: An
+
+intelligent recommender and decision support system (irdss) for effective management of software
+projects. IEEE Access. **8** [, 1–13 (2020). https://doi.org/10.1109/ACCESS.2020.3010968](https://doi.org/10.1109/ACCESS.2020.3010968)
+Hodson, T.O.: Root-mean-square error (rmse) or mean absolute error (mae): When to use them or not.
+
+Geosci. Model Dev. **15** (14), 5481–5487 (2022)
+Hohl, P., Klünder, J., Bennekum, A., Lockard, R., Gifford, J., Münch, J., Stupperich, M., Schneider, K.:
+
+Back to the future: Origins and directions of the ’agile manifesto’–views of the originators. J. Softw.
+Eng. Res. Dev. **6** [(1), 1–27 (2018). https://doi.org/10.1186/s40411-018-0059-z](https://doi.org/10.1186/s40411-018-0059-z)
+Morais, R.A.: Deep learning based models for software effort estimation using story points in agile envi-­
+
+ronments. Master’s thesis, Concordia University of Edmonton, Canada (2022)
+Qi, J., Du, J., Siniscalchi, S.M., Ma, X., Lee, C.-H.: On mean absolute error for deep neural network based
+
+[vector-to-vector regression. arXiv preprint arXiv:2009.08357. (2020)](http://arxiv.org/abs/2009.08357)
+Ross, B.C.: Mutual information between discrete and continuous data sets. PLoS ONE **9** (2), 87357 (2014)
+[Samuels, J.I.: One-hot encoding and two-hot encoding: An introduction. arXiv preprint arXiv:2401.07632.](http://arxiv.org/abs/2401.07632)
+
+(2024)
+Sánchez, E.R., Santacruz, E.F.V., Maceda, H.C.: Effort and cost estimation using decision tree techniques
+
+and story points in agile software development. Mathematics. **11** [(6), 1477 (2023). ​h ​t ​t ​p ​s ​: ​/ ​/ ​d ​o ​i ​. ​o ​r ​g ​/ ​1 ​0 ​](https://doi.org/10.3390/math11061477)
+[. ​3 ​3 ​9 ​0 ​/ ​m ​a ​t ​h ​1 ​1 ​0 ​6 ​1 ​4 ​7 ​7 ​ ​​​ ​​​](https://doi.org/10.3390/math11061477)
+Shidiq, M.B., et al.: Time effort prediction of agile software development using machine learning tech-­
+
+niques. Inspiration: Jurnal Teknologi Informasi dan Komunikasi. **13** (2), 39–48 (2023)
+Sudarmaningtyas, P., Mohamed, R.: A review article on software effort estimation in agile methodology.
+
+Pertanika J. Sci. Technol. **29** (2), 815–831 (2021)
+Tawosi, V., Moussa, R., Sarro, F.: On the relationship between story point and development effort in agile
+
+open-source software. In: Proceedings of the 16th ACM/IEEE International Symposium on Empiri-­
+[cal Software Engineering and Measurement (ESEM ’22), pp. 1–12 (2022). ​h ​t ​t ​p ​s ​: ​/ ​/ ​d ​o ​i ​. ​o ​r ​g ​/ ​1 ​0 ​. ​1 ​1 ​4 ​5 ​/ ​](https://doi.org/10.1145/3544902.3544921)
+[3 ​5 ​4 ​4 ​9 ​0 ​2 ​. ​3 ​5 ​4 ​4 ​9 ​2 ​1 ​ ​​​ ​​​](https://doi.org/10.1145/3544902.3544921)
+Turić, M., Celar, S., Dragičević, S., Vicković, L.: Advanced bayesian network for task effort estimation in
+
+agile software development. Appl. Sci. **13** [(16), 9465 (2023). https://doi.org/10.3390/app13169465](https://doi.org/10.3390/app13169465)
+Varshini, A.G.P., Kumari, K.A.: Predictive analytics approaches for software effort estimation: A review.
+
+Indian J. Sci. Technol. **13** (21), 2094–2103 (2020)
+
+**Publisher's Note** Springer Nature remains neutral with regard to jurisdictional claims in published maps
+and institutional affiliations.
+
+Springer Nature or its licensor (e.g. a society or other partner) holds exclusive rights to this article under
+a publishing agreement with the author(s) or other rightsholder(s); author self-archiving of the accepted
+manuscript version of this article is solely governed by the terms of such publishing agreement and appli-­
+cable law.
+# `1 3`
+

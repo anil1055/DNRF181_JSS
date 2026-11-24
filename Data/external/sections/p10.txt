@@ -1,0 +1,1029 @@
+Intelligent Data Analysis 28 (2024) 299–329 299
+DOI 10.3233/IDA-237366
+
+IOS Press
+# Machine learning based software effort estimation using development-centric features for crowdsourcing platform
+
+Anum Yasmin [a] *[,][∗]*, Wasi Haider [a], Ali Daud [b] *[,]* [c] *[,][∗]* and Ameen Banjar [c]
+
+a *Department of Computer and Software Engcineering, College of Electrical and Mechanical*
+*Engineering, National University of Sciences and Technology (NUST), Islamabad, Pakistan*
+b *Abu Dhabi School of Management, Abu Dhabi, United Arab Emirates*
+c *Department of Information systems and Technology, College of Computer Science and Engineering,*
+*University of Jeddah, Jeddah, Saudi Arabia*
+
+**Abstract.** Crowd-Sourced software development (CSSD) is getting a good deal of attention from the software and research
+community in recent times. One of the key challenges faced by CSSD platforms is the task selection mechanism which in practice,
+contains no intelligent scheme. Rather, rule-of-thumb or intuition strategies are employed, leading to biasness and subjectivity.
+Effort considerations on crowdsourced tasks can offer good foundation for task selection criteria but are not much investigated.
+Software development effort estimation (SDEE) is quite prevalent domain in software engineering but only investigated for
+in-house development. For open-sourced or crowdsourced platforms, it is rarely explored. Moreover, Machine learning (ML)
+techniques are overpowering SDEE with a claim to provide more accurate estimation results. This work aims to conjoin
+ML-based SDEE to analyze development effort measures on CSSD platform. The purpose is to discover development-oriented
+features for crowdsourced tasks and analyze performance of ML techniques to find best estimation model on CSSD dataset.
+TopCoder is selected as target CSSD platform for the study. TopCoder’s development tasks data with development-centric features
+are extracted, leading to statistical, regression and correlation analysis to justify features’ significance. For effort estimation,
+10 ML families with 2 respective techniques are applied to get broader aspect of estimation. Five performance metrices (MSE,
+RMSE, MMRE, MdMRE, Pred (25) and Welch’s statistical test are incorporated to judge the worth of effort estimation model’s
+performance. Data analysis results show that selected features of TopCoder pertain reasonable model significance, regression,
+and correlation measures. Findings of ML effort estimation depicted that best results for TopCoder dataset can be acquired by
+linear, non-linear regression and SVM family models. To conclude, the study identified the most relevant development features
+for CSSD platform, confirmed by in-depth data analysis. This reflects careful selection of effort estimation features to offer good
+basis of accurate ML estimate.
+
+Keywords: Software effort estimation, crowdsourcing, crowdsourced software development (CSSD), topcoder, machine learning
+(ML)
+
+**1. Introduction**
+
+S Software development effort estimation (SDEE) is considered one of the most crucial software project
+
+*∗* Corresponding authors: Anum Yasmin, Department of Computer and Software Engcineering, College of Electrical and
+Mechanical Engineering, National University of Sciences and Technology (NUST), Islamabad, Pakistan. E-mail: ayasmin.
+cse17ceme@student.nust.edu.pk. Ali Daud, Abu Dhabi School of Management, Abu Dhabi, United Arab Emirates. E-mail:
+alimsdb@gmail.com.
+
+1088-467X/$35.00 c *⃝* 2024 – IOS Press. All rights reserved.
+
+
+300 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Fig. 1. An overview of proposed work.
+
+management activities by researchers and practitioners [ 12, 17, 46 ]. SDEE is inevitable since underestimation can lead to insufficient resources allocation and poor-quality projects, consequently, results in
+incomplete project requirements [ 28, 36 ]. On the other hand, overestimation induces unnecessarily high
+budget and resources in project. As a result, a rise in project costs and bidding disadvantages may be encountered. Thus, accurate effort assessment at early stages of software lifecycle is essential. Development
+effort can be calculated based on task completion [ 78 ], measured in person-month (PM) or person-hour
+(PH) [ 13 ]. Various SDEE techniques have been proposed over the past four decades. Jorgensen and
+Shepperd [ 38 ] conducted a systematic literature review (SLR) based on 304 studies. Reported from SLR,
+estimation is done majorly using expert judgment [ 37 ], statistical analysis of historical project data [ 8 ] or
+machine learning (ML) techniques [ 4, 19, 23, 52 ]. There has been an increasing trend of incorporating ML
+methods for SDEE as they work better in modeling complex relationship between effort and software
+features [ 56 ]. Especially when dependent and independent features follow non-linear relationship and
+don’t seem to have any predetermined form. ML techniques are also known for overcoming biasness [ 25 ].
+Decision tree (DT), neural network, support vector regression (SVR) and ensemble methods are majorly
+explored in SDEE domain by recent researchers.
+Crowdsourcing is an evolutionary problem-solving platform, which works in distributed environment
+and combines human-intensive work with machine computation [ 6 ]. Software crowdsourcing (SWCS)
+or Crowdsourcing software development (CSSD) is an evolving domain of crowdsourcing, integrates
+traditional software engineering task in competition-based crowdsourced environment. Usually, CSSD
+enables software development through an open call format. Recent implementations of CSSD platforms
+are first devised by Jeff Howe in 2006 [ 32 ] and contain similarity with earlier idealistic development
+models, established by Free Software Movement.
+For any CSSD project, “task” is characterized as the starting point, which is basically one work
+unit made available on CSSD platform. CSSD task represents need or problem in hand (i.e., software
+development, design, or quality assurance). General architecture of CSSD involves three types of actors
+or stakeholders: Client, also known as task requesters (TR), Developer, also known as crowd worker
+(CW), and CSSD platform collaborating TR and CW. In competitive CSSD platform, a TR requests a
+task and offers award for task completion, while CW (software developer/designer/tester), participates in
+given software task. Crowdsourcing platform provides an online marketplace within which TR and CW
+can collaborate (also reflected in Fig. 1).
+Multiple CSSD platforms including Amazon Mechanical Turk, TopCoder, TaskCity, eLance, vWorker,
+Guru, oDesk and Taskcn are providing crowdsourced services to larger software community. TopCoder
+among all CSSD platforms, contains the largest software developer community, and known to produce
+projects for well-recognized organizations such as Google, Facebook, Microsoft and AOL [ 68 ]. TopCoder
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 301
+
+platform is geared towards highly skilled CWs, who undertake time-consuming, complex, and quality
+software development tasks. The size of requested projects on TopCoder bear complex inferences and
+larger magnitudes compared to microtask platforms (i.e., Amazon Mechanical Turk). Thus, the necessity
+of coming up with a justified price with respect to amount of work required for the task is an imperative
+decision problem for the stakeholders involved [72].
+
+[ 43 ] identified key challenges faced in CSSD platform, such as ineffective decision making on task
+selection, task completion uncertainty, costing issues and task quality assurance [ 35 ]. From CW’s
+perspective, adapting a task while not considering effort, may lead to low capital consumption efficiency
+or task starvation [ 26 ]. Since award money is established at the time of task posting by TR, which should
+be sufficiently attractive to the crowd. From TR’s perspective, inappropriate price can often lead to loss of
+potential crowd as well, hence price must be in accordance with effort demanded by the task in-hand.
+Valid pricing is well-known motivational factor behind CW’s task selection [ 43, 59 ], one of the top five
+key challenges for crowdsourced software development [ 42 ]. Further, task completion uncertainty prevails
+if unconscious attempt in task selection is made, i.e., not considering effort to be consumed on task. Effort
+based pricing strategy is crucial since mere intuition of TR about the price does not provide justified
+costing mechanism for CSSD task. Moreover, estimation needs to be supported by a good set of features
+to formulate an accurate effort estimation model. Since crowdsourced task requires in-time decision by
+CW whether to opt for the task or not, so features included in estimation must be those which are already
+available with the task, rather to rely on previous data. Considering the need of effort estimation in the
+field of CSSD with highly relevant, development-centric features, this study aims to incorporate ML
+based effort estimation for CSSD tasks. TopCoder is selected as CSSD platform for the study, due to its
+increasing utilization by recent researchers [ 1, 48, 80 ]. Basic working of the study is shown in Fig. 1 and
+main contributions of the study are as follows:
+
+**–**
+Defining a dataset for software development tasks posted on TopCoder platform, with features readily
+available and not having any dependability on previous phases data (i.e., software requirement,
+specifications, or design).
+
+**–**
+A detailed statistical, regression and correlation analysis is performed on selected TopCoder features
+along with model significance and normality considerations to justify relevance of dataset features.
+
+**–**
+Performing ML-based effort estimation with an empirical analysis using 20 ML techniques to
+identify the best performing estimation algorithm for TopCoder dataset.
+
+The rest of the paper is organized as follows: Section 2 presents related work of past studies covering
+SDEE and CSSD literature and Section 3 listed the problem formulation. Section 4 contains methodology
+used for this study and complete framework description in underlying sections. Section 4.3 listed effort
+estimation algorithms used for the study, Section 5 includes experimental setup having performance
+metrices. Results are discussion are elaborated in Sections 6 and 7 while Section 8 define threats to the
+study’s validity. Section 9 describes future for the study.
+
+**3. Problem formulation**
+
+This work attempts to address following issues, from the limitations identified in literature (Sections 2.1
+and 2.2):
+
+**–**
+*No joint framework* is present in CSSD platform for facilitating both task requester (TR) and crowd
+worker (CW)/developer to conduct a decisional process about task commencement. For TR, it’s
+necessary to know about effort involved in task before posting it, so winner’s cost can be adjusted
+accordingly. For CW, again getting intuition on whether to accept a task based on effort required is
+necessary. In this study, a framework for predicting effort is defined, facilitating both (TR and CW)
+to estimate effort based on task features.
+
+**–** *Cost analysis on TopCoder tasks is mainly focused on the past studies* [ 1, 49 ]. However, core focus
+on effort for CSSD task is still unaccounted. Consequently, no proper criteria of cost justification
+are present. Effort consideration holds impact as TR desires to get idea whether cost of winner(s)
+is justified according to effort required by task. For CW’s perspective (developer), task completion
+can also be ensured if CW can assess the effort of posted task beforehand. In this work, core effort
+estimation for TopCoder development tasks are taken into account, facilitating TR and CW to
+estimate effort for task in-hand, and make criteria of cost justification.
+
+**–**
+*Extraction of appropriate features and data collection play a vital part in crowdsourced environment*
+*analysis* [ 22 ]. TopCoder dataset features used by earlier research are limited in number as well
+as dependent on previous software development phase. Dependency on previous-phase features
+becomes problematic for estimation since it is difficult for developers to get access of any previous
+tasks data. To mitigate this issue, all features available on the time of task-publishing are incorporated
+in the study to estimate effort. Extracted features encompass multiple categories like characteristics
+of application being developed, developer’s working abilities, task outcomes and size.
+
+**–**
+*Descriptive statistics of all features and dataset normality are another important parameters,*
+*especially when ML based estimation systems are developed* . The reason is estimation result may
+vary according to normal and non-normal distribution of dataset. Data normality measures are
+missing in most of the studies incorporated ML algorithms in their working. This will leave the ML
+model difficult to comprehend in terms of statistical distribution of values. Also, what distribution
+dataset follows and what impact it brings to model’s performance is not reported in any CSSD study.
+In this work, a detailed descriptive statistical analysis of input features as well as output variable is
+examined alongside normality distribution assumptions. Investigation is made to analyze if model is
+still significant enough after transforming the dataset into normal distribution.
+
+
+306 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Fig. 2. Basic structure of proposed framework.
+
+**–**
+*Analyzing the impact of individual independent (input) variable on dependent (output) variable*
+*and examining the worth of keeping certain feature in dataset is necessary for building estimation*
+*model* . For that reason, model significance and detailed multiple regression analysis is performed
+for justifying the importance of each extracted feature and scrutinizing which feature needs to be
+controlled to minimize effort. Along with this, multicollinearity among input features, as well as
+correlation between input and output is determined to justify that model is highly suitable to perform
+ML analysis for forthcoming effort predictions.
+
+**–**
+*For verifying estimation stability and to avoid biases associated with individual approach, ML*
+*techniques with all major families are explored* . ML families included for the study are linear/nonlinear regression family, decision tree family, SVM family, neural network family, heterogenous
+and homogenous ensemble family. Two techniques from each family are taken to establish effort
+prediction model.
+
+**4. Methodology**
+
+This section presents the methodology used to build TopCoder Effort Estimation Model for predicting
+effort consumed on a CSSD task. Figure 2 shows the proposed framework, which consists of three main
+stages:
+Data Acquisition Stage (Section 4.1); describes the details of extracted data. Features which are part of
+dataset and their relevance with effort is elaborated.
+
+Data Preparation Stage (Section 4.2); contains detailed analysis performed on dataset to shape it
+in a form suitable for feeding to ML algorithm. Data is investigated in terms of statistical analysis
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 307
+
+(Section 4.2.1), normality checking (Section 4.2.2) regression analysis (Section 4.2.4) and correlation
+analysis (Section 4.2.5).
+Effort Prediction Stage (Section 4.3); presents effort estimation modeling with ML techniques, to
+identify best performing ML algorithm for TopCoder dataset.
+
+*4.1. Data acquisition stage*
+
+Data of 1500 TopCoder development tasks are extracted using Octaparse crawler. [1] Details of winner of
+each task (also referred as “developer” in this work) are extracted from his/her profile. Overall, profiles of
+500 developers (winners of each task) are gathered. Details of features related to task and developer are
+explained further in this section. Since we are considering TopCoder platform, term CW or developer
+will be used interchangeably.
+Data The following criteria is applied for task selection: dataset contains TopCoder development tasks
+completed between past year, i.e., 2020 to 2021 are taken. All tasks are accomplished, with 60 above
+submission score. For the sake of simplicity, only those tasks are selected with one winner (i.e., award
+money is given to the first winning submission). Tasks with source code information (repository or
+Gitpatch) are selected. After applying selection criteria, 1200 tasks remain to be part of dataset. [2] Further
+details on TopCoder dataset features are as follows:
+Dataset contains a total of 15 input features (also referred as “Effort drivers”) and 1 output feature, i.e.,
+Effort. Input features are grouped into 5 categories, depending upon the data they represent. Each feature
+contains numerical or ordinal values. Ordinal levels assigned to the features are “very high”, “high”,
+“nominal”, “low” and “very low” and each level is given a numerical value from 1 (very low) to 5 (very
+high) to establish ML estimation models later in the study. Table 2 listed all input features along with
+their names, category, abbreviation, and data types described further as follows:
+
+1. *Development characteristics (DVCH)* category shows what type of development a task requires.
+
+**–** The first feature of this category, *APPT* shows type of application under-development. Application
+types found for most tasks in extracted dataset are desktop, mobile, web applications, API,
+frontend (UI/Ux/Cx) and frontend-backend integration patch. Higher ordinal levels are assigned
+to more complex application, i.e., desktop and mobile application (dashboards, management
+information systems) since these applications involve large backend integration requirement [ 58 ].
+Nominal to low ordinal levels are assigned to small scale websites, APIs and frontend applications
+(UI/UX/Cx) since they require less lines of code and mostly involve the designing part of software
+application [16,54].
+**–** Next feature, *DEVT*, defines whether the task implies developing entirely new application or
+adjustment/updation in a previous task. Higher ordinal values are assigned for “from-the-scratch”
+application development, while updation tasks are given lower ordinal values.
+
+2. *Personnel Metrics (PERS)* category illustrates aspects of developer’s skill, reflecting his/her development ability.
+
+**–** First feature of this category, win percentage, *WINP* determines developer’s winning tendency,
+i.e., trend of developer winning a submitted task. Higher WINP reflects good analytical capability
+of developer, which in turn affects the required effort i.e., less effort required by developer with
+higher WINP.
+
+1 https://www.octoparse.com/.
+2 https://drive.google.com/drive/folders/1uwGEME4spi2WlIGRxERC5dkY1pk0DntW?usp=sharing.
+
+
+308 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 309
+
+**–** *SBRT* shows the tendency of developer to submit a task for which he/she has registered. Numerical
+values of both WINP and SBRT are directly extracted from the developer’s profile. Higher SBRT
+shows developer’s continuity in completing tasks and enhanced development capabilities.
+**–** *EXPR* defines developer’s experience in performing tasks of TopCoder development category.
+Numerical values are assigned as duration (in years) between first submitted task and latest
+submitted task by developer in development category.
+**–** *RATN* shows quality of work produced by developer in previous tasks. Developer’s rating (RATN)
+is directly extracted from profile.
+**–** *TSCR* is technology/language/tool score of developer. Developers’ skills (listed in developer’s
+profile, verified by TopCoder platform) are extracted, matched with skills required for task and
+score is assigned. For instance, if a task needs implementation of 3 languages/tools/technologies
+and developer previously has worked with 2 of them in past tasks, then TSCR will be 2/3 (0.67).
+**–** *NSUB* is determined as total number of submissions made by developer which reflects developer’s
+analysis ability of current task and thoroughness of implemented code.
+
+3. *Task complexity (TCPX)* shows complexity level infused by programming language, tools, and
+technology on the task.
+
+**–** *NoLN*, is the number of languages required to develop a particular task.
+**–** *PRLN* is assessed by type/complexity of programming languages required for development.
+Complexity is based on language generation, built-in libraries and automated function calls
+offered by language. Newer generation languages generally enable the provision of off-the-shelf
+libraries which in turn improves the development efficiency and subsequently decrease effort.
+**–** *TOOL* represents tool/technology needed for task development. Like PRLN, modern tools provide built-in functionalities with service invocation via interface, and are less code-oriented,
+hence reduce development effort. Values of both features are assigned based on complexity
+and ease of development they offer, i.e., recent generation programming languages (PRLN) and
+tool/technology (TOOL) are given higher ordinal level.
+**–** *CNST* referred to several constraints imposed on development or deployment process, such as
+design, platform and environment constraints. Extensive measures are needed if code is built with
+constrained environment, hence results in increased effort.
+
+4. *Artifact complexity (ACPX)* defines; what kind of provided and required artifacts involved in task
+and what is their complexity level.
+
+**–** *ASST* feature of this category, reflects facilitation level provided by documents/artifacts posted
+with the task. From TopCoder data, commonly found assets are: design files, prototype links,
+branch codes, micro frames, repos (containing code for the updation or bug-fixing tasks), which
+client (TR) provides with the task. Higher ordinal levels are assigned if artifact has increased
+helping level.
+**–** *DLVB* evaluates the overhead created due to the deliverables required to submit at the end of
+task. In addition to source code, more deliverables need extra effort for a task. From extracted
+data, deliverables found are: git patches, bug report, verifications videos/documents and database
+schema. Higher values are assigned if a higher number of deliverables must be produced by the
+developer.
+
+5. *Size* category determines task size. Software lines of code ( *LOC* ) are taken as size measures of effort
+calculation, for which numerical values of task size are obtained. Higher size reflects greater task
+effort.
+
+
+310 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Table 3
+Descriptive statistics of TopCoder output variable (effort)
+
+Effort distribution statistics Min Max Mean Median Standard deviation Skewness Kurtosis
+
+8.2 5333.7 801.5 559.5 728.29 2.57 9.59
+
+6. *Effort* is a dependent feature of the dataset and measured based on size and completion time of
+development task. Since challenge/task posted on crowdsourced platform opens for 24-hours till
+the deadline, so keeping in mind time differences of country a developer belongs, unit selected for
+Effort is person-hour (PH) in this study.
+
+*4.2. Data preparation stage*
+
+After data is extracted, statistical and multiple regression analysis is performed next, to shape the data
+suitable for effort estimation model. Details are presented further in this section.
+
+*4.2.1. Statistical analysis of TopCoder dataset*
+This stage starts with descriptive and statistical analysis of input effort drivers. Table 3 presents the
+statistical measures for all independent attributes (effort drivers) in dataset. For ordinal features, statistical
+values are considered to get the idea which data values against these ordinal features are most prevalent
+in dataset. For instance, we can conclude from Table 3 average tasks in dataset belong to “nominal”
+level of application type (APPT), i.e., most tasks require to develop WebApp (Backend) or Application
+programming interface (API). For DEVT feature, most tasks belong to “nominal” level as represented by
+their means since most published tasks required updation of any a previous project. Coming to Personnel
+Metrics (PERS) category, average developers in dataset have 39% winning percentage (WINP), while
+highest WINP is 100 which shows, some developers have won all tasks they have registered for. Same
+for SBRT, maximum 100% submission rate is found which again reflects, at maximum, developers
+submitted all tasks they have registered for, while 50% submission rate is found on average. For RATN
+feature, maximum rating achieved by developer is 1972, while on average developers belong the rating
+of 1467. Developers are present with an average EXPR of almost 2 years and the highest experienced
+developers contain 9 years of experience. Maximum technology expertise (TSCR) of developer is 1,
+depicting developer have worked with all skill in past as required by task. For TCPX measures, average
+tasks need development of using only 1 language, but at max, some tasks may require 4 languages to work
+on. Programming languages used (PRLN) in task are mostly on “nominal” complexity level, indicates
+that most tasks require 3G languages. [3] Sophistication level of tools (TOOL) have “high” ordinal value
+on average (i.e., 4), shows most of the tasks need relatively modern tools with built-in functionalities.
+Platform and environmental constraints (CNST) imposed by most of the tasks have ordinal value “2”
+(with ordinal level “high”), considering that developed application must run on windows and iOS. For
+ACPX category, artifacts (ASST) with “nominal” helping level (i.e., API/designing details) are given at
+the start of development. On the other hand, on average required artifact (DLVB) by tasks are again of
+“nominal” level (i.e., verification document with source code), while at minimum, tasks just required
+source code.
+
+After statistically analyzing input effort drivers, statistical details of output variable i.e., Effort are
+reported in Table 3. Effort is considered in person-hours (PH) measure. The level of effort recorded was
+
+3 https://www.computerhope.com/jargon/num/1gl.htm.
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 311
+
+Table 4
+Effort distribution in TopCoder dataset
+
+Effort ran g es Q uantile No. of tasks Mean Median Standard deviation ( SD )
+
+Q0 *∼* Q0.25 361.78 156 204.86 192.4 91.09
+Q0.25 *∼* Q0.75 1054.73 748 633.06 559.5 195.62
+Q 0.75 *∼* Q 1.00 4412.40 296 1728.02 1378.2 867.29
+
+Fig. 3. Effort distribution for TopCoder dataset.
+
+between 8.2 and 5333.7 PH (with an average of 801.5 PH). Skewness and Kurtosis measures (Table 3)
+verified that collected data is positively (right) skewed (i.e., Skewness = 2.57 *>* 1) and effort distribution
+having higher and sharper central peak (i.e., Kurtosis = 9.59 *>* 3). Quantile-wise analysis of effort values
+are also performed by dividing the dataset into 3 parts according to the Effort quantiles (i.e., 0–25%,
+25–75% and 75%). Results of Table 4 demonstrated that 2 [nd] quantile of effort values contains more data
+samples with average of 633.06 PH [30].
+
+*4.2.2. Normality check*
+Normality measures in effort values are verified using Shapiro-Wilk test [ 50 ] at significance level
+( *α* ) of 0.05, and graphically illustrated via histogram of Fig. 3. Histogram shows, majority of records
+having effort located towards lower values and some very high external values, verifying non-normal
+behavior of dataset. Results from Shapiro-Wilk test generated *ρ* -value much less than *α*, rejecting null
+hypothesis that data came from normal distribution. To tackle this, box-cox transformation which helps in
+correcting variable asymmetry, variance, and non-linearity [ 31 ]. Box-cox transformed distribution to a
+reasonable extent compared to Kolmogorov-Smirnov test which can produce false positives reinforced by
+extremely low *p* -values [ 27 ]. Box-cox is applied with Guerrero’s method (Eq. (1)) [ 29 ], where lambda
+parameter is used for minimizing coefficient of variation for subseries of Effort. Histogram and subsequent
+Shapiro-Wilk test results (after box-cox application) are shown in Fig. 4. Plot shows largest concentration
+of data is around mean, and samples frequency is closer to the limits. Also, Shapiro-Wilk test ( *ρ* -value
+
+*> α* = 0.05), confirmed that data distribution is not significantly different from normal distribution.
+
+*y* = *x* *λ* *λ−* 1 if *λ ̸* = 0 (1)
+� log( *x* ) if *λ* = 0
+
+
+312 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Fig. 4. Effort distribution after transformation.
+
+*4.2.3. Model significance with* *F* *test and* *R* [2] *test*
+Statistical inference of collected TopCoder dataset started with the *F* test [ 71 ], an overall test to see
+if the independent variables (Effort drivers) explain a significant amount of the variation in dependent
+variable (Effort). Reason for conducting *F* test is to determine whether the model is intercepting only
+model or not. If overall *F* test is not statistically significant, there is no point on going further. For a model
+with no independent variables (intercept-only model), all the model’s predictions equal the mean of the
+dependent variable. Consequently, if the overall *F* test is statistically significant, prediction of model
+trained on given dataset, is an improvement over mean of dependent variable. Percentage of the variation
+in dependent variable is represented by *R* [2] (coefficient of determination). The hypotheses formulated for
+TopCoder *F* test is shown in Eq. (2):
+
+*H* 0 : *β* 1 = *β* 2 = *β* 3 *. . . β* *n* = 0
+(2)
+� *H* 1 : *β* 1 *|β* 2 *| β* 3 *. . . |β* *n* *̸* = 0
+
+Null hypothesis (H0): no predictive relationship between the effort drivers and “Effort” in the population
+i.e., the model with no independent variables fits the data as well as the model.
+Alternative Hypothesis (H1): at least one effort driver fits the data better than the intercept-only model.
+In our model, *F* test’s null hypothesis claims that effort of collected dataset is pure randomness and
+has no regard for the values of any input features, i.e. Effort = *β* o + *ε*, while alternative hypothesis
+describes impact of at least one or more independent variable on model. Since effort values don’t follow
+normal distribution, so we have transformed effort values using box-cox transformation, as explained in
+Section 4.2.2. In Fig. 5 diagnostic plot is created using transformed effort values with residuals along with
+regression line (shown in red). Presence of outliers or noisy data can reduce effectiveness of estimate [ 39 ].
+So, for fitting the model closer to regression line, cook’s distance is incorporated with traditional cut-off
+at 4/(n-p), where n is number of samples and p is number of fitted values in our model [ 75 ]. Models with
+non-transformed Effort values showed *R* [2] and F-statistics as 0.79 and 45.78 respectively. It is clear from
+Fig. 5, transformed Effort values give better *R* [2] and model fit is closer to regression line. Table 5 shows
+overall model’s significance. A fairly large Coefficient of determination *R* [2] shows that relationship is a
+strong one. *R* [2] 0.852 or 85.2%, also verifies that the explanatory variables (effort drivers) have explained
+85% of the variation in “Effort”. This means 14.6% of the variation left unaccounted and is contributed
+
+by other factors. Model’s *ρ* -value (Significance F) is smaller than 0.05, indicating a reasonably significant
+model and rejecting the null hypothesis (i.e., the effort drivers do not help to predict “Effort”). This
+analysis provides sufficient evidence to conclude that our regression model, built using TopCoder dataset,
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 313
+
+Table 5
+Model significance analysis
+
+Model significance statistics Multi p le R *R* [2] Ad j usted *R* [2] Standard error F-statistics Si g nificance F
+
+0.844 0.852 0.831 193.3 59.658 2.76E-66
+
+Fig. 5. Diagnostic plot of residuals with transformed effort.
+
+fits the data better than the model with no independent variables. This further highlights the fact that all
+features selected for dataset (Section 4.1) contribute well in model’s significance.
+
+*4.2.4. Regression analysis of TopCoder features*
+This section explains regression details between dependent and independent variable. After confirming
+over all statistical significance of model, we proceeded with statistical inference using *τ* -test for individual
+regression coefficients. Regression analysis is necessary since it describes whether individual input feature
+influence effort after adjusting (or controlling) other input features (i.e., holding them constant). We need
+to explain the response between the variables as how effort drivers influence effort values. Regression
+equation for TopCoder dataset is shown by Eq. (3):
+
+*Effort* = 883 *.* 96 + 70 *.* 61 *APPT* + 129 *.* 02 *DEVT* *−* 484 *.* 61 *WINP* *−* 444 *.* 20 *SBRT*
+
+*−* 0 *.* 56 *RATN* *−* 53 *.* 85 *EXPR* *−* 255 *.* 01 *TSCR* *−* 54 *.* 15 *NSUB* + 107 *.* 68 *NoLN*
+
+(3)
+*−* 46 *.* 26 *PRLN* *−* 43 *.* 43 *TOOL* + 50 *.* 99 *CNST* *−* 103 *.* 96 *ASST* + 38 *.* 82 *DLVB*
+
++ 17 *.* 79 *LOC*
+
+Table 6 presents complete regression details of all input features where Standard error (with 95% CI)
+is showing the coefficient variation under repeated sampling. Next, *τ* -test (and its associated *ρ* -value)
+are incorporated to verify statistically significant relationship of individual input feature with Effort.
+Equation (4) represents hypothesis for the *j* [th] regression coefficient *βj* as:
+*H* 0 : *β* *j* = 0 (4)
+� *H* 1 : *β* *j* *̸* = 0
+
+
+314 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Table 6
+Regression analysis details between effort and effort drivers
+
+*β* Standard error (SE ) *τ* -value *ρ* -value 95% confidence interval ( CI )
+
+*β* o 883.96 170.74 5.18 6.52E-07 [546.83, 1221.1]
+APPT 70.61 18.00 3.92 0.000128 [35.08, 106.15]
+DEVT 129.02 22.99 5.61 8.37E-08 [83.62, 174.42]
+WINP *−* 484.61 84.62 *−* 5.73 4.76E-08 [ *−* 651.69, *−* 317.54]
+SBRT *−* 444.20 63.95 *−* 6.95 8.38E-11 [ *−* 570.47, *−* 317.93]
+RATN *−* 0.56 0.09 *−* 6.16 5.37E-09 [ *−* 0.75, *−* 0.38]
+EXPR *−* 53.85 8.83 *−* 6.10 7.32E-09 [ *−* 71.28, *−* 36.42]
+TSCR *−* 255.01 61.09 *−* 4.18 4.83E-05 [ *−* 375.63, *−* 134.4]
+NSUB *−* 54.15 11.56 *−* 4.68 5.91E-06 [ *−* 76.98, *−* 31.31]
+NoLN 107.68 17.99 5.99 1.31E-08 [72.16, 143.19]
+PRLN *−* 46.26 16.37 *−* 2.83 0.005308 [ *−* 78.58, *−* 13.93]
+TOOL *−* 43.43 13.13 *−* 3.31 0.001153 [ *−* 69.34, *−* 17.51]
+CNST 50.99 16.51 3.09 0.002358 [18.4, 83.59]
+ASST *−* 103.96 14.05 *−* 7.40 6.70E-12 [ *−* 131.7, *−* 76.22]
+DLVB 38.82 18.43 2.11 0.0367 [2.43, 75.22]
+LOC 17.79 0.89 19.91 *<* 2.00E-16 [ 16.03, 19.56 ]
+
+Null hypothesis (H0): effort driver (with regression coefficient *β* *j* ) holds no impact on Effort.
+Alternative Hypothesis (H1): effort driver (with regression coefficient *β* *j* ) put some (increasing or
+decreasing impact on Effort.
+As it is clear from Table 6, for all effort drivers, *τ* -value (and *ρ* -value) are less than significance level
+( *α* = 0.05), hence all input features contribute to measuring effort for a given task. Intercept or constant
+term, *β* o = 883.96, that gives the predicted value for “Effort” when all input variables are 0. That is,
+*β* o suggests typical effort consumption on a task with no DVCH measures, no consideration for PERS
+features, no TCPX and ACPX measures and size consideration. Further, features including APPT, DEVT,
+NoLN, CNST, DLVB AND LOC are putting increasing impact on effort, i.e., increased values of such
+features will increase effort. On the other hand, WINP, SBRT, RATN, EXPR, TSCR, NSUB, PRLN,
+TOOL, ASST, with negative regressions coefficient ( *β* ) have decreasing effect on Effort.
+In DVCH category, regression coefficient for DEVT feature (129.02) is higher than other feature
+of same category, APPT (70.61) indicates that, development type has more impact on increasing the
+effort. Further, all else equal, a task with developing new application puts an additional 129 PH (on
+average), compared to task that required just updating of previous application (as shown by DEVT
+feature). Compared with APPT, tasks that arrive with Android/iOS development, for instance, adds up
+average 71 PH compared to a task requiring front end development (or any relatively simpler application
+type). For PERS category, the most impacting regression coefficient is for WINP ( *−* 484.61 or *−* 4.84%),
+indicating that developer having higher rate of winning a task would require less 487 PH. Moreover, the
+influence of WINP in decreasing the effort is more than the other features of PERS category. After WINP,
+the technology score of a developer (TSCR) considerably reduces the effort (i.e., TSCR = *−* 255.01). In
+general, all features of PERS category create decreasing impact on effort. From this, we can conclude
+that improvement in developer’s characteristics would generate less effort-requiring task. Moreover,
+usage of modern programming languages and tools with more built-in functionalities (PRLN and TOOL
+feature) are contributing to reduced effort (less 46 PH and 43 PH respectively). Regression of ACPX
+category features suggested that more focus should be given on providing artifacts (ASST) along with
+task as it will reduce effort to 104 PH on average. Further, the presence of helping artifacts have more
+inclination on effort reduction than deliverable’s effort increase, since DLVB adds up 39 PH with one
+increased deliverable. To conclude, the highest increase in effort is offered by development type, while
+most decreasing impact is ensured by submission rate.
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 315
+
+Fig. 6. Pearson coefficient multicollinearity on TopCoder features.
+
+*4.2.5. Correlation analysis of TopCoder features*
+In addition to reporting descriptive, statistical and regression analysis of dataset, this stage of proposed
+framework applied Pearson’s correlation [ 55 ], referred as linear correlation. Multicollinearity problems
+arise when input features are too similar with each other and hold degree of relationship. This will raise the
+challenge of having similar effect of all explanatory variables (input features). The model, in turn, will not
+identify the impact of individual input variable in estimating dependent variable. A correlation coefficient
+close to zero implies no relationship between two features while values closer to 1 or *−* 1 suggests a
+good Pearson correlation. From the perspective of [ 11 ], values between [0.5, 1.0] indicate a high positive
+
+*−*
+and between [ 0.5, 1.0] a high negative correlation. From an estimation model’s perspective, we want
+multicollinearity to be as low as possible and correlation between input and output variables as high as
+possible.
+The extent of the multicollinearity is examined in Fig. 6 representing Pearson correlation coefficient
+among all input features. A small to moderate amounts of multicollinearity is seen in the TopCoder
+dataset features, which is usually not a problem [ 71 ]. Negative Pearson correlation values in analysis
+range from [ *−* 0.32, 0] which is less than the suggested limit of multicollinearity i.e., *−* 0.5 [ 11 ]. Positive
+multicollinearity among features ranges from [0, 0.41] which is again less than the suggested limit
+and shows quite moderate multicollinearity. This depicts that TopCoder dataset features do not contain
+overlapping information, making it favorable dataset for applying ML estimation algorithms. Features
+like CNST and ASST are less similar with most of other features, while NoLN found similar with most
+of the features of dataset. Extremely positive correlation is found between features LOC and DLVB with
+correlation coefficient 0.41. Extreme negative correlation is between EXPR and SBRT with coefficient
+
+*−*
+0.32, still maintaining their Pearson correlation coefficient in moderate range.
+Correlation between dependent and independent features is analyzed next, again using Pearson correla
+
+316 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Fig. 7. Positive Pearson correlation in TopCoder feature.
+
+tion at significance *α* = 0.05. Figures 7 and 8 demonstrated the magnitude of the correlation between
+effort driver (y-axis) and Effort (x-axis) along with correlation statistics (Pearson correlation coefficient
+(R), *ρ* -value with 95% confdence interval). Features including APPT, DEVT, NoLN, CNST, DLVB
+and LOC are showing positive correlation with Effort (Fig. 7) while negatively correlation is observed
+between Effort and RATN, EXPR, TSCR, NSUB, PRLN, TOOL, ASST (Fig. 8). We can conclude from
+the analysis that acceptable level of correlation exists between all input features and output feature since
+all correlation show *ρ* -value less than *α* = 0.05. Further, the highest increase in effort is offered by
+development type since from the scratch development require developer to spend morePH as compared
+task requiring only software enhancement. Most decreasing impact is observed by submission rate of
+developer, hence assigning task to developer with more submissions will be needing much less effort.
+
+*4.3. Effort estimation stage*
+
+After analyzing and preparing the TopCoder dataset, model training to estimate development effort
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 317
+
+Fig. 8. Negative Pearson correlation in TopCoder features.
+
+
+318 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Table 7
+Effort estimation techniques used in study
+
+Famil y Al g orithm Previous work Parameters settin g
+
+Rule-based (Rule) Zero Rule (ZeroR) [14] Scale method = Pearson Chi-square
+One Rule (OneR) [14] Scale method = Pearson Chi-square
+Linear regressor LASSO [70], [49], ***[1],*** Error distribution = Gaussian
+(LR) ***[77], [48]*** No. of regularization parameters (n *λ* ) = 100
+elastic net mixing ( *α* ) = 1
+Bayesian Linear Regression (BayesLR) [60] Error distribution = Gaussian
+Mapping function (link) = Identity
+Estimation algorithms = Sampling
+Non-linear Logistic Regression (LogReg) [24], ***[49], [1],*** Error distribution = Gaussian
+regressor ***[48]*** Mapping function (link) = Identity
+(NonLR) Convergence tolerance ( *ε* ) = 1e-08
+
+IWLS iterations (maxit) = 25
+Polynomial Regression (PolyReg) [41] Polynomial degree = 3
+Naive Bayes Multinomial Naive Bayes (MultiNaiveB) [82], [1] Laplace = 0.5
+(NaiveB) Bernouli Naïve Bayes (BernNaiveB) [82] Laplace = 0
+Decision Tree CART [67, 76], ***[49], [1]*** Min split = 20
+(DT) Complexity parameter (C) = 0.01
+max depth = 30
+RF [5], *[79]* No. of forest trees (ntree) = 500
+max depth = 100
+No. of features each node (mtry) = 5
+SVM SVM-Radial Base Function (svmRadial) [57], ***[49], [1],*** Complexity parameter (C) = 1
+
+***[77]*** Deviation tolerance ( *ε* ) = 0.1
+Sample influence ( *γ* ) = 0.066
+SVM-Polynomial Function (svmPoly) [9] Polynomial degree = 3
+Complexity parameter (C) = 1
+Deviation tolerance ( *ε* ) = 0.1
+Analogy based kNN5 [61], ***[49], [1],*** Similarity function = Euclidean
+(CBR) ***[48]*** solution function = mean, *k* = 5
+kNN10 ***[77]*** Similarity function = Euclidean
+solution function = mean, *k* = 10
+Neural network Multi-Layer Perceptron NNet MLPNN [62], [77] Size = 10
+(NNet) Activation Function = Logistic
+max iterations = 100
+Radial Basis Function NNet (RBFNN) [64] Size = 10
+Activation Function = Linear
+Learning function = Radial Basis
+Homogenous Bagging [15] No. of bags = 25
+ensemble (HM) Min split = 2
+Complexity parameter (C) = 0
+Gradient boosting machine (GBM) [74] Error distribution = Gaussian
+No of trees = 100
+shrinkage = 0.1
+Heterogenous Weight assignment (En_WtAvg) [51]
+ensemble ( HT ) Avera g in g ( En _ Av g) [ 63 ]
+
+comes next. For effort prediction, 10 ML families are considered, and two algorithms per family are
+part of experimentation. Table 7 shows each ML family, their respective two algorithms and parameter
+setting used to train each model in this study. Parameters of selected models are tuned using Grid search
+(GS) [ 51 ]. The selected ML algorithms are also used in SDEE literature to generate considerable results.
+Moreover, previous CSSD work also incorporated some of ML algorithms for estimation (Table 1).
+ML techniques mentioned in bold text (Table 7 Column 3) are used by previous CSSD work while
+non highlighted techniques are incorporated in tradition SDEE literature. For HT ensemble, the best
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 319
+
+performing algorithm from each family is selected and combined in form of ensemble. The idea behind
+choosing these algorithms is to incorporate estimation techniques from the different flavors of the ML
+domain and to broaden the spectrum of experimental evaluation. Moreover, it is established in previous
+literature (Section 2.1) [ 3, 78 ] NNet, SVM, Decision tree (RF and CART) and Linear Regression are
+frequently used for SDEE. NNet and SVM also outperformed in most of the studies. Among NNet family,
+MLPNN and RBFNN are widely utilized versions of neural network. Ensemble models, on the other
+hands, are also proved to generate better estimation accuracy by avoiding bias created by individual
+model [ 66, 74 ]. Besides this, we also incorporated comparatively less renowned ML models (ZeroR,
+OneR Naive Bayes) to give better judgement about working of ML techniques on our dataset.
+
+**5. Experimental setup**
+
+In order to assess the effectiveness of each estimation model, we applied 10-fold cross validation
+(10-fold-CV) by randomly dividing dataset into 70-30 ratio. All experiments and statistical evaluation
+are performed in RStudio using R programming language. Performance evaluation metrices (Section 5)
+are applied on each model. All experiments are executed for 500 repetitions to get unbiased results from
+each algorithm and mean and Standard Deviation (SD) of the error is calculated. Besides, we performed
+statistical tests, i.e., Welch’s *t* -test [ 40 ] to evaluate the performance significance of the estimation models
+using relative *ρ* -value. Algorithm 1 represents the working of complete effort estimation cycle with model
+evaluation. Evaluation metrices used in this study are Mean squared error (MSE), Root mean square error
+(RMSE), Mean Magnitude of relative error (MMRE), Median Magnitude of relative error (MdMRE) and
+PRED (25), which are represented in Eqs (5)–(10).
+
+
+*MSE* = [1]
+
+*T*
+
+
+*T*
+� ( *Effort* *actual* *−* *Effort* *estimated* ) [2] (5)
+
+*t* =1
+
+
+*RMSE* =
+
+*MRE* =
+����
+
+
+~~�~~
+�
+�
+
+*T*
+
+� [1]
+
+
+*T*
+� ( *Effort* *actual* *−* *Effort* *estimated* ) [2] (6)
+
+*t* =1
+
+
+*E* *ff* *ort* *actual* *−* *E* *ff* *or* *estimated*
+� *Effort* *actual*
+
+
+(7)
+�����
+
+
+*MMRE* = [1]
+
+*T*
+
+
+*T*
+� *MRE* *t* (8)
+
+*t* =1
+
+
+*MdMRE* = *median* ( *MRE* *t* ) *t ∈{* 1 *. . . T* *}* (9)
+
+
+*PRED* ( *d* ) = [100]
+
+*T*
+
+
+*T*
+�
+
+*t* =1
+
+
+1 if *MRE* ⩽ *d*
+(10)
+0 otherwise
+�
+
+
+Where *t ∈* [1 *. . . T* ] is CSSD task from dataset T. PRED (d) is included to comprehend which percentage
+of MRE is less than or equal to the value (d) among all tasks. The generally acceptable range of PRED
+(d) is d = 0.25. So it will be assessed what portion of dataset tasks lie under the given range of MRE
+accuracy, i.e., 25%. Models with better performance exhibit lower MSE, RMSE, MMRE, MdMRE and
+higher PRED values.
+
+
+320 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Although with evaluation metrices, we have populated performance results of each ML model. To
+ensure if models results are statistically significant [ 21 ], we used Welch’s *t* -test to check the significance
+difference between error measures of ML models [ 40 ]. Significance level ( *α* = 0.05) is applied to
+minimize Type I error [7] The null and alternative hypothesis of significance test are shown in Eq. (11):
+
+*H* 0 : *µ* *k* = *µ* *m* *ORµ* *k* *−* *µ* *m* = 0
+� *H* 1 : *µ* *k* *̸* = *µ* *m* *ORµ* *k* *−* *µ* *m* *̸* = 0 (11)
+
+Null hypothesis (H 0 ): Difference between error means of two compared models is zero, i.e., a model *k*
+(with error mean *µ* *k* ) have similar performance compared to model *m* (with error mean *µ* *m* ).
+Alternative hypothesis (H 1 ): Difference between error means of two compared models is not zero i.e.,
+a model *k* doesn’t hold equal performance model *m* .
+
+**Al** **g** **orithm 1:** Pro p osed Effort Estimation Module
+
+***Input:*** Algorithm_family ( *Zj* ); where { *Z* } *∈* {Rule, LR, NonLR, NaiveB, DT, SVM, CBR, NNet, HM, HT}
+ML_Algorithm ( *X* *i,j* ); Algorithm *i* belong to family *j*
+mean = *µ* ; standard deviation = *σ*
+***Output:*** Optimal Effort Estimation Model
+***Begin:***
+1. Algorithm_family ( *Zj* )
+2. ML_Algorithm ( *Xi, j* )
+for cross-validation fold [1: 10] **do**
+3. Divide dataset *D* *[T]* into by [70: 30] ratio
+for each ML_Algorithm ( *X* *i,j* ) **do**
+for iteration = 500 **do**
+**On training data,** *D* ***train*** *[T]*
+4. Perform training on *D* *train* *[T]* [using ML_Algorithm (] *[X]* *i,j* [)]
+model *k* = train ( *X* *i,j*, *D* *train* *[T]* [)]
+5. Get prediction of above trained models on *D* *train* *[T]*
+pred *k* = prediction (model *k*, *D* *train* *[T]* [)]
+**On test data,** *D* ***test*** *[T]*
+6. Apply model *k* to *D* *test* *[T]* [for testing]
+model *k_test* = model *k* ( *X* *i,j*, *D* *test* *[T]* [)]
+pred *k_test* = prediction (model *k_test*, *D* *test* *[T]* [)]
+**end** for
+
+**end** for
+
+**end** for
+
+**Performance evaluation**
+7. Calculate mean and standard deviation of error RMSE for model *k_test*
+*µ* *k_RMSE* [RMSE (model *k_test* )]
+*σ* *k_RMSE* [RMSE (model *k_test* )]
+8. Calculate mean and standard deviation of error MSE for model *k_test*
+*µ* *k_MSE* [MSE (model *k_test* )]
+*σ* *k_MSE* [MSE (model *k_test* )]
+9. Calculate mean and standard deviation of error MMRE for model *k_test*
+*µ* *k_MMRE* [MMRE (model *k_test* )]
+*σ* *k_MMRE* [MMRE (model *k_test* )]
+10. Calculate mean and standard deviation of error MdMRE for model *k_test*
+*µ* *k_MdMRE* [MdMRE (model *k_test* )]
+*σ* *k_MdMRE* [MdMRE (model *k_test* )]
+11. Calculate mean and standard deviation of error Pred25 for model *k_test*
+*µ* *k_Pred25* [Pred25 (model *k_test* )]
+*σ* *k_Pred25* [Pred25 (model *k_test* )]
+**Return** Model with *min* (RMSE), *min* (MSE), *min* (MMER), *min* (MdMRE), *max* (Pred25),
+**End**
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 321
+
+Table 8
+Results of ML algorithms applied to TopCoder dataset
+
+Algorithm Time RMSE MSE MMRE MdMRE Pred ( 25 )
+( sec ) *µ* *σ* *µ* *σ* *µ* *σ* *µ* *σ* *µ* *σ*
+
+ZeroR 3.26 0.862 0.024 0.744 0.020 0.852 0.014 8.345 1.031 0.50 15.77
+
+OneR 20.3 0.595 0.033 0.355 0.039 0.503 0.038 3.420 0.499 3.79 20.47
+
+LASSO 2.67 ***0.052*** ***0.010*** ***0.003*** ***0.001*** 1.027 0.105 ***0.105*** ***0.017*** 2715.05 ***85.74***
+BayesLR 1630.13 0.186 0.019 0.035 0.007 0.306 0.018 0.783 0.080 36.55 51.86
+logReg 10.06 ***0.070*** ***0.010*** ***0.005*** ***0.001*** ***0.048*** ***0.005*** ***0.295*** 0.049 44.38 ***72.25***
+PolyReg 12.57 0.436 0.038 0.192 0.034 0.378 0.039 3.233 0.704 5.24 57.69
+MultiNaiveB 10.92 0.262 0.062 0.073 0.036 0.190 0.061 1.136 0.610 10.87 59.75
+
+BernNaiveB 8.31 0.360 0.035 0.131 0.025 0.282 0.035 1.949 ***0.041*** 8.29 49.10
+
+kNN5 550.05 0.095 0.023 0.010 0.005 0.060 0.010 0.358 0.049 34.62 67.78
+
+kNN10 697.19 0.104 0.024 0.011 0.005 0.063 0.010 0.360 0.054 36.03 64.89
+
+CART 6.67 0.112 0.022 0.013 0.005 0.074 0.010 0.434 0.047 28.71 64.42
+
+RF 79.16 0.085 0.023 0.008 **0.004** ***0.051*** ***0.008*** 0.299 ***0.042*** 43.32 70.02
+
+svmRadial 12.93 0.085 0.028 0.008 0.005 ***0.045*** 0.009 ***0.229*** 0.427 53.83 ***79.25***
+svmPoly 11.24 ***0.084*** ***0.018*** ***0.007*** ***0.003*** ***0.050*** ***0.007*** ***0.282*** ***0.037*** 45.54 ***79.94***
+MLPNN 63.26 ***0.077*** 0.029 ***0.007*** 0.005 0.052 0.014 0.342 0.075 39.26 ***82.47***
+
+RBFNN 52.49 0.120 0.020 0.015 0.005 0.085 0.011 0.532 0.101 26.48 78.67
+Bagging 85.36 0.099 0.023 0.010 0.005 0.062 0.009 0.367 0.059 36.05 58.16
+GBM 18.8 0.091 0.024 0.009 0.005 0.057 ***0.008*** 0.349 0.053 37.80 68.00
+En_WtAvg 2.02 0.158 0.025 0.026 0.008 0.111 0.013 0.658 0.072 18.57 66.84
+En _ Av g 2.25 0.19 0.021 0.032 0.008 0.134 0.013 0.778 0.117 16.59 68.82
+
+**6. Results**
+
+This section discussed the experimental results after applying ML algorithms mentioned in Section 4.3
+using TopCoder collected data.
+
+*6.1. Results of performance metrices evaluation*
+
+For all experiments, mean and standard deviation (SD) of each evaluation metrics (Section 5) are
+calculated, with 500 iterations of each experiment Table 8 shows the resulting means ( *µ* ) and SD ( *σ* ) of
+errors for all models evaluated on TopCoder dataset. Models with goodperformance measures are shown
+in bold text. Based on RMSE, OneR, LASSO, logReg, MultiNaiveB, kNN5, RF, svmPoly, MLPNN and
+GBM has shown better performance as compared to their respective family member algorithm, so they
+are chosen for HT ensemble creation.
+
+Analyzing the results obtained in Table 8, it is possible to conclude that estimation obtained from
+regression family (both linear and non-linear), NNet family and SVM family gained smallest number of
+errors in most of metrices. Figure 9 shows the boxplot graph with RMSE of each model, which represents
+those models like LASSO, BayesLR, SVM, HT, DT families and En_wtAvg are not showing outliers.
+It is possible to observe that Rule based models have overestimated the model while LASSO, logReg,
+kNN5, MLP and SVM family have shown relatively better performance. Besides, boxplot of LASSO
+and logReg are less distorted than those of the other models while MultiNB has shown larger amount of
+estimation outliers, influencing RMSE mean to higher end.
+
+*6.2. Results of statistical significance test*
+
+For As mentioned earlier, Welch’s *t* -test is used with 5% significance *α* = 0.05) and 95% confidence
+interval. From the Table 8, it is very clear that TopCoder dataset works well for predicting effort with
+
+
+322 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Fig. 9. RMSE boxplot of ML models.
+
+Fig. 10. Welch *t* -test plot for best performing models.
+
+LASSO (linear) and logReg (non-linear), after which svmPoly and MLPNN performed better among
+other ML models. To confirm whether the results of the latter two techniques are significantly different
+from basic regression techniques (LASSO and logReg), a statistical test is conducted. For that purpose,
+Welch’s *t* -test with Bonferroni correction [ 44 ] is applied using RMSE of four best-performing techniques
+i.e. LASSO, logReg, svmPoly and MLPNN and results are represented in Fig. 10.
+Models are significantly different if they show difference between their error means less than 0.05.
+The plot clearly depicts that LASSO and logReg are giving significantly good performance compared
+to MLPNN since ˆ *µ* *mean* of LASSO and logReg (0.05 and 0.07 respectively), is lesser than of MLPNN
+(i.e. ˆ *µ* *mean* = 0.08). Plot also shows difference in error means of the models i.e., *ρ* *Bonf-Corrected*, used to
+analyze significance difference between models’ performance. All models are showing *ρ* *Bonf-Corrected* *<*
+0.05 compared to each other, which rejects the null hypothesis (Eq. (11)). Hence the performances of all
+models are statistically different from our two best performing models LASSO and logReg. It is to be
+noted that there also exist statistical difference between LASSO and logReg (i.e., *ρ* *Bonf-Corrected* = 4.03
+e *[−]* [13] ).
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 323
+
+
+324 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+Besides four best performing models, Welch’s *t* -test is conducted for all possible pairwise comparisons
+using their RMSE. Table 9. presents “Win coun” (based on results of Welch’s *t* -test) of each model,
+compared to all other models. The *ρ* -value is shown for only those models, surpassing 10% of significance
+level (i.e., *α* = 0.1). As it can be seen, the win count of LASSO is 19, meaning it has shown significant
+results (on *α* = 0.05) compared to all 19 models, however, for *α* = 0.1, LASSO surpassed only ZeroR
+and OneR. Similarly, the second highest Win count (i.e., 18) is for logReg, and again both Rule based
+models are less significant than logReg on significance level *α* = 0.1. ZeroR is the only model having no
+significant performance compared to any model, while polyR surpassed 2 models (Win count = 2), only
+on significance of *α* = 0.05 not 0.1.
+
+**7. Discussion**
+
+This study focuses on the fact that effort consumed on crowdsourced task is comparatively appropriate
+criteria for task selection rather than mere intuition. Work established vast range of TopCoder dataset
+feature covering major crowdsourced development aspect to estimate effort. Mostly dataset extracted in
+CSSD work have not performed any analysis to ensure whether the selection for attributes is justified
+in terms of statistical, regression and correlation measures. Section 4.2 clearly depicts that selected
+attributes for dataset possess model significance, regression, and correlation relationship with the output
+feature i.e., “Effort” making dataset more reliable for ML experimentation. Performing regression and
+correlation analysis further revealed which feature to focus on, for manipulating the effort. In our analysis,
+development type, assets available for the task and developer’s enhanced skill set are those domains
+which are influencing task effort the most.
+The features identified for this study are independent from previous phases i.e., features related to
+software requirement specification and design (as included in previous studies [ 49 ]), for example, winner’s
+submission score attained in design phase, number of registrants and submissions in design phase, number
+of pages in requirement/component specification. Rather focus is made on just in-hand features, relevant
+to task characteristics, developer’s skill set and task artifacts.
+Catering to the matter of accuracy in estimation, intelligent methods are known for their accurate and
+unbiased results. Furthermore, taking the opinion of multiple ML models is another way to achieve effort
+estimation accuracy. There is trend of utilizing ML for estimation in CSSD work (Table 1), but number of
+models used for estimation are not sufficient. This work incorporated 10 ML families with 2 algorithms
+each, hence total 20 models are trained on TopCoder extracted dataset (as mentioned in Table 7 Further,
+most of the past ML-based CSSD studies relied on only linear, tree based or neural network-based models.
+This wok shows, some algorithms which are not part of any estimation in previous CSSD work are
+also providing considerable performance, such as Bayesian Linear Regression, Polynomial Regression,
+Bernouli Naïve Bayes, Bagging, Gradient boosting machine, with RMSE values 0.186, 0.436, 0.360,
+0.099 and 0.091 respectively.
+Comparing our work with the initial study made on CSSD cost estimation by Mao et al. [ 49 ], ML
+models employed and their achieved performance in MMRE is as follows: SVMR (0.46), CART (0.216),
+Linear regression (0.279), Logistic regression (0.350), NNet (0.324) and kNN (0.397). Relevant models
+in our study achieved MMRE values as: svmRadial (0.045), svmPoly (0.050), CART (0.074), logReg
+(0.048), MLPNN (0.052), RBFNN (0.085, kNN5 (0.060), kNN10 (0.063). It is evident from the results;
+all models of this study have achieved 60% improved MMRE. This clearly shows careful and relevant
+features selection in dataset.
+
+
+*A. Yasmin et al. / ML based software effort estimation using development-centric features* 325
+
+**8. Threats to validity**
+
+This section presents threats to validity of the proposed study. For internal validity, several aspects
+need to be discussed, e.g., ML techniques to construct estimation model, choice of data transformation
+technique and parameter setting methods can be common threats to internal validity of ML based effort
+estimation.
+
+For this study, a large variety of ML estimation techniques are applied to identify a relatively unbiased
+technique working for TopCoder CSSD platform. ML techniques in previous effort estimation work
+(Table 7) are also part of this study. However, there is a margin of testing other ML learners to verify if
+performance tends to improve. Further, ML learners are implemented under grid search-based parameter
+settings rather than assigning default values, providing more context-oriented results. However, grid
+search involves larger computation compared to other automated parameter tuning techniques i.e., swarm
+intelligence or evolutionary methods. Hence computation-effective solutions can be incorporated. Another
+internal validity threats can be found when effort drivers are indirectly related to the software efforts. In
+this work, input features included to construct dataset possess enough correlation with dependent feature
+(effort) in terms of Pearson correlation, hence suitability of dataset for applying supervised ML learning
+to predict effort is ensured.
+External validity is determined by the extent to which the study’s conclusion can be generalized. ML
+algorithms and ensembles used in the study are implemented with parameter values coming from grid
+search tuning. For other datasets, additional parameter setting may be required for obtained optimum
+prediction model. Optimized parameter settings can be used to drive similar conclusions. In our work,
+effort estimation scheme is primarily designed for crowdsourced tasks, structured on the format followed
+by TopCoder platform. The dataset obtained for proposed scheme implementation is dependent on CSSD
+platform, i.e., features selected for each crowdsourced tasks can be found in tasks published on TopCoder.
+Execution of proposed scheme can be generalized for any other CSSD platform, using similar task posting
+mechanism like TopCoder. Moreover, this study mainly focuses on tasks from “TopCoder development
+category”. So, features selected for estimating effort are related to development/coding perspectives. For
+other TopCoder task categories (design, testing), different features set is needed.
+Conclusion validity is achieved by measuring the degree to which the study’s conclusions are reasonable.
+We used the 10-fold CV method to confirm the ability of a ML models to predict new data. Furthermore,
+all experiments are executed with 500 repetitions for having enough iterations to conclude results. This
+procedure is adequate to prevent biasing the results and minimizes training sample dependences. Similarly,
+these redundant tests are carried out for performance metrices, ensuring no evaluation metric can bias the
+conclusion results.
+
+**9. Conclusion and future work**
+
+Effort estimation measures are crucial in crowdsourced task for a well-established CSSD platform like
+TopCoder, having thousands of clients and developers. Effort estimation can serve the basis of award
+money decision associated with each task. In this work an effort estimation framework is proposed for
+TopCoder CSSD platform facilitating both client and developer by analyzing the task in terms of effort.
+The proposed framework includes three stages. Data from TopCoder development tasks is extracted
+including highly development-oriented features ( *Data acquisition stage* ). Data is prepared in terms of
+normality and *F* test measures, after which statistical, regression and correlation analysis are performed
+( *Data preparation stage* ). In end, prepared dataset is used to train estimation models from 10 ML families
+
+
+326 *A. Yasmin et al. / ML based software effort estimation using development-centric features*
+
+with 2 respective ML algorithms, for achieving best model for TopCoder dataset. Results are analyzed
+with 5 performance metrices and Welch *t* -test for significance. ML families used for estimation consist of
+linear/non-linear regression, NaiveBayes, CBR, DT, SVM, NNet, HM and HT with their two respective
+algorithms. Results have confirmed that linear/non-linear regression algorithms provided good results in
+most evaluation metrices. After that SVM and NNet family is giving good results for TopCoder dataset.
+As future work, we aim to analyze other task categories on TopCoder platform i.e., software design and
+QA, to identify appropriate features relevant to software design and testing aspects. Furthermore, CSSD
+platforms apart from TopCoder will be explored for dataset preparation and establishing effort estimation
+model to verify generality of proposed scheme.

@@ -1,0 +1,1018 @@
+Received 7 November 2025, accepted 1 December 2025, date of publication 5 December 2025,
+date of current version 12 December 2025.
+
+*Digital Object Identifier 10.1109/ACCESS.2025.3640855*
+# Swarm Intelligence for Predicting Software Development Effort
+
+YENNY VILLUENDAS-REY 1, CUAUHTÉMOC LÓPEZ-MARTÍN 2,
+JOSÉ LUIS VELÁZQUEZ-RODRÍGUEZ 3, AND CORNELIO YÁÑEZ-MÁRQUEZ 3
+
+1 Centro de Innovación y Desarrollo Tecnológico en Cómputo, Instituto Politécnico Nacional, Mexico City 07700, Mexico
+2 Department of Information Systems, Universidad de Guadalajara, Guadalajara 44100, Mexico
+3 Centro de Investigación en Computación, Instituto Politécnico Nacional, Mexico City 07738, Mexico
+
+Corresponding authors: Yenny Villuendas-Rey (yvilluendasr@ipn.mx) and Cornelio Yáñez-Márquez (coryanez@gmail.com)
+
+**ABSTRACT** An accurate development effort prediction (measured in person-hours) of a software project
+remains a challenge in the software engineering management field, due to either under-prediction or overprediction negatively affecting the budgeting and resource allocation to be assigned to the project. Hundreds
+of studies have explored software development effort prediction models; however, only a limited number
+of them have applied metaheuristic techniques to optimize the parameters of statistical regression equations
+(SREs). In addition, most algorithms require a huge amount of data to successfully learn the underlying
+model parameters. Accordingly, we introduce a novel variant of a swarm intelligence algorithm termed
+*Mexican Axolotl Optimization* (MAO), designed for optimizing the SRE parameters and for selecting the
+SRE within a unified optimization framework. Our approach enables the simultaneous identification of
+the most suitable SRE model and its optimal configuration, thereby enhancing predictive accuracy. Our
+proposal was evaluated on eight data sets of software projects selected from an international public repository.
+The performance of our proposal, named MAO-SRE, is compared to that obtained from traditional SRE,
+multilayer perceptron neural networks, support vector regression, random forest, and SREs optimized
+through particle swarm optimization and genetic algorithms. Results based on statistical significance allow
+us to conclude that MAO-SRE can be used to predict the development effort of software projects, considering
+their development type, development platform, and programming language generation.
+
+**INDEX TERMS** Statistical regression, software effort prediction, software engineering, swarm intelligence
+algorithms.
+
+
+**I. INTRODUCTION**
+
+Software development effort prediction (SDEP) belongs to
+software project planning, which corresponds to an activity
+of software engineering management [1]. It is useful for managers for budgeting software projects. The effort is reported
+in person-hours [2], and the project size has commonly been
+used as the explanatory variable for the SDEP. Source lines of
+code and function points have been the types of size majorly
+used [2].
+Both cost over-prediction and cost under-prediction affect
+the planning of software projects. Therefore, an accurate
+SDEP is needed. The importance of SDEP has been reflected
+
+The associate editor coordinating the review of this manuscript and
+
+approving it for publication was Anandakumar Haldorai .
+
+
+in the publication of several systematic reviews between
+2007 and 2025, where hundreds of studies on SDEP have
+been analyzed [2], [3], [4], [5], [6], [7], [8], [9], [10]. A diversity of SDEP techniques has been identified in the mentioned
+reviews, usually divided into mathematical models and nonmathematical models. In the first type mentioned, the models
+can be subclassified into statistical regression models and
+machine learning models, including Deep Learning techniques [11], [12]. Their parameters have been optimized (i.e.,
+feature weighting) by applying metaheuristic algorithms.
+Optimization algorithms remain in use in the software
+engineering area [13], [14], [15], [16], following their application more than twenty years ago, when a study concluded
+that there was excellent potential for exploiting metaheuristics in certain software engineering areas, such as effort
+
+
+2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+207448 For more information, see https://creativecommons.org/licenses/by/4.0/ VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+prediction [17]. Thus, we follow the recommendation of the
+mentioned study, whose goal was to stimulate more interest
+in using metaheuristics for finding near-optimal solutions in
+the software engineering field.
+Figure 1 illustrates the software development process
+phases for which effort will be predicted. The components
+by phase are the following [18]:
+
+  - Design: External design and internal design.
+
+  - Construction: Construct code, review or inspect, interfaces, unit test, and integrate software.
+
+  - Testing: System testing, performance testing, automated
+tests, and acceptance testing.
+
+  - Implementation: Releases for delivery, install software
+releases for users, user documentation, deliver user
+training, and provide user support.
+Metaheuristic algorithms have been classified as swarm
+intelligence (simulating the behavior of animals and insects
+in their environment), evolutionary (that are inspired by
+evolutionary principles in nature and among living creatures), physics-based (which simulates the physical laws),
+and human-based algorithms (simulating the behavior and
+laws of human societies) [19].
+We have identified several metaheuristic algorithms used
+for feature weighting in prediction models applied to SDEP in
+the past 25 years. Our research question is the following: How
+can the development effort prediction accuracy of software
+projects be improved by using a new swarm intelligence
+metaheuristic algorithm for optimizing the statistical model
+selection and its parameters?
+
+**FIGURE 1.** Development phases of a software project.
+
+In the present study, we apply a novel swarm intelligence
+metaheuristic algorithm, the Mexican Axolotl Optimization
+
+
+algorithm (MAO) [20]. MAO has been successfully applied
+to several optimization tasks, including vehicle parking [21],
+power scheduling [22], and network control [23].
+Our proposal specially modifies MAO for SDEP. The motivation to design a novel representation of solutions and novel
+searching operators in the context of a novel MAO-based
+algorithm is supported by the following issues:
+
+1) A significant finding in a recent systematic review of
+the literature on SDEP is that it is not possible to state
+that any SDEP model is the most promising based on
+the same data set and accuracy aspects [2].
+2) We identified thirty metaheuristic algorithms in the
+[twenty-eight SDEP studies (Appendix, and none of](app:1#A.I.))
+them apply MAO.
+3) Only nine of the twenty-eight studies apply metaheuristics for optimizing the parameters of statistical
+equations.
+4) There is a need to optimize not only the parameters of
+statistical regression equations (SRE) but also to embed
+the selection of the SRE model in the optimization
+algorithm.
+
+Regarding data sets, prediction accuracy measures, and validation methods, our study presents several advantages.
+We use the International Software Benchmarking Standards
+Group (ISBSG) release 2018, which is an international public
+repository commonly used in the software engineering field
+when development effort has been predicted [24]. The data
+sets were selected observing the ISBSG guidelines, that is,
+based on the quality of data, type of development, development platform, programming language generation, and
+resource level (i.e., how the effort was quantified) [25].
+In addition, we measure the performance of the models
+based on absolute residuals (a non-biased measure [26]),
+and we used the leave-one-out cross-validation procedure
+because it is a deterministic procedure that can be exactly
+reproduced by other researchers [2]. It uses mutually exclusive data sets for training and testing the models, leading to
+stability by removing the random selection of data sets. The
+main contributions of our study are:
+
+1) The proposal of a novel MAO-SRE optimization
+algorithm able to simultaneously optimize the selection
+of a suitable SRE model, as well as its parameters in
+the same optimization procedure. MAO-SRE is based
+on MAO and preserves its advantages of having high
+exploration and exploitation capabilities.
+2) The proposal of a novel representation of solutions in
+the context of optimizing SRE parameters, allowing
+solutions with variable length, and embedding the SRE
+model in the optimization procedure.
+3) The proposal of novel exploration and exploitation
+operators for variable-length solutions based on the
+MAO operators.
+4) Our proposal predicts the number of person-hours
+(effort) needed to complete a software project accurately than others in the state-of-the-art.
+
+
+VOLUME 13, 2025 207449
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+The remainder of this study is structured as follows: Section II
+describes related studies that have applied metaheuristic algorithms for feature weighting in SDEP models. Section III
+describes our proposal: the MAO-SRE. Section IV details the
+models used for comparison, their parameters, the selection
+of the software project data sets, the validation techniques,
+and the performance measures. Section V presents the
+results of MAO-SRE with respect to other metaheuristic
+and machine learning models. It also discusses the results
+obtained from a statistical viewpoint and covers the limitations and validation threats of our study.
+Finally, Section VI corresponds to our conclusions and
+future work.
+
+**III. NOVEL MEXICAN AXOLOTL ALGORITHM FOR THE**
+
+**SELECTION AND OPTIMIZATION OF STATISTICAL**
+
+**REGRESSION EQUATION**
+In this section, we introduce a novel model for effort prediction based on the Mexican Axolotl Optimization (MAO)
+algorithm. Subsection A refers to the main MAO characteristics, and subsection B explains the novel approach to
+optimizing statistical regression equations for software prediction, named MAO-SRE.
+
+*A. MEXICAN AXOLOTL OPTIMIZATION*
+
+Axolotls are studied for their remarkable regeneration capabilities, including the repair of their spinal cord and complex
+tissues such as retinal, restoring full functionalities in their
+bodies. They also straightforwardly accept transplants from
+other individuals, not only of extremities but all organs,
+including the brain. In addition, axolotls can also change their
+coloring to camouflage in the environment [54], [55].
+Those abilities are mimicked in the Mexican Axolotl Optimization (MAO) algorithm, in which artificial axolotls are
+able to camouflage in the environment, restore damaged parts
+of their bodies, and reproduce to obtain new generations
+of solutions. The particular characteristics of MAO make
+it suitable for exploring huge areas of search spaces while
+having fast convergence [16]. Figure 2 shows the results of
+MAO for the numeric optimization function in (1).
+
+*F (x)* = *g* ( *x* ) − *h* ( *x* ) + 20 + *e* (1)
+
+
+
+
+
+~~�~~
+�
+�
+�
+
+
+The MAO algorithm, represented in pseudocode, is described
+in [20].
+
+**FIGURE 2.** Example of the results of MAO over the numeric function.
+(a) Plotting of the function in a two-dimensional space. (b) Convergence
+curve of MAO. Note that the best results are found before 50 evaluations.
+
+Despite the advantages of MAO, it requires fixed-length
+solutions (axolotls), as usual in metaheuristic algorithms.
+That is, if we need to search for the optimal parameters of a
+certain model (i.e., an SRE), we need to apply the algorithm
+for the desired number of iterations. If we need to select
+
+among several SREs (20 in this research), then we need
+to apply the MAO twenty times, each time for the desired
+number of iterations. Therefore, if we selected 200 iterations,
+
+then we will need 20×200 =4000 iterations to obtain a result.
+
+To overcome this problem, we introduced a new variant of
+the original MAO described in [20] to optimize the SREs to
+be applied for SDEP.
+
+*B. MEXICAN AXOLOTL OPTIMIZATION FOR STATISTICAL*
+
+*REGRESSION EQUATIONS*
+
+The proposed Mexican Axolotl Optimization for Statistical
+Regression Equations (MAO-SRE) includes two main modifications to the MAO algorithm. The first one is a novel
+representation of the solutions that includes an additional
+dimension for each axolotl, representing the SRE used by
+the individual. The second one is to use a flexible number
+of dimensions for each axolotl, depending on the number of
+parameters the corresponding SRE needs, and to design novel
+exploration and exploitation operators to travel the search
+space, as well as a novel assortment operator. Accordingly,
+we consider 20 possible SREs in this research, as described in
+
+
+*g* ( *x* ) = −20exp
+
+
+−0 *.* 2
+
+
+
+*n*
+�
+
+
+*x* [2]
+
+� *i*
+
+*i* =1
+
+
+
+
+(2)
+
+
+(3)
+
+
+�
+
+
+*h (* x *)* = exp
+
+
+1
+
+*n*
+�
+
+
+*n*
+�
+
+
+� cos *(* 2 *πx* *i* *)*
+
+*i* =1
+
+
+As shown, MAO converges near zero in less than 100 evaluations of the optimization function.
+The selection of the Mexican Axolotl Optimization (MAO)
+is supported by its amazing experimental results over benchmark optimization functions [16] and in solving real-world
+problems [56], [57], [58].
+Its main relevance for software effort prediction is its ability to traverse complex search spaces in a short number of
+evaluations, combining exploration and exploitation of the
+solutions in a very efficient way. In particular, it showed
+better optimization capabilities than many well-established
+optimization algorithms in composite optimization functions [16].
+In MAO, the set of solutions (axolotls) of size *np* comprises the population *P* = � *S* 1 *, . . ., S* *np* � and each solution
+(axolotl) *S* ∈ *P* is represented as a D-dimensional vector
+of form *S* = [ *s* 1 *, . . ., s* *D* ], with min *i* ≤ *s* *i* ≤ max *i*, such
+that *O* ( *S* ) ∈ *R* . We also assume a minimization problem.
+
+
+VOLUME 13, 2025 207451
+
+
+**TABLE 3.** Statistical regression equations considered in the MAO-SRE.
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+**FIGURE 3.** Example of assortment in MAO-SRE.
+
+Algorithm 1 presents the general pseudocode of the proposed MAO-SRE. Algorithm 2 presents the pseudocode
+of the Transition procedure of the algorithms; Algorithm
+3 presents the pseudocode for the Injury and Restoration
+procedure, and Algorithm 4 shows the pseudocode for the
+Crossover procedure.
+As in [59], the novel assortment operator, as in
+Algorithm 4, considers crossing individuals with different
+numbers of dimensions (i.e., parents having SRE with a
+different number of parameters). Our proposal still obtains
+two eggs, one with the equation with fewer parameters and
+the other with the equation with more parameters. We use
+uniform crossover for the minimum number of parameters
+for both eggs, and we complete the egg with more parameters
+with the parent’s values, with the same parameter number.
+The advantages of the proposed MAO-SRE are its ability
+to handle variable-length solutions, to simultaneously select
+the desired SRE, and to optimize its parameters in a single
+procedure.
+
+
+Table 3. However, the proposal allows the use of any number
+of SREs.
+
+Thus, to obtain the novel MAO-SRE, we were inspired by
+the variable-length optimization strategy proposed in [59],
+and modified the MAO algorithm as follows:
+
+1) We transition the first dimension (corresponding to the
+SRE number) by selecting a random number in [ *1,*
+*ne* ], where *ne* is the number of SREs. We maintain the
+transition equation for the remaining *D* dimensions.
+2) We restore the first dimension by rounding the results
+of the restoring equation to the next integer number in
+
+[ *1, ne* ].
+3) We design a novel assortment operator and modify
+the assortment of individuals as follows: If the parents
+have SRE with a different number of parameters (for
+instance, equations 1 and 3), we will obtain two eggs,
+one with the equation of the female and the other with
+the equation of the male. We will use uniform crossover
+for the minimum number of parameters for both eggs.
+Then, for the egg with more parameters, we will use
+the parent’s values with the same parameter number
+(Figure 3).
+
+These novel modifications described in Algorithms 1 to 4
+(Figures 4-7) allow us to optimize simultaneously the SRE
+to be selected, as well as its parameters. In addition, such
+modifications are applicable to other SREs, not limited to the
+ones in Table 3, which makes the novel MAO-SRE useful for
+different scenarios involving the optimization of equations.
+
+
+**FIGURE 4.** Algorithm 1. MAO-SRE.
+
+For 20 SREs and 200 iterations, we can obtain the optimized solution in just 200 iterations, while the classic MAO
+needs 20 × 200 = 4000 iterations. In addition, the proposed
+
+
+207452 VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+**FIGURE 7.** Algorithm 4. New life (Assortment).
+
+
+**FIGURE 5.** Algorithm 2. Transition from larva to adult.
+
+**FIGURE 6.** Algorithm 3. Injury and Restoration.
+
+MAO-SRE is not exclusive to statistical regression equations,
+nor to SDEP. As a metaheuristic, it can be applied to any problem considering a set of possible functions (first dimension),
+with a variable number of parameters by function, as long as
+those variables are defined in the same interval.
+Otherwise, the proposed assortment operator can return
+invalid solutions. It is essential to mention that in our exper
+
+iments, the assortment procedure does not produce invalid
+solutions, because all statistical regression equations used are
+
+−
+defined in the same interval [ 10, 10].
+We conducted an ablation study to analyze the effect of
+population size and number of evaluations in the proposed
+MAO-SRE. The results for population size and evaluation
+number are in Appendix B. The study suggests that each
+individual should have an average number of evaluations
+between 10 and 50.
+
+The following section presents the details regarding the
+model training and data sets used.
+
+**IV. PREDICTION MODELS AND SOFTWARE DATA SETS**
+
+This section presents the prediction models used in this
+research, as well as the selected data sets of software projects.
+Additionally, it covers the validation procedures and performance measures that are analyzed.
+
+*A. PREDICTION MODELS AND PARAMETERS*
+
+In this study, we apply a novel MAO-based algorithm for
+the parameter optimization of statistical regression equations
+(SRE) employed in SDEP (referred to as MAO-SRE), including the selection of equations themselves. Each equation is
+derived from a regression analysis. The optimization of SRE
+is also based on those nine studies of Table 1, which involve
+the optimization of the SRE parameters using a metaheuristic.
+We tested three machine learning models and three
+metaheuristic optimization algorithms, along with statistical regression. The selected machine learning models were
+multilayer perceptron neural network (MLP), support vector
+regression (SVR), and random forest (RF).
+For MLP [60], we used a neural network with the following
+architecture: an input layer, one hidden layer, and an output
+
+
+VOLUME 13, 2025 207453
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+layer. The types of SVR we used were *ε* -SVR and *v* -SVR.
+The *ε* -SVR performs prediction tasks from the *ε* -insensitive
+loss function (i.e., the *ε* -SVR tolerates an absolute value of
+at most *ε* for the difference between the actual value and
+
+predicted value) [61], whereas the *v* -SVR minimizes the *ε* insensitive loss function and changes the SVR formulation
+using a *v* parameter having a value between zero and one [62].
+Sometimes, data are non-linearly separable, and a kernel
+is used for a higher-dimensional space representation. Thus,
+we used four types of kernels by type of SVR (linear, polynomial, radial basis function, and sigmoid) [63].
+The small size of the data sets, the small number of parameters, and their limited range, as determined by the model
+to be optimized, enabled an exhaustive search for optimal
+MLP and SVR parameter values. Table 4 includes the optimal
+values found for MLP and SVR by data set described in
+‘‘B. Data sets of software projects’’ section, once a leaveone-out cross-validation was performed. Finally, the Random
+Forest ensemble for regression had 100 base trees of 10-level
+depth each. The metaheuristic algorithms evaluated along
+with MAO were particle swarm optimization (PSO) [64]
+and genetic algorithms (GA), both commonly used in SDEP
+models (Appendix A.I).
+
+**TABLE 4.** Optimal parameter values for MLP and SVR (NHL: number of
+hidden layers; LR: Learning Rate; M: Momentum; SVRT: SVR type; KT:
+Kernel type, PV: Parameter values).
+
+**TABLE 5.** Metaheuristic algorithms applied in feature weighting of SDEP
+models.
+
+
+Several equations have been developed for particle updating [65], all accounting for the swarm’s individual and global
+knowledge. Several variants of PSO have been introduced,
+and PSO-SRE is one of them [49]. In addition, we also consider a version of GA to optimize the parameters of SRE by a
+GA algorithm (hereafter termed GA-SRE). Table 5 presents
+the parameters for MAO-SRE, PSO-SRE, and GA-SRE.
+The criteria for selecting these models are the following:
+
+1) The prediction accuracy of machine learning models
+has mostly been compared to the SRE accuracy [5], [7].
+2) The prediction accuracy of SRE has been reported as
+better than that obtained from machine learning models [7].
+3) Two systematic reviews of the literature published in
+2012 [5] and 2019 [7] about SDEP have reported
+the multilayer back-propagation neural network (MLP)
+and the support vector regression (SVR) as the more
+accurate machine learning models.
+4) A new proposed SDEP model should at least outperform SRE [66].
+5) The nine studies of Table 1 involved an SRE for comparing its performance to that of the new proposed
+model.
+
+6) In accordance with Appendix A, PSO and GA algorithms are the most used in the SDEP field.
+7) The PSO-SRE [49] uses the same data sets, validation
+method, and prediction accuracy criteria used in the
+present study.
+
+Thus, we observed the recommendations of a recent systematic literature review on SDEP studies [2], in the sense of
+(1) using the same data sets, (2) using the same prediction
+accuracy measure, and (3) training and testing the models
+using the same validation method.
+
+*B. DATA SETS OF SOFTWARE PROJECTS*
+
+The algorithms in our study were trained and tested with data
+sets obtained from the ISBSG release 2018, which contains
+8,261 software projects developed between 1989 and 2016 in
+32 countries [67]. The development platforms reported by the
+ISBSG are multiplatform (Multi), personal computer (PC),
+midrange (MR), and Mainframe (MF). The different types of
+programming languages are considered as application generator, second (2GL), third (3GL), and fourth (4GL) generation.
+The resource level is classified into four levels in accordance with the manner in which that effort is quantified (level
+1 is used in our study, which corresponds to development
+team effort). The data sets were selected observing the ISBSG
+guidelines mentioned in Table 6, which are: taking into
+account the quality of data, functional size method, type of
+development, development platform, programming language
+type, and resource level type [25].
+Eight data sets involving 1,500 projects from the 2,054
+projects of Table 7 were finally selected for our study. Data
+sets of Table 7 were obtained based on the following data
+preprocessing [49]:
+
+
+207454 VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+
+The quality data of projects ranges from ‘‘A’’ to ‘‘D’’ types.
+The ‘‘A’’ and ‘‘B’’ were selected since they are recommended
+by the ISBSG for statistical analysis [25].
+The type of functional size method selected was IFPUG.
+The pre-IFPUG V4 projects with V4 and post V4 should
+not be merged (ISBSG, 2018b); thus, only projects with a
+functional size method corresponding to IFPUG 4+ were
+selected. The ISBSG reports the functional size method in
+adjusted function points, a composite value computed from
+nineteen variables. The unadjusted function points are calculated based on internal logical files, external interface
+files, external inputs, external outputs, and external inquiries.
+This value is then adjusted using fourteen variables: data
+communications, distributed data processing, performance,
+heavily used configuration, transaction rate, online data
+entry, end-user efficiency, online update, complex processing,
+reusability, installation ease, operational ease, multiple sites,
+and facilitate change [68].
+A scatter plot of the raw data set of Table 7 was generated
+(Appendix C) to select the data sets according to the ISBSG
+criteria. All of them showed skewness, heteroscedasticity, and
+the presence of outliers. After applying the *χ* 2, Shapiro-Wilk,
+skewness, and kurtosis statistical normality tests to *effort* and
+*adjusted function points* variables, the hypothesis that *effort*
+and *adjusted function points* come from a normal distribution
+was rejected for all cases with 99% confidence. Thus, data
+were normalized by applying the natural logarithm (ln) [66].
+
+**TABLE 6.** Selection criteria for ISBSG Release 18 data sets.
+
+**TABLE 7.** Data sets used for training and testing the MAO-SRE, SRE, MLP,
+SVR, and PSO-SRE models (Type: type of development, Set: Data set
+identifier, Plat: Development platform, Lang: Programming language type,
+NSP: Number of Software Projects).
+
+In each scatter plot containing transformed (i.e., normalized) data, outliers were identified based on studentized
+
+
+residuals having an absolute value higher than 2.5. A 5%
+of outliers by data set was the maximum acceptable [69].
+A positive correlation coefficient was only acceptable if the
+assumption of all equations coincided with the development
+effort; that is, the larger the size, the higher the effort.
+A minimum percentage of 50% for the coefficient of determination was used because it has been minimally accepted for
+SDEP models [70]. Considering the characteristics described
+above, we selected eight data sets (Table 7 ).
+
+*C. VALIDATION AND PERFORMANCE*
+
+We used the leave-one-out cross-validation (LOOCV) procedure for training and testing the models. Regarding performance, we compute absolute residuals (AR), which is a
+symmetric measure and unbiased since it is not based on
+ratios. The advantages of AR are that it provides an original
+measure of the size of the prediction error, indicating how far
+the prediction of the model is from the actual value, which
+can make the error interpretation more intuitive. AR has been
+recommended over other measures based on ratios such as the
+
+magnitude of relative error, which has even been qualified
+as ‘‘deprecated’’ [24]. Absolute Residuals are calculated as
+follows [49]:
+
+AR *i* = |ActualEffort *i* − PredictedEffort *i* | (4)
+
+An absolute residual is calculated for each software project
+*i* . The mean (MAR) of multiple software projects n is
+obtained as:
+
+MAR = �1� *n* � [�] AR *i* (5)
+
+The MdAR represents the median of the ARs. We also
+used standardized accuracy (SA) to determine if the modelperforms better than random estimating Po, where *MAR* ¯ *Po*
+is the mean value of a large number of runs of random
+guessing [26]:
+
+*SA* = 1 − *[MAR]* ¯ ∗ 100 (6)
+
+*MAR* *Po*
+
+Finally, we applied the effect size ( *�* ) measure considering
+*S* *Po* as the sample standard deviation of the random guessing
+strategy. A *�* value larger than or equal to 0.5 is recommended for good predictions.
+
+*MAR* ¯ *Po*
+*�* = *[MAR]* [ −] (7)
+*S* *Po*
+
+The explanatory variable used is the size represented in
+adjusted function points, whose value is calculated from nineteen explanatory variables mentioned in the ‘‘B. Data sets of
+software projects’’ subsection.
+
+**V. RESULTS, DISCUSSION, AND VALIDITY**
+We present the numerical results of the compared models
+through a leave-one-out cross-validation on the eight selected
+data sets. Then, we discuss the proposed research hypothesis by statistical analysis and finally present some validity
+threads for the research.
+
+
+VOLUME 13, 2025 207455
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+*A. NUMERICAL RESULTS*
+
+We computed the four previously mentioned measures
+(MAR, MdAR, SA, and *�* ) for the seven compared models
+(SRE, MLP, SVR, RF, GA-SRE, PSO-SRE, and MAO-SRE).
+Tables 8-11 include the MAR, MdAR, SA, and *�* results
+obtained once the models were applied to the eight data sets,
+respectively.
+In addition, we analyzed the execution time of the
+compared algorithms (Table 12). As shown, the complete
+LOOCV procedure was performed in less than a minute for
+the biggest data set. The proposed model has execution times
+similar to those of GA-SRE and PSO-SRE. The fastest model
+
+was SRE, and the slowest were MLP and RF.
+
+**TABLE 8.** MAR prediction accuracies by model.
+
+**TABLE 9.** MdAR prediction accuracies by model.
+
+**TABLE 10.** SA prediction accuracies by model.
+
+Table 13 includes the dispersion of ARs by model. It shows
+that MAO-SRE presents similar values to those of SRE,
+MLP, SVR, and PSO-SRE. Moreover, it shows that RF and
+GA-SRE have the highest values with respect to the other five
+models. As for effect size values obtained (Table 11) all of
+them had a value higher than 0.70, that is, all of them higher
+
+
+**TABLE 11.** ***�*** prediction accuracies by model.
+
+**TABLE 12.** Execution time (in seconds) of the LOOCV procedure by model.
+
+than that recommended (0.5), then the application of any of
+the models suggests a large effect.
+
+**TABLE 13.** Standard deviation by model.
+
+*B. DISCUSSION*
+
+We obtained the ARs of MAO-SRE and the ARs of each
+
+prediction model to conduct a statistical analysis by data
+set. Then, we analyzed whether the data were normally distributed. The *χ* [2], Shapiro-Wilk, skewness, and kurtosis tests
+of normality were performed (Appendix C.I ). As shown,
+at least one model by data set does not follow a normal distribution. Therefore, we conclude that non-parametric statistical
+analysis is better suited for our data (Table 14). Accordingly,
+we used a combination of the Friedman test for comparing
+*k* related samples, followed by a post hoc test to mitigate
+inflated Type I error.
+We selected a significance level of 0.05 for a 95% confidence, and for each data set, we tested the following null (H 0 )
+and alternative (H 1 ) hypotheses with adjusted function points
+as the explanatory variable:
+
+
+207456 VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+**TABLE 14.** Statistical tests for the compared models.
+
+H 0 : The predictive accuracy of MAO-SRE is statistically
+equal to that of SRE, MLP, SVR, RF, GA-SRE, and PSO-SRE
+for predicting the development effort of software projects.
+
+
+H 1 : The predictive accuracy of MAO-SRE is statistically
+not equal to that of SRE, MLP, SVR, RF, GA-SRE, and
+PSO-SRE for predicting the development effort of software
+projects.
+The Friedman test rejected the null hypothesis for all data
+sets with p-values lower than 0.0000, and we conducted the
+corresponding post hoc analysis using Holm’s test.
+Table 14 presents the results for Friedman’s ranking as
+well as Holm’s post hoc statistical comparison between the
+best-ranked algorithms and the remaining ones for the eight
+data sets. MAO-SRE and PSO-SRE were the best-ranked
+
+models for half of the data sets. MAO-SRE was statistically
+different (i.e., had lower ARs) than PSO-SRE for data sets
+D1, D4, and D5. At the same time, PSO-SRE was statistically
+different (i.e., had lower ARs) than MAO-SRE for data sets
+D6 and D8. No significant differences between MAO-SRE
+and PSO-SRE were found for data sets D2 and D3.
+
+All remaining models were significantly different (i.e.,
+worse, with higher ARs) than the corresponding best-ranked
+algorithm (MAO-SRE or PSO-SRE).
+These results suggest that MAO-SRE can be used to
+predict the software development effort of a project, considering the following related to development type, development
+platform, and programming language type when adjusted
+function points are the explanatory variable:
+
+1) Software enhancement projects coded in 3GL and
+developed in Mainframe, MidRange, or Multiplatform.
+2) New software projects coded in 3GL and developed in
+Mainframe or Multiplatform.
+3) New or enhancement software projects coded in 4GL
+and developed in Multiplatform.
+
+Moreover, the PSO-SRE can also be applied as an alternative
+in software enhancement projects coded in 3GL and developed on personal computers due to the good performance
+of PSO-SRE when applied to the same data sets used in the
+present study [49].
+MAO-SRE improves upon previous swarm optimization
+methods by enabling rapid convergence, typically within only
+500 objective function evaluations, while maintaining a small
+population size of 10 individuals. Despite its compact design,
+the algorithm does not compromise the capacity to explore the
+search space effectively. Instead, it achieves a robust balance
+between exploration and exploitation, allowing it to identify
+high-quality solutions efficiently. This equilibrium is crucial
+in optimization contexts where premature convergence can
+lead to suboptimal results.
+By leveraging the collective intelligence of the swarm
+and using female and male subpopulations, MAO-SRE
+enhances diversity during the initial iterations and progressively focuses on fine-tuning the most promising regions of
+the search space as the process advances.
+Furthermore, this optimization framework is not limited to
+the prediction of SRE parameters. Its versatility makes it suitable for broader applications in computational intelligence,
+particularly in tuning the architecture and hyperparameters of
+
+
+VOLUME 13, 2025 207457
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+deep learning models or similar complex tasks. The method’s
+efficiency in resource utilization and convergence rate positions it as a promising alternative to traditional optimization
+algorithms.
+
+*C. LIMITATIONS AND VALIDITY*
+
+In the following, we summarize the main limitations of our
+study, as follows:
+
+1) We could only use eight data sets from the ISBSG
+Release 2018 by observing the ISBSG guidelines for
+selecting suitable data sets.
+2) We could only compare our results with one metaheuristic algorithm (i.e., PSO-SRE), which had been
+trained and tested using the same experimental design
+as the one followed in the present study.
+3) Other factors influence SDEP, such as those related
+to software (i.e., experience on similar projects, specialization, or knowledge of developing technology).
+However, the ISBSG did not include data regarding
+these factors.
+
+4) To be able to compare MAO-SRE in fair conditions
+to other metaheuristics, we will need to change the
+corresponding metaheuristics to be able to optimize
+several equations simultaneously. That is, we need to
+modify the internal procedure of the metaheuristics one
+by one.
+
+Four possible types of validity threats can be addressed into a
+software prediction models field [71] which were addressed
+in our study as follows:
+
+1) EXTERNALS
+(1) A poor quality in the first SDLC phase depicted in
+Figure 1 (i.e., requirements specification) not only provokes
+delays in the next SDLC phases and increases the cost of
+a software project [72] but also in the context of SDEP.
+The explanatory variable used by the MAO-SRE is the size
+represented in adjusted function points, which means that the
+accuracy of MAO-SRE’s predictions will rely on the accurate
+estimation of this variable, which will depend on the product
+quality obtained from the first SDLC phase, that is, on a
+good specification of requirements of the software project,
+and (2) The performance of the MAO-SRE was obtained
+observing the ISBSG guidelines, therefore, the performance
+of the MAO-SRE will depend of selecting projects having
+the same criteria used in the present study, such as, size type,
+type of development, development platform, programming
+language type, and resource level; unfortunately, we could
+not use data sets of those previous related studies included
+in Table 2 except one of them [49], once they did not used
+the ISBSG, therefore it was impossible to select the data
+sets observing the ISBSG suggested criteria, (3) Although
+the type of projects were developed into multiple types of
+both industry sectors and applications, the application of
+MAO-SRE will depend of similar projects used in our study
+such as communications, insurance, manufacturing, govern
+
+ment, banking, medical and health care, financial, electronics,
+and service industry [67].
+
+2) INTERNAL
+We selected the ‘‘A’’ and ‘‘B’’ rankings regarding quality
+data once the ISBSG suggested them for statistical analysis;
+however, we do not know the statistical criteria followed for
+the ISBSG, such that this suggestion has been generated.
+
+3) CONSTRUCT
+We transformed the values of both explanatory and dependent
+variables using the natural logarithm. Thus, they were not
+used in their actual form.
+
+Conclusions: A common concern into the software engineering prediction field is related to the uncertainty [73], [74].
+This validity threat does not apply due to our conclusions
+have been supported on statistical significance.
+
+**VI. CONCLUSION**
+
+Results after comparing the MAO-SRE performance to those
+obtained from the SRE, MLP, SVR, RF, PSO-SRE, and
+
+GA-SRE allow us to conclude that MAO-SRE can be used to
+
+predict, from the project size represented in adjusted function
+points, the software development effort of a project selected,
+taking into account its development type, development platform, programming language type, and the manner in which
+the effort was quantified.
+The proposed MAO-SRE can be used for other SDEP
+models without restriction on the number of SREs to be
+
+considered. On the one hand, future work will include the
+MAO-SRE application in software organizations. On the
+other hand, in addition to feature weighting, feature selection
+has been performed based on metaheuristic algorithms into
+the SDEP field; however, the use of metaheuristic algorithms
+for feature selection is reported as scarce in a systematic literature review on SDEP published in 2019 [7], which reports
+the use of only three of them: genetic algorithms, PSO, and
+Tabu search.
+
+Future work will involve the following issues:
+
+1) In addition to feature weighting, feature selection has
+been performed based on metaheuristic algorithms in
+the SDEP field; however, the use of metaheuristic algorithms for feature selection is reported as scarce in
+a systematic literature review on SDEP published in
+2019 [7], which reports the use of only three of them:
+genetic algorithms, PSO, and Tabu search. Thus, our
+future work will be based on the suggestion of the
+authors of the mentioned systematic review, that is,
+on the application of algorithms such as ant colony,
+wolf, cuckoo, harmony, firefly, and bee searching to
+feature selection. Moreover, these algorithms will be
+trained and tested using data sets of the most recent
+ISBSG release.
+
+2) Explainable models correspond to a recent field into
+the software engineering prediction field [75], [76],
+
+
+207458 VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+thus, future work will be focused on proposing models
+to predict software quality, including the number of
+defects and defect density, as well as to predict whether
+the software will fail or not from interpretable prediction models.
+
+**APPENDIX A**
+
+**METAHEURISTIC ALGORITHMS REVIEWED**
+
+Table 15 present the metaheuristic algorithms identified in
+the review of the papers related to software effort prediction
+since 2000. As shown, the most used models are Genetic
+Algorithms and Particle Swarm Optimization.
+
+**TABLE 15.** Metaheuristic algorithms applied in feature weighting of SDEP
+models.
+
+**APPENDIX B**
+
+**ABLATION STUDY FOR MAO-SRE**
+
+The effect of population size in MAO-SRE was studied with
+a fixed number of 500 evaluations of the objective function.
+We tested populations from 10 to 50 individuals, with increments of 10 in each case. Table 16 presents the average MAR
+values of five independent executions.
+As shown, the increase in the population with a fixed
+number of function evaluations degrades the performance of
+the algorithm.
+
+
+**TABLE 16.** MAR prediction accuracies of MAO-SRE with different
+population sizes, for 500 evaluations.
+
+The effect of the number of evaluations in MAO-SRE was
+
+studied with a fixed number of 10 individuals. We tested
+populations from 100, 250, 500, and 1000 evaluations of
+the objective functions. Table 17 presents the average MAR
+values of five independent executions. As shown, increasing
+the number of evaluations from 500 to 1000 degraded the
+performance of MAO-SRE.
+
+**TABLE 17.** MAR prediction accuracies of MAO-SRE with different
+numbers of evaluations, for 10 individuals.
+
+We theorize that the increased exploitation mechanism,
+resulting from more iterations, leads to overfitting of the SRE
+model, thereby degrading its generalization ability. However,
+having only 100 evaluations (10 per individual on average)
+was not enough for some data sets (d1, d2, d5) where more
+evaluations lead to better results.
+
+Based on the studies performed, we consider that an
+increased population hinders the exploration and exploitation
+of the MAO heuristic, and increasing the number of evaluations leads to overfitting. Therefore, we suggest maintaining
+a population such that each individual has between 10 and
+50 functional evaluations on average.
+
+**APPENDIX C**
+
+**SCATTER PLOT AND NORMALITY TESTS FOR THE DATA**
+
+Figures 8-15 show the scatter plot of the raw data sets of
+Table 7.
+
+The normality of the AR data for each of the compared
+models for each data set was tested by using the *χ* [2], ShapiroWilk, skewness, and kurtosis tests of normality (Table 18).
+The hypotheses to be tested by model and data set are the
+following:
+
+
+VOLUME 13, 2025 207459
+
+
+**FIGURE 8.** Scatter plot of data set d1: New, Mainframe, 3GL.
+
+**FIGURE 9.** Scatter plot of data set d2: New, Multiplatform, 3GL.
+
+**FIGURE 10.** Scatter plot of data set d3: New, Multiplatform, 4GL.
+
+**FIGURE 11.** Scatter plot of data set d4: Enhancement, Mainframe, 3GL.
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+**FIGURE 12.** Scatter plot of data set d5: Enhancement, MidRange, 3GL.
+
+**FIGURE 13.** Scatter plot of data set d6: Enhancement, Multiplatform, 3GL.
+
+**FIGURE 14.** Scatter plot of data set d7: Enhancement, Multiplatform, 4GL.
+
+**FIGURE 15.** Scatter plot of data set d8: Enhancement, Personal Computer,
+3GL.
+
+
+H 0 : The data of differences comes from a normal distribution (i.e., there are no differences in the analyzed data and the
+data from a normal distribution).
+
+
+H1 : There are differences in the analyzed data and the data
+from a normal distribution.
+
+
+207460 VOLUME 13, 2025
+
+
+Y. Villuendas-Rey et al.: Swarm Intelligence for Predicting Software Development Effort
+
+
+**TABLE 18.** Statistical tests for data distribution by models and data sets.
+
+We select a significance level of 0.05 for 95% confidence.
+If the smallest p-value amongst the four tests performed
+is less than 0.05, we can reject the idea that the data of
+differences comes from a normal distribution, whereas if the
+
+
+smallest p-value amongst the tests is greater than or equal to
+0.05, we cannot reject the idea that the data set of differences
+comes from a normal distribution with 95% confidence.

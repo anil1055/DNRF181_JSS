@@ -1,0 +1,45 @@
+Based on the provided research paper, here's a thorough analysis of the paper and identification of the predictors used for estimating web application effort.
+
+1.  **Introduction**: 
+    -   The paper discusses the challenges associated with effort estimation in Scrum projects.
+    -   Traditional methods are criticized for their inadequacy, resulting in inaccurate estimates, which can lead to project overruns and budget issues.
+    
+2.  **Methodology**:
+    -   The researcher collected a dataset containing 140 user stories with 12 input features (effort drivers) and estimated effort in story points.
+    -   They employed a range of machine learning (ML) algorithms, including Ridge Regression (RR), Extremely Randomized Trees (ET), Decision Tree (DT), Random Forest (RF), Support Vector Regressor (SVR), K-Nearest Neighbors (KNN), and Multi-Layer Perceptron (MLP).
+    -   An ensemble model was created by integrating the predictions of the mentioned models to overcome individual model limitations.
+    
+3.  **Feature Selection**:
+    -   The researcher chose mutual information (MI) for selecting features and controlling the selection process.
+    -   Features were categorized into numerical (team member count, average experience, size, complexity, priority, and number of tasks) and categorical (programming languages, development types, platforms, required databases, and additional tools).
+    -   After analyzing feature importance using MI, the top five features were selected for model development: complexity, size, related technologies, programming languages, and platforms.
+    
+4.  **Predictors Used**:
+    -   From the above analysis, we find that the following predictors are used for estimating web application effort in the proposed ensemble model:
+        -   Complexity: Measures the intrinsic scale of the user story, capturing the intricacies and nuances of the task.
+        -   Size: Represents the amount of work required to implement the user story, reflecting the scale and scope of the undertaking.
+        -   Related Technologies: Highlights the team's familiarity with the technologies needed to execute the task, influencing the ease of implementation and potential difficulties.
+        -   Programming Languages: Captures the impact of choosing a specific programming language on the task's complexity and execution speed.
+        -   Platforms: Reflects the development environment, which might affect the technicalities of implementing the user story.
+        
+5.  **Evaluation Metrics**:
+    -   The researcher employed several evaluation metrics to assess the performance of the models, including mean absolute error (MAE), mean squared error (MSE), and root mean squared error (RMSE).
+    
+6.  **Results and Discussion**:
+    -   The proposed ensemble model exhibited the best performance, outperforming individual models in estimation efforts.
+    -   Among the individual models, ridge regression (RR) proved to be the most successful, while decision trees (DT) and support vector regressor (SVR) displayed the poorest performances.
+    -   The ensemble model was shown to maintain its high-performance even on a separate and more comprehensive dataset, demonstrating its robustness and generalizability.
+    
+7.  **Statistical Testing**:
+    -   The researcher used the Wilcoxon signed-rank test to establish the statistical significance of the ensemble model's advantages over the individual models.
+    -   Significant statistical differences were detected between the ensemble and the three individual models (ET, RR, and MLP), confirming the ensemble's supremacy.
+
+By considering the research paper carefully, the predictors used for estimating web application effort in the proposed ensemble model can be summarized as:
+
+1.  **User Story Complexity**: Representing the intrinsicscale of the story.
+2.  **Story Size**: Measuring the amount ofworkrequired to implement the story.
+3.  **Technological Familiarity**: Highlighting the team's know-how regarding the technologies needed for the task.
+4.  **Programming Languages**: Influencing the complexity and execution speed based on the chosen programming language.
+5.  **Platforms/Environment**: Effecting the technical aspects of implementing the user story.
+
+Overall, the predictor choice demonstrates that the proposed ensemble model focuses primarily on those factors that contribute meaningfully to the complexity and feasibility of executing a user story, aiming to deliver a more accurate effort estimation in Scrum projects.

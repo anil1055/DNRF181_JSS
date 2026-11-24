@@ -1,0 +1,44 @@
+After carefully analyzing the provided research paper titled "A Predictive Model for Story Points Leveraging Features Like Readability and Sentiment from User Story Description," I will now present a comprehensive summary of the paper:
+
+**Summary:**
+
+This paper proposes and validates a novel predictive model, named NEOSP, to estimate Story Points (SP) for agile software development using features extracted from user story titles and descriptions. The authors address the challenge of developing efficient effort estimation models using deep learning techniques, which often require extensive computation resources and time for feature extraction and training. Instead, they focus on extracting features manually using natural language processing (NLP) techniques.
+
+**Research Questions:**
+The primary objectives of this study are to investigate whether a model incorporating readability, sentiment, and subjectivity features extracted from user story titles and descriptions can accurately predict SP and compare its performance against established baselines, namely Mean-Based Regression (MBR) and TF-IDF-SVM (TFIDFSE).
+
+**Methodology:**
+
+1.  **Data Collection**: The authors utilized the NEO Dataset, comprising 34 open-source projects hosted on GitLab, providing a rich collection of user stories and corresponding story points.
+2.  **Preprocessing**: After joining the title and description of each user story into a single string ("context"), several NLP techniques were employed to preprocess the text, including removing stop words, extra whitespace, punctuation, numbers, and HTML tags.
+3.  **Feature Extraction**: Eleven readability and sentiment-related features were extracted from the preprocessed text using libraries `textstat` and `TextBlob`. These features included Gunning Fog, Flesch Reading Ease, Flesch-Kincaid Grade Level, Smog Index, Coleman-Liau Index, Automated Readability Index, Dale-Chall Readability Score, Difficult Words, Linsear Write Formula, Polarity, and Subjectivity.
+4.  **Model Development**: The extracted features served as inputs for a Support Vector Regressor (SVR) model, while the sentiment classification was handled using the Pattern Analyser algorithm from the `Pattern` library.
+5.  **Performance Evaluation**: The Mean Absolute Error (MAE) was adopted as the primary evaluation metric to assess the effectiveness of the proposed model in predicting SP. Cross-validation was conducted across ten folds, followed by the Wilcoxon signed-rank test to establish statistically significant differences between the performance of NEOSP and the baselines (MBR and TFIDFSE).
+
+**Findings:**
+
+1.  Compared to MBRR, NEOSP exhibited a superior MAE in nearly all cases, although there was one instance where MBRR outperformed NEOSP. Nevertheless, a statistically significant improvement was observed in 27 out of 34 projects.
+2.  When contrasted with TFIDFSE, NEOSP displayed comparable performance, surpassing it in 29 instances and being surpassed in five. Statistical significance was confirmed in twelve cases via the Wilcoxon test.
+3.  Notably, NEOSP proved to be substantially faster in feature extraction and training times compared to the baselines.
+
+**Conclusion:**
+
+The proposed NEOSP model demonstrated promising results in estimating Story Points leveraging readability, sentiment, and subjectivity features derived from user story titles and descriptions. Its performance was competitive with state-of-the-art methods and even surpassed them in certain aspects. Moreover, NEOSP offers considerable advantages regarding computational efficiency. As recommended, further investigation into expanding the scope of applicable datasets and refining the model's robustness might lead to enhanced outcomes.
+
+To answer your question about which predictors are used for estimating Web Application Effort, the paper utilizes the following predictors:
+
+1.  Readability indicators:
+    *   Gunning Fog Index
+    *   Flesch Reading Ease
+    *   Flesch-Kincaid Grade Level
+    *   Smog Index
+    *   Coleman-Liau Index
+    *   Automated Readability Index
+    *   Dale-Chall Readability Score
+    *   Difficult Words
+    *   Linsear Write Formula
+2.  Sentiment Analysis:
+    *   Polarity (using TextBlob's sentipolarity() function)
+    *   Subjectivity (using TextBlob's sentimentsubjectivity() function)
+
+These predictors serve as essential components of the NEOSP model, enabling it to effectively capture meaningful patterns within the user story texts and ultimately contribute to improved effort estimation capabilities.
