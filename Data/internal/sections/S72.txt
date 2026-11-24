@@ -1,0 +1,1048 @@
+Third International Symposium on Empirical Software Engineering and Measurement
+# **Applying Support Vector Regression for Web Effort Estimation using a ** **Cross-Company Dataset **
+
+A. Corazza [1], S. Di Martino [1], F. Ferrucci [2], C. Gravino [2], E. Mendes [3]
+*1* *University of Napoli “Federico II”, Via Cinthia, I-80126, Napoli, Italy*
+*{corazza, dimartino}@ na.infn.it*
+*2* *University of Salerno, Via Ponte Don Melillo, I-84084Fisciano (SA) Italy*
+*{fferrucci,gravino}@unisa.it*
+*3* *The University of Auckland, Private Bag 92019, Auckland, New Zealand*
+*emilia@cs.auckland.ac.nz*
+
+**Abstract** **1. Introduction**
+
+*Support Vector Regression (SVR) is a new* In this paper, we analyze the use of *Support Vector*
+*generation of Machine Learning algorithms, suitable* *Regression* (SVR) for Web development effort
+*for predictive data modeling problems. The objective* estimation. SVR is an approach based on Support
+*of this paper is to investigate the effectiveness of SVR* Vector Machines, which are a new generation of
+*for Web effort estimation, in particular when dealing* Machine Learning algorithms [39][41]. As a positive
+*with a cross-company dataset. To gain a deeper insight* aspect, SVR can be easily integrated with *kernel*
+*on the method, we carried out an empirical study using* *functions* allowing the learning mechanism to adapt to
+*four kernels for SVR, namely linear, polynomial,* different datasets.
+*Gaussian, and sigmoid. Moreover, we used two* To the best of our knowledge, only two previous
+*variables’ preprocessing strategies (normalization and* studies have investigated the application of SVR for
+*logarithmic), and two different dependent variables* effort estimation, and neither focused on Web effort
+*(effort and inverse effort). As a result, SVR was applied* estimation, nor on the use of cross-company datasets.
+*using six different configurations for each kernel.* The first study that applied SVR for software effort
+*As for the dataset, we employed the Tukutuku* estimation [31] used data on 18 software projects from
+*database, which is widely adopted in Web effort* a NASA dataset [2] and reported that SVR
+*estimation studies. A hold-out approach was adopted* significantly outperformed both linear regression and
+*to evaluate the prediction accuracy for all the* Radial Basis Function Networks (RBFNs). The second
+*configurations,* *using* *two* *training* *sets,* *each* study [4] compared various AI-based effort prediction
+*containing data on 130 projects randomly selected,* techniques using two single-company datasets. Their
+*and two test sets, each containing the remaining 65* results corroborated those from [31], showing that
+*projects. As benchmark, SVR-based predictions were* SVR performed very well. However, it is widely
+*also compared to predictions obtained using Manual* recognized that many software and Web companies for
+*StepWise Regression, Case-Based Reasoning, and* various reasons do not have their own single-company
+*Bayesian Networks.* datasets [14][21][30]. Therefore investigating the
+*Our results suggest that SVR performed well, since* effectiveness of SVR using a cross-company dataset
+*on the first hold-out, the linear kernel with a* seems a reasonable research question to investigate. In
+*logarithmic transformation of variables provided* addition, the datasets employed in previous studies did
+*significantly superior prediction accuracy than all the* not include data on Web projects. Thus, the
+*other techniques, while for the second hold-out, the* contribution of this paper is to investigate the
+*Gaussian kernel achieved significantly superior* effectiveness of SVR for Web effort estimation, using
+*predictions than all other techniques, except for* a cross-company data on Web projects from the
+*Manual StepWise Regression.* Tukutuku database [23]. This database has been widely
+
+used in the field of Web effort estimation
+
+[11][20][22][26][30], and contains data on 195 Web
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+191
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+applications developed all over the world, with
+different technologies, methodologies, and size. Each
+project is characterized by a set of 25 features.
+Four kernels for SVR were used, namely linear,
+polynomial, Gaussian, and sigmoid. Moreover, to
+reduce the risk that large differences in the variables’
+value ranges in the dataset (usual of cross-company
+datasets) could have unwanted effects on the
+predictions, two preprocessing strategies were applied
+to the variables, namely normalization and logarithmic.
+In addition, SVR was applied using six different
+configurations for each kernel: normalized features and
+both unprocessed and inverse effort; features in
+logarithmic scale with unprocessed effort, inverse
+effort, effort logarithm and effort logarithm’s inverse.
+To evaluate the prediction accuracy of SVR we used,
+for all the configurations, two training sets, each
+containing data on 130 projects randomly selected
+from the Tukutuku database, and two test sets, each
+containing the remaining 65 projects. As benchmark,
+we employed Manual StepWise Regression (MSWR)
+and Case-Based Reasoning (CBR) due to their frequent
+use in Web & software effort estimation studies,
+Bayesian Networks as used in [22], and the Mean
+effort and the Median effort of the training sets.
+Prediction accuracy was measured using the Mean
+Magnitude of Relative Error (MMRE) [7], the Median
+Magnitude of Relative Error (MdMRE) [7], Prediction
+at level *l*, where *l* = 25 (Pred(25)) [7], the Mean
+Magnitude of Relative Error relative to the Estimate
+(MEMRE) [17], the Median Magnitude of Relative
+Error relative to the Estimate (MdEMRE) [17],
+boxplots of absolute residuals (actual effort – estimated
+effort) and finally boxplots of z (estimated effort /
+actual effort). Accuracy of estimates was also assessed
+by statistical significance tests, in order to verify if the
+predictions obtained with one technique significantly
+outperformed those of the others.
+Consequently, the research questions addressed
+arein this paper are the following:
+
+−
+Is Support Vector Regression an affordable
+technique for effort estimation?
+
+−
+Are the effort predictions obtained by Support
+Vector Regression significantly superior to the ones
+obtained by other techniques?
+
+The remainder of the paper is organised as follows:
+in Section 2 there is a description of the dataset we
+used for our empirical study. In Section 3 we present
+the evaluation techniques employed to assess the
+effectiveness of the predictions. In Section 4 there is a
+description of the SVR approach, together with
+information on how we set-up some parameters for the
+evaluations. In Section 5 there is a discussion of the
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+results, together with a comparison with other widely
+adopted estimation techniques, while finally in Section
+6 there are some concluding remarks and comments on
+future work.
+
+**2. Dataset Description**
+
+In this section the Tukutuku database [23] is
+described. This database is part of the Tukutuku
+project, which aims to gather data from completed
+Web projects, to develop Web cost estimation models
+and to benchmark productivity across and within Web
+Companies [23]. This database includes information on
+Web hypermedia systems and Web applications [6].
+The former are characterized by the authoring of
+information using nodes (chunks of information), links
+(relations between nodes), anchors, access structures
+(for navigation) and its delivery over the Web. In
+addition, typical developers are writers, artists and
+organizations that wish to publish information on the
+Web and/or CD-ROMs without the need to use
+programming languages such as Java. Conversely, the
+latter represents applications that depend on the Web
+or use the Web's infrastructure for execution and are
+characterized by functionality affecting the state of the
+underlying business logic. Web applications usually
+include tools suited to handle persistent data, e.g. local
+file system, (remote) databases, or Web Services.
+Typical developers are young programmers fresh from
+a Computer Science or Software Engineering degree,
+managed by more senior staff.
+The Tukutuku database has data on 195 projects,
+where:
+
+−
+Projects came mostly from 10 different countries,
+mainly New Zealand (47%), Italy (17%), Spain
+(16%), Brazil (10%), United States (4%), England
+(2%), and Canada (2%).
+
+−
+Project types are new developments (65.6%) or
+enhancement projects (34.4%).
+
+−
+About dynamic technologies, PHP is used in 42.6%
+of the projects, ASP (VBScript or .Net) in 13.8%,
+Perl in 11.8%, J2EE in 9.2%, while 9.2% of the
+projects used other solutions. The remaining
+projects used only HTML and/or Javascript.
+Each Web project in the database was characterized by
+process and product variables [23]. Summary statistics
+for the numerical variables from the Tukutuku database
+are given in Table 1, while Table 2 summarizes the
+number and percentages of projects for the categorical
+variables. Note that those variables are binary, and for
+our analysis their values have been coded by positive
+integers, namely 1 (for “new” and “no”) and 2 (for
+“enhancement” and “yes”).
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+192
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+**Table 1: Summary Statistics for numerical**
+**variables of Tukutuku database**
+
+|Variable|Mean|Med.|Std.<br>Dev|Min|Max|
+|---|---|---|---|---|---|
+|nlang|3.9|4|1.4|1|8|
+|DevTeam|2.6|2|2.4|1|23|
+|TeamExp|3.8|4|2.0|1|10|
+|TotEff|468.1|88|938.5|1.1|5,000|
+|TotWP|69.5|26|185.7|1|2,000|
+|NewWP|49.5|10|179.1|0|1,980|
+|TotImg|98.6|40|218.4|0|1,820|
+|NewImg|38.3|1|125.5|0|1,000|
+|Fots|3.2|1|6.2|0|63|
+|HFotsA|12.0|0|59.9|0|611|
+|Hnew|2.1|0|4.7|0|27|
+|totHigh|1|59.6|0.0|611|611|
+|FotsA|2.2|0|4.5|0|38|
+|New|4.2|1|9.7|0|99|
+|totNHigh|6.5|4|13.2|0|137|
+
+
+
+**Table 2: Summary of number of projects and**
+**percentages for categorical variables of**
+**Tukutuku database**
+
+|Variable|Level|Num.<br>Projects|% Projects|
+|---|---|---|---|
+|TypeProj|Enhancement|128|65.6|
+|TypeProj|New|67|34.4|
+|DocProc|No|104|53.3|
+|DocProc|Yes|91|46.7|
+|ProImpr|No|105|53.8|
+|ProImpr|Yes|90|46.2|
+|Metrics|No|130|66.7|
+|Metrics|Yes|65|33.3|
+
+
+
+The variable names have the following meaning:
+
+ - *nlang* : Number of programming languages adopted
+in the project.
+
+ - *DevTeam* : Number of Developers involved in the
+project.
+
+ - *TeamExp* : Mean number of years of experience for
+the team members.
+
+ - *TotEff* : Effort in person-hours.
+
+ - *TotWP* : Total number of Web pages (new and
+reused).
+
+ - *NewWP* : Total number of new Web pages.
+
+ - *TotImg* : Total number of images (new and reused).
+
+ - *NewImg* : Total number of new images.
+
+ - *Fots* : Number of features/functions reused without
+any adaptation.
+
+ - *HFotsA* : Number of reused high-effort features/
+functions adapted.
+
+ - *Hnew* : Number of new high-effort features/
+functions.
+
+ - *totHigh* : Total number of high-effort features/
+functions.
+
+ - *FotsA* : Number of reused low-effort features adapted.
+
+ - *New* : Number of new low-effort features/functions.
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+
+- *totNHigh* : Total number of low-effort features/
+functions.
+
+**3. Support Vector Regression**
+
+In this section, we present Support Vector
+Regression (SVR) and describe the settings employed
+in our case study. SVR is a regression technique based
+on Support Vector Machines, a very effective and
+mathematically well founded machine learning
+approach [39],[41].
+The large number of applications of support vector
+approaches to machine learning tasks are due not only
+to their performance, but also to the fact that they can
+be easily paired with “kernel functions”, which, as
+discussed below, allow an actual nonlinear
+transformation of the input data space. For the problem
+at hand, we consider the application of the support
+vector approach to function estimation, obtaining a
+Support Vector Regression (SVR). A good
+introduction to SVR’s mathematical background, some
+extensions, implementations and a list of references are
+given in [37]. Pointers to papers about SVR’s history
+can also be found in the References Section of the cited
+
+tutorial.
+
+**Figure 1 The soft margin loss setting for a**
+**linear SVM [37]**
+
+In effort estimation, both input features and effort
+estimate, are real numbers. In the version of ε-SVR
+where no kernel is introduced, we aim at finding the
+line which best approximates the training data, but we
+allow an error no greater than ε, thus focusing on
+training points which are further than ε from the
+candidate line. Amongst all possible solutions, the
+flattest one is chosen.
+In some cases, it is not possible to find a function
+satisfying all constraints, and the introduction of slack
+variables becomes necessary in order to relax the ε
+precision constraint for some of the points. A constant
+C is introduced to represent a tradeoff between the
+flatness of the function and the amount of error
+introduced by slack variables. Efficiency reasons
+suggest the solution of the optimization problem in the
+primary or dual space depending on whether the
+number of dimensions is smaller or larger than the
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+193
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+number of training examples. The solution of the dual
+problem, with the introduction of Lagrange multipliers,
+shows how the solution can be expressed as a linear
+combination of some of the training examples, namely
+the support vectors. The complexity of the function
+representation only depends on their number.
+Moreover, the introduction of Lagrange multipliers and
+dual space solution makes the use of kernel functions
+
+[36] particularly smooth. Kernels are very effective to
+solve the problem using a non-linear case. Indeed,
+using a kernel corresponds to a dot product in the
+feature space, where we apply the linear version of
+support vector machines. The literature proposes a
+large choice of such functions; some of them are of
+general application, while others are specific to
+particular domains. All induce different deformations
+of the input data space. For our case study, we applied
+four kernels, namely linear, polynomial, Gaussian and
+sigmoid, using the SVM-light software [18] [1] .
+The actual application of SVR requires the choice
+of values for two sets of parameters: one regarding the
+support vector algorithm, including the choice of ε and
+C, as discussed above, and a second set regarding the
+specific kernel adopted. In our experiments, we have
+tested various parameter settings. The results of a set of
+preliminary experiments performed basically
+confirmed the discussion reported in [31], where the
+best predictions were obtained with small values of ε
+(10-4).
+Another key point of the application of SVR relates
+to the features’ normalization. Large differences in the
+features’ values can have the unwanted effect of giving
+greater importance to some of the examples with
+respect to the others. This is especially true for the data
+we considered, since, as reported in Table 1, the
+feature values corresponding to the different projects
+are very different in the Tukutuku database (e.g.:
+nLang is in a range 1..8, while TotWP is 1..2000]). To
+avoid such a risk, we considered two possible
+strategies: normalization and logarithmic
+preprocessing. The former consists in separately
+considering each feature vector and dividing each of its
+elements by the norm of the vector, in order to force all
+vectors to have norm equal to one. Logarithmic
+preprocessing is usually adopted to reduce differences
+between values: herein we applied it to all the features’
+values. Crucially, both operations only require the
+knowledge of a single feature vector and can be
+applied also to new items for which effort needs to be
+evaluated.
+Furthermore, let us recall that among the different
+solutions, SVR chooses the one corresponding to the
+
+1 SVM-light is freely available in
+http://svmlight.joachims.org/ for scientific use.
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+flattest. This is not necessarily the best choice in our
+case because, from a managerial point of view, the
+flattest solution is the one that most underestimates the
+
+effort. We therefore considered a version of the
+experiment having for goal function the inverse of
+effort (1/e). The two problems are equivalent, except
+that the flattest solution of one case corresponds to the
+steepest one of the other, and vice-versa.
+Moreover, when we considered features in the
+logarithmic scale, we also compared the results
+obtained by unprocessed effort and with its logarithm,
+both in the direct and inverse versions. Differences
+
+between the two could be connected to a better fit of
+the function to be estimated. Note, for example, that
+when a linearity test gives a negative outcome,
+meaning that linearity regression cannot be linearly
+applied, the logarithm is applied instead to raise the
+probability that the data will fit a linear function
+
+[23],[28].
+In conclusion, SVR was applied in six different
+configurations summarized in Table 3.
+
+**Table 3: The considered SVR Configurations**
+
+
+
+
+|Configu-<br>ration|Dependent<br>variable|Variable transformation|
+|---|---|---|
+|C1|EFH|No transformation of the<br>variables|
+|C2|EFH|Normalization of the features|
+|C3|EFH|Log transformation of the effort<br>and features|
+|C4|1/ EFH|Normalization of the features|
+|C5|1/ EFH|Log transformation of the<br>features|
+|C6|1/ EFH|Log transformation of the effort<br>and features|
+
+
+**4. Validation Method and Evaluation**
+
+**Criteria**
+
+We assessed SVR’s effectiveness by randomly
+splitting the dataset into a training (used to train the
+algorithms) and a test set. Note that this was
+completely distinct from the training set used to assess
+the evaluation parameters. Such hold out methodology
+assumes the experimental conditions to remain
+constant, that is, that there is not a temporal evolution
+which causes the experimental conditions to change. In
+the final application, data collected in the past will be
+used to build an estimator able to solve problems in the
+future, and such procedure is effective only as long as
+the overall contextual conditions remain sufficiently
+constant. In such constant conditions, hold-out
+validation is definitely fair, since the observations
+included in the test set are completely different from
+those used to obtain the estimates.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+194
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+It is our view that considering only one split into
+training and test sets, even if randomly selected, can be
+misleading as it can correspond to either an extremely
+advantageous or, on the contrary, disadvantageous,
+split. Therefore, in our study, we used two random
+splits, so that the probability of having such extreme
+cases in both experiments was highly reduced. In order
+to compare the results obtained using SVR with other
+effort estimation techniques, such as Manual Stepwise
+Regression (MSWR), Case-Based reasoning (CBR),
+and Bayesian Networks (BNs), these two splits were
+the same employed by Mendes in [20], where the
+training set was obtained by randomly selecting 130
+observations from the original 195 projects contained
+in the Tukutuku database, while the remaining 65
+observations were included in the test set.
+To assess the accuracy of the obtained estimations, we
+employed commonly used measures such as the *Mean*
+*of Magnitude of Relative Error* (MMRE), *Median of*
+*MRE* (MdMRE), and *Prediction at level 25* (Pred(25))
+
+[8]. MRE is the basis for calculating MMRE and
+MdMRE, and defined as:
+MRE **=** |e-ê|/e (1)
+where *e* represents actual effort and *ê* estimated effort.
+MMRE and MdMRE represent the mean and the
+median, respectively, of the MRE values of all the
+observations in the test set. The difference between
+
+MMRE and MdMRE is that the former is sensitive to
+predictions containing extreme MRE values. Pred( *l* )
+measures the percentage of estimates that are within *l* %
+of the actual values, and *l* is usually set at 25.
+Note that Kitchenham *et al.* [13] showed that
+MMRE and Pred( *l* ) are respectively measures of the
+spread and kurtosis of *z*, where ( *z* = ê|/e). They
+suggested the use of boxplots of *z* and boxplots of the
+residuals (e-ê) as useful alternatives to simple
+summary measures since they can give a good
+indication of the distribution of residuals and *z* and can
+help explain summary statistics such as MMRE and
+Pred( *l* ). Indeed, boxplots are widely employed in
+exploratory data analysis since they provide a quick
+visual representation to summarize the data, using five
+values: median, upper and lower quartiles, minimum
+and maximum values, and outliers [13].
+The same authors suggested the use of the
+Magnitude of Relative Error relative to the Estimate
+(EMRE) as a comparative measure as well. The EMRE
+has the same form as MRE, but the denominator is the
+estimate, giving thus a stronger penalty to underestimates. As with the MRE, we can also calculate the
+mean EMRE (MEMRE) and Median EMRE
+(MdEMRE).
+Following the suggestion of Mendes and
+Kitchenham [14][21], we also compared MMRE,
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+MdMRE, and Pred(25) using two models based on the
+mean effort (i.e., MeanEffort) and median effort (i.e.,
+MedianEffort) as predicted values, respectively. The
+aim was to have a benchmark to assess whether the
+estimates obtained with a prediction technique are
+significantly better than estimates based on the mean or
+median effort. In addition, as benchmark, we also
+employed MSWR and CBR due to their frequent use in
+Web & software effort estimation studies, and BNs, as
+used in [22].
+The statistical significance of the results was tested
+using absolute residuals, to establish if one estimation
+technique provided significantly better results than the
+others [13],[28]. Statistical significance tests are used
+to assess whether two sets of data come from the same
+population. If they do, we can conclude that neither of
+the two experiments significantly outperforms the
+other.
+
+**5. Results and Discussion**
+
+Section 5.1 presents the results obtained when
+applying SVR with the different settings detailed in
+Table 3; Section 5.2 compares the best SVR result with
+those obtained by Mendes with MSWR, CBR, and
+BNs in a previous case study that used the same
+validation sets [20].
+
+**5.1.** **Comparison** **among** **different** **SVR**
+**configurations**
+
+The results in terms of MMRE, MdMRE, Pred(25),
+MEMRE, and MdEMRE obtained by applying the
+different SVR configurations are reported in Table 8
+(at the end of the paper).
+When variables were not transformed (i.e., C1), the
+best results in terms of MMRE, MdMRE, Pred(25),
+MEMRE, and MdEMRE were obtained using the
+Gaussian kernel (i.e, Gau) for both validation sets. In
+order to verify if the differences observed using these
+measures are legitimate or due to chance we needed to
+check if the absolute residuals obtained with the
+different settings came from the same population,
+which is done by applying a statistical significance test.
+The statistical significance of all results was checked
+using the nonparametric test Wilcoxon Signed Ranks
+test (α = 0.05). Results showed that the absolute
+residuals based on the Gaussian kernel were
+significantly smaller than those obtained with other
+configurations (except for the first validation set where
+the Gaussian kernel provided results comparable to
+those achieved using the Linear kernel).
+As for the normalization-based configurations (i.e.,
+C2), the best results were obtained using the
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+195
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+Polynomial kernel. Note that the Gaussian kernel
+presented the best MMRE; however, the remaining
+indicators MdMRE, MEMRE, and MdEMRE were
+worse than those using the Linear kernel. Also in this
+case the Wilcoxon test revealed that absolute residuals
+based on the Polynomial kernel were significantly
+smaller than those obtained with the other
+configurations (except for the second validation set
+where the Polynomial kernel provided results
+comparable with those achieved with the Linear
+kernel).
+Concerning the Log transformation-based
+configurations (i.e., C3), we can observe that the best
+results in terms of MMRE, MdMRE, Pred(25),
+MEMRE, and MdEMRE were obtained using the
+Linear kernel. Again, these results were confirmed by
+the Wilcoxon test when applied to absolute residuals,
+thus showing a statistically significant difference in
+favor of the Linear kernel.
+The Linear kernel also provided the best results in
+terms of MMRE, MdMRE, Pred(25), MEMRE, and
+MdEMRE when configuration C4 was employed.
+Furthermore, the Wilcoxon test showed that absolute
+residuals based on the Linear kernel were significantly
+smaller than those obtained with the other
+configurations (except for the second validation set
+using Gaussian kernel and the first validation set using
+Polynomial kernel).
+By applying SVR with configurations C5 and C6
+the best results in terms of MMRE, MdMRE, Pred(25),
+MEMRE, and MdEMRE were obtained using the
+Gaussian kernel. As for the significant differences
+between the absolute residuals obtained with the
+
+different kernels, the Wilcoxon test showed that the
+absolute residuals based on the Gaussian kernel were
+significantly smaller than those obtained using the
+other kernels.
+In order to establish which SVR configuration
+provided the best results we compared the summary
+measures MMRE, MdMRE, Pred(25), MEMRE, and
+MdEMRE and boxplots of absolute residuals, obtained
+by considering the best configuration for each setting
+presented in Table 3. The analysis of summary
+statistics suggested that the best results were achieved
+with C3 employing the Linear kernel for the first
+validation set, while for the second validation set the
+best results were provided by C6 using the Gaussian
+kernel. Observe that in the case of the first validation
+set, C6 with Gaussian kernel provided results very
+close to the ones of C3 with the Linear kernel. In
+particular, C6 presented a better MMRE value, but its
+MEMRE value was worse than C3’s MEMRE value.
+Thus, we considered C3 to be superior. This result is
+confirmed by the boxplots in Figure 2, which show that
+C3’s distribution, with the Linear kernel, is less
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+skewed than those of the other boxplots; in addition its
+median is closer to zero, and its outliers are closer to
+the tails, when compared to the outliers for the other
+boxplots. As for the second validation set, MMRE,
+MdMRE, Pred(25), MEMRE, and MdEMRE values
+obtained with C6 using the Gaussian kernel were better
+than those obtained with the other settings. Again, this
+result is confirmed by the boxplots in Figure 3, which
+show less skewed distribution for C6 with the Gaussian
+
+kernel and a median closer to zero.
+
+**Figure 2 – Boxplots of absolute residuals**
+**obtained with the SVR configurations for the**
+**first validation set**
+
+In order to verify if the differences observed using
+summary measures and boxplots of absolute residuals
+were legitimate or due to chance, we also checked the
+statistical significance of the results by applying the
+Wilcoxon test on the absolute residuals. The results for
+the first and the second validation set are reported in
+Table 4 and Table 5, respectively, where “Yes” in a
+cell means that the technique indicated on the row is
+significantly superior to the one indicated on the
+column. Regarding the first validation set, the results
+showed that the absolute residuals based on C3 using
+the Linear kernel were significantly smaller than those
+obtained using C1, C2, C4, and C5 (p-values < 0.005).
+Moreover, if we take into account summary measures,
+the boxplots of absolute residuals, and the results of the
+Wilcoxon test, we can observe that C3 using the Linear
+kernel also provided (not significantly) better results
+than C6 with the Gaussian kernel.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+196
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+**Figure 3 – Boxplots of absolute residuals**
+**obtained with the SVR configurations for the**
+**second validation set**
+
+**Table 4. Comparison of the absolute residuals**
+**obtained with the different SVR settings using**
+**Wilcoxon test (p-value between brackets) for**
+**the first validation set**
+
+
+
+
+
+
+
+
+
+
+
+|<|C1<br>Gau|C2<br>Pol|C3<br>Lin|C4<br>Lin|C5<br>Gau|C6<br>Gau|
+|---|---|---|---|---|---|---|
+|C1<br>Gau|-|-|-|No<br>(0.809)|No<br>(0.226)|-|
+|C2<br>Pol|Yes<br>(0.019<br>)|-|-|No<br>(0.734)|Yes<br>(0.019)|-|
+|C3<br>Lin|Yes<br>(0.000<br>)|Yes<br>(0.000)|-|Yes<br>(0.005)|Yes<br>(0.000)|No<br>(0.052)|
+|C4<br>Lin|-|-|-|-|No<br>(0.326)|No<br>(0.911)|
+|C5<br>Gau|-|-|-|-|-|-|
+|C6<br>Gau|Yes<br>(0.001<br>)|Yes<br>(0.010)|-|-|Yes<br>(0.000)|-|
+
+
+**Table 5. Comparison of the absolute residuals**
+**obtained with the different SVR settings using**
+**Wilcoxon test (p-value between brackets) for**
+**the second validation set**
+
+
+As for the second validation set, the results showed
+that the absolute residuals based on C6 using the
+Gaussian kernel were significantly smaller than those
+obtained using C1, C2, C4, and C5 (p-values < 0.003).
+Moreover, if we take into account summary measures,
+the boxplots of absolute residuals, and the results of the
+Wilcoxon test we can observe that C6 using the
+Gaussian kernel also provided (not significantly) better
+results than C3 with the Linear kernel.
+
+**5.2. Comparison with other techniques**
+
+In this section, we compare the results achieved
+using SVR with those obtained by Mendes in [20]
+when applying MSWR, CBR, and BNs, using the same
+validation sets. Table 6 and Table 7 report the MMRE,
+MdMRE, Pred(25), MEMRE, and MdEMRE obtained
+in [20]. We adopted the following acronyms:
+
+- BNAuHu: BN automatically generated using the
+Hugin Bayesian Network tool;
+
+- BNHyHu: BN Hybrid model using Hugin;
+
+- MSWR: Manual Stepwise Regression;
+
+- CBR1: CBR using one analogy;
+
+- CBR2: CBR using two analogies;
+
+- CBR3: CBR using three analogies;
+
+- MeanEffort: Mean value of the effort in the
+
+dataset;
+
+- MedianEffort: Median value of the effort in the
+
+dataset.
+
+Readers are referred to [20] for details on how these
+models were created. The summary measures MMRE,
+MdMRE, Pred(25), MEMRE, and MdEMRE suggest
+that, for both validation sets, SVR provided better
+results than the other techniques, even though they do
+not fit the thresholds suggested by Conte *et al.* [8].
+Moreover, even if all the techniques outperformed
+MeanEffort, only SVR and MSWR are characterized
+by better prediction accuracy (in terms of summary
+measures) than MedianEffort.
+
+**Table 6. Prediction accuracy obtained using**
+**t** **h** **e** **fir** **st** **v** **a** **li** **dat** **i** **o** **n** **set**
+
+
+
+
+
+
+
+
+
+
+
+|<|C1<br>Gau|C2<br>Pol|C3<br>Lin|C4<br>Lin|C5<br>Gau|C6<br>Gau|
+|---|---|---|---|---|---|---|
+|C1<br>Gau|-|No<br>(0.580)|-|No<br>(0.858)|No<br>(0.739)|-|
+|C2<br>Pol|-|-|-|No<br>(0.633)|No<br>(0.669)|-|
+|C3<br>Lin|Yes<br>(0.001)|Yes<br>(0.031)|-|No<br>(0.362)|No<br>(0.154)|No<br>(0.910)|
+|C4<br>Lin|-|-|-|-|No<br>(0.699)|-|
+|C5<br>Gau|-|-|-|-|-|-|
+|C6<br>Gau|Yes<br>(0.000)|Yes<br>(0.000)|-|Yes<br>(0.003)|Yes<br>(0.000)|-|
+
+|Col1|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|---|---|---|---|---|---|
+|SVR<br>(C3)|0.78|0.38|0.32|0.79|0.53|
+|MSWR|1.50|0.64|0.23|1.36|0.64|
+|CBR1|5.27|0.97|0.08|31.70|3.43|
+|CBR2|5.06|0.87|0.11|3.59|0.81|
+|CBR3|5.63|0.97|0.09|4.17|0.88|
+|BNAuHu|7.65|1.67|7.69|1.07|0.76|
+|BNHyHu|1.90|0.86|0.15|13.06|2.38|
+|Median<br>Effort|5.02|0.93|0.09|4.43|0.94|
+|Mean<br>Effort|30.35|3.99|15.38|1.07|0.91|
+
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+197
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+Figure 4 and Figure 5 show boxplots of absolute
+residuals and z, respectively, obtained for the first
+validation set. The analysis of these boxplots confirms
+the patterns abovementioned. Indeed, even though the
+boxplots of absolute residuals of SVR, MSWR, CBR2,
+BNHyHu, and MedianEffort are very similar, SVR’s
+distribution is less skewed than the other distributions.
+Furthermore, the outliers of SVR’s boxplot are closer
+to the tails than the outliers for the other techniques,
+and the median of SVR boxplot is closer to zero.
+Similar considerations can be done for the boxplots of
+z. The boxplots of absolute residuals and z also suggest
+that the estimations provided by CBR are slightly
+worse that those obtained by using SVR, BNHyHu,
+and MSWR.
+
+**Table 7. Prediction accuracy obtained using**
+**t** **h** **e** **seco** **n** **d** **v** **a** **li** **dat** **i** **o** **n** **set**
+
+|Col1|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|---|---|---|---|---|---|
+|SVR (C6)|0.64|0.43|0.28|1.91|0.50|
+|MSWR|0.73|0.66|0.11|2.86|1.21|
+|CBR1|4.46|0.92|0.08|21.81|0.95|
+|CBR2|6.73|0.89|0.15|15.65|0.90|
+|CBR3|6.09|0.84|0.09|13.26|0.89|
+|BNAuHu|4.09|0.96|0.02|7.90|0.93|
+|BNHyHu|27.95|5.31|0.09|1.34|0.90|
+|Median<br>Effort|4.95|0.89|0.15|4.62|0.78|
+|Mean<br>Effort|27.94|5.31|0.03|1.34|0.90|
+
+
+
+**Figure 4 – Boxplots of absolute residuals for**
+**the first validation set**
+
+As for the second validation set, the boxplots of
+absolute residuals and z are shown in Figure 6 and
+Figure 7, respectively. The analysis of these boxplots
+confirms the results provided above. Indeed, the
+median of the boxplots of absolute residuals for SVR,
+MSWR, and MedianEffort are very similar and their
+distributions are less skewed than those for the other
+boxplots. On the other hand, the boxplots of z suggest
+that SVR and MSWR provided better results than
+MedianEffort. Indeed, the median of SVR and MSWR
+boxplots are closer to zero and these boxplots are less
+skewed than the other boxplots. Furthermore, the
+outliers of the SVR and MSWR are closer to the tails
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+with respect to those of the others. Differently from the
+first validation set, the boxplots of absolute residuals
+and z also revealed that the results obtained with
+BNHyHu are worse than those obtained with the other
+techniques.
+
+**Figure 5– Boxplots of z for the first validation**
+
+**Figure 6– Boxplots of absolute residuals for**
+
+**Figure 7– Boxplots of z for the second (b)**
+**validation set**
+
+In order to verify if the differences observed using
+summary measures and boxplots are legitimate or due
+to chance, we again, we applied the Wilcoxon test (α =
+0.05). The results, reported in Table 9 and Table 10
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+198
+
+
+Third International Symposium on Empirical Software Engineering and Measurement
+
+
+(last page of the paper), led us to the following
+observations:
+1. The predictions obtained with SVR were
+significantly superior to those obtained with all the
+other techniques on the first validation set. With
+the second one, SVR predictions were
+significantly superior to all the techniques, but
+MSWR, with a confidence of 95%. If we use a
+confidence of 90%, SVR is superior to all the
+techniques.
+2. All the estimations obtained using the analyzed
+techniques (except for BNAuHu for the first
+validation set) were significantly superior to those
+using MeanEffort. Thus, for a software company,
+it is vault to use a prediction technique instead of
+using the simple mean effort of the previous
+projects.
+3. Only SVR and MSWR provide significantly
+superior accuracy to MedianEffort.
+4. MSWR significantly outperforms the BN-based
+techniques and the three CBR configurations.
+5. The three CBR configurations, and CBR2 and
+CBR3 provided better results than BNAuHu,
+while no difference has been found between the
+three CBR configurations.
+From all these considerations, we can positively
+answer our first research question “Is Support Vector
+Regression an affordable technique for effort
+estimation?”. About the second research question “Are
+the effort predictions obtained by Support Vector
+Regression significantly superior to the ones obtained
+by other techniques?”, we can give a partially positive
+answer, since SVR outperformed all the techniques
+that are to date the most widely and successfully
+employed prediction techniques in Software
+Engineering, both in terms of summary indicators and
+statistical significance (with a confidence of 90%).
+
+**7. Conclusions**
+
+In the paper, we described the application of
+Support Vector Regression to a cross-company dataset
+of Web applications, the Tukutuku database. In
+particular, we explored and compared different
+configurations and preprocessing filters to be applied
+to data and tested them on two different splits of the
+Tukutuku database into training and test sets. As a
+result, we have observed that the flexibility of the
+method, determined by the possibility of exploiting
+different kernels and parameters settings, allowed the
+learning mechanism to adapt to the characteristics of
+the different datasets. In particular, on the former split,
+SVR with linear kernel and log transformation of both
+the features and the effort to be estimated
+outperformed all other configurations and techniques
+with a confidence of 95%. Also on the latter split the
+log transformation of both features and effort obtained
+very good results, but in this case using the inverse of
+the log effort instead than directly the log effort proved
+to be a better choice. Moreover, the Gaussian kernel
+worked better than the linear one. All in all, in both
+cases, SVR outperformed all other techniques, with the
+exception of MSR on the second split, with a
+confidence of 95%. The improvement on MSR on the
+second split had a confidence of more than 90%.
+In conclusion, we can affirm that SVR has proven
+to be the best technique, among the ones we
+considered, for predicting the development effort on
+the considered cross-company dataset. Of course, the
+experimental results here presented hold only with
+respect to the Tukutuku database and they should be
+assessed on further data as soon as they are available.
+However, they are surely interesting enough to suggest
+the use of SVR among the techniques that are suitable
+for Web development effort estimation using a crosscompany database. As for future work, we intend to
+identify the characteristics of the datasets that make
+them more suitable for a specific kernel or parameter
+setting with the aim to design a Recommender System
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+
+that could adopt the best configurations for SVR based
+on the features of the specific dataset.
+
+**Table 8. Accurac** **y** **measures obtained b** **y** **usin** **g** **the considered SVR confi** **g** **urations**
+
+
+
+
+|Col1|Col2|First training and test sets|Col4|Col5|Col6|Col7|Second training and test sets|Col9|Col10|Col11|Col12|
+|---|---|---|---|---|---|---|---|---|---|---|---|
+|Conf.|Kernel|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|C1|Lin|4.67|0.91|0.11|2.37|0.78|5.50|2.04|0.08|1.30|0.80|
+|C1|Pol|2968.39|8.21|0.08|1.46|0.98|533.40|9.65|0.05|1.6|1.02|
+|C1|Gau|2.96|0.80|0.17|2.54|0.80|2.86|0.95|0.17|2.39|0.67|
+|C1|Sig|5.63|0.95|0.11|3.84|0.85|6.31|0.96|0.12|3.69|0.74|
+|C2|Lin|1.45|0.81|0.08|7.25|1.58|2.40|0.77|0.15|3.35|0.69|
+|C2|Pol|1.25|0.73|0.17|2.63|0.71|1.90|0.72|0.17|4.01|0.70|
+|C2|Gau|0.81|0.85|0.17|14.50|4.27|0.85|0.68|0.14|16.76|1.80|
+|C2|Sig|2.08|0.85|0.08|3.94|0.81|2.60|0.83|0.18|3.81|0.71|
+|C3|Lin|0.78|0.38|0.32|0.79|0.53|0.84|0.53|0.25|0.71|0.51|
+|C3|Pol|1.08|0.58|0.20|4.95|0.91|1.77|0.62|0.23|2.34|0.69|
+|C3|Gau|1.81|0.85|0.11|2.40|0.75|2.68|0.60|0.19|2.70|0.60|
+|C3|Sig|1.84|0.85|0.16|13.44|2.46|2.45|0.76|0.08|9.59|0.95|
+|C4|Lin|0.88|0.56|0.27|1.89|0.60|0.93|0.58|0.22|2.63|0.54|
+|C4|Pol|1.19|0.65|0.20|1.89|0.63|0.95|0.59|0.2|2.64|0.50|
+|C4|Gau|0.88|0.77|0.13|7.94|1.93|0.84|0.65|0.15|7.29|1.27|
+|C4|Sig|1.82|0.96|0.05|12.96|1.79|1.86|0.90|0.11|15.43|0.12|
+|C5|Lin|0.98|0.94|0.03|18.40|4.37|1.00|0.86|0.05|25.60|3.02|
+|C5|Pol|1.33|1.00|0.05|89.43|9.00|0.95|0.97|0.06|97.72|7.42|
+|C5|Gau|0.70|0.68|0.17|5.49|0.82|0.60|0.16|0.23|6.40|0.68|
+|C5|Sig|1.09|0.94|0.05|40.59|9.13|1.02|0.90|0.05|43.97|6.64|
+|C6|Lin|2.69|0.67|0.20|1.41|0.80|1001.44|0.61|0.14|0.99|0.64|
+|C6|Pol|2167.26|1.00|0.03|6,31E+18|119.68|1.45E+6|0.98|0.03|16.2E+9|37.63|
+|C6|Gau|0.61|0.39|0.32|1.71|0.52|0.64|0.43|0.28|1.91|0.50|
+|C6|Sig|6.00|0.93|0.09|4.58|0.96|2.26E+8|0.97|0.14|4.45|0.78|
+
+
+**Table 9. Comparison of the absolute residuals obtained for the first validation set, using the**
+**Wilcoxon test** **(p** **-values are re** **p** **orted between brackets** **)**
+
+
+|<|MSWR|CBR1|CBR2|CBR3|BNAuHu|BNHyHu|Mean Effort|Median Effort|
+|---|---|---|---|---|---|---|---|---|
+|SVR (C3)|Yes<br>(0.023)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.002)|Yes<br>(0.000)|Yes<br>(0.000)|
+|MSWR|-|Yes<br>(0.000)|Yes<br>(0.002)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|
+|CBR2||-|Yes<br>(0.052)|No<br>(0.398)|No<br>(0.288)|-|Yes<br>(0.022)|-|
+|CBR2|||-|No<br>(0.227)|Yes<br>(0.022)|No<br>(0.229)|Yes<br>(0.000)|No<br>(0.335)|
+|CBR3||||-|Yes<br>(0.023)|No<br>(0.288)|Yes<br>(0.000)|No<br>(0.422)|
+|BNAuHu|||||-|-|No<br>(0.223)|No<br>(0.822)|
+|BNHyHu|||Yes<br>(0.000)||Yes<br>(0.038)|-|Yes<br>(0.022)|-|
+|Mean Effort|||||||-|-|
+|Median Effort|||Yes<br>(0.003)|||Yes<br>(0.042)|Yes<br>(0.002)|-|
+
+
+**Table 10. Comparison of the absolute residuals obtained for the second validation set, using the**
+**Wilcoxon test** **(p** **-values are re** **p** **orted between brackets** **)**
+
+|<|MSWR|CBR1|CBR2|CBR3|BNAuHu|BNHyHu|Mean Effort|Median Effort|
+|---|---|---|---|---|---|---|---|---|
+|SVR (C6)|No<br>(0.083)|Yes<br>(0.002)|Yes<br>(0.004)|Yes<br>(0.003)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|
+|MSWR|-|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.001)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.009)|
+|CBR1||-|No<br>(909)|No<br>(893)|No<br>(241)|Yes<br>(0.009)|Yes<br>(0.009)|-|
+|CBR2|||-|-|No<br>(0.380)|Yes<br>(0.000)|Yes<br>(0.000)|-|
+|CBR3|||Yes<br>(0.000)|-|No<br>(264)|Yes<br>(0.000)|Yes<br>(0.000)|-|
+|BNAuHu|||||-|Yes<br>(0.000)|Yes<br>(0.000)|-|
+|BNHyHu||||||-|Yes<br>(0.000)|-|
+|Mean Effort|||||||-||
+|Median Effort||Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|-|
+
+
+
+978-1-4244-4841-8/09/$25.00 ©2009 IEEE
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:42:44 UTC from IEEE Xplore. Restrictions apply.
+202

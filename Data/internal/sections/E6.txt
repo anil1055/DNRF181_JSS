@@ -1,0 +1,786 @@
+# **Empirical Evaluation and Prediction of Web Applications' Authoring ** **Effort **
+
+
+Rachel Fewster
+
+Statistics Department
+The University of Auckland
+
+Private Bag 92019
+Auckland, New Zealand
+[r.fewster@auckland.ac.nz](mailto:r.fewster@auckland.ac.nz)
+
+**Abstract**
+
+
+Emilia Mendes
+
+Computer Science Department
+
+The University of Auckland
+
+Private Bag 92019
+Auckland, New Zealand
+emilia@cs.auckland.ac.nz
+
+
+Predicting the effort required in developing Web applications, although a difficult task, plays
+
+an important role in the successful management of Web development projects.
+
+This paper has two objectives: i) the first one is to describe a quantitative case study which
+
+measured a set of proposed effort metrics and also the effort involved in authoring Web
+
+(World Wide Web) applications; and ii) the second one is to suggest a Generalised Linear
+
+Model (GLM) for effort prediction of Web applications' authoring.
+
+Results have shown that, based on the dataset used, three (half) of the proposed metrics
+
+should be included in the effort model generated.
+
+**1.** **Introduction**
+
+Since the beginning of this decade the World Wide Web (Web) has become the best known
+
+example of a hypermedia system. Numerous organisations world-wide have developed so far
+
+thousands of commercial and/or educational Web sites (applications) [1] . However, developing
+
+good quality Web sites has a high cost, mostly in time and amount of difficulty involved for
+
+the authors (Brown 1995). Consequently, by applying measurement principles to measure the
+
+quality of Web sites and their development process, feedback can be obtained to help
+
+improve products and processes.
+
+In addition, software practitioners in general recognise the importance of accurate estimates
+
+of development effort to the successful management of major software projects. The Web is
+
+no exception. By having realistic estimates at early stages in a project life cycle project
+
+managers and Web development organisations can manage resources properly.
+
+1 Web site is a synonym for Web application, which represent the end result of Web development process.
+
+1
+
+
+To address these issues, this paper presents the results of a quantitative case study which
+
+empirically validates a set of metrics proposed to measure the effort involved in authoring
+
+Web applications. Authoring is considered a subset of the whole Web development,
+
+characterised by managing the actual content and structure of the application and how it is
+
+presented. The paper also investigates, based on the data collected in the case study, the use
+
+of Generalised Linear Models to estimate the effort involved in authoring Web applications.
+
+The proposed metrics adhere to the representational theory of measurement and have been
+
+theoretically validated according to the validation framework proposed by Kitchenham et al.
+
+(1995b). The theoretical validation is presented in (Mendes 1999).
+
+The case study is described in Section 2 and Section 3 presents the Generalised Linear Model
+
+for effort. Finally, we give our conclusions and comments on future work in Section 4.
+
+**2.** **The Quantitative Case Study**
+
+**2.1** **Description**
+
+Two questionnaires were used in the case study. The first one - Q1 - asked subjects to rate
+
+their level of Web authoring experience on a scale from 0 (no experience) to 10 (a great deal
+
+of experience). The second one - Q2 - (see Appendix A) was used to measure the predictor
+
+and response variables. Members of the research group checked both questionnaires for
+
+ambiguous questions, unusual tasks, definitions in the appendix and number of questions.
+
+The subjects who participated in the case study were 76 second-year Computer Science
+
+students from the University of Southampton attending the Human-Computer Interaction
+
+course. An analysis of the questionnaires obtained showed that six were missing fundamental
+
+information. Consequently, these samples were not used in the data analysis. The subjects
+
+were given coursework that consisted of developing Web applications to teach about Human
+Computer Interaction concepts. They were also required to structure their applications
+
+according to the Cognitive Flexibility Theory (CFT) (Spiro et al. 1995) principles, and to
+
+create the applications using a minimum of 50 documents.
+
+In order to reduce any learning effects (Kitchenham et al. 1995a) subjects were given an
+
+initial task – to author their personal Web pages. Two Web tutorials were suggested so that it
+
+would be possible for subjects with no Web authoring experience to learn how to author Web
+
+2
+
+
+pages. In addition, all the subjects received training on the CFT authoring principles (90
+
+minutes).
+
+Questionnaire Q2 was handed in together with the coursework. This questionnaire had two
+
+sections: one to collect attributes of the application and another to collect the *elapsed time*
+
+spent in authoring the application. Authoring was sub-divided into several sub-tasks, as
+
+follows:
+
+**Table 1** : Sub tasks used in the questionnaire
+
+**2.2** **Response and Predictor variables**
+
+The predictor variables (metrics) used in the case study evaluation were: *hyperdocument size*,
+
+*reused-documents, connectivity*, *perceived* *compactness*, *perceived stratum* and *structure of*
+
+*the application* ; The response variable used to measure authoring effort was the estimated
+
+*elapsed time* (number of hours) it took each subject to author the Web application.
+
+*Hyperdocument size* refers to the number of documents that each Web application has.
+
+Documents are HTML files, and a Web application is a collection of documents designed
+
+with a specific aim. In our case, the domain considered to be representative was education.
+
+The Web applications considered are ‘static’, where the number of dynamically generated
+
+pages is quite small, if not absent.
+
+*Reused-documents* represent the number of HTML files which have not been created from
+
+scratch.
+
+3
+
+
+*Connectivity* refers to the number of links that the Web application has. The links considered
+
+here are either structural or referential links (Conklin 1987), leaving apart dynamically
+
+computed links.
+
+*Compactness* (Botafogo et al. 1992) indicates how inter-connected the documents are. A
+
+completely connected application means that, from each document, there are links reaching
+
+all the other documents in the application. Compactness was measured in the case study
+
+evaluation by asking subjects to give an estimate of it, from 1 (completely disconnected) to 5
+
+(completely connected). Consequently, the compactness measured was the perceived
+
+compactness ( *P-Compactness* ).
+
+*Stratum* (Botafogo et al. 1992) indicates to what degree the Web application is organised for
+
+directed reading. A sequential application represents an application where there is only one
+
+path to be followed by the reader. For the case study evaluation, subjects were asked to
+
+estimate the stratum of the application, from 1 (no sequential navigation) to 5 (sequential
+
+navigation). Consequently, the stratum measured was the perceived stratum ( *P-Stratum* ).
+
+*Structure of the application* represents the way in which the documents have been linked:
+
+sequence, hierarchy, and network (Whalley 1990). A sequential structure corresponds to
+
+documents linearly linked; a hierarchical structure denotes documents linked in a tree shape
+
+and a network structure for documents linked in a net shape.
+
+**2.3** **Validity of the Case Study**
+
+This subsection presents the validity of the case study based on the three types of threats to
+
+the validity of an empirical study (Kitchenham et al. 1995a):
+
+1. Construct validity: Represents to what extent the predictor and response variables
+
+precisely measure the concepts they claim to measure.
+
+2. Internal validity: Represents to what extent conclusions can be drawn about the causal
+
+effect of the predictor variables on the response variables.
+
+3. External validity: Represents the domain to which a study’s findings can be generalised.
+
+**Construct Validity**
+
+The following problems might threaten the construct validity of the experiment:
+
+1. *P-Compactness* and *P-stratum* were estimated by subjects, rather than directly measured
+
+in the applications. It can be argued that estimated values are not ideal and may weaken
+
+4
+
+
+the results obtained. However, it would not be feasible to ask subjects to calculate
+
+themselves those measures as it would be very time-consuming. *Compactness*, as
+
+proposed by Botafogo et al. (1992), also uses an estimated value on its calculation (the
+
+conversion constant), leading to subjective measures as well. Finally, *stratum*, as
+
+proposed by Botafogo et al. (1992) is described by the authors as “not a perfect metric,
+
+where some problems are evident”. Therefore, we decided to re-use these concepts and
+
+measure them in a different way.
+
+2. Although the number of documents has been identified by hypermedia authors as a
+
+valuable metric to measure *hyperdocument size* (Mendes 1999), we are aware that there
+
+are other metrics which can also be used (for example, the length of the application, the
+
+complexity of documents and the functionality offered) and they will be the focus of our
+
+next evaluation.
+
+3. Although the questionnaire does not describe all the scale point definitions, guidance was
+
+given to students during the classes.
+
+**Internal Validity**
+
+The following problems might threaten the internal validity of the experiment:
+
+1. There were three confounding factors in this evaluation: i) subjects’ experience; ii)
+
+maturation effects, which are learning effects caused by subjects learning as an
+
+experiment proceeds; and iii) tools used to help author/manage the Web application. The
+
+data collected showed that: i) the experiences did vary greatly. Consequently, it was
+
+decided to consider two separate groups – subjects with experience levels ranging from 1
+
+to 5 (41 subjects) – LEL group - and subjects with experience levels ranging from 6 to 10
+
+(29 subjects) – HEL group; ii) subjects were asked to create their Web pages before
+
+authoring the applications and they all received training in the CFT principles.
+
+Consequently, it seems that the maturation effects were controlled, or at least reduced;
+
+and iii) the number of tools used did not vary greatly. This result was confirmed
+
+statistically.
+
+2. The selection effects, which are due to natural variations in subject performance, were
+
+controlled.
+
+3. The instrumentation effects in general did not occur in this evaluation. The questionnaires
+
+used were the same and the same system was used to author the applications.
+
+5
+
+
+**External Validity**
+
+The following problems might limit the external validity of the experiment:
+
+1. The results may be domain dependent as all the subjects answered the questionnaires
+
+based on their experience in authoring Web applications for education. This evaluation
+
+should therefore be repeated in domains other than education if the results are to be
+
+generalised to other domains.
+
+2. The experimental scale (Porter et al. 1997) is a threat when the experimental setting or the
+
+materials are not representative of industrial practice. The applications authored presented
+
+good quality interface and contents, when compared to other Web applications found in
+
+industry. Therefore, from this perspective it seems that those applications are
+
+representative of industrial practice, at least as far as Web authoring is concerned.
+
+3. The applications did not have more than 100 documents and 900 links, on average, as the
+
+subjects were supposed to spend only three working days on the coursework. These
+
+numbers represent small applications and are probably not representative of the large
+
+Web applications for education authored by some organisations, in general. On the other
+
+hand, the applications developed had a similar to or even better interface and contents
+
+quality than Web applications created by professionals, as noticed by one of the authors
+
+when marking the Web applications authored by the students. These results seem to
+
+indicate that the results of the case study are likely to scale-up.
+
+4. A threat to subject generalizability (Porter et al. 1997) may exist when the subject
+
+population is not drawn from the wider population. The subjects that participated in the
+
+case study may not be representative of Web professionals, since second-year Computer
+
+Science students cannot be categorised as experienced Web authors. The use of students
+
+as subjects, while sometimes considered unrealistic, is justified for two reasons: firstly,
+
+empirical evidence by Bohem-Davis and Ross (1992) indicates that students are equal to
+
+professionals in many quantifiable measures, including their approach to developing
+
+software; secondly, for pragmatic considerations, having students as subjects was the only
+
+viable option for this case study.
+
+**2.4** **Generalised Linear Model for Effort**
+
+We chose to model effort using the class of generalised linear models (GLMs) described in
+
+McCullagh and Nelder (1989). These models have the advantage of allowing relationships
+
+between response and predictor variables to be non-linear, providing considerable flexibility
+
+while still yielding to a rigorous statistical treatment.
+
+6
+
+
+In its most general form, a GLM consists of a response variable, *Y*, together with *p* predictor
+
+variables, *x* 1 *,...,x* *p* Here, *Y* might be a measurement of authoring effort for an application,
+# while x 1, ..., x p  represent properties of the application that affect the effort required, such as
+
+application size or complexity. A probability distribution is proposed for *Y*, chosen from a
+
+group of so-called exponential distributions (McCullagh and Nelder 1989). This group
+
+includes the familiar Gaussian, Gamma, Poisson and Binomial distributions, ensuring that a
+
+wide range of both skewed and symmetric distributional shapes can be accommodated.
+
+The dependence of *Y* on the predictor variables *x* 1 *,...,x* *p* is captured by modelling a
+
+transformation of the expected value of *Y* as a linear function of the predictors. We represent
+
+this as
+
+*g* ( *E* ( *Yi* )) =  0 +  1 *x* 1 *i* + ... +  *p* *x* *pi*, (1)
+
+where *Y* i is the *i* th instance of the response variable *Y*, and *E(Y* *i* *)* denotes the mean of the
+
+distribution of *Y* *i* . The quantities *x* 1 *i*,..., *x* *pi* denote the *i* th instances of variables *x* 1,..., *x* *p*
+
+respectively, and  *0* *,...,*  *p* are parameters to be estimated. The transformation *g* is a monotone
+
+function, and must be invertible over the whole real line. Since *E(Y* *i* *)* will generally be
+
+nonnegative in the present context, a suitable choice for g is the logarithmic function, which
+
+maps the nonnegative numbers onto the reals. The function g controls the nature of the non
+linear relationship between the response and predictor variables.
+
+Any GLM is specified by the two components above: a selected form for the probability
+
+distribution of *Y* (e.g. Gaussian, Poisson, etc.), and a transformation g that models the mean
+
+of this distribution as a function of the predictor variables *x* 1 *,...,x* *p* . The first component
+
+specifies the nature of the randomness inherent in observing *Y* - for example, whether *Y*
+
+comes from a symmetric Gaussian distribution and is equally likely to fall above or below the
+
+distribution mean, or whether the distribution of *Y* is skewed and departures from the
+
+distribution mean can be greater on one side than the other. The second component fixes the
+
+location of the distribution of *Y*, through knowledge of the other variables. On average, larger
+
+web applications are likely to require more effort than smaller ones; thus we use attributes
+
+such as application size to model the mean value of *Y* .
+
+7
+
+
+The GLM framework incorporates ordinary least squares regression as a special case, in
+
+which the error distribution of *Y* is Gaussian and the transformation g is the identity.
+
+Common criticisms of ordinary least squares regression are the restrictive need for a linear
+
+relationship between predictors and response, and the assumption of constant variance in the
+
+errors (Gray and MacDonell 1997). These problems are overcome by casting the models as
+
+more sophisticated GLMs.
+
+The methods described in this section were carried out using the statistical software package
+
+S-PLUS (Statistical Sciences, Inc. 1991).
+
+**Effort** **model**
+
+We formulated the effort GLM as follows. The variable *Y* was the total time, in hours, taken
+
+to author the application. The predictor variables, detailed in section 2.2, were:
+
+  - *x* 1 : experience. A categorical variable denoting whether the application was authored
+
+by a subject with low experience (LEL) or high experience (HEL).
+
+  - *x* 2 : application size (number of new documents in the application).
+
+  - *x* 3 : connectivity (number of links in the application).
+
+  - *x* 4 : reused documents (number of reused documents).
+
+  - *x* 5 : compactness (quantitative variable measured on a scale from 1 to 5).
+
+  - *x* 6 : stratum (quantitative variable measured on a scale from 1 to 5).
+
+  - *x* 7 : structure (categorical variable classifying the application as a sequence, hierarchy
+
+or network).
+
+The probability distribution of the response *Y* was chosen to be gamma. This distribution is
+
+right skewed, allowing for the possibility of severe overrun on a time schedule. The variance
+
+of the distribution is proportional to the square of the mean - thus as the expected duration of
+
+a project increases, so does the associated uncertainty. This is certainly true in practice, since
+
+it is far more difficult to estimate a precise duration for a two-year project than for a two-day
+
+one (Grey et al. 1999). Use of the gamma distribution for software development estimation
+
+was also advocated by Kitchenham and Linkman (1996).
+
+We used a logarithmic transformation g as explained above, so that *g(E(Y* *i* *)) = log(E(Y* *i* *))* .
+
+For model selection, we used Akaike's Information Criterion (AIC), which seeks the best fit
+
+8
+
+
+to the data while penalising overparameterisation; see Venables and Ripley (1999) for details.
+
+The AIC procedure suggested that only variables *x* 1, *x* 2 and *x* 3 should be included in the
+
+model, providing the final formulation
+
+*log(E(Y* *i* *)) =*  *0* *+*  1 *x* *1i* *+*  *2* *x* *2i* *+*  *3* *x* *3i* (2)
+
+Here, *x* 1 *i* is 0 for group LEL and 1 for group HEL, while the other variables are the
+
+measurements described earlier.
+
+The effect of using a logarithmic transformation g is clear from equation (2). The experience
+
+factor makes a multiplicative contribution to the mean *E(Y* *i* *)*, so that a subject with low
+
+experience might be expected to take (say) twice as long as one with high experience. This is
+
+in contrast to an additive effect, in which a subject with low experience would always take
+
+(say) 10 hours longer than one with high experience, whatever the expected duration of the
+
+project. The multiplicative formulation is more realistic in this context. The contributions to
+
+the mean of application size and connectivity are non-linear. Examination of the data
+
+suggests that this is a reasonable postulate for the true relationship.
+
+The model is fitted by finding estimates for the parameters  *0* *,*  *1* *,*  *2* *,* and  3 . As expected,  2
+
+ˆ ˆ
+and  *3* had small, positive estimates (  2 = .0011, std error 0.0033;  3 = .00015, std error
+
+0.00054). The expected authoring time therefore increased as the application size increased,
+
+and the relationship curved gently upwards for the largest applications. This pattern is
+
+displayed in Figure 1. The estimate of  1 implied that the less experienced group (LEL) took
+
+roughly 1.15 times longer to author any given application than the more experienced group
+
+(HEL). A further important quantity estimated by the GLM software is the dispersion
+
+parameter,  . This is related to the variance, or dispersion, of the distribution of *Y* : the higher
+
+ˆ
+the value of , the greater the variance. The estimate obtained for these data was  = .046 .
+
+The model fit for the GLM was verified by the usual residual plots (Venables and Ripley
+
+1999).
+
+9
+
+
+**Figure 1** : Perspective plot showing the dependence of expected authoring time, *E(Y )*, in
+
+hours, on number of new documents ( *x* 1 ) and connectivity ( *x* 2 ), when experience level is held
+
+constant at LEL.
+
+The AIC model selection procedure selected a relatively small subset of predictor variables
+
+for inclusion in the final model: namely experience, number of new documents in the
+
+application, and number of links in the application. These variables are all clearly defined
+
+and easy to evaluate. Some of the omitted variables, however, such as compactness, stratum,
+
+and structure, are more difficult to define precisely. Although the student subjects were given
+
+guidance in classes as to the correct classification of their applications, it is likely that there
+
+were still some inconsistencies in the reporting of these variables, and this could account for
+
+the failure of the model to select them as important predictors. More explicit guidance for
+
+evaluating these variables, and more comprehensive verification of the reported
+
+measurements, is being carried out in a new study currently underway.
+
+In relation to the prediction power of our model, our comments are as follows:
+
+- Effort was modelled using a probability distribution that has quite a lot of variation.
+
+Consequently, despite the fact that the errors are apparently quite large, they are still
+
+within the sampling variability expected under the model. The model reflects the extent of
+
+the uncertainty associated with the effort being modelled.
+
+- Literature in the field of effort prediction often uses the Mean Magnitude of Relative
+
+Error (MMRE) to measure the prediction power of the models used (Myrtveit and
+
+Stensrud 1999; Shepperd and Schofield 1997). However, within the scope of our work,
+
+10
+
+
+- we do not consider the MMRE a very good measure of how good the model is, because it
+
+does not make any allowance for the uncertainty associated with the effort.
+
+- Instead, the 'deviance' is used as a measure of fit. The deviance evaluates how likely the
+
+observations are under the fitted model, rather than what the absolute or relative error is
+
+between prediction and observation. Consequently, the deviance does allow for the
+
+natural variability: an observation can still be quite likely under the model, despite being
+
+a long way from the prediction, because the model specifies that the variability is such
+
+that even observations quite a long way from their predictions are to be expected.
+
+- We used the deviance to fit and select the model. This means that our model has been
+
+selected as optimal among the various alternatives we provided for the model-fitting
+
+software.
+
+- In conclusion, we believe that exact predictions of effort are very difficult, if not
+
+impossible, to obtain, and that it is more useful to get a realistic impression of the bounds
+
+of variability associated with any prediction.
+
+**3.** **Conclusions**
+
+This paper has reported i) a quantitative case study aimed at measuring proposed metrics and
+
+ii) the proposal of an effort estimation model using Generalised Linear Model. The case study
+
+involved the authoring of Web applications using the principles of the Cognitive Flexibility
+
+Theory. The data were collected using questionnaires, which were answered by the subjects
+
+who participated in the case study.
+
+Although the parameter estimates generated for our GLM model can only be applied to the
+
+dataset used, The GLM model can be applied to any Web projects, as long as it is fitted
+
+individually for each new organisation or set of projects.
+
+We believe that the use of generalised linear models to model effort provides a flexible
+
+modelling framework, for the following reasons:
+
+1) Choice of response distribution. We used gamma, although there are a variety of other
+
+options.
+
+2) Choice of the function g, which is determined to some extent by the choice made in (1).
+
+3) Choice of the predictor variables, which can also be transformed.
+
+11
+
+
+In terms of further work, the two datasets used in the case study had four variables
+
+characterising in some sense the applications. However, as size can be described in terms of
+
+length, functionality and complexity (Fenton and Pfleeger 1997), further investigation is
+
+necessary to identify the best combination of variables that give best results.
+
+In addition, the datasets used in this study were collected 2 years ago and unfortunately, we
+
+were unable to get hold of some applications in order to validate the reliability of our data.
+
+For this reason, we are currently implementing a tool that measures our proposed metrics
+
+automatically. Our aim is to use this tool in our next evaluation, which will be a replication of
+
+the case study presented in this paper.
+
+Finally, we are also investigating the use of the GLM as a framework for risk management.
+
+GLM, in common with all regression models, estimates a full probability distribution for the
+
+response variable *Y* . Using this knowledge for all proposed projects, we believe that we can
+
+determine the required level of risk for each one in order to attain an acceptable collective
+
+risk level across all projects.
+
+**APPENDIX A - QUESTIONNAIRE**
+
+**Questionnaire:**
+
+Name:
+
+Surname:
+
+For all time-related questions, please supply your estimate of elapsed time, in **hours**,
+considering **only** the **mechanical aspects** of the hypermedia design tasks and not the time it
+took you to research the contents. The underlined terms are defined in the appendix.
+
+**1)** How many web pages does your application have? ______________
+**2)** How many web pages did you develop from scratch? ______________
+**3)** How many web pages did you reuse from other sites? ______________
+
+**4)** If you reused a web page, did you do this by (tick more than one if necessary):
+
+making a link to it from your application (  )
+making a local copy of that page and using it (  )
+
+**5)** When reusing a web page did you (tick more than one if necessary):
+
+add new links to it (  )
+not add new links to it (  )
+
+**6)** Approximately how many links did you create? ________________
+
+**7)** What is the compactness of the application?
+
+Completely 5 4 3 2 1 Completely
+Connected Disconnected
+
+**8)** What is the stratum of the application?
+
+High stratum  5 4 3 2 1 No stratum
+
+**9)** Please circle the structure which best describes how the core documents of the application
+
+are organised:
+
+Sequence Hierarchy Network
+
+**12)** For each of the following tasks, please **estimate** the time it took to:
+
+**Create all:**
+
+**a)** text contents ___________
+**b)** graphics contents ___________
+**c)** video contents ___________
+
+15
+
+
+**d)** audio contents ___________
+
+**Create all:**
+
+**e)** links___________
+
+**Structure the application** ___________
+
+**Design the Interface:**
+**h)** planning of the interface ___________
+**i)** implementing of the interface ___________
+
+**Test the application:**
+**j)** testing the links in the application ___________
+**k)** testing media, i.e., testing if ___________
+the video works, the sound
+works, etc.
+
+h) What tools did you use to develop the application and for what purpose? Tick more than
+
+one if appropriate:
+
+Purpose
+
+( ) An HTML editor ________________________________________
+( ) An application generator ________________________________________
+( ) Software to organise and ________________________________________
+manage the HTML files
+( ) if other, which one? ________________________________________
+
+**APPENDIX**
+
+**Compactness** - the connectedness of the application. A high compactness indicates that from any document a
+user can easily reach, using links, any other document in the application, suggesting a large amount of crossreferencing.
+
+**Hierarchy** - a structure of an application where the documents are organised as a tree (see figure 1).
+
+Figure 1 - A Hierarchy
+
+**Network** – application where its structure is arranged as a net of documents and links (see figure 2).
+
+16
+
+
+Figure 2 - A Web
+
+**-**
+**Sequence** a structure of an application where the documents are linearly linked (see figure 3).
+
+Figure 3 - A sequence
+
+**Stratum** - suggests if there is an order for reading the application. Minimum stratum means that structurally it
+makes no difference from what document one starts reading. Maximum stratum is achieved in a linear
+application (the topology is a sequence) .
+
+17

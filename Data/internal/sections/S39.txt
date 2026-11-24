@@ -1,0 +1,1311 @@
+# **Exploring Case-based Reasoning for Web Hypermedia ** **Project Cost Estimation**
+
+Emilia Mendes
+
+Department of Computer Science
+The University of Auckland, New Zealand
+38 Princes Street, Auckland
+Tel: ++ 64 9 3737599 ext: 86137
+
+email: emilia@cs.auckland.ac.nz
+
+Nile Mosley
+
+MetriQ Limited
+
+19A Clairville Crescent, Wai-O-Taiki Bay,
+
+Auckland, New Zealand
+
+Tel: ++64 9 585 0088
+
+email: nile@metriq.biz
+
+Steve Counsell
+
+Department of Computer Science and Information Systems
+Brunel University
+Uxbridge UB8 3PH
+Middlesex, UK
+Tel: ++ 44 01895 274000
+email: steve.counsell@brunel.ac.uk
+
+**ABSTRACT**
+
+This paper compares several methods of analogy-based effort estimation, including the use of
+adaptation rules as a contributing factor to better estimation accuracy. Two data sets are used in
+the analysis. Results show that best predictions were obtained for the dataset that presented a
+continuous “cost” function and was more “unspoiled”.
+
+**Keywords**
+Web effort prediction, Web hypermedia, case-based reasoning, Web hypermedia metrics,
+prediction models.
+
+**1.** **INTRODUCTION**
+
+Most approaches to software cost estimation have focused on Expert opinion and algorithmic
+models. Expert opinion is widely used in industry and can be an effective estimation tool on its
+own or as an adjusting factor for algorithmic models [30],[16]. However, the means of deriving
+an estimate are not explicit and are therefore difficult to repeat.
+
+Algorithmic models attempt to represent the relationship between effort and one or more project
+features, where the main feature is usually taken to be some notion of software size (e.g. the
+number of lines of source code, number of Web pages, or number of graphics). These models
+require calibration to local circumstances and can be discouraging to adapt and use where there is
+limited or incomplete data, and limited expertise in statistical techniques. Examples of such
+models are the COCOMO model [4] and the SLIM model [34].
+
+1
+
+
+More recently researchers have investigated the use of machine learning approaches to effort
+estimation [15][39]. One of these approaches – estimation by analogy - has provided comparable
+accuracy to, or better than, algorithmic methods [26],[38],[39]. Estimation by analogy is a form
+of analogical reasoning where cases stored on the case base and the target case are instances of
+the same category [15]. As such, an effort estimate for a target case is obtained by searching one
+or more similar cases, each representing information about finished software projects.
+
+Unfortunately, when comparing prediction accuracy between different cost estimation
+approaches, researchers have been unable to find a unique technique which would unanimously
+provide the best estimates across different industrial data sets [8],[9],[20],[21],[29],[30]. These
+conflicting results suggested that there were other factors that should be taken into consideration,
+other than the technique itself. This lead to a simulation study by Shepperd and Kadoda [38],
+showing that data set characteristics (number of variables, data distribution, existence of
+collinearity and outliers, type of relationship between effort and cost drivers) influenced the
+effectiveness of effort estimation techniques. For example, if the data set used to estimate effort
+for a new project is roughly normally distributed, then algorithmic models, such as Stepwise
+regression, are to be preferred. Conversely, if the data set presents outliers and collinearity, then
+techniques such as analogy-based estimation should be favored.
+
+Given that most industrial data sets are seldom normally distributed, and present outliers and
+collinearity [38], we decided to investigate the analogy-based technique further. In addition,
+estimation by analogy is potentially easier to understand and apply, which is an important factor
+to the successful adoption of estimation methods within development companies in general, and
+Web development companies in particular. We believe therefore, analogy-based estimation
+should be examined further.
+
+Therefore, this paper investigates the use of estimation by analogy for Web hypermedia effort
+estimation. In particular, it investigates the use of adaptation rules as a contributing factor to
+better estimation accuracy. We have focused on two types of adaptation rule where estimated
+effort is in some way adjusted according to the estimated size for a new Web hypermedia
+application. A Web hypermedia application [10] is a non-conventional application characterised
+by the authoring of information using nodes (chunks of information), links (relations between
+nodes), anchors, access structures (for navigation) and its delivery over the Web. Technologies
+commonly used for developing such applications are HTML, JavaScript and multimedia. In
+addition, typical developers are writers, artists and organisations that wish to publish information
+on the Web and/or CD-ROM without the need to know programming languages such as Java.
+Please note that this study does not aim to find the “best” effort estimation technique but to focus
+attention to a single technique, that of estimation by analogy.
+
+We employed two data sets of Web hypermedia application projects in this study - DS1 and DS2.
+These data sets present different characteristics and are used to investigate the extent by which
+characteristics such as outliers, collinearity and types of relationship between effort and cost
+drivers would influence the accuracy of effort estimates obtained using the estimation by analogy
+technique.
+
+DS1 presents a continuous “cost” function, translated as a strong linear relationship between cost
+drivers and effort; DS2 presents a discontinuous “cost” function, where there is no linear or loglinear relationship between cost drivers and effort. In addition, DS1 is more “unspoiled” than
+DS2, reflected by the absence of outliers and a smaller collinearity.
+
+Results show that the best predictions are obtained for DS1, suggesting that the type of “cost”
+function has indeed a strong influence on the prediction accuracy, to some extent more so than
+
+2
+
+
+data set characteristics (outliers, collinearity). In addition, only one of the two types of adaptation
+rules employed generated good predictions.
+
+Section 2 reviews the process of estimation by analogy and previous research in the area relative
+to Web engineering. Section 3 describes the EA parameters employed by this study. The data sets
+used are presented in Section 4 and in Section 5 a comparison of the EA approaches is detailed.
+Finally, conclusions are given in Section 6.
+
+**2.1** **Introduction to EA**
+
+Estimation by analogy (EA) is an application of a case-based reasoning approach. Case-based
+reasoning (EA) is a form of analogical reasoning where cases stored on the case base and the
+target case are instances of the same category [15]. In the context of our investigation, a ‘case’ is
+a Web project (new or finished).
+
+An effort estimate for a new Web project is obtained by searching one or more similar cases,
+each representing information about finished Web projects.
+
+The rationale for EA is the use of historical information from completed projects with known
+effort. It involves [2]:
+
+- The characterising of a new active project *p,* for which an estimate is required, with attributes
+(features) common to those completed projects stored in the case base. In our context most
+features represent size measures that have a bearing on effort. Feature values are normally
+standardized (between 0 and 1) so they can have the same degree of influence on the results.
+
+- The use of this characterisation as a basis for finding similar (analogous) completed projects,
+for which effort is known. This process can be achieved by measuring the “Euclidean
+distance” between two projects, based on the values for *k* features for these projects. Although
+numerous techniques are available to measure similarity, nearest neighbour algorithms [39]
+using the unweighted Euclidean distance have been the most widely used in Software and
+Web engineering.
+
+- The generation of a predicted value of effort for a given project *p* based on the effort for those
+completed projects that are similar to *p* . The number of similar projects in general depends on
+the size of the data set. For small data sets typical numbers are 1, 2 and 3 closest neighbours
+(cases). The calculation of estimated effort is often obtained by using the same effort value of
+the closest neighbour, or the mean of effort values from 2 or more cases. In Software
+engineering and Web engineering a common choice is the nearest neighbour or the mean for 2
+and 3 cases.
+
+**2.2** **Advantages of Estimation by Analogy**
+Potential advantages of using EA for effort estimation are as follows [42]:
+
+*2.2.1* *EA has the potential to alleviate problems with calibration.*
+EA can give reasonably high quality estimates provided the set of past projects for a certain
+company has at least one project similar to a given target new project (which may belong to a
+different Company). EA can give better effort estimates because, unlike an algorithmic model, it
+does not consider the whole set of past finished projects in order to calculate an effort estimate. It
+is usual to consider only one to three finished projects that are the most similar to the new project
+for which an effort estimate is needed [2],[39]. In the scope of this study each data set employed
+is assumed to contain data on projects hypothetically belonging to the same Company, since all
+students were exposed to the same training and all had similar background.
+
+3
+
+
+*2.2.2* *EA can be valuable where the domain is complex and difficult to model.*
+Many features (Web application’s size, Web developer’s experience etc) can potentially
+influence a Web project’s development effort. However, identifying these features and
+understanding how they interact with each other is difficult. For example, there is no standard as
+to what size measures should be employed to measure a Web application’s size. Proposals
+
+[12],[26],[36] have been made, but to what extent the proposed size measures can be collected
+early enough in the development cycle such that they are useful as effort predictors, is still an
+open research question. This makes the Web cost estimation domain complex and difficult to
+model.
+
+In addition, to develop an algorithmic model, it is necessary to determine which features can
+predict effort, where the number of features has an influence on how much historical data is
+necessary to develop a model. Unfortunately, historical data is often in short supply and for those
+companies who develop Web projects it is even more difficult to obtain given that:
+
+- Web projects have short schedules and a fluidic scope [33].
+
+- A Web project’s primary goal is to bring quality applications to market as quickly as possible,
+varying from a few weeks [33] to 6 months [35].
+
+- Processes employed are in general heuristic, although some organisations are starting to look
+into the use of agile methods [1].
+
+EA has the potential for successful use without a clear model of the relationship between effort
+and other project features; rather than assuming a general relationship between effort and other
+project features applicable to all projects, it relies predominantly on selecting a past project that
+is similar to the target project.
+
+*2.2.3* *The basis for an estimate can be easily understood*
+Algorithmic models use a historical data set to derive cost models where effort is the output and
+size measures and cost drivers are used as input, with an empirical relation between input and
+output. Therefore, an algorithmic model generated using data from a given company A can only
+be applied to a different company B if the relation between effort and its inputs embodied in the
+model also applies to company B’s estimation problem.
+
+EA, on the other hand, bases estimates on concrete past cases, a familiar mode of human problem
+solving. According to [24] a large number of managers and developers is comfortable estimating
+in this manner.
+
+*2.2.4* *EA can be used with partial knowledge of the target project*
+Algorithmic models usually require a fixed set of input measures to make an estimate. However,
+measures available for estimating vary from project to project, where sometimes an input
+measure is not known at the time an effort estimate is required.
+
+EA addresses this issue by allowing the use of any of the input measures available, provided
+those measures are also available from past projects. This approach avoids the need to impose
+specific input, fixed for all Web projects.
+
+**2.3** **EA Challenges**
+The accuracy of estimates generated using EA relies upon three broad factors: availability of
+suitable similar cases, soundness of the strategy used for selecting them, and the way in which
+differences between the most similar cases and the target case are considered to derive an
+estimate. Those issues will be discussed in Section 3.
+
+4
+
+
+There is no recipe for applying each of those factors. Hence empirical investigation is necessary
+to help identify which combination of factors can work best given the characteristics of past and
+target projects, and a particular data set.
+
+**3.** **EA PARAMETERS**
+
+When using EA the three broad parameters mentioned in Section 2.3 are composed of six
+parameters [22]:
+
+1. Feature Subset Selection
+
+2. Similarity Measure
+3. Scaling
+4. Number of cases
+
+5. Case Adaptation
+6. Adaptation Rules
+
+Each parameter in turn can be split into more detail for use by a EA tool, allowing for several
+combinations of those parameters. Each parameter is described below, and we also indicate our
+choice and the motivation for each within this study. All the results for EA were obtained using
+EA-Works [37], a commercially available EA tool. The parameters presented in this Section
+comprise the full set of parameters to consider when using EA. Despite EA comprising six
+parameters, several studies in Web and Software engineering have only considered parameters
+two to five [2],[8],[9],[20],[21],[22],[23],[26],[27],[28],[29],[30],[38],[39],[42] as parameters one
+and six ideally require the use of a EA tool that automates both processes, since they are
+excessively time consuming if done manually.
+
+**3.1** **Feature Subset Selection**
+
+Feature subset selection involves determining the optimum subset of features that give the most
+accurate estimation. Some existing EA tools, e.g. ANGEL [39], offer this functionality optionally
+by applying a brute force algorithm, searching for all possible feature subsets. EA-Works does
+not offer such functionality; for each estimated effort, we used all features in order to retrieve the
+most similar cases.
+
+**3.2** **Similarity Measure**
+Similarity Measure measures the level of similarity between cases. Several similarity measures
+have been proposed in the software engineering literature; however the ones described here and
+used in this study are the unweighed Euclidean distance, the weighted Euclidean distance and the
+Maximum distance. Readers are referred to [2] for details on other similarity measures. The
+motivation for using un-weighted Euclidean (UE) and Maximum (MX) distances is that they
+have been previously used with encouraging results in software and Web engineering cost
+estimation studies [39],[29],[28],[2] and are applicable to quantitative variables, suitable for our
+needs. The weighted Euclidean was also chosen as it seemed reasonable to give different weights
+to our size measures (features) to reflect the importance of each, rather than expect all size
+measures to have the same influence on effort. Our data sets have seven and five size measures
+
+6
+
+
+respectively (Section 4.2), representing different facets of size. Each similarity measure we used
+is described below:
+
+*3.2.1* *Unweighted Euclidean Distance*
+The Unweighted Euclidean distance measures the Euclidean (straight-line) distance *d* between
+the points ( *x* *0* *,y* *0* ) and ( *x* *1* *,y* *1* ), given by the formula:
+
+*d* = ( *x* 0 − *x* 1 ) 2 + ( *y* 0 − *y* 1 ) 2 **(2)**
+
+This measure has a geometrical meaning as the distance of two points in the n-dimensional
+Euclidean space [2]. Figure 1 illustrates this distance by representing co-ordinates in E2. The
+number of features employed determines the number of dimensions:
+
+**Page-complexity**
+
+***Y*** ***1***
+
+***Y*** ***0***
+
+
+*0*
+
+
+***x*** ***0*** ***x*** ***1*** **Page-count**
+
+|d|Col2|Col3|
+|---|---|---|
+|||Page-c|
+
+
+**Figure 1 . Unweighted Euclidean distance using two size measures**
+
+*3.2.2* *Weighted Euclidean Distance*
+The weighted Euclidean distance is used when features vectors are given weights that reflect the
+relative importance of each feature. The weighted Euclidean distance *d* between the points ( *x* *0* *,y* *0* )
+and ( *x* *1* *,y* *1* ) is given by the formula:
+
+*d* = *w* *x* ( *x* 0 − *x* 1 ) 2 + *w* *y* ( *y* 0 − *y* 1 ) 2 **(3)**
+
+where *w* *x* and *w* *y* are the weights of *x* and *y* respectively.
+
+Weight was calculated using two separate approaches:
+
+1. On both data sets we attributed weight=2 to size measures PaC (Page Count), MeC (Media
+Count) and RMC (Reused Media Count) (DS1 only) and weight =1 to the remaining size
+measures. The choice of weights was based on expert opinion and on existing literature
+
+[12],[13]. All measures are presented in detail in Section 4.2.
+2. We measured the linear association between the size measures and effort using a two-tailed
+Pearson’s correlation for DS1 and a Spearman’s rho test, a non-parametric test equivalent to
+Pearson’s test, for DS2. Pearson’s and Spearman’s correlation tests measure the strength of
+the linear relationship between two variables [17]. The choice of tests was based on the
+characteristics of the measures employed. Whenever measures presented a normal distribution
+of values or very close to normal, we used the parametric test – Pearson. Otherwise,
+
+7
+
+
+Spearman’s rho was chosen. For DS2, some correlations presented negative values. Given that
+EA-works does not accept negative values as weights, we added +1.0 to all correlations,
+making all values positive and thus suitable for use. All the results presented in this paper
+have taken the +1 effect into account.
+
+*3.2.3* *Maximum Distance*
+
+The maximum measure computes the highest feature similarity, defining the most similar project.
+For two points ( *x* *0* *,y* *0* ) and ( *x* *1* *,y* *1* ), the maximum measure *d* is given by the formula:
+
+*d* = max(( *x* 0 − *x* 1 ) 2 (, *y* 0 − *y* 1 ) 2 ) **(4)**
+
+This distance effectively reduces the similarity measure down to a single feature, although the
+maximum feature may differ for each retrieval occurrence. In other words, although we used
+several size measures, for a given “new” project *p*, the closest project in the case base will be the
+one with a size measure that has the most similar value to the same measure for that project *p* .
+
+**3.3** **Scaling**
+Scaling or Standardisation represents the transformation of attribute values according to a
+defined rule such that all attributes have the same degree of influence and the method is immune
+to the choice of units [2]. One possible solution is to assign value zero to the minimum observed
+value and value one to the maximum observed value [23]. We have scaled all features used in
+this study by dividing each feature value by that features’ range.
+
+**3.4** **Number of Cases**
+
+The number of cases refers to the number of most similar projects that will be used to generate
+the estimation. According to Angelis and Stamelos [2] when small sets of data are used it is
+reasonable to consider only a small number of cases. Several studies in software engineering
+have restricted their analysis to the closest case (k=1) [8],[9],[21],[30]. However, we decided to
+use 1, 2 and 3 most similar cases, similarly to [2],[20],[26],[28],[29].
+
+**3.5** **Case Adaptation**
+Once the most similar case(s) has/have been selected the next step is to decide how to generate
+the estimation for the “new” project *p* . Choices of case adaptation techniques presented in the
+Software engineering literature vary from the nearest neighbour [8],[21], the mean of the closest
+cases, the median [2], inverse distance weighted mean and inverse rank weighted mean [23], to
+illustrate just a few. In the Web engineering literature, the adaptations used to date are the nearest
+neighbour, mean of the closest cases [26], and the inverse rank weighted mean [28],[29].
+
+We opted for the mean, median and the inverse rank weighted mean. Each adaptation and
+motivation for its use are explained below:
+
+- Mean: Represents the average of k cases, when k>1. The mean is a typical measure of central
+tendency used in the Software/Web engineering literature. It treats all cases as being equally
+influential on the outcome.
+
+- Median: Represents the median of k cases, when k>2. Another measure of central tendency
+and a more robust statistic when the number of most similar cases increases [2]. Although
+
+8
+
+
+this measure, when used by Angelis and Stamelos [2], did not present encouraging results,
+measured using MMRE and Pred(25), we wanted to observe how it would behave for our
+data sets.
+
+- Inverse rank weighted mean: Allows higher ranked cases to have more influence than lower
+ones. If we use 3 cases, for example, the closest case (CC) would have weight = 3, the second
+closest (SC) weight = 2 and the last one (LC) weight =1. The estimation would then be
+calculated as (3*CC + 2*SC + LC)/6). It seemed reasonable to us to allow higher ranked
+cases to have more influence than lower ranked ones, so we decided to use this adaptation as
+well.
+
+**3.6** **Adaptation Rules**
+Adaptation rules are used to adapt the estimated effort, according to a given criterion, such that it
+reflects the characteristics of the target project more closely. For example, in the context of effort
+prediction, the estimated effort to develop an application *app* would be adapted such that it
+would also take into consideration an *app* ’s size values.
+
+The adaptation rules employed in this study are based on the linear size adjustment to the
+estimated effort [42].
+
+For Walkerden and Jeffery [42], once the most similar finished project in the case base has been
+retrieved, its effort value is adjusted to estimate effort for the target project. A linear
+extrapolation is performed along the dimension of a single measure, which is a size measure
+strongly correlated with effort. The linear size adjustment is represented as follows:
+
+## Effort finished Pr oject Effort t arg et = Size Pr ∗ Size t arg
+
+
+*finished* Pr *oject*
+## t arg et = Size ∗ Size
+
+
+*finished* Pr *oject*
+## arg et = ∗ Size t arg et (5)
+
+
+*t* arg *et*
+*finished* Pr *oject*
+
+
+We will use an example to illustrate linear size adjustment. Suppose a client requests the
+development of a new Web hypermedia application using 40 Web pages. The closest finished
+Web project in the case base has used 50 Web pages and its total effort was 50 person/hours,
+representing 1 Web page per person/hour. We could use for the new Web project the same effort
+spent developing its most similar finished project, i.e., 50 person/hours. However, estimated
+effort can be adapted to reflect more closely the estimated size (number of Web pages) requested
+by the client for the new Web project. This can be achieved by dividing actual effort by actual
+size and then multiplying the result by estimated size, which would give an estimated effort of 40
+person/hours.
+
+Unfortunately in the context of Web projects, size is not measured using a single size measure as
+that there are several size measures that can be used as effort predictors [27],[29]. In that case,
+the linear size adjustment has to be applied to each size measure and then the estimated efforts
+generated averaged to obtain a unique estimated effort (Equation 6).
+
+
+= 1 ⎛⎜ *q* = *x*
+## ∑
+
+
+⎜
+⎜
+
+⎝
+
+
+= 1 ⎜ *q* = *x* *E* *act* *S* *est* . *q* ⎟
+## . P ∑ (6)
+
+
+*q* = *x*
+
+
+*E* *S*
+
+
+=
+
+
+= *act* *est* . *q*
+## est . P q ⎜ ∑ =1 S
+
+
+⎞
+
+⎟
+⎟
+
+⎠
+
+## E est . P = q ⎜⎝ q ∑ =1 S act . q >0.
+
+
+*q* = *act* . *q*
+
+
+=
+
+*act* . *q*    
+
+where:
+
+*q* is the number of size measures characterising a Web project.
+
+*E* *est* . *P* [ is the Total Effort estimated for the new Web project ] *[P]* [. ]
+
+*E* *act* is the Total Effort for a finished Web project obtained from the case base.
+
+
+9
+
+
+*S* *est* . *q* [ is the estimated value for the size measure ] *[q]* [, which is obtained from the client. ]
+
+*S* *act* . *q* [ is the actual value for the size measure ] *[q]* [, for a finished Web project obtained from the case ]
+
+base.
+
+Equation 6 presents one type of adaptation rule employed, named “adaptation without weights”.
+When using this adaptation, all size measures contribute the same towards total effort, indicated
+by the use of a simple average. If we were to apply different weights to indicate the strength of
+relationship between a size measure and effort, we would have to use the following equation:
+
+## = q = 1 x ⎛⎜⎜ [⎜] qq ∑ ==1 x w q ⎛⎜⎜ ∑ w ⎝ ⎝
+
+
+⎞
+
+⎟
+⎟ [⎟]
+
+⎠
+
+## E est . P = q ∑ = 1 x w ⎜⎜ [⎜] ⎝ qq ∑ ==1 x w q ⎜⎜⎝ EF actact F . qest >0. q
+
+## . P = = 1 ⎜ q ∑ = x w ⎜ E act F est . q ⎟⎟ (7)
+
+
+*q* = *x*
+
+
+⎜
+⎜
+
+⎝
+
+
+=
+
+
+*act* *est* . *q*
+## q = x [⎜] ∑ w q ⎜
+
+
+⎞
+
+⎟
+⎟
+
+⎠
+
+
+.
+
+
+*est* . *P* *q* = *x* ⎜ =1 *q* ⎜ *F*
+
+
+=
+
+
+*q* = *act* . *q*
+
+
+*q*
+*q* =1
+
+
+⎛
+
+⎜
+⎜ [⎜]
+
+⎝
+
+
+=
+
+*act* . *q*       
+
+1
+
+
+=
+
+
+where:
+
+*w* *q* represents the weight *w* attributed to feature *q* .
+
+Equation 7 presents the other type of adaptation rule we employed. We have applied both types
+of adaptation rules to this study to determine if different adaptations give different prediction
+accuracy. We have also used the same weights as those presented in Section 3.2.2 for Weighted
+Euclidean distance.
+
+Finally, as we have used up to three closest Web projects, we had to add another equation to
+account for that:
+
+
+1 ⎛ *r* =3
+
+=
+## ⎜ [⎜] ∑
+
+
+⎛ *r* =3 ⎞
+## ⎜ [⎜] ∑ E est . P r ⎟ [⎟]
+
+⎝ *r* =1 ⎠
+
+
+3
+
+
+1 *r* =
+## ⎜ [⎜] ∑ E est .
+
+*r* ⎝ *r* =1
+
+
+⎟ [⎟]
+⎠
+
+## E total est = ⎜ ∑ E est . P r ⎟ (8)
+
+*r* ⎝ *r* =1 ⎠
+
+
+=
+
+
+Here *r* is the number of closest Web projects obtained from the case base, where its minimum and
+maximum values in the context of this study are 1 and 3, respectively.
+
+**4.** **DATA SETS EMPLOYED**
+
+**4.1** **Introduction**
+
+The case study evaluations measured Web applications size and their design and authoring effort.
+Four metrics representing confounding factors were also measured.
+Our measurement activity was developed according to Fenton and Pfleeger’s Conceptual
+Framework for Software Measurement [14], which is based on three principles:
+1. Classifying the *entities* to be examined.
+
+2. Determining relevant *measurement goals* .
+
+3. Identifying the *level of maturity* the *organisation* has reached.
+
+The classification of entities applied to both case studies is presented in Table 1.
+
+10
+
+
+**Table 1. Classification of Products, Processes and Resources for the case study**
+
+|ENTITIES|ATTRIBUTES (Internal)|
+|---|---|
+|Products|Products|
+|Web application|Page Count<br>Media Count<br>Program Count<br>Total Embedded Code Length<br>Reused Media Count (1st case study)<br>Reused Program Count (1st case study)<br>Connectivity Density<br>Total Page Complexity<br>Structure|
+|Processes|Processes|
+|Web authoring and design<br>processes|Total Effort|
+|Resources|Resources|
+|Developer|Authoring and Design Experience|
+|Authoring tool|Tool Type|
+
+
+
+All metrics presented here are described in detail on Section 4.2.
+Our measurement goals were documented using the Goal-Question-Metric (GQM) [3] (Table 2).
+
+**Table 2. The case study’s goals, questions and metrics**
+
+
+
+
+
+
+
+|Goal|Question|Metric|
+|---|---|---|
+|Purpose: to measure<br>Issue: Web design and<br>authoring processes<br>Object: process<br>Viewpoint: developer’s<br>viewpoint|What attributes can characterise<br>size of Web applications?|Page Count<br>Media Count<br>Program Count<br>Reused Media Count (1st case study)<br>Reused Program Count (1st case study)<br>Connectivity Density<br>Total Page Complexity<br>Structure|
+||How can design and authoring<br>processes be measured?|Total Effort|
+||What influence can an authoring<br>tool have on the effort required to<br>author a Web application?|Tool Type|
+
+
+Finally, the level of maturity within the Web application development community considered for
+our case study, measured according to the Capability Maturity Model (CMM) [32], is one.
+
+**4.2** **Data Set Description**
+
+The analysis presented in this paper was based on two data sets containing information about
+Web hypermedia applications developed by Computer Science Honours and postgraduate
+students, attending a Hypermedia and Multimedia Systems course at the University of Auckland.
+
+The first data set (DS1, 34 applications) was obtained using a case study (CS1) consisting of the
+design and authoring, by each student, of Web hypermedia applications aimed at teaching a
+chosen topic, structured according to the CFT principles [40], using a minimum of 50 pages.
+Each Web hypermedia application provided 46 pieces of data, from which we identified 8
+
+11
+
+
+attributes, shown in Table 3, to characterise a Web hypermedia application and its development
+
+process.
+
+The second data set (DS2, 25 applications) was obtained using another case study (CS2)
+consisting of the design and authoring, by pairs of students, of Web hypermedia applications
+structured using an adaptation of the Unified Modelling Language [5], with a minimum of 25
+pages. Each Web hypermedia application provided 42 pieces of data, from which we identified 6
+attributes, shown in Table 4, to characterise a Web hypermedia application and its development
+
+process.
+
+The criteria used to select the attributes were [12],[13]: i) practical relevance for Web
+hypermedia developers; ii) measures which are easy to learn and cheap to collect; iii) counting
+rules which were simple and consistent.
+
+Tables 3 and 4 show the attributes that form a basis for our data analysis. Total effort is our
+dependent/response variable; remaining attributes our independent/predictor variables. All
+attributes were measured on a ratio scale. Tables 5 and 6 outline the properties of the data sets
+used. DS1 had originally 37 observations with three outliers where total effort was unrealistic
+compared to duration. Those outliers were removed from the data set, leaving 34 observations.
+Collinearity represents the number of statistically significant correlations with other independent
+variables out of the total number of independent variables [38].
+
+**Table 3 - Size Measures for DS1**
+
+|Metric|Description|
+|---|---|
+|Page Count (PaC)|Total number of html or shtml files|
+|Media Count (MeC)|Total number of original media files|
+|Program Count (PRC)|Total number of JavaScript files and Java applets|
+|Reused Media Count (RMC)|Total number of reused/modified media files.|
+|Reused Program Count (RPC)|Total number of reused/modified programs.|
+|Connectivity Density (COD)|Average number of internal links per page.|
+|Total Page Complexity (TPC)|Average number of different types of media per page.|
+|Total Effort (TE)|Effort in person hours to design and author the application|
+
+
+
+**Table 4 - Size Measures for DS2**
+
+|Metric|Description|
+|---|---|
+|Page Count (PaC)|Total number of html files.|
+|Media Count (MeC)|Total number of original media files.|
+|Program Length (PRL)|Total number of statements used in either Javascript or Cascading Style<br>Sheets.|
+|Connectivity Density (COD)|Average number of links, internal or external, per page.|
+|Total Page Complexity (TPC)|Average number of different types of media per page.|
+|Total Effort (TE)|Effort in person hours to design and author the application|
+
+
+
+Summary statistics for all the variables on DS1 and DS2 are presented in Tables 7 and 8,
+respectively.
+
+**Table 5 - Properties of DS1**
+
+12
+
+|Number of Cases|Feature<br>s|Categorical features|Outliers|Collinearity|
+|---|---|---|---|---|
+|34|8|0|0|2/7|
+
+
+**Table 6 - Properties of DS2**
+
+|Number of Cases|Features|Categorical features|Outliers|Collinearity|
+|---|---|---|---|---|
+|25|6|0|2|3/5|
+
+
+
+**Table 7 – Summary statistics for DS1**
+
+|Variable|Mean|Median|Minimum|Maximum|Std. Deviation|Skweness|
+|---|---|---|---|---|---|---|
+|PaC|55.21|53|33|100|11.26|1.85|
+|MeC|24.82|53|0|126|29.28|1.7|
+|PRC|0.41|0|0|5|1.04|3.27|
+|RMC|42.06|42.50|0|112|31.60|0.35|
+|RPC|0.24|0|0|8|1.37|5.83|
+|COD|10.44|9.01|1.69|23.30|6.14|0.35|
+|TPC|1.16|1|0|2.51|0.57|0.33|
+|TE|111.89|114.65|58.36|153.78|26.43|-0.36|
+
+
+
+**Table 8 – Summary statistics for DS2**
+
+|Variable|Mean|Median|Minimum|Maximum|Std. Deviation|Skweness|
+|---|---|---|---|---|---|---|
+|PaC|58.68|39|13|322|60.63|3.72|
+|MeC|147.64|111.00|16|406|116.77|1.18|
+|PRL|67.99|50.70|22.08|327.86|59.66|3.73|
+|COD|9.31|7.52|2.52|25.15|5.51|1.08|
+|TPC|7.75|4.26|1|38|8.36|2.59|
+|TE|61.84|44|18|137|39.73|0.47|
+
+
+
+For both case studies two questionnaires were used to collect data. The first asked subjects to rate
+their Web hypermedia authoring experience using five scales, from no experience (zero) to very
+good experience (four). The second was used to measure characteristics of the Web hypermedia
+applications developed (suggested measures) and the effort involved in designing and authoring
+those applications. On both questionnaires, we describe in depth each scale type, to avoid
+misunderstanding. Members of the research group checked both questionnaires for ambiguous
+questions, unusual tasks, and number of questions and definitions in the questionnaires’
+appendices.
+
+To reduce learning effects in both case studies, subjects were given coursework prior to
+designing and authoring the Web hypermedia applications. This consisted of creating a simple
+Web hypermedia application and loading the application to a Web server. In addition, to measure
+possible factors that could influence the validity of the results, we also asked subjects about the
+main structure (backbone) of their applications [1], their authoring experience before and after
+developing the applications, and the type of tool used to author/design the Web pages [2] .
+Finally, CS1 subjects received training on the Cognitive Flexibility Theory authoring principles
+(approximately 150 minutes) and CS2 subjects received training on the UML's adapted version
+(approximately 120 minutes). The adapted version consisted of Use Case Diagrams, Class
+Diagrams and Transition Diagrams.
+
+**4.3** **Validity of Both Case Studies**
+Here we present our comments on the validity of both case studies:
+
+1 Sequence, hierarchy or network.
+
+2 WYSIWYG (What You See Is What You Get), close to WYSIWYG or text-based.
+
+13
+
+
+- The measures collected, except for effort, experience, structure and tool, were all objective,
+quantifiable, and re-measured by one of the authors using the applications developed. The
+scales used to measure *experience, structure* and *tool* were described in detail in both
+questionnaires.
+
+- Subjects' authoring and design experiences were mostly scaled ‘little’ or ‘average’, with a
+low difference between skill levels. Consequently, the original data sets were left intact.
+
+- To reduce maturation effects, i.e. learning effects caused by subjects learning as an
+evaluation proceeds, subjects had to develop a small Web hypermedia application prior to
+developing the application measured. They also received training in the CFT principles, for
+the first case study, and in the UML's adapted version, for the second case study.
+
+- The majority of applications used a hierarchical structure.
+
+- Notepad and FirstPage were the two tools most frequently used on CS1 and FirstPage was the
+tool most frequently used on CS2. Notepad is a simple text editor while FirstPage is freeware
+offering button-embedded HTML tags. Although they differ with respect to the functionality
+offered, data analysis using DS1 revealed that the corresponding effort was similar,
+suggesting that confounding effects from the tools were controlled.
+
+- As the subjects who participated in the case studies were either Computer Science Honours
+or postgraduate students, it is likely that they present skill sets similar to Web hypermedia
+professionals at the start of their careers.
+
+- For both case studies, subjects were given forms, similar to those used in the Personal
+Software Process (PSP) [18], to enter effort data as the development proceeded.
+Unfortunately, we were unable to guarantee that effort data had been rigorously recorded and
+therefore we cannot claim that effort data on both data sets was unbiased. However, we
+believe that this problem does not affect the analysis undertaken in this paper.
+
+We believe that the results presented here may be also applied to those Web companies that
+develop Web hypermedia applications which are within the size limits and structure we have
+employed, that use similar tools to those used in our case studies, and where Web developers are
+at the start of their careers. However, if a Web company’s context differs from ours then we
+cannot guarantee that the results presented in this paper are likely to be successful when applied
+to their environment.
+
+**5.** **COMPARISON OF EA TECHNIQUES**
+To compare the EA techniques we used the jack-knife method (also known as leave one out
+cross-validation). It is a useful mechanism for validating the error of the prediction procedure
+employed [2]. For each data set, we repeated the steps described below 34 times for DS1 (34
+cycles) and 25 times for DS2 (25 cycles), as we had 34 and 25 projects respectively. All projects
+in both data sets were completed projects for which actual effort was known.
+
+**Step 1:** Project number *i* (where *i* varies from 1 to 34/25) is removed from the case base such that
+it is considered a new project for the purpose of the estimation procedure.
+**Step 2:** The remaining 33/24 projects are kept in the case base and used for the estimation
+
+process.
+**Step 3:** The EA tool finds the most similar cases, looking for projects that have feature values
+similar to the feature values for project *i* .
+**Step 4:** Project *i*, which had been removed from the case base, is added back.
+
+For each cycle we calculated the MRE. The results in Tables 9 and 10 have been obtained by
+considering four similarity measures (unweighted Euclidean (UE), weighted Euclidean using
+Subjective Weights (WESub), Weighted Euclidean using Correlation-based Weights (WECorr)
+
+14
+
+
+and Maximum (MX)), three choices for the number of cases (1, 2 and 3), three choices for the
+case adaptation (mean, inverse rank weighted mean and median) and three choices for the two
+types of adaptation rules (adaptation using no size weights, adaptation using subjective size
+weights and adaptation using correlation-based size weights). Tables 9 and 10 present MMRE
+and Pred(25) for each EA technique investigated. However this is only one of the steps necessary
+in order to identify whether there are significant differences amongst predictions obtained by
+these techniques. We need also to use statistical tests of significance which will compare
+predictions across distances and across techniques. All tests of significance used were based on
+absolute residuals, as these are less biased than the MRE [38]. To compare absolute residuals
+across a distance we employed the Wilcoxon Rank Sum Test [17], since the data was naturally
+paired. To compare absolute residuals across a single technique we employed the Kruskal-Wallis
+Test since the data was not naturally paired and we compared several samples simultaneously.
+Both the Wilcoxon Rank Sum Test and the Kruskal-Wallis Test [17] verify, given a set of
+samples, if they belong to a similar distribution. When they do that means that there are no
+statistical differences between the tested samples and they are representative of a similar sample
+population.
+
+For all tests the confidence limit was set at α=0.05. Only non-parametric tests were employed
+since the absolute residuals for all the models used in this study were not normally distributed, as
+confirmed by the Kolmogorov-Smirnov test for non-normality [17].
+
+Shaded areas on both tables (along the MMRE column) indicate the model(s) that presented
+statistically significantly better predictions than others. Sometimes, the shaded area includes two
+models across the same row when their predictions are not statistically different from each other.
+Conversely, no shaded areas across a row mean that there was no best model in that group.
+
+The legend used on both tables is as follows:
+
+UE – Unweighted Euclidean
+WESub – Weighted Euclidean based on Subjective weights
+WECorr – Weighted Euclidean based on Correlation coefficients (Pearson’s for DS1 and
+Spearman’s for DS2)
+MX – Maximum
+
+K – number of cases
+
+CC – Closest Case
+
+IRWM – Inverse Rank Weighted Mean
+
+**Figure 2 - Legend for Tables 9 and 10**
+
+15
+
+
+**Table 9 - Results for DS1**
+
+
+
+
+
+
+
+
+
+
+|Distance|K|Adaptation|No Adaptation<br>MMRE Pred(25)|Col5|Adaptation No<br>Weights|Col7|Adaptation Subjective<br>Weights<br>MMRE Pred(25)|Col9|Adaptation Pearson<br>Weights|Col11|
+|---|---|---|---|---|---|---|---|---|---|---|
+|Distance|K|Adaptation|No Adaptation<br>MMRE Pred(25)|No Adaptation<br>MMRE Pred(25)|MMRE|Pred(25)|MMRE|MMRE|MMRE|Pred(25)|
+|UE|1|CC|12|100|23|100|22|72|22|72|
+|UE|2|Mean|15|100|32|100|32|60|34|64|
+|UE|2|IRWM|13|100|28|100|28|64|29|68|
+|UE|3|Mean|14|100|30|100|29|52|31|60|
+|UE|3|IRWM|13|100|28|100|28|64|29|68|
+|UE|3|Median|14|100|21|100|23|68|24|64|
+|WESub|1|CC|10|100|21|100|24|68|30|68|
+|WESub|2|Mean|13|100|32|100|34|56|38|48|
+|WESub|2|IRWM|12|100|26|100|30|64|34|60|
+|WESub|3|Mean|13|100|31|100|32|56|36|44|
+|WESub|3|IRWM|12|100|27|100|31|64|34|56|
+|WESub|3|Median|14|100|23|100|20|68|25|52|
+|WECorr|1|CC|11|100|24|100|21|72|24|72|
+|WECorr|2|Mean|14|100|33|100|42|52|42|52|
+|WECorr|2|IRWM|12|100|28|100|34|68|34|68|
+|WECorr|3|Mean|13|100|32|100|37|52|38|56|
+|WECorr|3|IRWM|12|100|28|100|35|60|36|60|
+|WECorr|3|Median|15|100|24|100|24|64|27|56|
+|MX|1|CC|32|100|20|100|20|56|21|56|
+|MX|2|Mean|23|100|17|100|16|80|19|72|
+|MX|2|IRWM|25|100|18|100|17|76|19|64|
+|MX|3|Mean|25|100|14|100|21|88|22|88|
+|MX|3|IRWM|23|100|15|100|17|84|19|84|
+|MX|3|Median|31|100|16|100|14|88|17|80|
+
+
+**Table 10 - Results for DS2**
+
+
+
+
+
+
+
+
+
+|Distance|K|Adaptation|No Adaptation<br>MMRE Pred(25)|Col5|Adaptation No<br>Weights<br>MMRE Pred(25)|Col7|Adaptation Subjective<br>Weights<br>MMRE Pred(25)|Col9|Adaptation<br>Spearman<br>Weights|Col11|
+|---|---|---|---|---|---|---|---|---|---|---|
+|Distance|K|Adaptation|No Adaptation<br>MMRE Pred(25)|No Adaptation<br>MMRE Pred(25)|Adaptation No<br>Weights<br>MMRE Pred(25)|Adaptation No<br>Weights<br>MMRE Pred(25)|MMRE|MMRE|MMRE|Pred(25)|
+|UE|1|CC|83|68|87|28|94|24|112|24|
+|UE|2|Mean|75|60|87|24|94|20|114|12|
+|UE|2|IRWM|78|72|85|28|92|20|112|16|
+|UE|3|Mean|74|56|74|20|79|20|96|16|
+|UE|3|IRWM|77|64|79|24|86|20|104|12|
+|UE|3|Median|83|60|56|32|58|28|65|12|
+|WESub|1|CC|66|0|66|32|65|24|65|28|
+|WESub|2|Mean|58|0|87|24|55|36|57|40|
+|WESub|2|IRWM|58|0|85|28|56|36|57|44|
+|WESub|3|Mean|58|0|74|20|61|36|57|28|
+|WESub|3|IRWM|57|0|79|24|57|36|56|36|
+|WESub|3|Median|60|0|56|32|57|28|59|20|
+|WECorr|1|CC|158|20|252|20|229|12|242|16|
+|WECorr|2|Mean|195|4|197|12|183|16|191|16|
+|WECorr|2|IRWM|134|4|214|8|198|12|207|8|
+|WECorr|3|Mean|118|0|174|8|162|16|169|12|
+|WECorr|3|IRWM|125|0|191|16|177|20|185|16|
+|WECorr|3|Median|118|12|152|4|152|16|151|12|
+|MX|1|CC|64|36|156|24|170|16|193|28|
+|MX|2|Mean|67|12|133|12|136|16|146|20|
+|MX|2|IRWM|86|16|138|24|145|16|160|8|
+|MX|3|Mean|64|8|143|32|141|32|136|20|
+|MX|3|IRWM|86|12|140|20|141|24|146|24|
+|MX|3|Median|88|8|120|16|117|16|115|12|
+
+
+The first interesting observation is the difference in accuracy between both data sets, based on
+both MMRE and Pred(25) (Tables 9 and 10; Figures 4 to 7). If we consider that an MMRE <=
+25% suggests good accuracy level, and a Pred(25) >= 75% [11] then we can conclude that DS2,
+
+16
+
+
+despite presenting absolute residuals for “No Adaptation” is statistically better than for all other
+groups, showing a poor accuracy level for all distances used. On the contrary, DS1 in general
+presented good prediction accuracy where the best predictions were obtained for no adaptation
+and for adaptation using no weights.
+
+Results for DS1 show that No adaptation and Adaptation using no weights presented
+significantly better predictions than Adaptation using weights, suggesting that those two EA
+techniques should be preferred when the dataset presents a well-defined “cost” function and does
+not present many outliers or collinearity. In order to provide thresholds on collinearity/number of
+outliers we would need to simulate data using many possible combinations of
+collinearity/outliers. This will be the subject of further research.
+
+Results for DS2 show that, except for Unweighted Euclidean distance, there are no significant
+differences amongst the techniques employed. Since the Unweighted Euclidean distance
+presented significantly better results than the other distances, for all types of adaptation, it may
+indicate that this distance should be the one used whenever a data set presents similar
+characteristics to those of DS2.
+
+In addition to Tables 9 and 10 we have also provided line charts (see Figures 4 to 7) that show
+MMREs and Pred(25) for both DS1 and DS2 data sets.
+
+The legend used on Figures 4 to 7 is showed below.
+
+MMRE NA – MMRE for No Adaptation
+MMRE ANW – MMRE for Adaptation No Weights
+MMRE ASW – MMRE for Adaptation Subjective Weights
+MMRE APW – MMRE for Adaptation Pearson (DS1)/Spearman (DS2) Weights
+Pred(25) NA – Pred(25) for No Adaptation
+Pred(25) ANW – Pred(25) for Adaptation No Weights
+Pred(25) ASW – Pred(25) for Adaptation Subjective Weights
+
+–
+Pred(25) APW Pred(25) for Adaptation Pearson (DS1)/Spearman (DS2) Weights
+
+**Figure 3 - Legend for Figures 4 to 7**
+
+The line charts presented in Figures 4 to 7 are sub-divided into four areas, as follows:
+1. rows one to six correspond to Unweighted Euclidean distance.
+2. rows seven to 12 correspond to Weighted Euclidean distance based on subjective weights.
+3. rows 13 to 18 correspond to Weighted Euclidean distance based on Correlation coefficient
+weights.
+4. rows 19 to 24 correspond to Maximum distance.
+
+17
+
+
+**Figure 4 – Line chart for DS1 using MMRE**
+
+Figure 4 shows that MMRE using the technique “No Adaptation” (MMRE NA) remained
+between 10 and 15 for the first three areas, and then peaked when the Maximum distance was
+used. MMRE NA for the first three areas, shows lower values than MMRE for any other
+techniques. The second best result was obtained for MMRE using the technique “Adaptation no
+Weights” (MMRE ANW). All techniques that used adaptation presented better results than
+MMRE NA, based on the Maximum distance. Figure 4 also shows that MMRE for all adaptation
+techniques seem to follow similar patterns throughout, i.e., when values rise or fall for one
+adaptation technique, the same trend happens to the other two techniques.
+Figure 5 shows that MMRE for the first two areas were not widely different across techniques.
+This trend continues for the last two areas, except for MMRE NA, which is the lowest overall.
+As mentioned earlier, MMRE values are not good for any of the techniques used, since their
+values are around 50 and beyond.
+
+Figure 6 shows that Pred(25) for techniques “No adaptation” (Pred(25) NA) and “Adaptation No
+Weights” (Pred(25) ANW) presented the best possible value of 100. The two remaining
+techniques presented similar values for Pred(25) along all areas, but technique “Adaptation
+Subjective Weights” (Pred(25) ASW) had slightly higher values for areas 2 to 4.
+
+Figure 7 shows good Pred(25) values for technique NA for area 1, however this technique then
+presents the worst values for area 2, and very low values for areas 3 and 4. The remaining
+techniques seem to follow similar pattern throughout all 4 areas, with slightly higher Pred(25)
+values for areas 1 and 2.
+
+18
+
+
+**Figure 5 – Line chart for DS2 using MMRE**
+
+**Figure 6 – Line chart for DS1 using Pred(25)**
+
+
+19
+
+
+**Figure 7 – Line chart for DS2 using Pred(25)**
+
+On both data sets, applying adaptation rules using weights did not give better predictions, which
+seems counter intuitive. However, there are circumstances that may explain these results:
+
+  - Using the original data sets to carry out the calculations, rather than the normalised
+versions, may have contributed to these results, as the range of values amongst size
+measures was sometimes quite different.
+
+  - If correlation coefficients were higher for variables that also had greater/smaller values,
+then their effect as scalars could also affect the estimated effort obtained.
+
+Further investigation using normalised values is necessary since we need to identify to what
+extent non-normalised data can affect the adaptations employed.
+
+In addition, there are several differences between DS1 and DS2 that may have further influenced
+the results:
+
+- The range of data for DS1 is smaller than that for DS2, suggesting that DS1 may be more
+homogenous than DS2.
+
+- The “cost” function presented in DS1 is continuous, revealed in hyper planes, which form the
+basis for useful predictions [38], and a strong linear relationship between size measures and
+effort. However, the “cost” function presented in DS2 is discontinuous, suggesting that DS2
+has more heterogeneous data than DS1.
+
+- DS1 is more “unspoiled” than DS2, if we consider data set characteristics such as variables
+with normal distribution, no outliers and no collinearity [38]. DS1 has several variables with
+a close to normal distribution, no outliers and two out of seven variables presenting
+collinearity. DS2 does not have any variables with distributions close to normal, has outliers
+and three out of six variables present collinearity. Clearly, DS2 is more “spoiled” than DS1.
+
+- DS1 is larger than DS2. Previous work [38] shows that EA always benefited from having
+larger data sets and that extra cases were most valuable where there was a discontinuous
+“cost” function and/or the data sets were “spoiled” (outliers and outliers + collinearity).
+
+20
+
+
+Finally, another issue which may have influenced our results is the choice of size measures
+employed. To date there is no standard as to what is or are the best size measures to use for Web
+cost estimation, therefore we cannot fully guarantee that the data sets employed had the most
+adequate size measures for the type of Web applications under investigation.
+
+Our results confirm previous work by Shepperd and Kadoda [38], which showed via simulation
+that data sets presenting a continuous “cost” function gave much better predictions than those
+that did not exhibit it, and that this effect tended to be far larger than that between different cost
+estimation models or other data set characteristics.
+
+Except for Weighted Euclidean distance based on subjective weights (WESub), the best
+predictions for DS1 were obtained without the use of adaptation rules and by applying adaptation
+rules without weights. Regarding WESub, the adaptation without weights did not give as good a
+result as those obtained using no adaptation, suggesting that the size measures for the three
+closest cases on each retrieval episode were predominantly not as homogenous as their
+corresponding effort.
+
+.5
+
+
+
+
+
+
+
+
+.4
+
+.3
+
+
+
+
+
+
+
+.2
+
+.1
+
+0.0
+
+-.1
+
+N = 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34
+
+**Figure 8. Boxplots of absolute residuals for column “no adaptation” for DS1**
+
+The statistical significance comparing all distances across the column “no adaptation” (Table 9)
+for DS1 revealed that, except for the mean of 3 cases, all results obtained using the maximum
+distance were the worst, confirmed statistically. A boxplot of absolute residuals for the remaining
+three distances (Figure 8) illustrates residuals that do not differ much from each other. However,
+a closer look revealed that the weighted Euclidean distance, using weights based on Pearson’s
+correlation coefficients, and the inverse rank weighed mean for three cases is a good candidate as
+the one that gives the best predictions for DS1 overall.
+
+Results for all distances across the column “adaptation no weights” (Table 9), for DS1, revealed
+that, except for the mean of three cases for the maximum distance, there were no statistically
+significant differences. Therefore, the best prediction over that column would be the maximum
+distance using the mean of three cases.
+
+A boxplot of absolute residuals (Figure 9) for the unweighted Euclidean distance illustrates
+residuals that do not differ very much from each other. A closer look does not reveal any
+promising candidates for best predictor.
+
+21
+
+
+100
+
+80
+
+60
+
+40
+
+
+
+
+
+
+
+
+20
+
+0
+
+-20
+
+N = 25 25 25 25 25 25
+
+UEK1 UEMK2 UEIRK2 UEMK3 UEIRK3 UEMEDK3
+
+**Figure 9 – Boxplots of absolute residuals for UE distance without adaptation for DS2**
+
+The statistical significance comparing all distances across the column “no adaptation” for DS2
+(see Table 10) revealed that all results obtained using the unweighted Euclidean distance were
+the best. This was confirmed statistically.
+
+It would make little sense to compare the distributions of both data sets looking for that which
+significantly gives the best prediction since DS1 clearly presented better estimations than DS2.
+Nevertheless, this does not mean that data sets without a continuous “cost” function should be
+discarded. A possible approach to deal with DS2 might be to partition the data into smaller, more
+homogeneous data sets.
+
+**6.** **CONCLUSIONS**
+
+In this paper we compared several methods of EA-based effort estimation. In particular, we
+investigated the use of adaptation rules as a contributing factor for better estimation accuracy.
+
+The paper looks at two different types of data sets, investigating the relationship between data set
+characteristics and prediction accuracy based on EA. Therefore using data sets with differing
+characteristics was fundamental for our investigation.
+
+Results indicated that the best predictions were obtained for the data set that presented a
+continuous “cost” function, reflected as a strong linear relationship between size and effort, and
+that was more “unspoiled” (no outliers, small collinearity).
+
+The work presented in this paper is at preliminary stage. However, we believe that there are
+lessons to be learnt:
+
+- It seems that there is a strong relationship between the nature of the “cost” function and the
+prediction accuracy. Since our results corroborate previous work [38] (which used different
+data sets and size measures) we believe it gives an indication that that a relationship does
+indeed exist.
+
+22
+
+
+- Regarding data sets that have a discontinuous “cost” function; the use of EA adaptation rules
+does not seem to improve accuracy. For those with a continuous “cost” function, the absence
+of adaptation rules does not seem to hinder good prediction accuracy.
+
+- The use of adaptation rules with size weights did not improve accuracy on any of the data
+sets employed. This may be a consequence of using very different size measures with varying
+
+ranges.
+
+As it seems that the nature of a “cost” function can be quite influential on the predictions
+obtained, additional investigation using different Web project data sets is necessary in order to
+further issues such as:
+
+- Nature of Web projects developed in industry. Will these data sets often exhibit continuous
+“cost” functions?
+
+- For data sets showing a discontinuous “cost” function, to what extent will being “unspoiled”
+influence the EA predictions obtained?
+
+- Given a “cost” function, will smaller data sets always show worse predictions than larger
+data sets?
+
+In addition, other issues such as the choice of size measures also need further investigation, as
+they may influence the type of “cost” function a data set presents and even the results for
+adaptation rules.
+
+We believe that the results presented herein may be also applied to those Web companies that
+develop Web hypermedia applications which are within the size limits and structure we have
+employed, that use similar tools to those used in our case studies, and where Web developers are
+at the start of their careers. However, if a Web company’s context differs from ours then we
+cannot guarantee that the results presented in this paper are likely to be successfully applied to
+their environment.
+
+An important aspect of this research is that our conclusions are solely based on the data sets used
+and cannot be generalised outside their scope.

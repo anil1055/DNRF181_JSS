@@ -1,0 +1,669 @@
+# **Measuring Functionality and Productivity in Web-based Applications: a Case** **Study**
+
+
+Maurizio Morisio [1]
+
+*University of*
+*Maryland*
+*College Park – USA*
+*morisio@cs.umd.edu*
+
+
+Daniele Romano
+
+*Politecnico di Torino -*
+*Italy*
+*romano@athena.polito.it*
+
+
+Ioannis Stamelos
+
+*Aristotle University of*
+*Thessaloniki – Greece*
+
+*stamelos@csd.auth.gr*
+
+
+Vasilis Spahos
+*Aristotle University of*
+*Thessaloniki – Greece*
+
+*vspahos@csd.auth.gr*
+
+
+**Abstract**
+
+*In this paper we explore the variation of the cost of*
+*writing code when object- oriented framework based*
+*development of web applications is encountered for the*
+*first time. Managers need such information to justify their*
+*investments in innovative development strategies. Size*
+*measurements are essential in this task and a number of*
+*metrics, namely Lines of Code, classical Function Points*
+*and Object-Oriented Function Points, are employed. It is*
+*argued that lines of code and object-oriented function*
+*points are more suitable in this case. Data analysis*
+*reveals that learning influences mainly the cost of writing*
+*new code, consisting of continuous calls to components*
+*provided by the framework. We also explore the*
+*applicability of an already proposed effort prediction*
+*model that is based on different reuse types. A cost*
+*estimation model is the by-product of this study, providing*
+*a helpful tool for managing the first projects in which the*
+*framework is employed* .
+
+**1.** **Introduction**
+
+Object Oriented frameworks provide an important
+enabling technology for reusing the architecture and
+functionality of software components. Despite the heavy
+reuse involved in framework–based development,
+application design based on frameworks continues to be a
+difficult task. The designer must understand the complex
+class hierarchies and objects embodied in the framework
+in order to use the framework effectively. This is the
+reason for the relatively low productivity that is reported
+for the first applications developed using the framework.
+Therefore managers need tools to justify their investment
+
+
+in framework technology. They need ways to monitor
+productivity growth and models to estimate return on
+investment for framework adoption.
+In the experiment described in a companion paper [1],
+a number of Web based applications were developed
+using an object oriented framework. This framework
+supports the development of multimedia services on a
+digital network using CORBA infrastructure and
+integrating COTS (Component Off-The-Shelf) products
+such as CU-See-Me. The framework is composed of a
+service platform, to abstract common functions from a
+network, and components to abstract control services. The
+development of applications consists of the verbatim
+reuse of the framework plus the development of new
+code, in Java, which implements calls to the components
+provided by the framework.
+As reported in [1], significant reuse level and high
+productivity characterizes framework-based applications’
+development. Another important concept related to the
+framework based software development is the impact of
+the learning effect, since the user must fully understand
+the abstract design of the underlying framework, as well
+as the object collaboration rules or contracts. In [2] it is
+stated that there is a linear relationship between
+productivity and *Reuse* *Level* ( *Reuse* *Rate* ). Whether this
+relationship is linear or not, it is expected that higher
+Reuse Level results in higher productivity. This does not
+apply in the first applications developed using the
+framework due to the learning factor.
+Our aim was to construct a cost estimation model that
+would take into account the learning factor, in order to
+calculate the relative cost of writing new code that uses
+the framework, when the framework is used for the first
+time. As stated in [3] frameworks have a steep learning
+curve. However this is not proved using any empirical
+data. Using the empirical data from the development of
+five applications with the framework we tried to construct
+
+
+1 Maurizio Morisio is visiting researcher at University of Maryland, while on sabbatical leave from Politecnico di Torino.
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+the learning curve using the Wright or cumulative –
+average cost model ([4]).
+The first stage consisted in applying a number of
+software measures and finding out which one was the
+most proper for our purposes. A variety of measures have
+been applied since in a highly innovative area such as
+framework-based development, it is essential to decide
+carefully the measurement tools that will be used.
+In the second stage an effort prediction model which is
+described in [5] is used in order to quantify the impact of
+the learning factor on the relative cost of writing new
+code for an application.
+Finally the results obtained from the second stage are
+used to construct an estimation model for the relative cost
+of writing code for new applications using the framework.
+
+**2.** **Measuring the framework-based**
+**applications**
+
+**2.1.** **Measuring the size**
+
+The first approach used in order to measure the size of
+the applications developed using the framework was
+Function Point Analysis (FPA). Function Point counting
+rules were initially introduced by Allan Albrecht, IBM, in
+1979 ([6]). These rules have been reviewed by the
+International Function Point User Group. The focus of the
+rules is to measure the functional size of software from a
+user point of view. Function Points are often used in cost
+estimation tools such as algorithmic cost models.
+The first problem in applying the IFPUG rules ([7],
+
+[8]) was the nature of these applications. As stated earlier
+the experiment involved Web-based object oriented
+applications and therefore an adaptation of these rules was
+necessary.  A tutorial ([9]) was used in order to adapt
+IFPUG Counting rules to this specific kind of
+applications. The second problem related to Function
+Points is that this measure does not enable the distinction
+between functionality provided by the framework and by
+the code developed for the specific application. This leads
+to the conclusion that Function Points can not be used in
+order to measure the Reuse Level *,* and as a consequence
+this metric cannot be used to build an estimation model
+that incorporates reuse.
+The second metric that was used was the Object
+Oriented Function Points (OOFPs). OOFPs were
+introduced in [10] as a method used for estimating the
+size and consequently the effort and duration of object
+oriented software development projects. In Function
+Points the central concept are *logical files* and
+
+
+*transactions* . In OOFPs the central concept are the classes
+and their methods. There is a mapping between classes
+and files and methods and transactions. In FPA, logical
+files (LF) are divided into *internal logical files* *(ILFs)* and
+*external interface files (EIFs)* . This division is made by
+identifying the application boundary. In OOFPs classes
+are divided into external classes and internal classes.
+External classes refer to non–system components, such as
+other applications, external services and reused library
+classes. Classes within the application boundary
+correspond to ILFs, while classes outside the application
+boundary correspond to EIFs.
+Transactions in FPA are classified as *inputs, outputs*
+and *inquiries* . In OOFPs class methods are used instead of
+transactions. Class methods are treated as *Service*
+*Requests* (SR) whether they belong to external or to
+internal classes.
+The complexity of each class is calculated by counting
+single attributes of each class as *Data Element Types*
+(DETs) and complex attributes, (i.e. attributes which type
+is a class), as Record Element Types (RETs). Then
+complexity look-up tables for *logical files* introduced by
+IFPUG rules are used in order to count the OOFPs.
+The complexity of each Service Request is calculated
+by counting the arguments of each method. *Simple*
+*arguments* are counted as DETs, while *complex*
+*arguments*, such as objects, are counted as File Types
+Referenced (FTRs). When the DETs and FTRs of a
+method have been counted, the IFPUG Counting Practices
+Manual table for external inputs is used in order to
+classify the methods as having low, average or high
+complexity.
+OOFPs in contrast with Function Points enable the
+counting of Reuse Level because a clear distinction can be
+made between classes that were developed and classes
+that were reused, and also Service Requests provided by
+new developed classes and Service Requests provided by
+reused classes. In contrast with LOCs, OOFPs enable the
+measurement of the size of an application at the OO
+design phase, while LOCs can be used only at the end of
+the implementation phase. Even if the exact number of
+classes and methods is not known at the early design
+phase, an estimation of the size of the software in OOFPs
+can be obtained counting the number of classes and
+assigning a low complexity to each of them. The fact that
+OOFPs can be counted early enough in the development
+cycle implies that this metric is more suitable in order to
+build a cost estimation model.
+
+The third metric in order to measure the size of the
+software is Lines of Code which is the number of physical
+lines of code delivered in each application. For a specific
+application the size expressed in LOCs includes the Lines
+of Code of the framework which is verbatim reused.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+|Application|Effort<br>(person<br>hours)|IFPUG<br>FPs|Application_<br>OOFPs|Reused_OOFPs|Total<br>LOCs|Reused<br>LOCs|New<br>Developed<br>LOCs|
+|---|---|---|---|---|---|---|---|
+|SPY|95|29.92|1397|1150|12331|10613|1718|
+|TLL|87|62.48|1481|1150|12386|10613|2673|
+|MCS|45|69.52|1354|1150|12439|10613|1826|
+|AUC|63|62.48|1491|1150|13633|10613|3020|
+|VOD|34|N/A*|1397|1150|12231|10613|1618|
+
+
+**Table 1. Measurements for five applications based on the framework.**
+**(SPY=SPY camera, TLL=Telelearning, MCS=Multiconference, AUC=Auction, VOD=Video on Demand)**
+
+**(** **[*]** **Requirements not available)**
+
+
+**2.2.** **Measuring the Reuse Level**
+
+As mentioned earlier, applications developed using a
+framework imply strong reuse. A number of reuse metrics
+is introduced in [5]. The Reuse Level is used to quantify
+the amount of reuse that took place in an application. It is
+equal to the size of the reused software divided by the size
+of the total software. The Reuse Level is usually
+expressed as a percentage. We use two different
+approaches in order to measure the Reuse Level. Other
+authors use the term Reuse Rate instead of Reuse Level.
+In the first approach we measure the Reuse Level using
+Lines of Code. The Reuse Level, expressed as a
+percentage, for a particular application (P) is given by:
+
+��������
+���������� ���� ��� = ×����
+�������
+
+where:
+
+*Reuse(P)* : The lines of code reused,
+*Size(P)* : The total lines of code delivered in the
+application.
+We must mention here that the only kind of reuse
+presented in the applications developed, is verbatim reuse
+and in order to count *Reuse(P)* we just count the lines of
+code verbatim reused.
+The second approach for measuring the Reuse Level is
+using OOFPs. In this case Reuse Level is measured by the
+following formula:
+
+*ReuseOOFPs(P)*
+*ReuseLevel* *OOFPs* *(P)* = × *100%*
+*ApplicationOOFPs(P)*
+
+where:
+
+*ApplicationOOFPs(P)* : are counted with the rules
+previously mentioned, and
+
+
+*ReuseOOFPs(P)* : are the OOFPs for the reused classes
+and Service Requests of these classes.
+We will describe in short terms how *ReuseOOFPs* are
+
+counted. The reused classes are external classes counted
+as EIFs for the application, so the OOFPs for these classes
+are counted by using the complexity matrix for EIFs. The
+OOFPs for the reused methods (Service Requests of
+reused classes) are counted by using the complexity
+matrix for External Inputs. The reused OOFPs are
+measured by the following formula:
+
+*ReuseOOFPs=ReusedClassesOOFP +*
+
+*ReusedMethodsOOFPs*
+
+**2.3.** **Measurement Results**
+
+The results obtained using the previous metrics are
+shown in Table 1. These results were used in order to
+calculate the productivity among the projects. The
+productivity was measured in FPs per effort, in OOFPs
+per effort and in LOCs per effort. The productivity figures
+based on simple metrics such as number of classes and
+methods are included in [1].
+In figure 1 productivity is expressed in FPs per effort.
+As we stated earlier Function Points cannot be used to
+measure the Reuse Level *.* The variations in productivity
+among the projects cannot be explained using FPs leading
+to the conclusion that this metric cannot be used for our
+
+purposes.
+In figure 2 and 3 productivity and Reuse Level are
+measured using OOFPs. We observe that productivity in
+the second project compared to the productivity in the
+first project increases, while the Reuse Level decreases.
+This is due to the learning effect. We conclude that this
+metric may be used for constructing a cost estimation
+model.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+**Figure 1. Productivity expressed in FPs per person**
+**hour.**
+
+
+**Figure 4. Productivity expressed in LOCs per person**
+**hour.**
+
+
+
+
+
+
+**Figure 2. Productivity expressed in OOFPs per**
+**person hour.**
+
+
+**Figure 5. Reuse Level measured using LOCs.**
+
+In figure 4 and 5 productivity and Reuse Level are
+measured using LOCs. The conclusions are the same as
+for OOFPs. Comparing figure 2 with figure 4 and figure 3
+with figure 5 we observe that there is a similarity between
+the variations in productivity and Reuse Level measured
+using OOFPs and LOCs. This indicates a strong
+relationship between these two metrics. However, as
+mentioned above, OOFPs can be measured early enough
+in the life cycle and therefore this metric seems more
+suitable for an estimation model.
+
+**3.** **Managing the productivity growth in the**
+**first applications**
+
+As discussed in [1], there is a learning factor that
+influences productivity. In order to build the cost
+estimation model we should first quantify the impact of
+the learning factor. The learning factor influences the
+productivity or the cost of writing new code that exploits
+
+
+
+
+**Figure 3. Reuse Level measured using OOFPs.**
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+the functionality provided by the framework. A way to
+quantify the impact of this factor is to measure how this
+cost changes among the projects. For this reason we must
+use a model which makes a distinction between reused
+and newly developed code. A model suitable for our
+purposes is described in [5], and was introduced by the
+U.S. Defense Information System Agency (DISA).
+According to this model the total effort expressed in labor
+hours in order to develop a project is given by the
+formula:
+
+*E* *r* *=a* *1* *L* *n* *+a* *2* *L* *r* *+a* *3* *L* *v* *+a* *4* *L* *a* (3.1)
+
+where:
+
+*L* *n* *=* lines of new custom code,
+*L* *r* *=* lines of new reusable code,
+*L* *v* *=* lines of verbatim reused code,
+*L* *a* *=* lines of adapted reused code.
+
+The coefficients represent the relative costs of reuse in
+terms of development hours per line of code as follows:
+
+*a* *1* *=* relative cost of writing custom code,
+*a* *2* *=* relative cost of writing reusable code,
+*a* *3* *=* relative cost of verbatim reuse,
+*a* *4* *=* relative cost of adapted reuse,
+
+In [5] the following default values are proposed for
+these coefficients:
+
+*a* *1* *=* 1.0, *a* *2* *=* 1.5, *a* *3* *=* 0.2 and *a* *4* *=* 0.5.
+
+It is stated that they can vary significantly according to
+the development environment.
+This model assumes that no learning effect is present:
+it holds for projects developed by experienced personnel.
+For the applications developed with the help of the
+framework, the framework was totally verbatim reused
+and there was no adapted reused code. The programmer
+did not write reusable code. The new code was developed
+in order to make use of some methods provided by the
+classes of the framework. In this context, the influence of
+the learning factor can be determined if we calculate the
+way the coefficient *a* *1* changes across the projects. For our
+purpose the model described by equation 3.1 must be
+adapted. The total effort in labor hours to develop an
+application using this framework is given by the type:
+
+*E* *r* *=a* *1* *L* *n* *+a* *3* *L* *v* [(3.2)]
+
+where:
+*L* *n* *=* Lines of new code developed in order to make use of
+the methods provided by the framework,
+*L* *v* *=* Lines of code of the framework (verbatim reused),
+
+
+and:
+
+*a* *1* *=* the relative cost of writing code that implements
+calls to the functions provided by the framework, in
+development hours per line of code,
+*a* *3* = the relative cost of verbatim reused code in
+development hours per line of code.
+
+The effort ( *E* *r* ), the lines of new code ( *L* *n* ) and the lines
+of the verbatim reused code ( *L* *v* ) are shown in Table 1 for
+each application. It is important to note that learning has
+no effect on the cost of verbatim reused code, since it is a
+repetitive task accomplished in a standard way. The value
+of the coefficient *a* *3* can be considered to be constant and
+approximated as follows **.**
+From the default values of formula 3.1, we note that
+the ratio *a* *1* */a* *3* is equal to 5, implying that the cost of
+writing new code is five times higher than the cost of
+verbatim reused code. However, in our case, this may be
+true only for the last application (VOD), since, according
+to the designer ([1]), this application signals the end of the
+learning effect.
+Therefore the relative cost of verbatim reuse may be
+approximated by applying the formula 3.2 on application
+VOD, considering *a* *1* */a* *3* =5:
+
+� ���
+� � = �����
+� ����� + �� �����
+
+resulting in *a* *3* =1.8 hours/KLOC after replacement of
+values. Under the assumptions we have made we will use
+this value for all five applications.
+The relative cost of writing custom code (i.e. code
+which uses the framework) is determined by the formula:
+
+� � − � � � �
+� � = �����
+� �
+
+Using equation 3.4 we calculated the relative cost or
+writing code that makes use of the framework for the five
+applications. The results are presented in figure 6. The
+applications are placed in the order in which they were
+developed. The first application is the first one that the
+programmer developed using the framework.
+From this diagram it is evident that the cost or writing
+new code is higher for the first two projects, during which
+the programmer learns how to use the framework, and
+decreases as the number of the applications developed
+using the framework increases.
+
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+**Figure 6. Relative cost of writing code that uses the**
+**framework (calculated using LOCs).**
+
+We applied the same model described by the equation
+3.2 using OOFPs. In this case the parameters ( *L* *n* ) and ( *L* *v* )
+have different meaning.
+
+*L* *n* = Size of new developed code in OOFPs,
+*L* *v* *=* Size of reused code in OOFPs,
+
+and:
+
+*a* *1* = the relative cost of writing code that implements calls
+to the functions provided by the framework in
+development hours per OOFPs,
+*a* *3* = the relative cost of verbatim reused code in
+development hours per OOFPs.
+
+
+We used the same method as in the case of LOCs for
+the approximation of *a* *3*, assuming that the default ratio of
+5 is also valid for OOFPs. We have calculated that
+
+*a* *3* =0.014 hours/OOFPs. The coefficient � *1* for each
+application can be calculated using equation 3.4. The
+results obtained for the coefficient � *1* using OOFPs are
+shown in figure 7. As in the case of LOCs, the diagram
+shows that there is a steep fall in the value of the
+coefficient � *1*, during the development of the first
+applications.
+
+**4.** **Building the estimation model**
+
+The previously obtained diagrams imply that for the
+first applications developed, the relative cost of writing
+new code decreases exponentially as the number of
+cumulative projects increases. The first step towards the
+construction of this estimation model is to predict the
+relative cost of writing new code that uses the framework,
+using the relative cost of writing new code in the first
+application and the cumulative number of applications.
+For this reason we investigate how well the results for
+parameter *a* *1* obtained in the previous stage fit the Wright
+curve [4], the earliest industrial learning curve represented
+by:
+
+
+*y=* � *X* *[-]* [�] �� (4.1)
+
+where:
+*y =* the estimated relative cost of writing new code ( � *1* ) in
+hours per line of code,
+� *=* is the relative cost of writing new code in the first
+application in hours per line of code,
+*X =* the cumulative number of applications developed
+using the framework until the development of the current
+application, including this application,
+�� the learning rate parameter,
+
+�� error.
+
+The learning rate parameter was estimated using leastsquares regression after taking logarithms of both sides.
+Parameter � is sometimes expressed in percent, which
+reflects the percentage of decline in relative cost of
+writing new code with each doubling of cumulative
+volume:
+Using the results for the parameter *a* *1* obtained from
+
+�����
+� = �����
+�� �
+
+equation 3.4 using LOCs, and applying regression we
+obtain the following results:
+
+
+
+
+
+
+**Figure 7. Relative cost of writing code that uses the**
+**framework (calculated using OOFPs).**
+
+
+*r* *[2]* =0.962,
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 10:58:25 UTC from IEEE Xplore. Restrictions apply.
+
+
+� =0.937 or, expressed as a percentage, 52.23 %,
+� = 0.045.
+
+Therefore the resulting estimation model is:
+
+*a* *1* *=0.045* � *[-0.937 ]* (4.3)
+
+where:
+*a* *1* = the relative cost of writing new code for the use of
+the framework expressed in development hours per LOCs,
+*X* = the cumulative number of applications developed
+until the development of the current application, including
+the current application.
+
+Typical percentage rates observed in practice for the
+learning rate parameter are from 70 to 95 percent ([4]).
+The small percentage value for the learning rate parameter
+( �� in this case, indicates a relatively steeper learning
+curve, which implies a rapid decrease in the relative cost
+of writing new code that uses the framework.
+We then applied regression for the results obtained for
+coefficient *a* *1* using OOFPs. The results are:
+
+*r* *[2]* =0.903,
+� =0.828 or, expressed in percentage, 56.33%,
+� =0.348 expressed in development hours per OOFPs.
+
+Using these results the estimation model is:
+
+*a* *1* *=0.348X* *[-0.828   ]* (4.4)
+
+where:
+*a* *1* = the relative cost of writing new code for the use of
+the framework expressed in development hours per
+OOFPs,
+*X* = the cumulative number of applications developed
+until the development of the current application, including
+the current application.
+
+In both cases the values for *r* *[2]* are satisfactory. The
+number of data points is small, but this is only what we
+should expect: the learning effect vanishes after few
+initial projects.
+The above results indicate a learning rate parameter
+slightly higher than that obtained using LOCs. However
+the low value of this learning parameter implies again the
+existence of a steep learning curve. Using OOFPs or
+LOCs and the above described models we can estimate
+the relative cost of writing new code that uses the
+components of the framework, for the first applications.
+
+**5.** **Conclusions**
+
+In this paper we have measured the functional size and
+
+
+the code size of the software produced during an
+experiment involving the development of web-based
+applications using an object-oriented framework. Three
+different metrics have been used for this purpose, Lines of
+Code, classical Function Points and Object-Oriented
+Function Points.
+It is important to fully understand the productivity
+implications in this type of software development.
+Software managers need to keep under control
+productivity variation in the first applications of the
+framework, since, initially, it is reasonable to expect
+lower than normal productivity.
+Although function point analysis is suitable for
+determining the amount of functionality provided by a
+software product, function points can not reflect the extent
+to which code reuse has been applied in development.
+Therefore, they are inappropriate for productivity
+estimations in this type of software development. On the
+contrary, lines of code and object-oriented function points
+are capable of measuring reuse.
+Based on size measurements with these metrics and
+taking into account the different types of reuse we have
+found that the cost of writing new code (consisting mainly
+of calls to components provided by the framework) is
+reduced, following a traditional learning curve.
+Based on the above we have built a simple cost
+estimation model that may be used by managers that are
+asked to invest in this technology and direct such software
+development projects. This model helps in predicting and
+tracking development costs during the first exploratory
+projects. The parameters of the models are specific to the
+context of the experiment, but we believe that the
+methodology followed is applicable in other development
+environments as well.
+Finally, we have found that lines of code and OOFPs
+are equally suitable for measurements in this field. We
+prefer the latter because OOFPs are available earlier in the
+software development cycle.

@@ -1,0 +1,973 @@
+# Effort Estimation of Web Applications through Web CMF Objects
+
+
+Erika Corona, Giulio Concas, Michele Marchesi
+
+*Dept. of Electrical and Electronic Eng.*
+*University of Cagliari*
+*Cagliari, ITALY*
+*{erika.corona, michele, concas}@diee.unica.it*
+
+***Abstract*** **—Several Content Management Frameworks (CMF),**
+**either open source or with a commercial license, are available to**
+**help the publication of huge amounts of information and to**
+**develop Web applications. Unfortunately, developing Web**
+**applications through a CMF is not exempt from cost and time**
+**overruns, as in traditional software projects, and currently there**
+**is no estimation model able to adequately measure the effort of**
+**Web application development. This work presents a new**
+**methodology for estimating the effort of Web applications**
+**developed with a Content Management Framework (CMF). We**
+**present the new key elements for analysis and planning, needed**
+**to define every important step in developing a Web application**
+**through a CMF. Using those elements, it is possible to estimate**
+**the effort needed to build such an application in man-days. We**
+**also present the experimental validation of the proposed**
+**methodology performed on a 9-project dataset, provided by three**
+**different Italian software companies.**
+
+***Keywords–Web application effort estimation; Content Man­***
+***agement Framework; Web Objects; experimental validation***
+
+I. I NTRODUCTION
+
+Nowadays, Web sites and Web portals are more and more
+complex, and have to manage and convey to their visitors
+huge amounts of information. When developing these
+applications, programmers typically use a Content Manage­
+ment Framework (CMF), a software that provides most of
+what is needed to develop Web applications, and that is easily
+extensible through proper add­ons and plugins.
+There are several CMFs, like the open source CMFs
+Joomla! [1], Drupal [2], and WordPress [3], that have been
+created to help the management of those large amounts of
+content and to develop both simple and complex Web
+applications. Because of the capability of handling and editing
+heterogeneous data sources, an increasing number of
+organizations and corporations turned to CMFs to fulfill their
+need to publish data and provide services – such as business
+intelligence, GIS, e­Business – in their websites and portals.
+Unfortunately, developing Web applications through
+CMFs is not exempt from cost and time overruns, as in tradi­
+tional software projects. Estimation is one of the most critical
+
+
+Giulio Barabino, Daniele Grechi
+*Dept. of Biophysical and Electronic Eng.*
+*University of Genova*
+*Genova, ITALY*
+*{giulio.barabino,daniele.grechi}@unige.it*
+
+components of a successful software project: *complete the*
+*project on time and within budget* is the classic challenge for
+all project managers [4]. However, predictions made by
+project managers about their project are often inexact:
+software projects need, on average, 30­40% more effort than
+estimated [5]. In spite of the many estimation models
+available, currently there is no model able to adequately
+measure the effort of a Web application [6][7][8][9][10].
+This work presents a new methodology for estimating the
+effort of Web applications developed with a CMF. We
+concerned ourselves with effort estimation for Web applica­
+tions three times, in 2009 [11], in 2011 [12] and in 2012 [13].
+In our 2009 paper [11], we compared the effectiveness of Al­
+brecht's classic Function Points (FP) metrics [14] and Reifer's
+Web Objects (WO) metrics [15] in estimating development
+effort for Web applications, testing those metrics on a dataset
+made of 10 projects provided by a software company between
+2003 and 2009. The experimental results showed a high error
+in estimates when using WO metrics, which proved to be more
+effective than FP metrics in only two occurrences. However,
+neither of the metrics passed Conte's criterion [16] of having
+at least 75% of the estimates with an error less than or equal to
+25%, although the FP metric was the closest to its satisfaction.
+In the context of this first work, it appeared evident that
+effort estimation depends not only on functional size meas­
+ures, but that other factors had to be considered, such as model
+accuracy and other challenges specific to Web applications.
+For this reason, we revised the WO methodology in 2011,
+creating the RWO model [12]. This model estimates the effort
+required to develop a Web project in terms of man­days, using
+a combination of two metrics: Albrecht's classic FP metric and
+Reifer's WO metric. We applied the RWO method to a dataset
+made of 24 projects provided by the same company as in our
+previous work, comparing the results to those gathered by
+applying FP and WO methods. The experimental results
+showed that the RWO method reached effort prediction results
+that are comparable to – and in 4 cases even better than – the
+FP method.
+
+
+The reason for proposing – in our last work [13] – a new
+methodology for size estimation was to counteract the inad­
+equacy of the RWO method when used with the latest Web
+application development tools. The size metric used in the
+RWO method was found not to be well suited for Web ap­
+plications developed through a CMF. In particular, operands
+and operators used in Reifer's metric relate to elements that
+can be quickly and easily created by modern programming
+technologies, and whose weight appears to be irrelevant in
+terms of size calculation for a Web project.
+We identified new key elements for analysis and planning,
+allowing for the definition of every important step in the
+development of a Web application using a CMF. Each element
+considered can show a different degree of complexity. We
+tested the size estimation ability of our methodology on 7
+projects provided by the same company of the previous
+studies. We compared the value of the size estimate yielded
+using original requirements to the final size of each project, as
+measured on the developed Web application, with very low
+MRE values on estimated sizes: the Web CMF Objects
+methodology has a value of *Pred* (0.25) equal to 85.7%, so it
+satisfies the acceptance criterion by Conte et al. [16].
+In this work, we complete the presentation and assessment
+of our methodology, suggesting a new cost model for the
+calculation of effort estimation. We tested the whole
+methodology on 9 projects provided by three different Italian
+software companies, comparing the value of the effort es­
+timate to the actual, final effort of each project, in man­days.
+We compared the effort estimate both with values obtained
+from the Web CMF Objects methodology and with those
+obtained from the respective effort estimation methodologies
+of the three companies, getting excellent results – a value of
+*Pred* (0.25) equal to 100% for our methodology.
+This paper is organized as follows: Section II presents an
+overview of main current cost models; in Section III we de­
+scribe our approach, while Section IV discusses the results of
+the experiments performed applying our method to obtain its
+validation. Finally, Section V presents the conclusions and
+plans for future work.
+
+II. C OST M ODEL O VERVIEW
+
+Research on software development effort and cost estima­
+tion has been abundant and diversified since the end of the
+Seventies [14][16][17]. The topic is still very much alive, as
+shown by the numerous works existing in the literature. Re­
+searchers have extensively investigated the topic, in relation to
+both estimation approach (regression, analogy, expert
+judgment, function points, simulation, etc.) and research ap­
+proach (theory, survey, experiment, case study, simulation,
+etc). These studies were carried out in both industrial and aca­
+demic contexts. The most frequently used estimation approach
+is regression­based, where the COCOMO model is the most
+used model [17]. As regards functional size measurement
+methods, they measure software size in terms of user­required
+functionalities. The first functional point method was created
+by Albrecht in 1979 [14], whereas the most modern is the
+COSMIC method, created by an international consortium of
+
+
+metrics experts [18]. For a comparison of the most widely
+used function points methods see, for example, ref. [19].
+Finally, according to several empirical studies, expert
+judgment is the preferred estimation approach [5]. A recent
+review of empirical studies on accuracy of software
+development effort estimates found that, on average, accuracy
+of expert­based effort estimates was higher than the model­
+based one [20].
+With regard to the validation of estimation methods, the
+dominant research approach is based on the use of historical
+data. Moreover, the context most research applies to is the
+industrial one [21]. Narrowing down the topic to Web applica­
+tions, one of the first researchers to introduce size metrics to
+measure Web applications was Tim Bray [22], through statist­
+ical analysis on the basic characteristics of the main Web sites
+in 1995. Size metrics were proposed by Cowderoy et al. [23]
+to be used to predict development effort for Web applications.
+At the beginning, the models used for Web effort estimation
+were the same as the ones used for general software
+applications.
+One of the first researchers to introduce a method spe­
+cifically devised for the Web was Reifer, through WO metric
+and the WEBMO model [15]. This model was later used by
+other researchers to perform comparisons among different
+estimation models, but with varying results, sometimes
+dissimilar from each other [11][24][25][6]. Many research
+works on Web effort estimation were also carried out by
+Mendes and collaborators [7][8]. Works devoted to estimate
+development effort in CMS projects are fewer: for example,
+we may quote a paper by Aggarwal et al. [16], where the
+linear regression estimation model CMSEEM is proposed.
+In general, project effort estimation models are based on
+cost models that consider as input a set of parameters – named
+cost drivers – size being the predominant one [17][26], and
+give as output an effort measure.
+In ending this section, we want to underline that the ex­
+isting models for classic software applications are not well
+suited to Web application development, as stated by many
+authors also in regards to CMS­based projects [6][7][8][9]
+
+[10], so software project estimation remains a key challenge to
+researchers.
+
+III. T HE P ROPOSED M ODEL : W EB CMF O BJECTS
+
+Thanks to the partnership, now years old, with the same
+software company, we could directly observe in the field the
+evolution of development technologies and methodologies on
+projects developed over a span of almost 10 years. This fact
+allowed us to experiment the effort prediction methodologies
+in the literature and to adapt them to the changes in
+technologies over time. Recently, we started new partnerships
+with two small software companies, so we had the opportunity
+to observe different areas of applicability.
+
+
+The latest trend [1] in Web application development is the
+now prevailing usage of Content Management Frameworks
+(CMF). Therefore, we decided to focus our research work in
+this direction, elaborating a method specifically built for effort
+estimation of projects where a CMF is in use.
+
+*A.* *Content Management Frameworks*
+
+The effort estimation methodology – outlined below – was
+devised starting from a thorough observation of the de­
+velopment cycle of Web applications developed with Content
+
+Fig. 1. Web CMF Objects methodology scheme
+
+Management Frameworks available with an Open Source li­
+cense, such as *Joomla!*, *Drupal*, etc. [1][2].
+A Content Management Framework (CMF) is a high­level
+software application that allows for the creation of a
+customized Web Content Management System (WCMS). A
+WCMS is a software tool that can be used by both technical
+and general staff, and that allows for the creation, editing,
+management and publishing of a wide asset of multimedia
+content, in a website. CMFs greatly help to organize and plan
+a WCMS, freeing the site administrator from all aspects
+related to Web programming (knowledge of scripting
+languages, server installation, database creation etc.).
+Every CMF, apart from the basic functionalities for cre­
+ation and management of dynamic pages, have libraries of
+modules and add­on components readily available to users. By
+using such libraries, even the most knowledgeable pro­
+grammer can be free from the task of writing code parts on
+easy and recurring functionalities, with the advantage of fo­
+
+1 According to a recent, unpublished survey [27], conducted by the
+Department of Electrical and Electronic Engineering (DIEE) of
+the University of Cagliari and the Department of Biophysical and
+Electronic Engineering (DIBE) of the University of Genova from
+a sample group of software developers, 90% of respondents
+usually adopt Open Source CMF when developing Web
+applications.
+
+
+cusing on specific functionalities for her or his own applica­
+tion.
+The web developer using a CMF has many options: using
+just ready­made modules (and components) for the entire
+application, editing and customizing the available modules to
+her or his liking (a chance specific to open source CMFs), or
+planning and programming new, completely original, mod­
+ules [2] . In the final estimation of development effort, the use of
+ready­made modules and components will clearly have a
+different impact compared to programming new ones starting
+from scratch. Similarly, editing modules and components in
+order to customize them will have a different impact
+altogether.
+
+*B.* *Overview of Web CMF Objects Methodology*
+
+The proposed methodology is meant for Web applications
+developed with CMFs, regardless of the specific technology
+used to implement the frameworks. It is essentially based on
+two separate phases, that can be accomplished in parallel, and
+on a final merge between the data coming from these phases.
+One of the phases is the *Size Estimation* which, starting
+from the requirements, considers the various elements that
+typically contribute to the size of the application, and weights
+them with their relative difficulty to implement. Since the
+work on the various elements is made in different ways – it
+may be writing code in a programming language, writing style
+sheets, writing XML to configure an interface, designing the
+schema of a database, editing a map, or other activities – the
+resulting size is not expressed in units like lines of code or the
+like, but is in fact a table with values estimating the size and
+the relative difficulty to implement the various elements that
+typically constitute a CMF application.
+The other phase of Web CMF Objects methodology is the
+identification of the Cost Model that is characteristic of the
+organization, and is often specific of a given team working in
+it. The Cost Model can be identified just once, and is valid for
+all the projects that the team carries on using the same, or
+similar, tools. The Cost Model gives an estimate, this time in
+man­days, of the typical effort needed to implement the
+various elements identified in the methodology, at the various
+difficulty levels. In practice, it is a table of values that have to
+be multiplied by the corresponding size estimates to yield the
+global estimate.
+This last step is the computation of the sum of the size of
+the elements multiplied by the corresponding costs. It is per­
+formed straightforwardly, and yields the global estimate of the
+
+2 According to a recent unpublished survey [27], from a sample
+group of CMF users in Web application development:
+
+     - 68% of respondents frequently uses components of
+the library, and the same respondents state they use
+the components with a frequency between 61 and
+100% on the total development of an application;
+
+     - 5% of respondents uses modules from the library, and
+the same respondents state they use the modules with
+a frequency between 0 and 20%;
+
+     - 64% of respondents edits modules from the library,
+changing usually about 40% of the code compared to
+the original.
+
+
+effort to implement the system, in man­days. Of course, if
+requirements change after the Size Estimation, the estimation
+should be updated, and the final effort estimation recalculated.
+Fig. 1 gives a schematic overview of the Web CMF Objects
+methodology.
+
+*C.* *Size Estimation of a Web Application*
+
+Following the analysis on a sample of Web applications
+and of their development cycle, distinctive and recurring
+elements were found.
+They were divided into two sets: *general elements* and
+*specific functionalities.* Each element found is marked by a
+complexity degree, depending on various factors: context of
+application, existence or absence in the used CMF library,
+customization, reuse, etc. The weighted sum of each element
+makes up the size estimation of the Web application. In this
+way, size estimation is performed in terms of functionalities
+offered by the application to the user, as in Albrecht's classic
+FP metric [14], but everything is now contextualized to the
+present time.
+
+*D.* *General Elements*
+
+*General elements* are defined as all the preliminary ana­
+lysis and planning activities, as well as the essential elements
+for creating the main structure of an application, like basic
+image elements and some information content, usually static
+and with low or no interaction with the user. Basic, necessary
+elements for interaction in an application belong to this class.
+Some elements are single­instance, while for others there
+might be a number of instances; all elements have a
+complexity that can be low, medium­low, medium­high or
+high.
+
+TABLE I. C ONTEXT AND EXTERNAL ENVIRONMENTAL ANALYSIS
+
+
+TABLE II. S ITE STRUCTURE
+
+
+
+
+
+|Element|Definition|
+|---|---|
+|Content architecture|content management planning: document<br>types and management types (e.g.: listing<br>texts by expiring date or by type/topic, by<br>priority/deadlines, user type, etc.).|
+|Management and re­<br>aggregation of tags and<br>keys|categorization and classification of content<br>and information on the Website.|
+|System infrastructure|arrangements for the required infrastructure<br>at system level.|
+|General search engine<br>on site|a basic (standard) search engine or a<br>customized one, present in the application.|
+|Preparation of bare<br>mockup, requirements<br>and navigation|decision as to how navigation should be<br>done, what is to be highlighted, content<br>management solutions.|
+|Content management<br>system|creation of components for content<br>management|
+
+
+TABLE III. G RAPHICS AND MAPS
+
+
+
+
+|Element|Definition|
+|---|---|
+|Production of logo and<br>corporate image|Production through study of design and<br>meanings.|
+|Graphic layout<br>production|layout elaborated by graphic artists, starting<br>from bare mockup (title, footer, static<br>elements in interface).|
+|Creation of ad hoc texts,<br>pictures and/or videos|development of original multimedia content<br>for the Web, on request by the customer, on<br>specific topics.|
+|Map (or background)|management of necessary backgrounds for<br>creation of geo­referenced information into<br>the application.|
+
+
+TABLE IV. M ULTIPLE ­ INSTANCE GENERAL ELEMENTS .
+
+
+
+
+
+|Element|Definition|
+|---|---|
+|Context and user­base<br>analysis|critical issues and opportunities of the<br>informative space where the Web application<br>is to be run.|
+|Analysis of on­line<br>demand­and­offer|critical summary and review of gathered<br>materials (market analysis, interviews, focus<br>groups, etc.).|
+|Newsletter|policies on spreading and publishing content,<br>how frequently, to whom, etc.|
+|Customizations by<br>editorial staff|feasibility of updates to the site from outside.<br>Options (software­side) to edit the template,<br>in case external staff is planned to be in<br>charge.|
+|Site findability and<br>positioning verification|operations related to the positioning of the<br>site on search engines.|
+
+
+*a)* *Single-instance and multiple-instance general elements*
+Tables I, II and III show the 15 single­instance elements,
+each with its own definition. These elements can be present or
+not, but if they are present, their number is just one. Table IV
+shows the 4 multiple­instance elements, each with its own
+definition. These elements can be present or not; if they are
+present, their number can be more than one.
+
+
+|Element|Definition|
+|---|---|
+|Community and social<br>management|managing the presence of the Web<br>application on the main social networks, as<br>static (simply sharing contents) or dynamic<br>(an intelligent and more complex manage­<br>ment style). One instance per social network.|
+|Templates and<br>navigation system|planning of main templates (home page,<br>content pages, search pages, etc.), menu and<br>cross­section views (view by user, view by<br>life events, etc.). One instance per template.|
+|User role management|Front­end user registration and<br>customization of access type to the site<br>depending on user type. One instance per<br>user type.|
+|Multilingualism|simple translation of the site and re­planning<br>of some parts depending on language. One<br>instance per each language.|
+
+
+*E.* *Specific Functionalities*
+
+This category includes all elements needed for interaction
+between application and user, concerning the specific features
+of the application. These are functionalities expressly created,
+thus with a high customization level and database interaction
+(authentication, profiling, data input forms, etc).
+As done previously, functionalities are evaluated by
+number of instances, as well as by complexity level, which can
+be low, medium­low, medium­high or high. For instance, in
+the case of the number of tables that have to be created in the
+DB, we will consider separately the number of low complexity
+tables, of medium­low complexity tables, and so on,
+
+
+
+multiplying each number by a weight depending on their
+complexity and summing up the four factors.
+Tables V, VI and VII show the list of elements describing
+the 11 multiple­instance specific functionalities, each with its
+own definition. These elements can be present or not; if they
+are present, their number can be more than one.
+
+TABLE V. Q UERY AND REPORTING
+
+|Element|Definition|
+|---|---|
+|DB and internal Query<br>creation|number of tables in the DB.|
+|Report system design|report system design|
+|External Query|number of queries to external DBs.|
+
+
+
+*F.* *Complexity Degree*
+
+Determining the complexity degree of each element is one
+of the most critical steps in the methodology, because it is left
+to the project manager's own experience and knowledge of her
+or his team of developers. The degrees that can be associated
+to each element are four: low, medium­low, medium­high or
+high complexity. We decided to use a 4­degree ordinal scale to
+avoid giving the user of the method the chance to choose a
+“fully balanced” judgment – that is not to perform a choice. In
+all cases, the user must choose between “low” and “high”,
+albeit in different levels.
+
+TABLE VI. C ARTOGRAPHIC AND MULTIMEDIA
+
+
+tion; thus, it must be assessed on an empirical basis. As far as
+development of CMF modules or plugins is concerned, we can
+generally consider:
+
+  - *Low complexity* when the element is present in the
+CMF library or when pre­exisitng elements are used
+without substantial changes;
+
+  - *Medium-low complexity* when the element is present
+in the CMF library but a customization is needed, or
+when pre­existing elements are used with non­sub­
+stantial changes;
+
+  - *Medium-high complexity* when the element is not
+present in the CMF library and therefore there is a
+need for it to be implemented, or when the customiza­
+tion of an element in the library is substantial;
+
+  - *High complexity* when the element is not present in the
+CMF library and its implementation is complex or
+when the customization of an element in the library is
+very high.
+
+*G.* *Cost Model*
+
+The cost model used in the Web CMF Objects
+methodology is an empirical model, that includes the
+following parameters, named *cost drivers* :
+
+   - software development language used,
+
+   - team members skills,
+
+   - software reuse,
+
+   - development experience of the team.
+
+As one would expect, the values of the cost drivers differ
+among teams, so the cost model is not fixed and
+predetermined, but we need to calibrate it according to the
+characteristics of the development team. For privacy reasons,
+we hide the name of the companies we worked with for
+empirical evaluation of our method. We will simply call them
+company/team A, B and C. Table VIII shows a brief
+description of the three companies involved in our study. For
+calibrating the cost model, we interviewed the project manager
+of each team, asking to state a quantitative judgment that
+included an overall evaluation of the above mentioned cost
+
+drivers, for each element mentioned in Section III.C and III.D.
+This was made before the beginning of the estimation phase.
+Note that, if it is known that some of the elements will never
+appear in the projects carried on by the company, the
+corresponding rows of the table can be overlooked.
+As a result, we obtained the development effort estimate
+expressed in man­days for each element, and for each degree
+of complexity. These estimates are specific of each team, and
+represent the respective cost model. As an example, Table IX
+shows the cost model pertaining to team A.
+
+TABLE VIII. S OFTWARE C OMPANIES M AIN F EATURES
+
+
+
+
+|Element|Definition|
+|---|---|
+|Cartographic data base|use and management of pre­existing data<br>bases needed to include geo­referenced in­<br>formation into the application (e.g. data<br>bases on hospitals/hotels/companies etc.).<br>Ad­hoc cartographic data bases belong to the<br>"DB and external query creation" category.|
+|Creation and inclusion<br>of customized maps|creation and inclusion of maps with place­<br>holder icons, lines, selection tools, videos or<br>pictures, through the use of Google Maps<br>JavaScript API, or similar APIs – number of<br>different maps.|
+|Clickable maps|number of pictures/graphs with hypertextual<br>links to other sites or other sections of the<br>same site.|
+|File types managed by<br>the application|number of different file types the application<br>needs to manage.|
+
+
+TABLE VII. E XTERNAL ACCESSIBILITY
+
+
+
+
+|Element|Definition|
+|---|---|
+|Management of reserved<br>areas|definition of access levels (management of<br>content approval workflow: e.g. none,<br>reading, writing, adding/deleting documents,<br>adding new pages, etc.) and functionalities of<br>each reserved area (page or site section) –<br>number of different areas.|
+|External system access|number of accesses to different external<br>applications.|
+|Services available<br>outside of the<br>application|number of Web services the system provides<br>and/or uses.|
+|Data input models|number of modules specific to the<br>application.|
+
+|Company/Team|Size|n. employees|Foundation year|
+|---|---|---|---|
+|A|small|15|2007|
+|B|medium|399|1988|
+|C|small|20|2004|
+
+
+The complexity degree to be assigned to analysis and plan­
+ning is strongly related to the context and size of the applica­
+
+
+TABLE IX. C OST M ODEL OF T EAM A
+
+|Element|Complexity degree|Col3|Col4|Col5|
+|---|---|---|---|---|
+|Element|Low|Medium- Low|Medium-high|High|
+|Context and user­base analysis|0.5|1|2|5|
+|Analysis of on­line demand­and­offer|0.5|1|3|5|
+|Newsletter|0.5|2|4|6|
+|Customizations by editorial staff|0.5|1|5|8|
+|Site findability and positioning<br>verification|0.5|1|2|3|
+|Content architecture|0.5|1|2|3|
+|Management and re­aggregation of tags<br>and keys|0.5|1|1.5|2|
+|System infrastructure|1|2|3|5|
+|General search engine on site|0.5|1|2|5|
+|Preparation of bare mockup,<br>requirements and navigation|0.5|1|2|4|
+|Content management system|0.5|1|1.5|2|
+|Production of logo and corporate image|1|1.5|2|3|
+|Graphic layout production|1|1.5|2|3|
+|Creation of ad hoc texts, pictures and/or<br>videos|0.5|1|2|3|
+|Map (or background)|0.5|1|1.5|2|
+|Community and social management|0.5|1|1.5|2|
+|Templates and navigation system|1|3|5|7|
+|User role management|0.5|1|2|4|
+|Multilingualism|1|2|5|8|
+|DB and internal Query creation|0|0.25|0.6|1|
+|Report system design|0.5|1|1.5|2|
+|External Query|0.5|1|1.5|2|
+|Cartographic data base|0.5|1|1.5|2|
+|Creation and inclusion of customized<br>maps|0.5|1|3|5|
+|Clickable maps|0.2|0.5|0.75|1|
+|File types managed by the application|0.5|1|1.5|2|
+|Management of reserved areas|0.5|1|1.5|2|
+|External system access|1|3|6|10|
+|Services available outside of the<br>application|0.5|1|1.5|2|
+|Data input models|0.25|0.5|0.75|1|
+
+
+*a)* *Calculation of the Estimation*
+After considering every element, each one of which is
+weighted with its own complexity, the effort estimation of the
+Web application results from the simple sum of all elements:
+
+
+*M* *N*
+*EG* *c* 
+## =1 j j ∑ k =1
+
+
+=
+## Effort estimation ∑ j =1
+
+
+*N*
+
+= *FS* *k* *c* *k* (1)
+
+
+Where:
+
+*EG* *j* is the *j-th* general element, of *c* *j* complexity, and
+*M* is the total number of general elements;
+*FS* *k* is the *k-th* specific functionality, of *c* *k* complexity,
+and *N* is the total number of specific functionalities.
+
+IV. E XPERIMENTAL R ESULTS
+
+The method outlined here can be considered to be gener­
+ally valid, since the elements presented in Section III are
+common to most Web applications. On the other hand, the
+calibration of the method through the choice of the complexity
+
+
+degree to assign to each element is strongly dependent on the
+team developing the application. Therefore, the experimental
+findings shown below are to be considered of limited external
+validity, although they represent an interesting validation case
+of a methodology on real data.
+Testing the validity of the Web CMF Objects effort
+estimation model through comparison with other methods
+usually used in literature, such as FP, COCOMO, WO etc., has
+not been possible, because these methods measure different
+elements than those we considered, and are, therefore, hardly
+comparable with it.
+
+*A.* *Dataset*
+
+We considered a dataset made by 9 projects, developed
+with Content Management Frameworks between 2009 and
+2012, by the three software companies A, B and C. These
+companies provided us all relevant data about the considered
+projects, and namely their requirements, original estimations
+and overall devlopment effort computed after the project
+completion. Note that our estimantion results refer to projects
+that were already completed. We had no chance to estimate
+projects at their beginning, using only their requirements, and
+then to compare the results with the real effort after the actual
+completion of the project.
+The studied projects were generally aimed to develop
+applications for public administrations, health services and
+other customers; they were all finished successfully.
+The first activity we performed was to build the complete
+cost model for the three considered companies A, B and C, as
+described in Section III.G. Then, for each project the elements
+discussed in Section II.C were extracted from their original
+requirement documents. For each element present in each
+examined project, we multiplied their relative size for the
+estimated complexity factor, following the respective cost
+model table (accounting also for the number of instances with
+different complexity level). We then summed up the value of
+all these elements, as reported in eq. (1) of Section III,
+obtaining the *provisional effort estimate.*
+We then compared the *final actual effort* of the completed
+projects with the *provisional effort estimates.* We considered
+both the provisional effort estimate provided by each company
+and the provisional effort estimate calculated with the Web
+CMF Objects methodology. This analysis showed differences
+in estimation data, as expected. Table X shows the effort
+estimation methods and technologies used by each company.
+
+TABLE X. S OFTWARE C OMPANIES ESTIMATION METHODS AND TECHNOLOGIES USED
+
+
+
+
+|Project|Estimation method|Technology|
+|---|---|---|
+|1/Team A|Analogy & expert judgment|jAPS [28]|
+|2/Team A|Analogy & expert judgment|jAPS|
+|3/Team A|Analogy & expert judgment|Joomla!|
+|4 Team B|Expert judgment|Joomla!|
+|5/Team B|Expert judgment|Joomla!|
+|6/Team B|Expert judgment|Joomla!|
+|7/Team B|Expert judgment|Joomla!|
+|8/Team C|Analogy|Joomla!|
+|9/Team C|Analogy|Joomla!|
+
+
+*B.* *Effort Prediction and Evaluation Method*
+
+We evaluated the effectiveness of the methodology in
+predicting the effort of the analyzed applications through the
+calculation of the MRE (Magnitude of Relative Error) factor
+for each project, a measure commonly used in the Web es­
+timation literature for prediction accuracy.
+
+
+−
+*Effort* *ACTUAL* *Effort* *ESTIMED*
+*MRE=*
+
+*Effort* *ACTUAL*
+
+
+Similarly to what reported in [24], we completed the error
+evaluation by calculating the prediction level *Pred,* defined as
+the proportion of the observations within a given level of
+
+accuracy:
+
+
+*Pred*  *l*  = *[k]*
+
+*N*
+
+
+By performing *N* total observations, if *k* is the number of
+observations with an MRE less than or equal to *l*, *Pred* ( *l* ) is
+the percentage of projects with a MRE less than or equal to *l.*
+For instance, if we have 10 projects, with just 8 out of them
+having an MRE less than 0.2, then *Pred* (0.2) = 0.8. Conte et
+al. [16] suggest an acceptable threshold value for the mean
+MRE to be less than or equal to 0.25, and for *Pred* (0.25) to be
+greater than or equal to 0.75. In other words, *more than 75%*
+*of the projects should have an MRE less than 0.25* .
+
+TABLE XI. E FFORT E STIMATE ON 9 D ATASETS P ERTAINING TO R EAL P ROJECTS
+
+[ MAN ­ DAYS ].
+
+|Project n.|Provisional effort estimate through Web CMF Objects|Final actual effort|Final – provisional effort|Qualitative judgment|MRE|
+|---|---|---|---|---|---|
+|1/Team A|24.5|24.75|0.25|underestimated|0.01|
+|2/Team A|53.25|58.75|5.5|underestimated|0.09|
+|3/Team A|56.2|64.5|8.3|underestimated|0.13|
+|4 Team B|201|196|­5|overestimated|0.03|
+|5/Team B|263|248|­15|overestimated|0.06|
+|6/Team B|799|1047|248|underestimated|0.24|
+|7/Team B|39|40|1|underestimated|0.03|
+|8/Team C|28.5|30|1.5|underestimated|0.05|
+|9/Team C|10.38|10|­0.38|overestimated|0.04|
+
+
+
+TABLE XII. MRE S TATISTICS OF W EB CMF O BJECTS .
+
+|Min|Max|Mean|Median|Std<br>dev|Pred<br>(0.25)|%Pred<br>(0.25)|
+|---|---|---|---|---|---|---|
+|0.01|0.24|0.07|0.05|0.07|9|100%|
+
+
+
+*C.* *Results*
+
+Tables XI and XII summarize the results for the examined
+dataset. As shown there, the method gives excellent results,
+with very low MRE values. As confirmed by the more detailed
+
+
+MRE analysis shown in Table 3, the Web CMF Objects
+methodology has a value of *Pred* (0.25) equal to 100%, so it
+fully satisfies Conte's criterion. This means, for our
+methodology, an excellent estimation power regarding the
+effort needed to build the application.
+Tables XIII and XIV show the values of provisional effort
+estimation of projects calculated using the corresponding
+company's methodology. In this case, *Pred* (0.25) is equal to
+44%, so it does not satisfy Conte's criterion.
+
+TABLE XIII. C OMPANY ' S E FFORT E STIMATE ON 9 D ATASETS P ERTAINING TO R EAL
+P ROJECTS [ MAN ­ DAYS ].
+
+|Project n.|effort estimate Provisional through company methodology|Final actual effort|Final – provisional effort|Qualitative judgment|MRE|
+|---|---|---|---|---|---|
+|1/Team A|40|24.75|­15.25|overestimated|0.62|
+|2/Team A|66,8|58.75|­0.05|overestimated|0.14|
+|3/Team A|110|64.5|­45.5|overestimated|0.71|
+|4 Team B|168|196|28|underestimated|0.14|
+|5/Team B|360|248|­112|overestimated|0.45|
+|6/Team B|930|1047|117|underestimated|0.11|
+|7/Team B|42|40|­2|overestimated|0.05|
+|8/Team C|40|30|­10|overestimated|0.33|
+|9/TeamC|15|10|­5|overestimated|0.5|
+
+
+
+TABLE XIV. MRE S TATISTICS OF C OMPANY ' S E FFORT E STIMATES .
+
+|Min|Max|Mean|Median|Std<br>dev|Pred<br>(0.25)|%Pred<br>(0.25)|
+|---|---|---|---|---|---|---|
+|0.05|0.71|0.34|0.33|0.23|4|44%|
+
+
+
+V. C ONCLUSIONS AND FUTURE WORK
+
+We presented a new methodology of effort estimation for
+Web applications developed using a Content Management
+Framework (CMF). The reason for proposing a new methodo­
+logy for effort estimation was the realization of the inadequacy
+of the Revised Web Objects (RWO) method – which we had
+previously developed – in estimating the development effort of
+the latest Web applications. Thanks to the partnership, now
+years old, with the same software company, we could directly
+observe on the field the evolution of development technologies
+and methodologies on projects developed over a span of
+almost 10 years. Recently, we also started new partnerships
+with two small software companies, so we had the opportunity
+to observe even more application areas and technologies.
+New key elements for analysis and planning were
+identified; they allowed for the definition of every important
+step in the development of a Web application through a CMF.
+After calibrating the method, we tested it on a dataset made by
+9 projects, developed between 2009 and 2012 by the three
+companies. The data on all the previously described elements
+in the projects were provided during the requirement gathering
+(estimation level), as well as after the development was
+finished (final level). Our findings show that the application of
+
+
+the method gives very low MRE values: the Web CMF
+Objects methodology has a value of *Pred* (0.25) equal to
+100%, so its satisfies the acceptance criterion by Conte et al.
+
+[16]. This means, for our methodology, an excellent
+estimation value.
+This work represents a confirmation of the good result we
+obtained in our 2012 work [13], and the base to conduct
+further experimental validation, with the purpose to make the
+Web CMF Objects methodology a useful tool for software
+companies.
+
+A CKNOWLEDGMENT
+
+We would like to acknowledge the contribution of the fol­
+lowing persons to this paper: Antonio Ariu, Ferdinando
+Artese, Marco Di Francesco, Marinella Ghisu, Laura Piccinno,
+Danele Sanna, Francesca Serci, and Massimo Zanotto.
+This work was partially funded by Regione Autonoma
+della Sardegna (RAS), Regional Law No. 7, 2007 on
+Promoting Scientific Research and Technological Innovation
+in Sardinia, call 14/2/2009, and RAS Integrated Facilitation
+Program (PIA) for Industry, Artisanship and Services, call
+14/10/2008, project No. 265, Advanced Technologies for Soft­
+ware Measuring and Integrated Management, TAMIGIS.
+
+R EFERENCES
+
+[1] Joomla! website. www.joomla.org.
+
+[2] Drupal website. http://.drupal.org
+
+[3] WordPress website. wordpress.org
+
+[4] K. El Emam, A. G. Koru, “A replicated survey of IT software project
+failures”, Software, IEEE, vol. 25(5), pp. 84­90, Sept.­Oct. 2008.
+
+[5] K. Moløkken, M. Jørgensen, “A review of software surveys on software
+effort estimation”, in *Proceedings of the International Symposium on*
+*Empirical Software Engineering*, ISESE'03, pp. 223­230, Rome, Italy,
+2003.
+
+[6] T.C. Hooi, Y. Yusoff, Z. Hassan, “Comparative study on applicability of
+WEBMO in Web application cost estimation within Klang Valley in
+Malaysia”, *Computer and Information Technology Workshops,* *CIT*
+*Workshops 2008,* *IEEE 8* t *h International Conference on*, pp.116­121,
+July 2008.
+
+[7] E. Mendes, N. Mosley, S. Counsell, “The application of case­based
+reasoning to early Web project cost estimation”, in *Proceedings of the*
+*26* [th] *Annual International Computer Software and Applications*
+*Conference*, COMPSAC 2002, pp. 393­398, Oxford, England, August
+2002.
+
+[8] E. Mendes, N. Mosley, S. Counsell, “Early Web size measures and
+effort prediction for Web costimation”, *in Proceedings of the 9* *[th ]*
+
+*International Symposium on Software Metrics,* METRICS'03, pp. 18­39,
+Sydney, Australia, September 2003.
+
+[9] N. Aggarwal, N. Prakash, S. Sofat, “Web hypermedia content man­
+agement system effort estimation model”, *ACM SIGSOFT, Software*
+*Engineering Notes*, vol. 32 (2), March 2009.
+
+
+
+[10] L. Mangia, R. Paiano, “MMWA: a software sizing model for Web ap­
+plications”, *in Proceedings of the 4* *[th]* *International Conference on Web*
+*Information Systems Engineering*, WISE 2003, pp.53­61, Rome, Italy,
+December 2003.
+
+[11] G. Barabino, G. Porruvecchio, G. Concas, M. Marchesi, R. De Lorenzi,
+M. Giaccardi, “An empirical comparison of function points and Web
+Objects”, *in Proceedings of the International Conference on*
+*Computational Intelligence and Software Engineering,* CiSE 2009, pp.
+1­4, Wuhan, China, December 2009.
+
+[12] R. Folgieri, G.Barabino, G. Concas, E. Corona, R. DeLorenzi, M.
+Marchesi, A. Segni, “A revised Web Objects method to estimate Web
+application development effort”, *in Proceedings of the 2* *[nd]* *International*
+*Workshop on Emerging Trends in Software Metrics,* WETSOM 2011,
+pp. 59­64, Honolulu, Hawaii, USA, May 2011, ACM.
+
+[13] E. Corona, M. Marchesi, G. Barabino, D. Grechi, L. Piccinno, “Size
+Estimation of Web Applications through Web CMF Objects”, *in*
+*Proceedings of the 3* *[rd]* *International Workshop on Emerging Trends in*
+*Software Metrics,* WETSOM 2012, Zurich, Switzerland, June 2012.
+
+[14] A.J. Albrecht, “Measuring application development productivity”,
+*Proceedings of the Joint SHARE, GUIDE, and IBM Application*
+*Development Symposium*, pp. 83–92, Monterey, California, October
+1979, IBM Corporation.
+
+[15] D. Reifer, “Web development: estimating quick­to­market software”,
+Software, IEEE, vol. 17 (6), pp. 57­64, Nov­Dec 2000.
+
+[16] S. D. Conte, H. E. Dunsmore, V. Y. Shen, Software engineering metrics
+and models, Benjamin­Cummings Publishing Co, 1986.
+
+[17] B.W. Boehm, “Software engineering economics”, Software Engineering,
+IEEE Transactions on, vol. SE­10(1), pp. 4­21, January 1981.
+
+[18] COSMIC organization Website. www.cosmicon.com.
+
+[19] SMS Exemplar Ltd. Group, “Everything you always wanted to know
+about software measurement”, available online at
+http://www.cosmicon.com/dl_manager4.asp?id=276.
+
+[20] M. Jørgensen, “Forecasting of software development work effort:
+Evidence on expert judgment and formal models”, *International Journal*
+*of Forecasting,* vol. 23 (3), pp. 449–462, 2007.
+
+[21] M. Jørgensen, M.J. Shepperd, “A systematic review of software de­
+velopment cost estimation studies”, Software Engineering, IEEE
+Transactions on, vol. 33(1), pp. 33­53, 2007.
+
+[22] Bray, T, “Measuring the Web”, *Proceedings* *of the 5* [t] *[h]* *International*
+*World Wide Web Conference*, Paris, May 1996.
+
+[23] A.J.C. Cowderoy, A.J.M. Donaldson, J.O. Jenkins, “A metrics frame­
+work for multimedia creation”, *Proceedings of the* *5* *[th]* *Software Metrics*
+*Symposium*, Metrics 1998, pp. 144­147, November 1998.
+
+[24] M. Ruhe, R. Jeffery, I. Wieczorek, “Using Web Objects for estimating
+software development effort for Web applications”, *Proceedings* *of the*
+*9* [t] *[h ]* *IEEE International Software Metrics Symposium,* METRICS '03, pp.
+30­37, September 2003.
+
+[25] F. Ferrucci, C. Gravino, S. Di Martino, “A case study using Web Ob­
+jects and COSMIC for effort estimation of Web appl [ica] tions” *,*
+*Proceedings of the 34th Euromicro Conference, Software Engineering*
+*and Advanced Applications,* SEAA '08, pp. 441­448, September 2008.C.
+Jones, Estimating software costs, Mc Graw­Hill, 1998.
+
+[26] E. Corona, D. Grechi, “CMF Survey”, unpublished.
+
+[27] jAPS Website. http://dev.japsportal.org.

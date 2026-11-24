@@ -1,0 +1,666 @@
+# Content Management System Effort Estimation Using Bagging Predictors
+
+
+Naveen Aggarwal*, Nupur Prakash**, Sanjeev Sofat***
+
+         - CSE Deptt, University Instt. Of Engg. & Technology, Panjab University, Chandigarh, INDIA
+**School of Information Technology, GGSIP University, Delhi, INDIA
+*** CSE Deptt. Punjab Engg. College, Chandigarh, INDIA
+e-mail: navagg@gmail.com
+
+**Abstract** - **This paper presents an effort estimation model for the**
+**content management systems which can be used to estimate the**
+**effort required for designing and developing. The data from the**
+**different content management system projects are studied and the**
+**model is finalized by using the bagging predictor on linear**
+**regression learning model. These projects are categorized based**
+**on their size and total/build effort ratio. The size of the project is**
+**estimated by using the modified object point analysis approach. A**
+**questionnaire is prepared to help project managers to find out the**
+**different objects, their categories and their complexity in the**
+**project. Final effort is estimated using the project size and the**
+**different adjustment factors. For better calculation of these**
+**adjustments factors, these are categorized based on their**
+**characteristics** **viz.** **Production** **and** **General** **system**
+**characteristics, Developer’s experience and capability. Another**
+**questionnaire is used to refine the model and it has to be filled by**
+**the project managers after completing the project. The proposed**
+
+the domain based models.
+
+**model is validated by studying twelve completed projects taken**
+**from industry and seventy different projects completed by the**
+**students. The proposed model shows a great improvement as**
+**compared to the earlier models used in effort estimation of**
+**content management system projects.**
+
+
+I. INTRODUCTION
+
+The way the information is currently being accessed on web
+may get change drastically in the coming years with the Web
+2.0. The creativity of user is enhanced as numerous ways can
+be devised to collaborate. But with this, there is a challenge of
+efficient web design that gives independence to share
+information in a user defined way [1]. The Content
+Management System (CMS) tools have already started playing
+this role and their use in developing and maintaining the web
+sites is increasing day by day. This is mainly because of their
+ability to enable the companies to build, deploy and maintain
+highly dynamic internet, intranet and extranet web sites,
+quickly and efficiently. The processing engine of CMS
+dynamically creates hypermedia pages using the different
+multimedia contents, which are stored as objects on different
+server [2, 3]. These objects are stored on the smart server
+cache and served to the different devices and individuals. The
+
+effort required to design such hypermedia application is very
+high because of the high coupling among the elements. Further
+designing customizable screens which user can change for
+better information sharing is always difficult than normal
+screens. In a typical business environment with changing
+customer needs, the designs are always inconsistent. This may
+
+
+lead to underestimation or overestimation of the resources [4].
+The underestimation causes understaffing, under scoping of
+QA effort, and mismanagement of schedule. Similarly
+overstaffing is the main cause for cost increments, time
+increments and overuse of resources. These effects have large
+impact on other concurrently going on projects. Further as
+software grew in size and importance, it also grew in its
+complexity, making it very difficult to accurately predict the
+cost of the software development. The software development
+process of web CMS requires gradual refinement. Size
+estimation in these projects is very difficult because of
+multimedia contents having different characteristics, access
+methods and storage requirements [5]. So it is hard to find
+basis for good estimates in web CMS. It is observed that the
+better accuracy in estimation can be achieved by developing
+the domain based models.
+
+The main aim of this research is to propose the effort
+estimation model for the content management systems. For the
+size estimation of the project, the different techniques such as
+function point analysis, object point analysis and use case
+analysis are compared. An Estimation model, to address the
+estimation needs for the client in the projects that uses tools
+like CMS, ITG etc, is developed using data from the Subject
+Company and different student projects executed at Panjab
+University, Chandigarh. The estimation model is finalized by
+using the bagging predictors.
+The rest of the paper is organized as follows. Section 2
+reviews the different effort estimation model for web based
+
+projects. The proposed effort estimation model is discussed in
+detail in section 3. Section 4 discusses the validity of the
+model and represents the results. Finally, Section 5 concludes
+the paper.
+
+
+II. RELATED WORK
+
+Over the years, different approaches have been
+suggested for the estimation of different types of projects.
+These projects are categorized as development projects;
+maintenance projects and support services by keeping in mind
+that these activities never occurred simultaneously. Most of
+these approaches estimate the effort based on the size of the
+development project and same approach is also used in
+estimating the effort of web projects [6].
+Most of the web development companies are very small and
+are working at SEI CMM level 2. Hence a study was
+
+
+conducted by Ruhe et al [7] to assess whether the COBRA
+(Cost Estimation Benchmarking and Risk Analysis) method
+was adequate for estimating Web development effort
+accurately using data from these companies. As COBRA is
+heavily depended upon the expert opinion and data on past
+projects to estimate development effort hence accurate results
+are possible only if size estimates are correct. Although the
+prediction accuracy obtained using COBRA for similar project
+is very good but for new projects some learning oriented
+method need to be incorporated.
+Mendes et al. [8] studied the different learning oriented
+techniques such as the case-based reasoning, linear regression,
+and stepwise regression techniques with an aim to estimate
+development effort for Web applications. He concluded that
+the case based reasoning gives the best result for experienced
+student datasets. In 2001, Mendes et al. [9] studied the
+prediction accuracy of these approaches using linear and
+stepwise multiple regression models. This time data was
+collected from the web sites of experienced programmers by
+considering the three main entities such as application page,
+media and program. In each entity the following five factors
+are considered such as: length size, reusability, complexity
+size, effort, and confounding factors. Results showed that the
+best predictions were obtained for the entity program, based on
+non-reused program measures (code length and code comment
+length). In this study, results were not very good for
+application page entity. So in the next study, Fewster et al [10]
+proposed a generalized linear model for estimation of effort.
+This model provides a flexible regression framework for
+predictive modeling of effort. But the model was very much
+dependent on the accuracy of the different data and size
+metrics used.
+
+Reifer et al [11] proposed an extension to the COCOMO-II
+model by introducing WEBMO model. Different cost drivers
+were proposed by keeping in mind the demands of web
+projects. Further, as web projects keep on changing, hence
+variable effort power law was used rather than the fixed one.
+In WEBMO, size was measured by using analytical Halstead’s
+formula for volume. Although, all the different sub
+components in a typical web project were considered, but with
+the changing development tools, the fixed cost drivers are not
+suitable. Morisio et al [12] solved this problem by introducing
+the estimation model for the web development companies to
+predict and track the development costs when new
+technologies are employed. An object oriented framework was
+used to gather the data and a learning factor was associated
+which changes with every usage of framework. The results
+clearly show that effort to write a code reduces with every
+usage of the framework.
+In 2003, Baresi et al. [13] conducts a study with an aim to
+estimate the design effort of web applications. Their dataset
+comprised 30 Web applications developed by students. The
+relationship between the numbers of size measures were
+obtained and organized in categories. The categories employed
+were information model, navigation model and presentation
+model. They identified a few attributes that may be related to
+
+
+the total design effort. In addition, they also carried out a finer
+grain analysis, to find out which of the used measures have an
+impact on the design effort when using W2000 [14]. But all of
+these approaches discussed above are not directly applicable to
+the web content management system projects. This is mainly
+because:
+
+1. There are no well defined guidelines to identify the
+development model for CMS. Most of the processes
+employed are ad hoc.
+2. There are no standard tools and technology defined for
+CMS. It is very difficult to estimate the size of the project
+when the developers are not experienced. No mechanism
+available to create estimations model for new technologies
+and tools.
+
+3. Existing web project estimation guidelines are not robust
+enough to take care of the complexities of the interfacing
+system in CMS.
+Braga et al [15] suggested that the bagging predictors [16] can
+be used to improve the performance of any methodology that
+uses linear regression, regression trees or support vector
+regression for estimation. But still, it is felt that for different
+technologies which are being used in different domain, there
+should be different estimation model which are developed just
+from the experience gained in that domain only.
+
+III. EFFORT ESTIMATION MODEL
+
+The basic approach of the Content Management System
+Effort Estimation Model (CMSEEM) is described in the
+Figure 1. The initial effort estimation model is an extension of
+the COCOMO 2.0 Model [17]. The data collected from the
+twelve different content management system projects taken
+from the subject company. It is assumed that all the data of
+twelve different project requests studied is correct without any
+deviation. The model is then refined from the data collected
+
+from the 70 different CMS projects completed by the post
+graduate students. All the students who are involved in
+developing projects are provided with a detailed set of project
+requirements. After studying the requirements, they need to
+certify the following points before they start developing the
+projects.
+
+- Requirements Specifications are clear and well understood
+
+- Tools used to develop the project can be mapped to Object
+Point analysis [18] i.e. from Requirement analysis, it is
+possible to count the total number of objects required for
+development in the specified tool.
+
+- Overall size of project is small and do not involve any
+research activity.
+All the students were given a questionnaire, which they
+have to submit after completing the software requirement
+specification document. The questionnaire is about the 40
+different parameters related to the setup, implementation,
+design, performance, user interface, usability, reliability,
+external interface, and other requirements of the project.
+
+
+Figure 1: Approach for Effort Estimation of CMS
+
+*A. Estimation of Size*
+For Size calculation, we have opted for the Object Point
+Analysis. Object Points are a measure of the size of computer
+applications and the projects that build them. The size is
+measured from a components point of view. It is independent
+of the computer language, development methodology,
+technology or capability of the project team used to develop
+the application. Following steps are mainly followed to
+calculate the total number of Object Points of a particular
+project.
+Step 1: Assess Object Counts: All the different categories of
+possible components in CMS are recognized [19-20]. These
+components and categories may vary according to the tools
+used.
+
+Step 2: Each object instance is classified into corresponding
+total number of object points depending upon the value of its
+characteristic dimensions. This value depends upon the
+different characteristic of the objects which may have additive
+or multiplicative effect on it. Brief description about the
+different object instances categories and their characteristics is
+as follows.
+
+- Branch Setup: In Branch Setup, Main Multiplicative factor
+is total number of branches and sub branches. Other tasks
+
+such as setting up work area, creating template data,
+changing configuration settings (setting proxies, receivers,
+color palettes and visual formats) are counted as additive
+task.
+
+- Authorities Setup: Number of functionalities to be
+enhanced in a CMS is taken as multiplicative factor. The
+number of tasks need to be performed for each of the
+functionality are taken as additive tasks such as changing
+permissions, events and privileges for each users, security
+settings etc.
+
+- Work Flow Setup: Different tasks (user tasks, group tasks,
+local, external, CGI tasks, update, submit, end tasks etc)
+and different directives (Team Info, CGI Info, element Info
+etc) in work flow are taken as multiplicative factors. For
+each task different dependencies are taken as additive
+factors.
+
+- Static Containers: Total number of different items in each
+
+container is taken as multiplicative factor. For each of
+these items, number of different characteristics and
+
+
+properties settings and other GUI settings are considered as
+an additive factor.
+
+- Dynamic Containers: No of Object Points for Dynamic
+Containers is counted as sum of object points for the extra
+Template created and object points of container by
+considering it as static with current data items.
+
+- Data Components: For each data component, the total
+number of validations required for that component is
+considered as multiplicative factor. For each of these data
+components, number of source of data tables from where it
+is taking its data or sending its data along with the different
+hyperlinks associated with it are considered as additive
+factor for that item.
+
+- External Interface Components: For this category, the total
+number of internal objects interlinked with external objects
+is taken as multiplicative factor. For each internal object,
+total number of external objects, API, ODBC, and tools.are
+taken as an additive factor.
+
+- Screens: Different data forms, message boxes, error
+messages, tabs, menus, frames etc are considered as
+different views. Total number of such views is considered
+
+as multiplicative factor. For each view, its interaction with
+databases, validations using Java Script functions,
+operations and different style classes used are taken as
+additive factors.
+
+- Reports / Files: Different sections in each report / file are
+considered as multiplicative factors. In each section, the
+number and source of data are considered as the additive
+
+factors.
+
+- Database Setup: Different tables/views or triggers in
+particular database are considered as multiplicative factors.
+In each table/view/trigger, the different attributes and any
+changes made to these attributes are taken as additive
+factors.
+
+For all the objects, their multiplicative and additive factors are
+used to calculate the final object point count.
+Step 3: Estimate the expected percentage of reuse to be
+achieved for the different Object Categories in this project.
+Compute the New Object Points (NOP) to be developed,
+
+NOP= (Object Points) X (100- % Reuse) / 100          (1)
+
+Step 4: Determine the Object Points: Add all the weighted
+object instances to get one number, the object point count.
+
+*B. Estimation of Adjustment Factors*
+The adjustment factors affect the feature overall and not
+any object in particular. Main three adjustment factors
+considered are:
+
+- Production System Characteristics (PSC)
+
+- General System Characteristics (GSC)
+
+- Developer’s Experience and Capability (DEC) [21]
+Main Production System Characteristics (PSC) that affects the
+system can be categorized as follows:
+
+- Application Characteristics (Round the Clock Support,
+Criticality, Complexity)
+
+
+- Data Characteristics (Volume, Quality, Change Dynamics,
+External Dependency)
+
+- Others (Security, Portability, Privacy, Audit ability, User
+training etc.)
+The weighted influence of each of these characteristics is
+added to get the Adjustment factor corresponding to the PSC.
+If a characteristic has strong influence then 3 points are added,
+for average influence, 2 points are added and for less
+influence, one point is added.
+The General system characteristics such as effective GUI,
+distributed data processing, installation and operational ease
+also have the direct impact on the effort. The complexity of
+GUI increases with the amount of control provided to user.
+The other factors that increase it are consistent interface with
+
+visual, conceptual and linguistic clarity and support to
+different languages. In most of the CMS, data is processed
+dynamically using the appropriate component of the system.
+These components may be located at different servers used by
+the CMS. The total number of such components in a particular
+system defines the complexity of that system. Further the total
+different types of servers used to store data and different types
+of network used to connect these, increases the complexity.
+Some of the CMSs, require automated installation and
+operation without any operator intervention. Developing such
+applications is very complex. Similarly, the applications
+designed for automated recovery from failure or errors have
+more degree of complexity. The effects of all such general
+system characteristics are calculated on the same lines as we
+have calculated the PSC.
+
+Finally, the effect of developer’s experience and capability on
+the estimated effort can be considered in the similar way as
+suggested by Boehm et al [21].
+The Final adjustment factor is calculated as follows
+Final Adjustment factor (AF) =
+((Sum of PSCs & GSCs) * 1/100) + 0.5) / DEC          (2)
+
+*C. Effort Estimation using Bagging Predictors*
+As the model is proposed to be used in early stage of
+development, so the following formula is used to estimate the
+effort.
+Effort nominal = AF X (NOP) [ B] (3)
+
+The inputs are the NOP (Number of Object Points) of software
+development, an adjustment factor AF, and a scale factor, B.
+The scale (or exponential) factor, B, accounts for the relative
+economies or diseconomies of scale encountered for software
+
+projects of different sizes. Finally, value of factor B is adjusted
+using regression analysis from the data collected from all these
+projects. As the project size grows, it exhibits more
+diseconomies of scale. Further, it is found that in the
+maintenance based project, due to large overhead, projects
+exhibit more diseconomies. To improve the overall
+performance of the regression analysis, the bagging predictors
+are used. The bagging predictors’ technique was first proposed
+by Breiman [16]. In this technique, multiple versions of same
+predictor over the different training sets are proposed to get an
+
+
+aggregated predictor. The final prediction of aggregated
+predictor is just the average of prediction of all the predictors.
+The same learning approach has to be used for each of the
+predictor. Main parameters of bagging approach are defined
+as follows:
+
+- no-of-bootstrap-replica : As suggested by Breiman [16],
+we have tested our system for 25 and 50 different bootstrap
+replica.
+
+- bag_percentSize –For each replica, randomly 10 projects
+are chosen among the 70 different students projects used
+for training.
+
+- Classifier- linear regression model is used for all the
+replica
+Different steps used for bagging predictor approach are as
+follows:
+
+- Let T contains the data of all the training sets
+
+- Initialize the variable sum to zero.
+
+- For i = 1 to no-of-bootstrap-replica
+� Let Ti, the new training set of size bag-percentSize is
+created randomly from T.
+� Use the classifier to built a new regression model, Ri
+corresponding to Ti
+� Predict the value of each instance of T using the Ri
+and add to the sum.
+
+- Compute the average of all the predictions to get the final
+predicted value.
+Above steps are checked for two different values (25, 50) of
+no-of-bootstrap-replica. It is found that 25 iterations are
+sufficient for the bagging predictors. Results do not vary
+much, if we increase the number of iterations.
+
+IV. RESULTS AND VALIDATIONS
+
+Data is collected from the two different sets of projects. First
+set contains data and other details of twelve completed
+projects. This set is used for testing only. Similarly, second set
+contains data of 70 different projects undertaken by post
+graduate students. These student projects are used for training
+purpose. Different projects studied vary in the complexity of
+implementation of different phases of life cycle. These projects
+have been grouped together into the following categories using
+their total/build ratio parameter. These categories are created
+keeping CMS projects in mind.
+
+� Type 1 - Small Projects, low total/build effort ratio
+� Type 2 - Small Projects, high total/build effort ratio
+� Type 3 - Large Projects, low total/build effort ratio
+� Type 4 - Large Projects, high total/build effort ratio
+
+For all these 70 projects, students have to answer two separate
+questionnaires, first one after studying the requirements and
+then the second one after completing the project. The answers
+of the first questionnaire are used to predict the effort using the
+proposed model and of the second questionnaire are used to
+refine the model. First questionnaire contains six different
+categories of questions.
+
+
+Table I: Comparison of Effort Estimation using Proposed Model and Bagging Predictors
+
+|Type of<br>Projects|No. of<br>Projects|Mean<br>Actual<br>Effort|Without Using<br>Model|Col5|Using Proposed<br>Model|Col7|Using Bagging<br>Predictors|Col9|
+|---|---|---|---|---|---|---|---|---|
+|Type of<br>Projects|No. of<br>Projects|Mean<br>Actual<br>Effort|Effort<br>Prediction|MRE|Effort<br>Prediction|MRE|Effort<br>Prediction|MRE|
+|Type 1|30|72|55|0.24|62|0.13|63|0.12|
+|Type 2|21|82|51|0.38|69|0.16|72|0.12|
+|Type 3|11|272|210|0.23|240|0.12|245|0.10|
+|Type 4|18|332|219|0.34|253|0.24|290|0.13|
+
+
+These categories are Design requirements, Set up
+requirements, Implementation requirements, Usability
+requirements, External interface requirements, Reliability and
+Performance requirements, Maintainability and Adaptability
+requirements. Each category contains 8-10 questions about the
+specific requirements. Hence all the details, which are required
+by the proposed models, are covered in this questionnaire.
+Second questionnaire is used after the completion of project.
+In this first of all, project heads were asked about the increase
+in complexity as compared to their first assessment in all the
+different phases of software development life cycle. Secondly,
+they were asked to distribute the total effort in phase wise
+manner. The predicted effort is compared phase wise for all
+the projects.
+The proposed model is validated using two approaches. The
+first approach is based on the data available from the past
+projects. The estimated effort of the proposed model is
+compared with the effort estimated in those projects. Its
+detailed analysis is shown in Table I. In each category, mean
+actual effort in person months is calculated. This is compared
+with the effort predicted using the proposed model and without
+using it. By using bagging predictors, prediction efficiency is
+improved as shown in Table I. Finally, the Mean Relative
+Error (MRE) in each category is calculated. From the Table I,
+it is very clear that MRE is very less when the effort is
+predicted using our model and further variance in prediction is
+improved using bagging predictors. Mean of all MRE
+(MMRE) using proposed model is 0.16 as compared to
+MMRE of 0.30 without using the model and it is further
+improved to 0.12 when bagging predictors are used.
+The prediction at level 25 by using proposed model is more
+than 80%, which earlier was about 62% when the proposed
+model was not used.
+
+In our second approach, the project managers were asked to
+estimate the effort of new project using the proposed model
+and another one of their choice. Then a survey is conducted
+using a questionnaire to check the confidence level of project
+manager in using the proposed model.
+
+V. CONCLUSION
+
+In this paper, Content Management System Effort Estimation
+model is proposed for the current technologies using which a
+piece of work can be estimated most accurately. The model is
+
+
+designed to help project manager to estimate effort at the very
+early stage of requirement analysis. The initial model is
+finalized using bagging predictors on linear regression model.
+After the requirement analysis stage, the project size metric is
+estimated using the object point analysis. A set of
+questionnaire is used to estimate the complexity of the project
+and the other adjustment factors, which has to be filled after
+completing the initial requirement analysis. This model is
+proposed to be used differently for the different types of
+projects. Different projects have been categorized based on
+their total/build effort ratio. After analyzing 12 completed
+industry projects and 70 students projects, the model shows
+very good accuracy for Type 1 and Type 3 projects, where
+total / build effort ratio is very low. But when the project
+contains very less coding then the effort estimation accuracy is
+not very good. This clearly shows that for the maintenance
+projects, adjustment factors needs to be modified.
+
+REFERENCES
+
+[1] Oreilly, tim, "What is Web 2.0: Design Patterns and
+Business Models for the Next Generation of Software”.
+
+Communications & Strategies, No. 1, p. 17, First Quarter
+2007 http://ssrn.com/abstract=1008839
+
+[2] Carr, L., Bechhofer, S., Goble, C., and Hall, W.
+"Conceptual Linking: Ontology-based Open
+Hypermedia". In The Tenth International World Wide
+Web Conference, Hong Kong, May, 2001
+http://www10.org/cdrom/papers/246/index.html
+
+[3] D. Schwabe, R. Pontes, I. Moura: “OOHDM-Web: An
+Environment for Implementation of Hypermedia
+Applications in the WWW”, ACM SigWEB Newsletter,
+Vol. 8, #2, June 1999.
+
+[4] Tridas Mukhopadhyay, Steven S. Vicinanza and Michael
+J. Prietula, “Examining the Feasibility of a Case-Based
+Reasoning Model for Software Effort Estimation”, MIS
+Quarterly, Vol. 16, No. 2 June, 1992.
+
+[5] Mendes, E.; Mosley, N.; Counsell, S., "Comparison of
+Web size measures for predicting Web design and
+authoring effort," Software, IEE Proceedings -, vol.149,
+no.3, pp.86-92, Jun 2002
+
+[6] Yunsik Ahn, Jungseok Suh, Seungryceol Kim, Hyunsoo
+Kim, “The Software maintenance project effort estimation
+model based on function points”, Journal of Software
+
+
+Maintenance & Evolution: Research and Practice, Vol 15,
+issue 2, April, 2003.
+
+[7] Ruhe, M., Jeffery, R., & Wieczorek, I., “Cost estimation
+for Web applications”, Proceedings ICSE 2003
+
+[8] Mendes, E., Watson, I., Triggs, C., Mosley, N., &
+Counsell, S., “A comparison of development effort
+estimation techniques for Web hypermedia applications”,
+Proceedings Metrics 2002.
+
+[9] Mendes, E., Counsell, S., & Mosley, N., “Measurement
+and effort prediction of Web applications”, Proceedings
+of the 2nd ICSE Workshop on Web Engineering, June,
+2000.
+
+[10] Fewster, R., & Mendes, E., “Measurement, prediction
+and risk analysis for Web applications” Proceedings of
+Software Metrics Symposium, METRICS 2001.
+
+[11] Reifer, D.J., “Web development: Estimating quickto-market software”. IEEE Software, Nov – Dec 2000.
+
+[12] Morisio, M., Stamelos, I., Spahos, V., Romano, D.,
+“Measuring functionality and productivity in Web-based
+applications: A case study”, Proceedings of the Sixth
+International Software Metrics Symposium, 1999.
+
+[13] Baresi, L., Morasca, S., & Paolini, P., “Estimating the
+design effort for Web applications”, Proceedings of
+Software Metrics Symposium, Metrics 2003.
+
+[14] Baresi, L., F. Garzotto, and P. Paolini. “Extending
+UML for modeling web applications”, In Proceedings of
+
+[View publication stats](https://www.researchgate.net/publication/221231729)
+
+
+34th Anual Hawaii International Conference on System
+Sciences (HICSS’34), Hawai, Jan. 2001.
+
+[15] Petronio L. Barga, Adriano L.I. Oliveira, Gustavo
+H.T. Ribeiro, Silvio R.., “Bagging Predictors For
+Estimation of Software Project Effort”, in Proceedings of
+International Joint Conference on Neural Networks, USA,
+August 2007.
+
+[16] L. Breiman, “Bagging Predictors”, Mach Learn, vol
+24, no 2, pp 123-140, 1996.
+
+[17] B.W. Boehm, B. Clark, E. Horrowitz, C. Westland,
+R. Madachy, R. Selby, "The COCOMO 2.0 Software Cost
+Estimation Model", American Programmer, July 1996.
+
+[18] Vahan Harput,Hermann Kaindl and Stefan Kramer,
+“Extending Function Point Analysis of Object-Oriented
+Requirements Specifications”, Proceedings of the 11th
+IEEE International Software Metrics Symposium, 2005.
+
+[19] Norman, M. Stillwell, “TeamSite Content
+Management Systems- Technical Overview”,
+http://www.its.monash.edu.au/staff/web/slideshows/teamsi
+te-technical/teamsite-tech-presentation.html
+
+[20] English, O. Londer, T. Bleeker, S. Shell, S. Cawood,
+“Microsoft Contenet Management Server-2002 A
+Complete Guide”, Published by Addison-Wesley
+Professional, Oct 27, 2003.
+
+[21] Boehm, B., “Anchoring the software processes”,
+IEEE Software, Vol 13, No 4, July 1996.

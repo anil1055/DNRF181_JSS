@@ -1,0 +1,1000 @@
+## **Measurement, Prediction and Risk Analysis for Web Applications **
+
+Rachel Fewster Emilia Mendes
+
+*Statistics Department* *Computer Science Department*
+*The University of Auckland* *The University of Auckland,*
+*Auckland, New Zealand* *Auckland, New Zealand*
+[r.fewster@auckland.ac.nz](mailto:r.fewster@auckland.ac.nz) [emilia@cs.auckland.ac.nz](mailto:emilia@cs.auckland.ac.nz)
+
+
+Rachel Fewster Emilia Mendes
+
+*Statistics Department* *Computer Science Department*
+*The University of Auckland* *The University of Auckland,*
+*Auckland, New Zealand* *Auckland, New Zealand*
+[r.fewster@auckland.ac.nz](mailto:r.fewster@auckland.ac.nz) [emilia@cs.auckland.ac.nz](mailto:emilia@cs.auckland.ac.nz)
+
+**Abstract** Prediction is a necessary part of an effective process,
+
+be it authoring, design, testing, or Web development as a
+
+*Accurate estimates of development effort play an* whole.
+*important role in the successful management of larger* A prediction process involves [2]:
+*Web development projects. By applying measurement* � Capturing data about past projects
+*principles to measure qualities of the applications and* development phases within the same project.
+*their development processes, feedback can be obtained to* � Identification of size metrics, cost drivers and the
+*help understand, control and improve products and* formulation of theories about their relationship with
+
+effort.
+
+*processes.*
+*The objective of this paper is to present a Web design* � Generation of prediction models to be applied to
+*and authoring prediction model based on a set of metrics* projects.
+*which were collected using a case study evaluation.* � Assessment of the effectiveness of those prediction
+*The paper is organised into three parts: part I* models.
+*describes the case study evaluation (CSE) in which the*
+*metrics used in the prediction model were collected.* This paper focuses on effort prediction for Web design
+*These metrics were organised into five categories: effort* and authoring processes. We adopt the classification
+*metrics, structure metrics, complexity metrics, reuse* proposed by Lowe and Hall [3] where authoring
+*metrics and size metrics.* encompasses the management of activities for the actual
+*Part II presents the prediction model proposed, which* content and structure of the application and its
+*was generated using a Generalised Linear Model (GLM),* presentation. Design covers the methods used for
+*and assesses its prediction power. Finally, part III* generating the structure and functionality of the
+*investigates the use of the GLM as a framework for risk* application, and typically does not include aspects such as
+*management.* Web application requirements elicitation, feasibility
+
+consideration and applications maintenance. In addition,
+our design phase also incorporates the conceptual design
+
+**1. Introduction** of the application, reflected in map diagrams showing
+
+documents and links.
+The data used to generate our prediction model was
+
+In any scientific field, measurement generates
+
+gathered through a quantitative case study evaluation
+
+quantitative descriptions of processes and products,
+
+where a set of suggested metrics and cost drivers for
+
+making it possible to understand behaviour and result.
+
+effort prediction were measured. The metrics were
+
+This understanding allows for the selection of better
+
+organised into five categories: effort metrics, structure
+
+techniques and tools to control and improve processes,
+
+metrics, complexity metrics, reuse metrics and size
+
+products and resources [1]. metrics.
+Software practitioners recognise the importance of
+
+A number of complexity metrics from literature in
+
+realistic estimates of effort to the successful management
+
+Software Engineering [2] and Multimedia [4, 5] were
+
+of software projects, the Web being no exception. Having
+
+reused. In addition, several media metrics were adapted
+
+realistic estimates at an early stage in a project's life cycle
+
+from [6]. The Prediction model proposed was generated
+
+allow project managers and development organisations to
+
+using a statistical techniques, namely the Generalised
+
+manage resources effectively.
+
+
+Prediction is a necessary part of an effective process,
+be it authoring, design, testing, or Web development as a
+whole.
+A prediction process involves [2]:
+� Capturing data about past projects or past
+development phases within the same project.
+� Identification of size metrics, cost drivers and the
+formulation of theories about their relationship with
+effort.
+� Generation of prediction models to be applied to
+projects.
+� Assessment of the effectiveness of those prediction
+models.
+
+This paper focuses on effort prediction for Web design
+and authoring processes. We adopt the classification
+proposed by Lowe and Hall [3] where authoring
+encompasses the management of activities for the actual
+content and structure of the application and its
+presentation. Design covers the methods used for
+generating the structure and functionality of the
+application, and typically does not include aspects such as
+Web application requirements elicitation, feasibility
+consideration and applications maintenance. In addition,
+our design phase also incorporates the conceptual design
+of the application, reflected in map diagrams showing
+documents and links.
+The data used to generate our prediction model was
+gathered through a quantitative case study evaluation
+where a set of suggested metrics and cost drivers for
+effort prediction were measured. The metrics were
+organised into five categories: effort metrics, structure
+metrics, complexity metrics, reuse metrics and size
+metrics.
+A number of complexity metrics from literature in
+Software Engineering [2] and Multimedia [4, 5] were
+reused. In addition, several media metrics were adapted
+from [6]. The Prediction model proposed was generated
+using a statistical techniques, namely the Generalised
+Linear Model (GLM) [7].
+
+
+1
+
+
+Section 2 describes the case study evaluation and
+Section 3 presents and evaluates the prediction model
+generated. An investigation of the use of the GLM as a
+framework for risk management is presented in Section 4
+and finally, Section 5 gives our conclusions and
+comments on future work.
+
+**2. The Case Study Evaluation**
+**2.1 Description**
+
+The case study consisted of the design and authoring of
+Web applications aimed at teaching a chosen topic,
+structured according to the Cognitive Flexibility Theory
+(CFT) principles [8], using a minimum of 50 Web pages.
+The relationship between the process model [3] used
+by the students to develop the applications and the steps
+to apply the CFT are presented in Figure 1:
+
+|Structure<br>Application|Col2|
+|---|---|
+|||
+
+
+|Plan Cases, Themes and Matrix|Col2|
+|---|---|
+|Plan Cases, Themes and Matrix||
+
+
+|Link<br>Information|Col2|
+|---|---|
+|||
+
+
+|Plan<br>Interface|Col2|
+|---|---|
+|||
+
+
+|Plan<br>Navigation|Col2|
+|---|---|
+|Plan<br>Navigation||
+
+
+Requirement analysis was not considered in the
+process model as it had already been given to the students
+during one of their classes.
+Forty three Computer Science students from the
+University of Auckland participated in the case study.
+They were attending the Hypermedia and Multimedia
+Systems course, offered during the first semester of 2000.
+Two questionnaires were used to collect the data. The
+first [1] asked subjects to rate their Web authoring
+experience using five scales, from no experience (one) to
+very good experience (five). The second questionnaire [2]
+was used to measure characteristics of the Web
+applications developed (suggested metrics) and the effort
+involved in designing and authoring those applications.
+On both questionnaires, we describe in depth each scale
+type, to avoid any misunderstanding. Members of the
+research group checked both questionnaires for
+
+1 The questionnaire is available at
+http://www.cs.auckland.ac.nz/~emilia/Assignments/expquestionnaire.html.
+2 The questionnaire is available at
+http://www.cs.auckland.ac.nz/~emilia/Assignments/questionnair
+e.html.
+
+
+ambiguous questions, unusual tasks, number of questions
+and definitions in the Appendix.
+Early analysis showed that six questionnaires were
+missing fundamental information. They were not used in
+the data analysis, leaving us thirty seven datapoints. [3]
+To reduce learning effects, subjects were given a
+coursework prior to designing and authoring the Web
+applications, which consisted of:
+� Creating a simple personal homepage.
+� Designing a multi-page Web application.
+� Creating a Web site for the Matakohe Kauri
+Museum [4], improving on their existing site.
+� Loading the Web pages onto a Web server.
+
+Finally, all subjects received training on the Cognitive
+Flexibility Theory authoring principles for approximately
+150 minutes.
+
+|Implement<br>Interface|Col2|
+|---|---|
+|||
+
+
+|Implementation|Col2|
+|---|---|
+|Implementation||
+
+
+**2.2 Metrics collected**
+
+|Test Media<br>& Links|Col2|
+|---|---|
+|||
+
+
+The metrics collected during the case study evaluation
+represented attributes of four types of Entities [2]:
+� Web application.
+� Web design and authoring processes.
+� Developer.
+� Authoring tool.
+
+Each entity type had a set of metrics collected and
+organised into five categories: Size metrics, Reusability
+metrics, Complexity metrics, Effort metrics and
+Confounding factors. The metrics and corresponding
+categories are described from Table 1 to 5:
+
+
+3 the dataset is available to use by contacting
+emilia@cs.auckland.ac.nz
+4 http://www.hmu.auckland.ac.nz:8001/gilchrist/matakohe/.
+
+2
+
+
+
+
+
+
+
+
+
+**Figure 1 - Relationship between process model and CFT steps**
+
+
+**Table 1 - Size Metrics**
+
+|Entity Type|Metric|Description|
+|---|---|---|
+|Web application|Page Count *|Number of html or shtml files used in the Web application.|
+|Web application|Media Count *|Number of media files used in the application.|
+|Web application|Program Count|Number of cgi scripts, Javascript files, Java applets used in the<br>application.|
+|Web application|Total Page Allocation *|Total space (Mbytes) allocated for all the html or shtml pages used<br>in the application.|
+|Web application|Total Media Allocation *|Total space (Mbytes) allocated for all the media files used in the<br>application.|
+|Web application|Total Code Length|Total number of lines of code for all the programs used by an<br>application.|
+
+
+
+**Table 2 - Reusability Metrics**
+
+|Entity Type|Metric|Description|
+|---|---|---|
+|Web<br>application|Reused Media Count *|Number of reused/modified media files.|
+|Web<br>application|Reused Program Count|Number of reused/modified programs.|
+|Web<br>application|Total Reused Media<br>Allocation *|Total space (Mbytes) allocated for all the reused media files used in<br>the application.|
+|Web<br>application|Total Reused Code Length|Total number of lines of code for all the programs reused by an<br>application.|
+
+
+
+**Table 3 - Complexity Metrics**
+
+
+
+
+
+
+|Entity Type|Metric|Description|
+|---|---|---|
+|Web application|Connectivity *|Total number of internal links5. We do not include<br>dynamically generated links.|
+|Web application|Connectivity Density [2] *|Connectivity divided by Page Count.|
+|Web application|Total Page Complexity *|PageCount<br>∑ PageComplexity<br>PageCount<br>1|
+|Web application|Cyclomatic Complexity [2] *|(Connectivity - Page Count) + 2.|
+|Web application|Structure6 *|Measures how the main structure (backbone) of the<br>application is organised: sequence, hierarchy, or network.|
+
+
+- Suitable for static Web applications, where the number of dynamically generated links and/or pages is absent.
+5 Subjects did not use external links to other Web sites. All the links pointed to pages within the application only.
+6 A sequential structure corresponds to documents linearly linked; a hierarchical structure denotes documents linked in a tree shape and
+a network structure for documents linked in a net shape.
+
+3
+
+
+**Table 4 - Effort Metrics**
+
+|Entity Type|Metric|Description|
+|---|---|---|
+|Web<br>application<br>design and<br>authoring<br>process|Total Effort|SE+IE+IP+IB+LTE+MTE|
+|Web<br>application<br>design and<br>authoring<br>process|Structuring Effort (SE)|Estimated elapsed time (number of hours) it took a subject to<br>structure an application.|
+|Web<br>application<br>design and<br>authoring<br>process|InterLinking Effort (IE) *|Estimated elapsed time (number of hours) it took a subject to inter-<br>link the pages in order to build the application's structure.|
+|Web<br>application<br>design and<br>authoring<br>process|Interface Planning (IP)|Estimated elapsed time (number of hours) it took a subject to plan the<br>application's interface.|
+|Web<br>application<br>design and<br>authoring<br>process|Interface Building (IB)|Estimated elapsed time (number of hours) it took a subject to<br>implement the application's interface.|
+|Web<br>application<br>design and<br>authoring<br>process|Link Testing Effort (LTE)<br>*|Estimated elapsed time (number of hours) it took a subject to test all<br>the links on an application.|
+|Web<br>application<br>design and<br>authoring<br>process|Media Testing Effort<br>(MTE) *|Estimated elapsed time (number of hours) it took a subject to test all<br>the media on an application.|
+
+
+
+**Table 5 - Confounding Factors**
+
+|Entity Type|Metric|Description|
+|---|---|---|
+|Developer|Experience|Measures the authoring/design experience of a subject using a scale from 0 (no<br>experience) to 4 (very good experience).|
+|Tool|Type|Measures the type of tool used to author/design the Web pages: WYSIWYG, semi-<br>WYSIWYG7 or text-based.|
+
+
+**2.3 Validity of the Case Study**
+
+There are three types of threats to the validity of an
+empirical study [9]:
+
+- Construct validity: Represents to what extent the
+predictor and response variables precisely measure
+the concepts they claim to measure.
+
+- Internal validity: Represents to what extent
+conclusions can be drawn about the causal effect of
+the predictor variables on the response variable.
+
+- External validity: Represents the domain to which a
+study’s findings can be generalised.
+
+**2.3.1 Construct Validity.** Design and authoring effort are
+difficult concepts to measure. However, it is argued that
+the data collected and the response variable derived are
+intuitively reasonable measures.
+
+- There is no standard on what constitutes the design
+and authoring processes of a Web application.
+Therefore, the activities used in this study may not be
+representative of all practices employed in the Web
+community.
+
+7 WYSIWYG - What You See Is What You Get
+
+
+
+- The metrics collected, apart from effort, experience
+and structure, were all objective and precisely
+quantifiable. The scale used to measure experience
+and the three types of structure of an application were
+described in detail in both questionnaires.
+
+**2.3.2 Internal Validity.** There were four confounding
+factors in the case study evaluation:
+
+- Subjects' authoring and designing experience.
+
+- Maturation effects, i.e. learning effects caused by
+subjects learning as an experiment proceeds.
+
+- Structure of the application.
+
+- Tools used to help author and design the Web
+application.
+
+The data collected revealed that:
+
+- Subjects' authoring and design experiences were
+mostly scaled little (experience=2) or average
+(experience=3), with a low difference between skill
+levels. A scatterplot between experience and effort
+was used to investigate their relationship. Most
+datapoints fell within clusters between the interval
+
+4
+
+
+10 to 80 hours, either for experience 2 or 3.
+Consequently the original dataset was left intact.
+
+- Subjects had to develop a Web application as part of
+their first assignment. They also received training in
+the CFT principles, reducing maturation effects.
+
+- Notepad (or similar text editor) and FirstPage were
+the two tools most frequently used. Notepad is a
+simple text editor while FirstPage is freeware
+offering button-embedded HTML tags. Although
+they differ with respect to the functionality offered, a
+scatterplot between total-effort and tool revealed that
+for both tools most datapoints fell within the interval
+between 10 to 80 hours. Consequently, confounding
+effects from the tools were reduced.
+
+� The selection effects, which are due to natural
+variations in subject performance, were controlled.
+� The instrumentation effects in general did not occur
+in this evaluation; the questionnaires used were the
+
+same.
+
+**2.3.3 External Validity.** The results may be domain
+dependent as all subjects answered the questionnaires
+based on their experience in developing Web applications
+for education. This evaluation should therefore be
+repeated in domains other than education if the results are
+to be generalised to other domains.
+� The applications did not have more than 103
+documents (mean=57) and 1501 links (mean 616).
+These numbers represent medium size applications,
+according to [3]. Consequently they are not
+representative of the large Web applications for
+education developed by some organisations.
+However, the applications developed had similar to
+or even better interface and contents quality than
+Web applications developed by professionals (as
+observed by one of the authors when marking the
+applications), suggesting that the results of the case
+study are likely to scale-up.
+� A threat to subject generalizability [10] may exist
+when the subject population is not drawn from a
+wider population. The subjects that participated in the
+case study were either final year undergraduate
+students or MSc students. It is likely that they present
+skill sets similar to Web professionals at the start of
+their careers. The use of students as subjects, while
+sometimes considered unrealistic, is justified for two
+reasons: firstly, empirical evidence by Bohem-Davis
+and Ross [11] indicates that students are equal to
+professionals in many quantifiable measures,
+including their approach to developing software;
+secondly, for pragmatic considerations, having
+
+
+students as subjects was the only viable option for
+this case study.
+
+**3. The Generalised Linear Model**
+
+**3.1 Introduction**
+
+Generalised linear models (GLMs) [7] provide a
+flexible regression framework for predictive modelling of
+effort. The models allow non-linear relationships between
+response and predictor variables, and they admit a wide
+range of choices for the distribution of the response
+variable. They are therefore much more realistic than
+conventional models such as ordinary least squares
+regression.
+In its most general form, a GLM consists of a response
+variable, ***Y***, together with ***p*** predictor variables, ***x*** ***1*** ***,...,*** ***x*** ***p*** ***.***
+
+For our purposes, the response is the total effort of a
+project, while ***x*** ***1*** ***,...,*** ***x*** ***p*** represent metrics such as
+
+application size or complexity. The response ***Y*** is
+modelled with a systematic component and a random
+component. The systematic component describes the
+relationship between ***Y*** and the predictor variables, while
+the random component expresses the random variation in
+***Y*** from one project to the next.
+For the random component, a probability distribution
+is chosen for ***Y*** from the group of so-called exponential
+distributions [7]. This group includes the familiar
+Gaussian, Gamma, Poisson, and Binomial distributions.
+The Gaussian distribution is used for ordinary least
+squares regression. It assumes that the distribution of ***Y*** is
+symmetric about its mean (i.e. ***Y*** is equally likely to fall
+above or below the predicted value), and that ***Y*** has
+constant variance for all projects. Other distributions in
+the group, such as Poisson and Gamma, move away from
+these assumptions and allow the variability of ***Y*** to
+increase as the mean increases. The Gamma distribution,
+furthermore, is not symmetric, but accommodates larger
+variation above the mean than below it.
+The systematic component of the GLM fixes the mean,
+or location, of the distribution of ***Y***, by relating it to the
+predictor variables ***x*** ***1*** ***,...,*** ***x*** ***p*** . Let ***Y*** ***i*** be the value of ***Y*** for
+
+the ***i*** th project, and let **µ** ***i*** **= E(** ***Y*** ***i*** **)** denote the mean of the
+distribution of ***Y*** ***i*** . The mean **E(** ***Y*** ***i*** **)** is also referred to as the
+*predicted* effort for project ***i*** . The systematic component
+involves a transformation of the mean, **E(** ***Y*** ***i*** **)**, using a
+monotone *link function*, ***g***, that is invertible over the
+whole real line. The transformed mean is modelled as a
+linear function of the predictors:
+
+5
+
+
+***g(E(Y*** ***i*** ***))*** **=** **β** ***0*** **+** **β** ***1*** ***x*** ***1i*** **+** ***...*** **+** **β** ***p*** ***x*** ***pi*** ***,*** (1)
+
+where ***x*** **1** ***i*** **,...,** ***x*** ***pi*** denote the ***i*** th instances of variables
+***x*** ***1*** ***,...,x*** ***p,*** respectively, and **β** ***0*** ***[,...,]*** **[β]** ***p*** are parameters to be
+
+estimated. It is the function ***g*** that controls the nature of
+the non-linear relationship between the response and
+predictor variables ***.***
+Any GLM is specified by the two components above: a
+probability distribution for ***Y***, and a transformation ***g*** .
+Ordinary least squares regression is a special case of a
+GLM, in which the error distribution of ***Y*** is Gaussian and
+the link function ***g*** is the identity. The ordinary least
+squares model is often criticised for its restrictive
+assumptions [12], which are overcome by using the more
+sophisticated models available in the GLM framework.
+GLMs are implemented in most statistical software
+packages. The analyses in this paper were conducted
+using the software S-PLUS [13].
+
+**3.2 Model for Effort Data**
+
+We formulated the effort GLM as follows. The
+variable ***Y*** was total effort, from Table 4. The predictor
+variables were taken from the size, reusability, and
+complexity metrics in Tables 1 to 3. We chose the
+distribution for ***Y*** to be Gamma. The positive skew of this
+distribution is particularly valuable for effort models,
+because it allows for the possibility of severe overrun on a
+time schedule. The variance of the Gamma distribution is
+proportional to the square of the mean; so as the expected
+duration of a project increases, the associated variability
+also increases. In practice this means it is easier to
+estimate a precise duration for a project lasting a few days
+than it is for one lasting several weeks. Other authors
+have also recommended the Gamma distribution for effort
+estimation [14], although not in the GLM context.
+With the Gamma distribution there are three usual
+choices for the link function ***g*** : the identity link, ***g(x) = x*** ;
+the logarithmic link, ***g(x) = log(x)*** ; and the inverse link,
+***g(x) = 1/x*** . We investigated each of these links, but for
+the Auckland data the choice was found to have very little
+impact on the results, due to small magnitudes of
+parameter estimates. The identity link was favoured, for
+two reasons. Firstly, it provided the best fit of the three
+models, by a small margin. Secondly, the identity link
+suggests a linear relationship between the response
+variable and the predictors. While a linear relationship is
+often unrealistic, plots suggested that relationships were
+in fact broadly linear for the Auckland data. It is
+reasonable that the predicted effort should vary linearly
+with many of the metrics in Tables 1 to 3, such as *page*
+*count* and *total page allocation* . The choice of ***g*** depends
+
+
+upon circumstances, however, and the authors favoured
+the logarithmic link function when using alternative
+metrics with a different set of data [15].
+Selecting the predictor variables ***x*** ***1*** ***,...,*** ***x*** ***p*** is not
+
+always straightforward, and some experimentation is
+usually required. Chief problems are the small size of the
+data set (37 observations), and relationships within the
+variables. Ideally the predictors should not be linearly
+related to each other: for example, it would be wrong to
+include the metrics *page count*, *connectivity*, and
+*cyclomatic* *complexity* together in the same model,
+because the last of these is a linear function of the first
+two. With some other variables the relationship might be
+more subtle, and it is important to check for possible
+hidden relationships between variables such as *page count*
+and *total page allocation* .
+With only 37 observations, it would be unwise to
+include more than about 4 or 5 predictors in the model.
+For this reason we recommend that a model selection
+procedure is used to select variables. A popular basis for
+model selection is Akaike's Information Criterion (AIC),
+which seeks the best fit to the data while penalising
+overparametrisation [16]. After considerable
+experimentation, we found that the AIC criterion
+consistently reduced our predictive model to the two
+predictors ***x*** ***1*** = *total page allocation*, and ***x*** ***2*** = *total media*
+*allocation* . These represent the strongest size metrics, and
+the selection is reasonable. It is likely that the data set was
+not large enough to allow the effects of the complexity
+metrics to be detected.
+
+The final model formulation was therefore:
+
+**µ** ***i*** **=** ***E(Y*** ***i*** ***)*** **=** **β** ***0*** **+** **β** ***1*** ***x*** ***i1*** **+** **β** ***2*** ***x*** ***2i*** (2)
+
+with ***Y*** ***i*** distributed as a Gamma random variable. The
+parameters of the Gamma distribution are determined by
+
+***ˆ*** ***ˆ*** ***ˆ***
+the parameter estimates **β** ***0*** ***,*** **β** ***1*** and **β** ***2,***, and an additional
+
+estimate of a *dispersion parameter*, **φ** ***[ˆ]***, provided by the
+
+GLM software.
+
+**3.3 Results**
+
+The parameter estimates from the Gamma GLM are as
+
+***ˆ*** ***ˆ***
+follows: **β** ***0*** **=** ***253.*** (std error 8.6); **β** ***1*** **=** ***.0074*** (std error
+
+***ˆ***
+0.028; range of ***x*** ***1*** : 80MB to 843MB); **β** ***2*** **=** **−** ***.00011*** (std
+error 0.00038; range of ***x*** ***2*** : 0MB to 26540MB). The
+
+6
+
+
+predicted value of effort for project ***i*** is therefore
+
+***ˆ*** ***ˆ*** ***ˆ*** ***ˆ***
+**µ** ***i*** **=** **β** ***0*** **+** **β** ***1*** ***x*** ***i1*** **+** **β** ***2*** ***x*** ***2i*** .
+
+***ˆ***
+Although it was unexpected that **β** should be ***2***
+negative, indicating that the expected effort decreases as
+the total media allocation increases, it is probably due to
+the enormous range of ***x*** ***2*** . The parameter estimate is
+influenced more by the very large values (8 records over
+1500MB) than by the majority of smaller values, and
+huge increases in the media allocation at the extremes
+need to be countered in the model by incorporating a
+negative parameter. It is possible that there is also a
+confounding effect of experience in this respect.
+The dispersion parameter for the Gamma distribution
+
+***ˆ***
+was estimated to be **φ** **=** ***.038*** . Using the theory of
+
+Gamma GLMs, it can be shown that the estimated
+probability distribution for any variable ***Y*** ***i*** is Gamma with
+
+shape parameter **φ** ***[ˆ]*** **[ -1 ]** and inverse scale parameter ***(*** ***oˆ*** **/** **µ** ***ˆ*** ***i*** ***)*** **-1**
+
+***ˆ*** ***2*** ***ˆ*** ***ˆ*** ***2***
+The variance of this distribution is **ο** ***i*** **=** **φµ** ***i***, and the
+mean is **[µ]** ***[ˆ]*** [ . ] ***i***
+There are several ways of validating the model fit.
+Firstly, the parameter estimation and AIC model selection
+procedures ensure that we have an optimal model within
+the constraints of our own specification (i.e. Gamma
+distribution with identity link). Secondly, the choice of
+link function ***g*** was found to have little effect on the
+results, although the identity link was the most natural
+choice.
+Thirdly, we can verify that the Gamma distribution has
+captured the true level of variability present in the effort
+data by checking whether the observations fall within the
+range expected under their estimated probability
+distributions. The results were found to be extremely
+good, with close to ***x%*** of the data points falling within
+
+
+the central ***x%*** range of their estimated distributions for
+any ***x*** between 0 and 1. For example, 92% of the
+observations fell within the 90% range of their estimated
+distributions, and 97% fell within the 95% range. This
+suggests that the Gamma distribution has captured the
+right level of uncertainty in the data: the spread of the
+estimated distributions is neither too wide nor too narrow.
+We refitted the GLMs using the Poisson distribution in
+place of the Gamma, and found that although the
+parameter estimates were very similar, the Poisson
+distribution could not reflect the true uncertainty in the
+data. For instance, only 32% of the observations lay
+within the 90% range of their distributions with the
+Poisson model. Realistic estimation of the uncertainty
+associated with the effort variable is essential for useful
+prediction, as we shall illustrate in Section 4. It is much
+more useful to quote an interval when making an effort
+prediction than it is to give the point estimate **[µ]** ***[ˆ]*** [ . ] ***i***
+Finally, we investigate the residuals of the fitted GLM.
+Since the GLM is fitting a skewed distribution to the data,
+
+***ˆ***
+the absolute residuals ***(*** ***y*** ***i*** **−** **µ** ***i*** ***)*** are not very informative.
+They are expected to increase in magnitude as **[µ]** ***[ˆ]*** ***i***
+
+increases, because variance is proportional to **[µ]** ***[ˆ]*** ***i2***, so they
+do not conform to the Gaussian distribution expected
+under an ordinary least squares model. Instead, we use a
+type of residual called the *deviance residual* when
+verifying the fit of a GLM [7, 16]. These represent the
+contribution of each observation to the overall deviance of
+the data from their predictions. A deviance residual close
+to zero indicates that the observation has a good fit under
+the GLM. Plots of deviance residuals are shown in Figure
+2, and reveal a regular distribution of residuals with no
+disturbing patterns.
+
+
+**Figure 2 - Plot of deviance residuals against predicted values,** **µ** ***ˆ*** **; and boxplot of deviance residuals** ***i***
+
+
+7
+
+
+**4. Prediction and Project Management**
+
+The need for effective time management in an
+organisation undertaking large numbers of projects was
+underlined in [14], where it was pointed out that the risks
+associated with each project must be absorbed into an
+organisation-wide management plan. Attempts to
+accommodate a project's risk within the budget of the
+project itself would lead to greatly inflated time estimates
+and uncompetitive contract bids. It was further suggested
+in [14] that risk management could be effective only if all
+projects undertaken by the organisation were of similar
+size.
+The GLM that we have used provides a very natural
+framework for risk management, and it can accommodate
+considerable variability in project sizes. The key lies in
+the fact that the GLM, in common with all regression
+models, estimates a full probability distribution for the
+response variable ***Y*** . Instead of obtaining just a single
+point estimate for project time, we can calculate the
+probability that the time will exceed any given value.
+With a point estimate of 20 days, for instance, the fitted
+probability distribution of ***Y*** gives the probability of the
+time exceeding 25 days, 30 days, and so on. Using this
+knowledge for all proposed projects, we can determine
+the required level of risk for each one in order to attain an
+acceptable collective risk level across all projects.
+Although we shall illustrate the risk procedure using
+the Gamma GLM of Section 3, the methods can be
+applied to the output from any regression model. We
+assume that the Gamma GLM has been fitted to all
+available data from the organisation, and estimates
+
+***ˆ*** ***ˆ*** ***ˆ***
+**β** ***0*** ***,*** **β** ***,1*** ***,...,*** **β** ***p***, and **φ** ***[ˆ]*** have been obtained for the
+
+parameters and the dispersion parameter. We now
+consider a new set of ***n*** projects for which we need to
+devise a collective budget.
+
+**Figure 3 – Probability density function of Gamma**
+**distribution.**
+
+
+For each of the new projects in turn, we calculate the
+probability distribution of the effort ***Y*** . The ***i*** th project,
+with predictor values ***x*** ***i1*** ***,...,*** ***x*** ***pi***, yields an estimated
+
+***ˆ*** ***ˆ***
+distribution for ***Y*** ***i*** with mean **[µ]** ***[ˆ]*** [ = ] ***i*** **β** ***1*** ***x*** ***i1*** **+** ***...*** **+** **β** ***p*** ***x*** ***pi*** .
+
+For a Gamma GLM, this estimated distribution is
+
+Gamma ***(*** **φ** ***ˆ*** **−** ***1*** ***(,*** **φ** ***ˆ*** **µ** ***ˆ*** ***i*** ***)*** **−** ***1*** ***)***, where **φ** ***[ˆ]*** is the estimated
+dispersion parameter. Figure 3 shows the shape of a
+Gamma distribution. The curve is the probability density
+function ***f(y)***, and the area under the curve as far as any
+point ***x*** is the estimated probability that the effort ***Y*** ***i*** is less
+than or equal to ***x*** . In the figure, the estimated probability
+that the new project takes time ***x*** or less is 0.70.
+Of chief importance to the organisation is that the sum
+
+***Y*** ***1*** **+** ***...*** **+** ***Y*** ***n*** does not exceed the total amount of time
+budgeted for the ***n*** projects. A single project that exceeds
+its budget is not consequential as long as it is balanced by
+other projects that were completed in less than the allotted
+time, as workers can be reassigned from the other
+projects. A suitable strategy is therefore to decide upon an
+overall security level, ***S*** . For instance, a manager might
+wish to decide the total budget so that it covers the sum
+
+***Y*** ***1*** **+** ***...*** **+** ***Y*** ***n*** with ***S*** **= 99%** probability.
+Once this is decided, an individual budget must be
+determined for each project, in order to place contract
+bids and allot employee resources. Here we recommend
+the following procedure. Allot to each project ***i*** a
+budgeted time ***b*** ***i*** that is ***k*** standard deviations above the
+mean of the probability distribution of ***Y*** ***i*** . The quantity ***k***
+is to be calculated. Recalling that the mean and standard
+
+***ˆ*** ***ˆ*** ***ˆ*** ***2***
+deviation of the distribution are **[µ]** ***[ˆ]*** [ and ] ***i*** **σ** ***i*** **=** **φµ** ***i***, the
+
+budgeted time for project ***i*** is
+
+***ˆ***
+***b*** ***i*** **=** **µ** ***i*** **+** ***k*** **σ** ***[ˆ]*** . ***i*** (3)
+
+The total budgeted time is therefore
+
+***ˆ*** ***ˆ*** ***ˆ*** ***ˆ***
+***b*** ***1*** **+** ***...*** **+** ***b*** ***n*** **=** ***(*** **µ** ***1*** **+** ***...*** **+** **µ** ***n*** ***)*** **+** ***k(*** **σ** ***1*** **+** ***...*** **+** **σ** ***n*** ***).*** (4)
+
+We now need to find ***k*** such that the overall security on
+the ***n*** projects is ***S*** . The total time taken, ***Y*** ***1*** **+** ***...*** **+** ***Y*** ***n***, is a
+sum of ***n*** different Gamma random variables. As long as ***n***
+is reasonably large (say, greater than 10), and the Gamma
+distributions are not vastly different, the distribution of
+
+***Y*** ***1*** **+** ***...*** **+** ***Y*** ***n*** is reasonably well approximated by a
+Gaussian distribution, with mean **µ** ***ˆ*** ***1*** **+** ***...*** **+** **µ** ***ˆ*** ***n*** and
+
+***ˆ*** ***2*** ***ˆ*** ***2***
+variance **σ** ***1*** **+** ***...*** **+** **σ** ***n*** . This result follows from the
+Central Limit Theorem for probability distributions [17],
+
+8
+
+
+and simulation experiments suggest that the
+approximation is largely robust to differences in the
+Gamma distributions, especially for large ***n*** .
+This approximation, together with equation (4),
+enables us to calculate the value ***k*** as
+
+
+***n***
+
+
+***n*** ***ˆ*** ***2***
+# **S ∑ i = 1 σ i** **∑ ni = 1 σ ˆ i**
+
+
+***ˆ***
+# **z S ∑ i = 1**
+
+***k*** **=**
+***n***
+
+
+**σ** ***i***
+
+***,*** (5)
+
+
+hours, so the bidding policy leaves an average surplus of
+7 hours per project. We would expect a surplus when the
+policy is applied to the same set of data as the model was
+fitted over.
+
+**Figure 4 - Overall security and security per**
+**project, for the set of 37 projects outlined in**
+**Section 2. The dotted line is the line** ***y=x*** **.**
+
+**Table 6 - Overall security and security per**
+**project, for the set of 37 projects outlined in**
+**Section 2.**
+
+|Overall security, S|Security per project, s|
+|---|---|
+|0.999|0.754|
+|0.99|0.718|
+|0.95|0.682|
+|0.9|0.661|
+|0.8|0.636|
+
+
+**5. Conclusions and Future Work**
+
+This paper has reported: i) a quantitative case study
+evaluation (CSE) that measured several Web metrics,
+grouped as size metrics, complexity metrics, structure
+metrics, effort metrics and reuse metrics; ii) the proposal
+of an effort prediction model which was generated using a
+Generalised Linear Model (GLM); iii) the assessment of
+the prediction power for the proposed model; iv) the use
+of the GLM as a framework for risk management.
+The AIC criterion consistently reduced the predictive
+model to two predictors: *total page allocation* and *total*
+
+9
+
+
+**=**
+
+**=**
+
+***n*** **σ** ***ˆ***
+
+
+***,***
+
+***ˆ***
+
+
+***i*** **=** ***1*** ***i***
+
+
+**=**
+
+
+where ***z*** is the quantile of the standard Gaussian ***S***
+distribution corresponding to security ***S*** (i.e.
+***pr(*** ***Z*** **≤** ***z*** ***S*** ***)*** **=** ***S***, if ***Z*** has the standard Gaussian
+distribution). Equation (5) is obtained by a routine
+manipulation of the Gaussian distribution. All the
+quantities on the right-hand side of (5) are known from
+the fitted GLM. Once ***k*** is known, the budget for each
+project can be calculated, using expression (3).
+A nice property of the Gamma GLM of Section 3 is
+that the chosen value of ***k*** places the same level of
+security on every project. For example, in order to be 99%
+certain that the total budget is not exceeded, the strategy
+above might place an individual budget on each project
+that is (say) 70% sure to be adequate. This makes the
+policy easy to report and implement, since all projects are
+treated in the same way. The property holds for all
+Gamma and Gaussian GLMs, although not for Poisson
+GLMs. Note that projects with the same security level do
+not necessarily have the same time allotted to them; for
+example, for one project the budgeted time at 70%
+security might be 8 days, while for another project it
+might be 20 days.
+Figure 4 shows the relationship between the overall
+security ***S*** and the security per project, ***s***, and some precise
+readings from the figure are given in Table 6. The values
+were obtained from the set of 37 projects to which the
+original model was fitted, although in practice we would
+usually wish to consider a new set of projects. Ideally the
+curve should lie well below the line ***y=x,*** and this is the
+case for ***S>0.6.***
+The figure and table show that we do not need to be
+excessively cautious in our individual bids in order to
+attain a very high level of security across all projects
+together. For example, to be 95% sure that all 37 projects
+will be completed on time, we can budget at only 68.2%
+security per project. This means that roughly one third of
+the projects will overrun.
+For the Auckland case study, the policy outlined in this
+section would suggest an overall bid of 2069 hours for an
+overall security level of ***S =*** **0.90** (requiring security per
+project ***s*** **= 0.661** ). The total time observed was 1818
+
+
+*media allocation* . Other metrics might have been selected
+as well, had the dataset had more than 37 observations.
+The GLM provides a natural framework for effort
+prediction and risk management over a set of new
+projects. The procedures outlined in Section 4 can be
+applied with any regression model, and are robust to
+moderate differences in project sizes.
+GLMs are classified as algorithmic models [18].
+Algorithmic models, which have been to date the most
+popular in the literature, attempt to represent the
+relationship between effort and one or more project
+characteristics. The main “cost driver” used in such a
+model is usually taken to be some notion of the software
+size (e.g. the number of lines of source code, number of
+pages, number of links).
+Other existing approaches to effort prediction include
+expert judgement and analogy [18].
+An advantage of algorithmic models over estimation
+and expert judgement is that they allow users to see how a
+model derives its conclusions. This can be important for
+the purpose of verification as well as theory building and
+gaining an understanding of the process being modelled
+
+[18]. In addition, these models need to be calibrated to the
+local environment in which they are used, which
+significantly improves their accuracy [2].
+Recently several comparisons have been made
+between the three categories of prediction models algorithmic, expert judgement and analogy - based on
+their prediction power [19,20,21,22,23,24]. However no
+convergence has been obtained to date.
+As our future work we plan to apply effort prediction
+to the whole development cycle of Web applications and
+to compare the performance of GLMs against human
+estimation and analogy.
+To conclude, there is an urgent need for adequate Web
+development effort prediction at an early stage in the
+development. As the use of the Web as a resource
+delivery environment increases, effort estimation can
+contribute significantly to the reduction of costs and time
+involved in developing Web applications.

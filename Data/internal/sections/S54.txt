@@ -1,0 +1,623 @@
+# **A Replicated Study Comparing Web Effort Estimation ** **Techniques **
+
+Emilia Mendes [1], Sergio Di Martino [2], Filomena Ferrucci [2], and Carmine Gravino [2]
+
+1 The University of Auckland, Private Bag 92019
+Auckland, New Zealand, 0064 9 3737599 ext. 86137
+
+emilia@cs.auckland.ac.nz
+2 The University of Salerno, Via Ponte Don Melillo, I-84084 Fisciano (SA)
+
+Italy, 0039 089963374
+{sdimartino,fferrucci,gravino}@unisa.it
+
+**Abstract.** The objective of this paper is to replicate two previous studies that
+compared at least three techniques for Web effort estimation in order to identify
+the one that provides best prediction accuracy. We employed the three effort
+estimation techniques that were mutual to the two studies being replicated,
+namely Forward Stepwise Regression (SWR), Case-Based Reasoning (CBR)
+and Classification & Regression Trees (CART). We used a cross-company data
+set of 150 Web projects from the Tukutuku data set. This is the first time such
+large number of Web projects is used to compare effort estimation techniques.
+Results showed that all techniques presented similar predictions, and these
+predictions were significantly better than those using the mean effort. Thus, all
+the techniques can be exploited for effort estimation in the Web domain, also
+using a cross-company data set that is specially useful when companies do not
+have their own data on past projects from which to obtain their estimates, or
+that have data on projects developed in different application domains and/or
+technologies.
+
+**Keywords:** Cost estimation, effort estimation, stepwise regression, case-based
+reasoning, regression tree, Web projects, Web applications.
+
+**1  Introduction**
+
+Web development, despite being a relatively young industry, initiated just 13 years
+ago, currently represents a market that increases at an average rate of 20% per year,
+with Web e-commerce sales alone surpassing 95 billion USD in 2004 (three times the
+revenue from the world’s aerospace industry) [1] [19]. Unfortunately, in contrast, most
+Web development projects suffer from unrealistic project schedules, leading to
+applications that are rarely developed on time and within budget [19]. Therefore Web
+effort estimation is a very important area within the field of Web engineering and
+evidence from empirical studies is fundamental in order to build a body of knowledge
+in Web engineering, which can be used to inform practitioners and researchers alike.
+
+1 http://www.aia-erospace.org/stats/aero_stats/stat08.pdf
+http://www.tchidagraphics.com/website_ecommerce.htm
+
+B. Benatallah et al. (Eds.): WISE 2007, LNCS 4831, pp. 423–435, 2007.
+© Springer-Verlag Berlin Heidelberg 2007
+
+
+424 E. Mendes et al.
+
+To date numerous studies have investigated techniques and/or measures for Web
+effort estimation [1][5][6][9][10][11][12][13][14][15][16][18][19][21], however of
+these only two studies [5][18] have compared Web effort estimation techniques using
+three or more effort estimation techniques. Their data sets, size measures, choice of
+cross-validation, and some of the techniques differed slightly, however there were also
+similarities: i) neither used costs drivers, in addition to size measures, to estimate effort,
+i.e., the only independent variables employed were size measures; ii) Length was a class
+of size measures [12] common to both studies (examples of Length measures are
+number of Web pages, number of images/medias, number of internal link); iii) the effort
+estimation techniques Stepwise Regression (SWR), Case-based Reasoning (CBR) and
+Classification and Regression Trees (CART) were also used in both studies; iv) both
+studies looked at a common research question: Which of the techniques employed gives
+the most accurate predictions for the data set?; v) Prediction accuracy was measured in
+both case studies using the three common accuracy measures, namely the Mean
+Magnitude of Relative Error (MMRE), Prediction at level 25 (Pred(25)), and Median
+Magnitude of Relative Error (MdMRE) [22].
+
+Costagliola *et al.* [5] found that none of the effort estimation techniques used in
+their study was statistically significantly superior; however, the three accuracy
+measures used suggested that Stepwise Regression presented overall the best and the
+worst accuracy using elements of Functionality and Length size measures,
+respectively. The class of Functionality measures included the nine components that
+are part of *Web Objects* [19]. Mendes *et al.* [18] found that Stepwise Regression
+showed statistically significantly superior predictions than the other techniques when
+using Length size measures. These results seem contradictory since Length size
+measures used in combination with SWR provided the worst results in [5], based on
+accuracy measures, and the best results in [18]. However, the data sets used in these
+two studies differed largely: Mendes *et al.* [18] used a data set containing data on 37
+Web hypermedia applications developed by postgraduate and MSc students attending
+a Hypermedia and Multimedia Systems course at the University of Auckland (NZ),
+whereas Costagliola *et al.* [5] used a data set containing data on 15 real Web software
+applications developed by a single Web company.
+
+This paper replicates these two previous studies, using the three common effort
+estimation techniques they employed, and a data set containing a mix of data on 150
+Web hypermedia and Web software applications from the Tukutuku database [11].
+Each Web project in the Tukutuku database (see Section 2) is characterised using
+Length & Functionality size measures, and also some cost drivers. These size
+measures and cost drivers were obtained from the results of a survey investigation
+
+[11], using data from 133 on-line Web forms aimed at giving quotes on Web
+development projects, and were also confirmed by an established Web company and a
+second survey involving 33 Web companies in New Zealand. Therefore it is our
+belief that these size measures and cost drivers are both meaningful to Web
+companies and as a consequence both should be included in our analysis.
+
+The remainder of the paper is organised as follows: Section 2 describes the data set
+used for the case study. The results of the empirical analysis obtained using SWR,
+CBR, and CART are presented in Section 3. A discussion of the results is provided in
+Section 4, and conclusions are given in Section 5.
+
+
+A Replicated Study Comparing Web Effort Estimation Techniques 425
+
+**2  Data Set Description**
+
+The analysis presented in this paper was based on data from the Tukutuku database
+
+[11], which aims to collect data from completed Web projects to develop Web cost
+estimation models and to benchmark productivity across and within Web Companies.
+The Tukutuku includes Web hypermedia systems and Web applications [3]. The
+former represents static applications using a very rich navigational structure.
+Conversely, the latter represents software applications that depend on the Web or use
+the Web's infrastructure for execution and are characterized by functionality affecting
+the state of the underlying business logic.
+
+The Tukutuku database has data on 150 projects where:
+
+ - Projects come from 10 different countries, mainly New Zealand (56%), Brazil
+
+(12.7%), Italy (10%), Spain (8%), United States (4.7%), and England (2.7%).
+
+ - Project types are new developments (56%) or enhancement projects (44%).
+
+ - Applications are mainly Legacy integration (27%), Intranet and eCommerce (15%).
+
+ - Languages used are mainly HTML (88%), Javascript (DHTML/DOM) (76%),
+
+PHP (50%), Graphics Tools (39%), ASP (VBScript, .Net) (18%), and Perl (15%).
+
+Each Web project in the database was characterized by 25 variables, related to the
+application and its development process (see Table 1).
+
+**Table 1.** Variables for the Tukutuku database
+
+|Variable Name|Scale|Description|
+|---|---|---|
+|COMPANY DATA|COMPANY DATA|COMPANY DATA|
+|Country|Categorical|Country company belongs to.|
+|Established|Ordinal|Year when company was established.|
+|nPeople|Ratio|Number of people who work on Web design and development.|
+|PROJECT DATA|PROJECT DATA|PROJECT DATA|
+|TypeProj|Categorical|Type of project (new or enhancement).|
+|nLang|Ratio|Number of different development languages used|
+|DocProc|Categorical|If project followed defined and documented process.|
+|ProImpr|Categorical|If project team involved in a process improvement programme.|
+|Metrics|Categorical|If project team part of a software metrics programme.|
+|DevTeam|Ratio|Size of a project’s development team.|
+|TeamExp|Ratio|Average team experience with the dev. language(s) employed.|
+|TotEff|Ratio|Actual effort in person hours used to develop a Web application.|
+|EstEff|Ratio|Estimated effort in person hours to develop a Web application.|
+|Accuracy|Categorical|Procedure used to record effort data.|
+|WEB APPLICATION|WEB APPLICATION|WEB APPLICATION|
+|TypeApp|Categorical|Type of Web application developed.|
+|TotWP|Ratio|Total number of Web pages (new and reused).|
+|NewWP|Ratio|Total number of new Web pages.|
+|TotImg|Ratio|Total number of images (new and reused).|
+|NewImg|Ratio|Total number of new images created.|
+|Fots|Ratio|Number of features reused without any adaptation.|
+|HFotsA|Ratio|Number of reused high-effort features/functions adapted.|
+|Hnew|Ratio|Number of new high-effort features/functions.|
+|TotHigh|Ratio|Total number of high-effort features/functions|
+|FotsA|Ratio|Number of reused low-effort features adapted.|
+|New|Ratio|Number of new low-effort features/functions.|
+|TotNHigh|Ratio|Total number of low-effort features/functions|
+
+
+426 E. Mendes et al.
+
+Within the context of the Tukutuku project, a new high-effort feature/function
+requires at least 15 hours to be developed by one experienced developer, and a higheffort adapted feature/function requires at least 4 hours to be adapted by one
+experienced developer. These values are based on collected data.
+
+Summary statistics for the numerical variables from the Tukutuku database are
+given in Table 2, and Table 3 summarises the number and percentages of projects for
+the categorical variables.
+
+**Table 2.** Summary Statistics for numerical variables
+
+|Col1|Mean|Median|Std. Dev.|Min.|Max.|
+|---|---|---|---|---|---|
+|nlang|3.75|3.00|1.58|1|8|
+|DevTeam|2.97|2.00|2.57|1|23|
+|TeamExp|3.57|3.00|2.16|1|10|
+|TotEff|564.22|78.00|1048.94|1|5000|
+|TotWP|81.53|30.00|209.82|01|2000|
+|NewWP|61.43|14.00|202.78|0|1980|
+|TotImg|117.58|43.50|244.71|0|1820|
+|NewImg|47.62|3.00|141.67|0|1000|
+|Fots|2.05|0.00|3.64|0|19|
+|HFotsA|12.11|0.00|66.84|0|611|
+|Hnew|2.53|0.00|5.21|0|27|
+|totHigh|14.64|1.00|66.59|0|611|
+|FotsA|1.91|1.00|3.07|0|20|
+|New|2.91|1.00|4.07|0|19|
+|totNHigh|4.82|4.00|4.98|0|35|
+
+
+
+**Table 3.** Summary of number of projects and percentages for categorical variables
+
+|Variable|Level|Num. Projects|% Projects|
+|---|---|---|---|
+|TypeProj|Enhancement|66|44|
+||New|84|56|
+|DocProc|No|53|35.3|
+||Yes|97|64.7|
+|ProImpr|No|77|51.3|
+||Yes|73|48.7|
+|Metrics|No|85|56.7|
+||Yes|65|43.3|
+
+
+
+As for data quality, Web companies that volunteered data for the Tukutuku
+database did not use any automated measurement tools for effort data collection.
+Therefore in order to identify guesstimates from more accurate effort data, we asked
+companies how their effort data was collected (see Table 4).
+
+**Table 4.** How effort data was collected
+
+|Data Collection Method|# of Projects|% of Projects|
+|---|---|---|
+|Hours worked per project task per day|93|62|
+|Hours worked per project per day/week|32|21.3|
+|Total hours worked each day or week|13|8.7|
+|No timesheets (guesstimates)|12|8|
+
+
+A Replicated Study Comparing Web Effort Estimation Techniques 427
+
+At least for 83% of Web projects in the Tukutuku database effort values were
+based on more than guesstimates.
+
+**3  Effort Estimation Techniques**
+
+The three effort estimation techniques were applied to the same subset of 120
+randomly selected projects from the Tukutuku database ( *training set* ). The remaining
+30 Web projects from the database ( *validation set* ) were used later to measure the
+techniques’ prediction accuracy. There is no agreement as to what should be the ideal
+size for the training and validation sets. Therefore our choice was subjective.
+
+**3.1  Regression-Based Web Effort Model**
+
+Stepwise Regression (SWR) [8] is a statistical technique whereby a prediction model
+(Equation) is built to represent the relationship between independent and dependent
+variables. This technique aims to find the set of independent variables (predictors)
+that best explains the variation in the dependent variable (response) by adding, at each
+stage, the independent variable with the highest association to the dependent variable,
+taking into account all variables currently in the model. Before building a model it is
+important to ensure assumptions related to using such technique are not violated [8].
+The One-Sample Kolmogorov-Smirnov Test (K-S test) confirmed that none of the
+numerical variables were normally distributed, and so were transformed into a natural
+logarithmic scale to approximate a normal distribution. Several variables were clearly
+related to each other (e.g. TotWP and NewWP; TotImg and NewImg; totNHigh,
+FotsA and New) thus we did not use the following variables in the stepwise
+regression procedure:
+
+ - *TotWP* – associated to *NewWP* .
+
+ - *TotImg* – associated to *NewImg* .
+
+ - *Hnew* and *HFotsA* – associated to *TotHigh* ; both present a large number of zero
+
+values, which leads to residuals that are heteroscedastic.
+
+ - *New* and *FotsA* – associated to *TotNHigh* ; both also present a large number of
+
+zero values, which leads to residuals that are heteroscedastic.
+
+We created four dummy variables, one for each of the categorical variables
+*TypeProj*, *DocProc*, *ProImpr*, and *Metrics* .
+
+To verify the **stability** of the effort model the following steps were used [8]:
+
+ - Residual plot showing residuals vs. fitted values to check if residuals are
+
+random and normal.
+
+ - Cook’s distance values to identify influential projects. Those with distances
+
+higher than 4/n are removed to test the model stability. If the model coefficients
+remain stable and the goodness of fit improves, the influential projects are
+retained in the data analysis.
+
+The prediction **accuracy** of the regression model was checked using the 30
+projects from the validation set, based on the raw data (not log-transformed data).
+
+The regression model selected six significant independent variables: *LTotHigh*,
+*LNewWP*, *LDevTeam*, *ProImprY*, *LNewImg*, and *Lnlang* . Its adjusted R [2] was 0.80.
+The residual plot showed several projects that seemed to have very large residuals,
+
+
+428 E. Mendes et al.
+
+also confirmed using Cook’s distance. Nine projects had their Cook’s distance above
+the cut-off point (4/120). To check the model’s stability, a new model was generated
+without the nine projects that presented high Cook’s distance, giving an adjusted R [2]
+of 0.857. In the new model the independent variables remained significant and the
+coefficients had similar values to those in the previous model. Therefore, the nine
+high influence data points were not permanently removed. The final equation for the
+regression model is described in Table 5.
+
+**Table 5.** Best Model to calculate LTotEff
+
+|Independent Variables|Coeff.|Std. Error|t|p>|t||
+|---|---|---|---|---|
+|(Constant)|1.636|.293|5.575|.00|
+|LTotHigh|.731|.119|6.134|.00|
+|LNewWP|.259|.068|3.784|.00|
+|LDevTeam|.859|.162|5.294|.00|
+|ProImprY|-.942|.208|-4.530|.00|
+|LNewImg|.193|.052|3.723|.00|
+|Lnlang|.612|.192|3.187|.002|
+
+
+
+When transformed back to the raw data scale, we get the Equation:
+
+*TotEfft* = .51345 *TotHigh* .0731 *NewWP* .0259 *DevTeam* .0859 *e* −.0942Pr *o* Im *pr* *New* Im *g* .0193 *nlang* .0612 (1)
+
+The residual plot and the P-P plot for the final model suggested that the residuals were
+normally distributed.
+
+**3.2  CBR-Based Web Effort Estimation**
+
+Case-based Reasoning (CBR) is a branch of Artificial Intelligence where knowledge
+of similar past cases is used to solve new cases [22]. Herein completed projects are
+characterized in terms of a set of *p* features (e.g. *TotWP* ) and form the case base. The
+new project is also characterized in terms of the same *p* attributes and it is referred as
+the target case. Next, the similarity between the target case and the other cases in the
+*p* -dimensional feature space is measured, and the most similar cases are used,
+possibly with adaptations to obtain a prediction for the target case. To apply the
+method, we have to select: the relevant project features, the appropriate similarity
+function, the number of analogies to select the similar projects to consider for
+estimation, and the analogy adaptation strategy for generating the estimation. The
+similarity measure used in this study is the one used in both [5][18], namely the
+Euclidean distance. Effort estimates were obtained using the five adaptations used in
+both [5][18]: effort for the most similar project in the case base (A1); the average of
+the two (A2) and three (A3) most similar projects; the inverse rank weighted mean of
+the two (IRWM2) and the three (IRWM3) most similar cases. In addition, common to
+
+[5][18], all project attributes considered by the similarity function had equal influence
+upon the selection of the most similar project(s). We used the commercial CBR tool
+CBR-Works version 4 to obtain effort estimates.
+
+**3.3  CART-Based Web Effort Estimation**
+
+The objective of CART [2] models is to build a binary tree by recursively partitioning
+the predictor space into subsets where the distribution of the response variable is
+
+
+A Replicated Study Comparing Web Effort Estimation Techniques 429
+
+successively more homogeneous. The partition is determined by splitting rules
+associated with each of the internal nodes. Each observation is assigned to a unique leaf
+node, where the conditional distribution of the response variable is determined. The best
+splitting for each node is searched based on a "purity" function calculated from the data.
+The data is considered to be pure when it contains data samples from only one class.
+The least squared deviation (LSD) measure of impurity was applied to our data set. This
+index is computed as the within-node variance, adjusted for frequency or case weights
+(if any). In this study we used all the variables described in Tables 2 and 3. We set the
+maximum tree depth to 10, the minimum number of cases in a parent node to 5 and the
+minimum number of cases in child nodes to 2. We looked to trees that gave the small
+risk estimates (SRE), which were set at a minimum of 90%, and calculated as:
+
+
+⎛ *node* − *error* ⎞
+
+⎜ [⎜] ⎝ 1− exp *lained* − var *iance* ⎟ [⎟] ⎠
+
+
+⎛
+
+
+−
+
+−
+*lained* − var *iance*
+
+
+*node* − *error*
+
+
+SRE = 100 - ⎜ [⎜] ⎝ 1− exp *lained* −− var *iance* ⎟ [⎟] ⎠
+
+
+100 - ⎜ [⎜] ⎝ 1− exp *lained* − var *iance* ⎟ [⎟] ⎠ (2)
+
+
+where *node-error* is calculated as the within-node variance about the mean of the
+node. *Explained-variance* is calculated as the within-node (error) variance plus the
+between-node (explained) variance. By setting the SRE to a minimum of 90% we
+believe that we have captured the most important variables.
+
+Our regression trees were generated using SPSS Answer Tree version 2.1.1, and
+our final regression tree is shown in Fig. 1.
+
+**Fig. 1.** CART Tree used to obtain effort estimates
+
+
+430 E. Mendes et al.
+
+**4  Comparing Prediction Techniques**
+
+The 30 Web projects in the validation set were used to measure the prediction accuracy
+of the three different techniques presented in this paper. As mentioned above, to assess
+the accuracy of the derived effort prediction models, we have employed de facto
+standard accuracy measures, such as the mean Magnitude of Relative Error (MMRE),
+median MRE (MdMRE), and Prediction at 25% (Pred(25)) [4].
+
+Here we compare the prediction between effort techniques taking into account first,
+the accuracy statistics and second, the boxplots of absolute residuals, where residuals
+are calculated as (actual effort – estimated effort). Moreover, as suggested by Mendes
+and Kitchenham [6][9] we also analyzed MMRE, MdMRE, and Pred(0.25) obtained
+by considering a model based on the mean effort (i.e., MeanEffort) and the median
+effort (i.e., MedianEffort) as predicted values. The aim is to have a benchmark to
+assess whether the estimates obtained with SWR, CBR, and CART are significantly
+better than estimates based on the mean or median effort.
+
+Table 6 shows their MMRE, MdMRE and Pred(25). MMRE seems to indicate
+large differences in accuracy between SWR and CART/IRWM3; however, the
+median MRE (MdMRE) accuracy seems similar throughout all techniques. Pred(25)
+also shows some difference between SWR and the other techniques, however the
+difference is not large. To verify if the differences observed using MMRE, MdMRE
+and Pred(25) are legitimate or due to chance we checked if the absolute residuals
+came from the same population, which is done by applying a statistical significance
+test. Given that the absolute residuals are not normally distributed, confirmed using
+the Kolmogorov-Smirnov test, we compared the residual distributions with two
+nonparametric paired tests, Friedman and Kendall’s W tests. Both showed that all
+residuals came from the same population (p=0.763) and as a consequence that the
+effort estimation techniques all presented similar prediction accuracy.
+
+**Table 6.** Accuracy measures (%) for models
+
+|Col1|MMRE|MdMRE|Pred(0.25)|
+|---|---|---|---|
+|SWR|94.8|100|6.7|
+|A1|138.1|85.1|13.3|
+|A2|134.7|85.|13.3|
+|A3|203|91.7|13.3|
+|IRWM2|206.4|91.5|10|
+|IRWM3|546.3|99.3|13.3|
+|CART|690.4|83.2|20|
+|Median Effort|132.8|85.9|10|
+|Mean Effort|1106.2|252.3|6.7|
+
+
+
+Fig. 2 shows boxplots of absolute residuals for all techniques. Except for IRWM3,
+all the medians look very similar, and the same also applies to their distributions.
+IRWM3 presents a more compact distribution, however its median is the highest;
+CART presents the greatest variation in absolute residuals. All these distributions
+share the same four outliers, identified as projects 22, 23, 24 and 27.
+
+What these results suggest is that, at least for the data set used, any of the effort
+techniques compared (and all the different CBR combinations) would lead to similar
+
+
+A Replicated Study Comparing Web Effort Estimation Techniques 431
+
+effort predictions. Our results corroborate those of Costagliola *et al.* [5], who used a
+much smaller data set of industrial Web software applications than ours. As for the
+prediction accuracy of the effort techniques, if we use the minimum threshold
+proposed by Conte *et al.* [4] as means to indicate if a model is accurate (MMRE &
+MdMRE <= 25%, and Pred(25) >= 75%) our conclusion would be that all models
+were poor; however, we also must take into account another benchmark, which is
+obtained using the median (59.1) and the mean (526.9) effort models (see Table 6).
+The statistical significance tests confirm that all the effort models are significantly
+superior to the mean effort model, however similar to the median effort model. This
+means that if a Web company were to use the mean effort of past projects as the
+estimate for a new project, this estimate would be significantly worse than using
+either the median effort or any of the effort techniques in this paper.
+
+**Fig. 2.** Absolute residuals for SWR (SWR), CBR (A1, A2, A3, IRWM2, IRWM3) and CART
+(CART) models
+
+The Tukutuku database does not contain a random sample of Web projects,
+therefore our results only apply to the Web companies which projects were used in
+this paper and Web companies that develop similar projects to those from the
+Tukutuku database.
+
+**5  Comparing Studies**
+
+In this section we compare our case study results with those reported in [18] and [5],
+taking into account descriptive statistics characterizing the three data sets employed
+and the accuracy of the estimations obtained.
+
+First, we compare the size measures used in the three case studies. Mendes *et al.*
+employed 5 size measures (i.e., Page Count, Media Count, Program Count, Reused
+Media Count, and Reused Program Count), and 2 Complexity measures (i.e.,
+Connectivity Density and Total Page Complexity) [18]. Costagliola *et al* employed 8
+Length measures (i.e., Web Pages, New Web Pages, Media, New media, Client Side
+
+
+432 E. Mendes et al.
+
+Scripts and Application, Server Side Scripts and Applications, Internal Link, External
+References), which in some cases coincide with some of the size measures used in
+Mendes *et al.*, and 9 Functional measures that are all part of the *Web Objects* size
+measure [19]. Each Web project used in our case study was characterized by eleven
+size measures (denoting Length and Functional measures), and seven cost drivers.
+Note that despite our case study and the case study in [18] both use Length and
+Functional measures, there are differences between these measures. In particular,
+Costagliola *et al.* carried out the analysis separately on the distinct sets of Length and
+Functional measures. Conversely, in this paper we considered Length and Functional
+measures as a single set on which SWR, CART, and CBR were applied to. Another
+difference in the three case studies relates to the information the variables represent.
+In this paper we used size variables that characterise Web applications but cost drivers
+that characterise Web projects; while in [18] and [5] only measures related to Web
+applications were considered. Furthermore, note that Complexity measures
+(Connectivity density and Total page connectivity) have been used in [18] only.
+
+The effort models obtained by Costagliola *et al.* [5], using Linear and Stepwise
+Regression, selected Web Pages, Media, and Server Side Scripts & Applications as
+significant effort predictors, while the effort models built by Mendes *et al.* [18]
+selected Page Count, Media Count, and Reused Media Count as predictors. Thus,
+both case studies indicated the number of Web pages and Media as significant
+predictors. Conversely, as previously stated, the regression model obtained in this
+paper was built using data representing size measures but also cost drivers. In
+particular, the model stresses that the size of a project’s development team and the
+number of used different development languages are suitable predictors of Web
+development effort.
+
+The three case studies also differ in the number of Web projects contained in each
+data set and the type of projects used: 15 industrial Web applications in [5], 37
+student-based Web hypermedia applications in [18], and 150 industrial Web
+applications in our case study (see Table 8). Moreover, the descriptive statistics
+presented in Table 8 show that the projects used in [5] have much larger median and
+mean effort and number of Web pages than those used in [18] and in this paper. In
+particular, the mean effort of projects in [5] is 23.9 times and 4.7 times the mean
+effort of projects in [18] and in this case study respectively.
+
+Table 7 also shows that the mean and standard deviation for the number of (static)
+Web pages are quite similar for the projects used in case studies [5] and [18], and
+much smaller than the mean and standard deviation for the projects used in our case
+study. The median, minimum and maximum values differ across the three case
+studies, and suggest that the applications used in [18] were overall larger than the
+applications used in the other two case studies (median = 53).
+
+Finally, studies [5] and [18] reported effort accuracy that was overall above the
+minimum thresholds suggested by Conte *et al.* [4]. These thresholds advocate that
+good prediction is only achieved when MMRE & MdMRE <= 25%, and Pred(25) >=
+75%. Conversely, the prediction accuracy for all the effort techniques used in this
+case study showed MMRE & MdMRE values > 25% and Pred(25) < 75%, thus
+suggesting, if we apply Conte *et al.* ’s thresholds, that predictions were poor.
+
+These results are not surprising since the estimations obtained in [5] and [18] were
+based on single-company data sets (i.e., data coming from 15 Web projects provided
+
+
+A Replicated Study Comparing Web Effort Estimation Techniques 433
+
+**Table 7.** Summary statistics for effort and Web pages
+
+|Col1|EFFORT|Col3|Col4|Col5|Col6|
+|---|---|---|---|---|---|
+||Mean|Median|Std. Dev.|Min.|Max.|
+|Costagliola et al. - ICWE 2006|2,677.87|2,792|827.12|1,176|3,712|
+|Mendes et al. - ESE 2003|111.89|114.65|26.43|58.36|153.78|
+|Current case study|564.22|78|1048.94|1|5000|
+||NUMBER OF PROJECTS|NUMBER OF PROJECTS|NUMBER OF PROJECTS|NUMBER OF PROJECTS|NUMBER OF PROJECTS|
+|Costagliola et al. -ICWE 2006|15|15|15|15|15|
+|Mendes et al. - ESE 2003|37|37|37|37|37|
+|Current case study|150|150|150|150|150|
+||NUMBER OF (STATIC) WEB PAGES|NUMBER OF (STATIC) WEB PAGES|NUMBER OF (STATIC) WEB PAGES|NUMBER OF (STATIC) WEB PAGES|NUMBER OF (STATIC) WEB PAGES|
+||Mean|Median|Std. Dev.|Min.|Max.|
+|Costagliola et al. - ICWE 2006|17..2|11|12.167|2|46|
+|Mendes et al. - ESE 2003|24.82|53|11.26|33|100|
+|Current case study|81.53|30|209.82|1|2000|
+
+
+
+by a single company [5] and from 37 Web hypermedia applications developed by
+postgraduate students of similar background and competences [18]) while the
+predictions obtained in this paper have been obtained taking into account a crosscompany data set (i.e., a data set that contains project data volunteered by several
+companies [11]). Indeed, several empirical studies have shown that estimations
+obtained using a single-company dataset are superior to predictions obtained from a
+cross-company dataset [6][9][17]. However, the effort estimations obtained in this
+case study using effort techniques are significantly superior to the estimations
+obtained taking into account the mean effort. Thus, the use of a cross-company data
+set seems particularly useful for companies that do not have their own data on past
+projects from which to obtain their estimates, or that have data on projects developed
+in different application domains and/or technologies.
+
+One possible reason for the better performance of the single-company data set,
+compared to the cross-company one, may be related to the size of the single-company
+data sets. Indeed, recently, Kitchenham *et al* . [7], by means of a systematic review,
+found that all studies where single-company predictions were significantly better than
+cross-company predictions employed smaller number of projects than in the crosscompany models, and such data sets were characterized by a smaller maximum effort.
+They speculated that as single-company data sets grow, they incorporate less similar
+projects so that differences between single- and cross-company data sets cease to be
+significant.
+
+**6  Conclusions**
+
+In this paper we have replicated two previous studies that compared several effort
+estimation techniques to identify which technique provided the best prediction
+accuracy to estimate effort for Web applications [5][18]. We employed the three
+effort estimation techniques that were mutual to the two studies being replicated,
+namely Forward Stepwise Regression, Case-Based Reasoning, and Classification and
+Regression Trees. Our case study employed data obtained from 150 Web projects
+from the Tukutuku database [11]. This is the first time such large number of Web
+
+
+434 E. Mendes et al.
+
+projects is used to compare Web effort estimation techniques. The empirical results
+showed that all techniques presented similar predictions, and these predictions were
+significantly better than those using the mean effort. Thus, we have corroborated the
+results presented by Costagliola *et al.* in [5], who found that none of the effort
+estimation techniques used in their study was statistically significantly superior.
+
+We also showed that the two previous case studies presented effort estimates with
+superior accuracy to the estimates obtained in our case study, and that these results
+may have been caused by the use of a cross-company dataset in our study, compared
+to single-company datasets in [5] and [18].
+
+Finally, the Web projects used in [5] presented the largest median effort and
+smallest median number of static Web pages.

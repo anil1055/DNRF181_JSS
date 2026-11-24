@@ -1,0 +1,1099 @@
+# Three Empirical Studies on Estimating the Design Effort of Web Applications
+
+LUCIANO BARESI
+
+Politecnico di Milano
+
+and
+
+SANDRO MORASCA
+
+Universit`a degli Studi dell’Insubria
+
+Our research focuses on the effort needed for designing modern Web applications. The design effort
+is an important part of the total development effort, since the implementation can be partially
+automated by tools.
+We carried out three empirical studies with students of advanced university classes enrolled in
+engineering and communication sciences curricula. The empirical studies are based on the use of
+W2000, a special-purpose design notation for the design of Web applications, but the hypotheses
+and results may apply to a wider class of modeling notations (e.g., OOHDM, WebML, or UWE).
+We started by investigating the relative importance of each design activity. We then assessed the
+accuracy of *a priori* design effort predictions and the influence of a few process-related factors on
+the effort needed for each design activity. We also analyzed the impact of attributes like the size
+and complexity of W2000 design artifacts on the total effort needed to design the user experience
+of web applications. In addition, we carried out a finer-grain analysis, by studying which of these
+attributes impact the effort devoted to the steps of the design phase that are followed when using
+W2000.
+
+Categories and Subject Descriptors: D.2.8 [ **Software Engineering** ]: Metrics— *Product metrics* ;
+G.3 [ **Probability and Statistics** ]— *Robust regression* ; H.5.4 [ **Information Interfaces and Pre-**
+**sentation** ]: Hypertext/Hypermedia
+
+General Terms: Economics, Experimentation, Measurement
+
+Additional Key Words and Phrases: Web application design, W2000, empirical study, effort
+estimation
+
+This article was accepted by David Rosenblum.
+The research presented in this article was partially funded by the IST project *QualiPSo*, sponsored
+by the EU in the 6th FP (IST-034763); the FIRB project *ARTDECO*, sponsored by the Italian
+Ministry of Education and University; and the project *La qualit`a nello sviluppo software*, sponsored
+by the Unversit`a degli Studi dell’Insubria.
+Authors’ addresses: L. Baresi, Dipartmento di Elettronica e Informazione, Politecnico di Milano, piazza Leonardo da Vinci, 32, I-20133 Milano (Italy); email: baresi@elet.polimi.it; S. Morasca, Dipartmento di Scienze della Cultura, Politiche e dell’Informazione, Universit`a degli Studi dell’Insubria,
+via Valleggio, 11, I-22100 Como (Italy); email: sandro.morasca@uninsubria.it.
+Permission to make digital or hard copies of part or all of this work for personal or classroom use is
+granted without fee provided that copies are not made or distributed for profit or direct commercial
+advantage and that copies show this notice on the first page or initial screen of a display along
+with the full citation. Copyrights for components of this work owned by others than ACM must be
+honored. Abstracting with credit is permitted. To copy otherwise, to republish, to post on servers,
+to redistribute to lists, or to use any component of this work in other works requires prior specific
+permission and/or a fee. Permissions may be requested from Publications Dept., ACM, Inc., 2 Penn
+Plaza, Suite 701, New York, NY 10121-0701 USA, fax +1 (212) 869-0481, or permissions@acm.org.
+
+⃝ C 2007 ACM 1049-331X/2007/09-ART15 $5.00 DOI 10.1145/1276933.1276936 http://doi.acm.org/
+10.1145/1276933.1276936
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+**15**
+
+
+15:2 - L. Baresi and S. Morasca
+
+**Discussion.** There may be several causes for this difference. The main motivation behind the results is the cultural difference between the students in **PdM1**
+and **PdM2** and those in **USI** . Even though the design of a Web application
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:21
+
+is a multi-faceted problem, which would require experts with different backgrounds, each culture tends to emphasize a particular facet. Engineers are
+always concerned with making applications work “correctly:” They know what
+is behind the user experience and they think about it in terms of its relation
+with the back-end. The result is that a good data model (i.e., the information
+model) becomes the starting point for designing a reliable application. The
+user experience, along with its usability, is only a consequence. In contrast,
+communication experts flip the problem and start conceiving their applications
+from the other end: They only have a vague idea of what is behind the scene
+and their designs start and end with the definition of the user-experience. The
+other layers (models) are not fundamental for their message and thus they can
+be underemphasized.
+
+Even though all subjects were asked to design a Web application from
+scratch, different communities–and thus different expertise–associate different weights with W2000 models (but this consideration applies to many modeling techniques for Web applications). This means that they take different
+perspectives on the development process. In what could be called a *top-down*
+approach, one starts from the Web pages and then moves to rendered data; in
+a *bottom-up* approach, one starts modeling relevant information and arrives at
+the concrete pages by means of transformations and refinements. In contrast,
+with conventional software development, in this case, the choice does not depend on the starting point (new system vs. legacy components), but comes from
+the different background.
+This different attitude is also supported by the difference in the learning
+effort estimates. The subjects in **USI** found the notation much more difficult
+than the students in **PdM1** and **PdM2** . In the first case, the subjects were
+asked to learn a modeling discipline: in a sense, they felt they had to adopt an
+engineering perspective to carry our their projects, thus they thought it was
+difficult. The students in **PdM1** and **PdM2** are more used to modeling and
+design notations and understood the problem as something they were used to
+(even though they did not consider presentation problems in detail, especially
+in **PdM1** ).
+The difference in learning effort may also be explained by the fact that the
+students at **USI** were second-year ones, while the students of **PdM1** and **PdM2**
+were fourth- and fifth-year students.
+
+5.2 Subjects’ Ability to Estimate and Predict Actual Efforts
+
+In this section, we present the hypotheses and results we obtained about the
+ability of our subjects to estimate the actual effort:
+
+—we first investigated how close the estimates of our groups of subjects as a
+whole were to the actual values
+
+—we then evaluated whether the estimates could be used to build prediction
+models
+
+—we checked if a few factors related to the subjects could influence the estimates, actual values, and differences between estimates and actual values.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:22 - L. Baresi and S. Morasca
+
+5.2.1 *Effort Underestimation.*
+
+**Question.** Are the subjects overly optimistic, that is, do they tend to underestimate the effort needed to design an application and the efforts related to each
+effort category?
+
+**Rationale.** This is a common problem in software and Web engineering, in
+which even experienced technicians and managers tend to underestimate effort.
+The knowledge of the fact that there is a tendency to underestimate effort and
+its components may be used in two ways:
+
+—be prepared for a high likelihood that the actual effort will be larger than the
+estimated one
+
+—study the causes that make Web application designers underestimate the
+design effort and remove them, if possible, or alleviate the problem.
+
+**Hypothesis.** We believed that there actually is a tendency to underestimate
+effort, so this is the statistical hypothesis we tested: *for each effort category, the*
+*median of the actual effort is higher than the median of the estimated effort* .
+
+**Results.** In the three cases, the students were asked to estimate their effort
+after they had classes on using W2000. In **PdM1**, we managed to collect data
+only on the effort for the information and navigation models, so we use *EstEff* −
+and *ActEff* − instead of *EstEff* and *ActEff* . For the sake of comparison, we here
+report on the results on *EstEff* − and *ActEff* − also for **PdM2** and **USI** . The results
+are in Table II.
+
+*PdM1.* The subjects tended to underestimate the design effort: The median
+of *ActEff* − was approximately 50% greater than the median of *EstEff* −
+and the difference was statistically significant. The same applies to the
+differences between the effort categories, except for the learning effort.
+*PdM2.* The results are less clear than for **PdM1** . The median of *ActInfoEff* was
+not greater than the median of *EstInfoEff* in a statistically significant
+way. That had a relevant impact on the fact that the median of *ActEff*
+was not greater than the median of *EstEff* in a statistically significant
+way, despite the fact that the median of *ActNavEff* turned out to be
+greater than the median of *EstNavEff* in a statistically significant way.
+The median of *ActPresEff* was greater than the median of *EstPresEff* in
+a statistically significant way, so the median of *ActEff* turned out to be
+greater than the median of *EstEff* in a statistically significant way. In
+contrast, the median of *ActLearnEff* was not greater than the median
+of *EstLearnEff* in a statistically significant way.
+*USI.* The subjects tended to underestimate the design effort, based on the
+analysis of *EstEff* − vs. *ActEff* −, and *EstEff* vs. *ActEff* . Specifically, the
+median of *ActEff* is more than 30% greater than the median of *EstEff* .
+The same applies to the differences between the effort categories.
+
+**Discussion.** There appears to be an underestimation problem in all three of
+our studies, regardless of the fact that **PdM1** and **PdM2** involved estimates
+from individuals, while **USI** had estimates from teams, and the fact that **PdM1**
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:23
+
+and **PdM2** involved engineering students, while **USI** involved communication
+sciences students. To be precise, the underestimation hypotheses are not supported for all development effort components of **PdM2**, but there is fairly good
+evidence that there is an underestimation pattern in **PdM2** too, since the underestimation hypothesis was not supported for the information model effort
+alone, in addition to the learning effort. At any rate, all of our subjects applied a
+naive approach and the result was that they underestimated the problem, even
+though engineering students were from later years and personnel with skills
+in communication is not usually asked to plan a technical project and estimate
+the effort needed to complete it. The students in **USI** provided estimates whose
+median value was comparatively larger than the median value of the estimates
+provided by the **PdM1** and **PdM2** students. Still, their estimates were larger
+because the students worked in teams of three people, so the estimated effort
+of each team was likely to be higher. By looking at the per capita effort, **USI**
+students actually have a lower estimated value than **PdM1** or **PdM2** students.
+The data in Table II also show that the medians of the estimated efforts for
+**PdM1** students were approximately half the medians for the corresponding
+efforts for **PdM2** students. One possible explanation is that the subjects had
+talked with the subjects from the previous year (i.e., the ones that participated
+in **PdM1** ) and so they may have provided initial estimates that took the underestimation problem into account. Still, underestimation problems can be found
+in **PdM2** .
+
+5.2.2 *Usefulness of Effort Estimates.*
+
+**Question.** Are effort estimates actually useful to predict actual effort?
+
+**Rationale.** Effort estimates are often produced in a subjective way. Nevertheless, they can often be useful to predict actual effort, even though there may be
+several causes of deviation between the estimated and the actual values. This
+question is different from the previous one, which investigated if a set of subjects tend to underestimate the design effort. The question we are discussing
+here aims at checking whether it is possible to build prediction models for the
+actual effort based on the estimated effort, even though the estimated effort
+may be off target on average.
+
+**Hypothesis.** Our belief was that effort estimates are useful to predict the actual
+effort. This is the hypothesis we tested: *for each effort category, there is a positive*
+*correlation between the estimated effort and the actual effort* .
+
+**Results.** We describe only the most interesting results in some detail, for the
+sake of conciseness. The results are in Tables III and IV.
+
+*PdM1 EstEff* − is a good predictor of *ActEff* −, even though it appears to consistently underestimate it: the model derived from OLS regression is
+*ActEff* − = 1 *.* 51 · *EstEff* − + 2 *.* 31 (with goodness-of-fit *R* *OLS* [2] [=][ 0] *[.]* [54) and]
+the model derived from RR is *ActEff* − = 2 *.* 45 · *EstEff* − − 12 *.* 58 (with
+goodness-of-fit *R* *RR* [2] [=][ 0] *[.]* [82 and] *[ R]* *MS* [2] [=][ 0] *[.]* [58). The single estimated]
+effort categories are also good predictors for the corresponding actual
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:24 - L. Baresi and S. Morasca
+
+effort category. It may appear that the OLS and RR coefficients of the
+models (1) with dependent variable *ActInfoEff* and dependent variable
+*EstInfoEff* and (2) with dependent variable *ActNavEff* and dependent
+variable *EstNavEff* are much closer to 1 than the coefficients of *EstEff* −
+in the OLS and RR equations for *ActEff* − . However, that may be due
+to the fact that the intercepts in either model are considerably higher,
+which tilts the regression lines in such a way as to make the slopes less
+steep. At any rate, the values of *τ* *b* and *ρ* also show the existence of an
+association between the estimated and the corresponding actual effort
+categories and total effort as well.
+*PdM2 EstEff* − is a good predictor for *ActEff* −, and so is *EstEff* for *ActEff* . The
+OLS regression model *ActEff* − = 0 *.* 86 · *EstEff* − + 8 (with goodness-of-fit
+*R* [2]
+*OLS* [=][ 0] *[.]* [33) and the model derived from RR is] *[ ActEff]* [−] [=][ 0] *[.]* [76][·] *[EstEff]* [−] [+]
+6 *.* 67 (with goodness-of-fit *R* *RR* [2] [=][ 0] *[.]* [94 and] *[ R]* *MS* [2] [=][ 0] *[.]* [89), seem actually]
+to indicate a (small) overestimation problem, since the coefficients of
+*EstEff* − are smaller than 1 and the intercept is relatively small. Similar
+considerations apply to the prediction of *ActEff* by *EstEff*, though the
+intercepts of the OLS and the RR models are certainly higher. This again
+shows that the overestimation problem in **PdM2** is not as clear as in
+**PdM1** and in **USI** . The values of *τ* *b* and *ρ* also show the existence of an
+association between the estimated and the corresponding actual effort
+categories and total effort as well. As for the various subcategories, the
+estimated effort is a good predictor of the actual effort, and the slopes
+obtained with OLS and RR are fairly close.
+*USI* . All estimated efforts appear to be good predictors of the corresponding
+actual efforts. For instance, the OLS line *ActEff* = 0 *.* 85 · *EstE f f* +
+38 *.* 49 with goodness-of-fit *R* *OLS* [2] [=][ 0] *[.]* [41) and the RR line] *[ ActEff]* [ =][ 0] *[.]* [94][ ·]
+*EstE f f* + 12 *.* 51 (with goodness-of-fit *R* *RR* [2] [=][ 0] *[.]* [92 and] *[ R]* *MS* [2] [=][ 0] *[.]* [86)]
+show an underestimation problem because the intercepts (especially the
+intercept of the OLS line) appear to be relatively large, even though the
+coefficients of *EstEff* are not larger than 1. The nonparametric analysis
+confirms these results.
+
+**Discussion.** Our analyses show that it is possible to use the estimated effort
+as a predictor for the actual effort in OLS models, even though we have an
+underestimation problem in two applications. As the values of *R* [2] show, the
+estimated values seem to account for a fairly significant part of the variance,
+even though other factors clearly need to be taken into account. The differences
+among the studies can be explained like in the comparison among the means
+of estimated and actual effort.
+
+5.2.3 *Influencing Factors.*
+
+**Question.** Which subjects’ characteristics may influence the effort estimates,
+the actual effort, and the accuracy of the effort estimates?
+
+**Rationale.** Identifying the factors that may influence the effort estimates, the
+actual effort, and the accuracy of the effort estimates can be used to act on
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:25
+
+those factors to produce more accurate estimates or to identify “trustworthy”
+subjects. This is relevant because effort estimation is one of the most difficult
+and important tasks in Web (and software) engineering.
+
+**Hypothesis.** Our belief was that effort estimates, the actual effort, and the
+accuracy of the effort estimates were influenced by a number of subjects’ factors. We believed that subjects’ characteristics would influence design effort
+and learning effort as well. Our idea was that greater skills and better school
+proficiency are associated with smaller efforts between actuals and estimates
+(since the subjects would be able to complete the assignment in less time) and
+smaller differences (since the subjects would be able to make better estimates).
+Thus, this is the hypothesis we tested: *there is a negative correlation between*
+
+—
+*the subjects’ technical knowledge (measured by the number of Web-related*
+*languages (HTML, XML, etc.) and techniques (JSP, ASP, etc.) that they knew)*
+*and school proficiency (measured by their average grade or the number of*
+*computer science exams they had passed)* on the one hand, and
+
+—
+*the estimated learning effort, actual learning effort, difference between actual*
+*and estimated learning effort, estimated effort, actual effort, and difference*
+*between actual and estimated effort,* on the other hand.
+
+**Results.** The results we obtained in **PdM1** were not really encouraging. The
+only correlations we found were a negative correlation between technical knowledge and the difference between actual and estimated effort, and between proficiency and estimated learning effort. Surprisingly, there seems to be a positive
+correlation between proficiency and actual effort, contrary to our hypothesis. In
+addition, the goodness-of-fit of these results was too small to base any predictions on univariate models. Few of the hypotheses turned out to be confirmed,
+and with a very low exploratory power, due to its low goodness-of-fit, and this
+is why we did not pursue checking this hypothesis in the other studies. For
+conciseness, we do not report the detailed results in this article.
+
+**Discussion.** The negative correlation between technical knowledge and the
+difference between actual and estimated effort seems to indicate that subjects
+with greater technical knowledge are better at providing an estimate for the
+actual effort. The negative correlation between proficiency and *EstLearnEff*
+shows that subjects with higher proficiency tended to believe that they would
+have an advantage in the learning activities. However, this advantage did not
+materialize, since there is no correlation between the average of their previous
+grades and *ActLearnEff* . As for the positive correlation between proficiency and
+*ActEff*, one possible explanation is that higher proficiency may be associated
+with higher levels of commitment in carrying out the homework. This may
+also help explain why we did not obtain results for the other hypotheses, since
+there was the superposition of two effects: on the one hand, better skills and
+proficiency made our subjects more productive; on the other hand, the subjects
+with better skills and proficiency were also more committed and devoted more
+effort.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:26 - L. Baresi and S. Morasca
+
+5.3 Subjects’ Ability to Estimate the Learning Effort
+
+Since our studies had students as subjects, we also investigated their ability to
+estimate their learning effort.
+
+**Question.** How good are the subjects at estimating the learning effort for Web
+design?
+
+**Rationale.** Our subjects were students, so they were used to estimating the
+effort it would take them to learn a specific topic, at least approximately.
+
+**Hypothesis.** To this end, we adopted the same underestimation approach that
+we used for the other. So, our first hypothesis was that the median of *ActLearn-*
+*Eff* is greater than the median of *EstLearn* effort. If we obtain a statistically
+significant result, we have support to reject the claim that the students can
+estimate their learning effort well, otherwise, we cannot reject this claim. The
+second hypothesis is that there is a positive correlation between *EstLearnEff*
+and *ActLearnEff*, to make sure that we can use the estimation results for prediction purposes.
+
+**Results.** The first hypothesis is not supported in **PdM1** and **PdM2** so we
+cannot reject (and we have some evidence for) the claim that students know
+how to estimate the learning effort, but the results for **USI** actually show that
+*ActLearnEff > EstLearnEff* . In **PdM1**, **PdM2**, and **USI**, the positive correlation
+hypothesis is supported by the OLS, the RR, and the nonparametric analyses,
+with satisfactory goodness-of-fit ( *R* [2] ) values, especially for **USI** .
+
+**Discussion.** The results supported our hypotheses as to **PdM1** and **PdM2**, but
+not for **USI** . **USI** subjects were younger and not used to software modeling at
+all. They had to predict the effort for something completely new to them without the experience gained after years at university. As for **PdM1** and **PdM2**,
+we can say that students in their last college years are usually good at estimating the effort they need to learn a new topic, or better to deal with a given
+course. Moreover, even if they were new to Web applications, they were already
+familiar with the problem of modeling software applications with UML-like
+notations.
+
+5.4 Self-Grading
+
+**Question.** Are the students good at evaluating their own design models?
+
+**Rationale.** Artifact quality evaluation is an important issue in software and
+Web engineering and is usually carried out on a largely subjective basis. Thus,
+we wanted to check how good the subjects/designers in our empirical studies
+were in evaluating their own artifacts.
+
+**Hypothesis.** We believed that our students were expert enough to provide an
+assessment of their own artifacts that would agree with the grading provided
+by their professor. Thus, our hypothesis was that *there is a positive correla-*
+*tion between the grade provided by the students and the grade provided by the*
+*professor.*
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:27
+
+**Results.** In **PdM1**, the results did not show any correlation or even an association, so we did not replicate this part of the study in the following empirical
+studies.
+
+**Discussion.** It is possible that the students did not really want to provide us
+with a reliable self-evaluation of their artifacts, because they did not want to
+appear either too “bold” or too “shy,” for fear that their self-evaluation would
+influence the professor’s evaluation one way or the other. The evaluation of the
+products is often used to evaluate the persons who have contributed to that
+product, so this problem is similar to the problem in industrial organization,
+where practitioners may sometimes be reluctant to provide data about their
+own work and products for fear these data will be used against them.
+
+5.5 Characteristics of W2000 Models and Actual Effort
+
+Here, we investigate whether there are any relationships between the measures
+for the internal attributes of W2000 models and the actual effort. We study the
+entire actual effort first and then we investigate its components, that is, the
+actual information, navigation, and presentation effort. Data and analyses are
+available for **PdM1** and **PdM2**, but not for **USI** . The internal attributes and
+corresponding measures for W2000 artifacts are in Table VI. For space reasons,
+we do not report here on all the hypotheses we tested, so the table contains a
+superset of the measures that appear in the hypotheses of this article. The
+interested reader may refer to Baresi et al. [2003], which is about **PdM1**, for a
+more complete illustration of the hypotheses we have set and tested.
+
+**Question.** Does the size of information, navigation, presentation models, their
+complexity, or the granularity adopted to decompose the information model
+influence the actual development effort? Does reuse influence the total effort to
+develop W2000 (Web application) models?
+
+**Rationale.** These factors are commonly believed to be highly influential in a
+number of application fields of empirical software engineering [Boehm 1981;
+Boehm et al. 2000; Fenton 1991; Fenton and Pfleeger 1996]. In addition to considering the size of produced artifacts, we must distinguish among information,
+navigation, and presentation. Complexity can be added at any level: One can
+start with a simple information model, and add complexity with a very detailed
+navigation or presentation model. Complexity may also come from the granularity adopted to select the components of the information model (i.e., the way
+entities are partitioned), and the nodes of the navigation model. In contrast,
+slots defined in the information model can be reused in the other models by
+means of properly defined segments, which are the W2000 construct conceived
+to support reuse across the different models.
+
+**Hypothesis.** Our hypothesis can be expressed as follows.
+
+(1) *The actual effort increases with: the size of the information, the navigation,*
+*or the presentation model, the complexity of the information or the navi-*
+*gation model, and the granularity decomposition of the information model*
+*(measured by the attributes shown in Table VI)* .
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:28 - L. Baresi and S. Morasca
+
+Table VI. Measures for Internal Attributes of W2000 Models. The three sections of the table
+
+contain the results for Information, Navigation, and Presentation models, respectively
+
+Attribute Measure Definition
+**entities** # of entities in the model
+
+Size **components** # of components in the model
+**infoSlots** # of slots in the model
+
+**slotsSACenter** avg. # of slots per sem. assoc. center
+Average size
+**slotsCollCenter** avg. # of slots per collection center
+Average granularity **componentsEntity** avg. # of components per entity
+of decomposition **slotsComponent** avg. # of slots per component
+
+**collections** # of collections in the model
+Complexity
+**Sassociations** # of sem. associations in the model
+
+Data cohesion **SACenters** # of sem. assoc. centers in the model
+
+Reuse **se** **g** **ments** # of se g ments in the model
+
+**nodes** # of nodes in the model
+Size
+**navSlots** # of slots in the model
+
+**nodesCluster** avg. # of of nodes per cluster
+Average size
+**slotsNode** avg. # of slots per node
+Complexity **navLinks** # of links in the model
+Structuredness **clusters** # of clusters in the model
+
+**pages** # of pages in the model
+Size
+**pUnits** # of publishing units in the model
+Complexity **prLinks** # of links in the model
+Structuredness **sections** # of sections in the model
+
+(2) *The actual effort decreases with: the reuse in the models (measured by seg-*
+*ments as shown in Table VI)* .
+
+**Results.** In **PdM1**, variables *components* and *navSlots* are positively correlated with the actual effort, and *segments* is negatively correlated with
+the actual effort. All the measures for the other attributes were not correlated with the actual effort. In **PdM2**, *Entity*, *SACenter*, *SlotperNode*, and
+*SlotperSACenter* are associated and correlated with *ActEff* and *ActEff* − .
+If we analyze the effort with respect to the main W2000 models, in **PdM1**,
+variables *components* and *segments* are linearly correlated with *ActInfoEff*,
+and *entities*, and *slotsCollCenter* are “weakly” linearly correlated with it (their
+p-values are close to but not below 0.05). However, there is no statistically significant association between any of these variables and *ActInfoEff* . In addition,
+there is a remarkable difference between the coefficients of the regression lines
+obtained with OLS and RR, so the linear correlations we found may be the
+effect of some undetected outliers. Variables *navLinks* and *slotsNode* are linearly correlated with *ActNavEff*, and *slotsNode* is also associated with it. The
+coefficients and intercepts of the regression lines obtained with OLS and RR
+with *slotsNode* are somewhat close, so there may not be a large influence due
+to outliers.
+In **PdM2**, the association and correlation of two measures, *components* and
+*entities*, and *ActInfoEff* are statistically significant. However, the OLS coefficients are quite far from those we obtained with RR, maybe due to the effect of
+outliers. Variable *slotsNode* is both associated and correlated with *ActNavEff* .
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:29
+
+The difference in the coefficients between the regression lines obtained with
+OLS and RR may be still due to the presence of undetected outliers. No association or correlation exists between *navLinks* and *ActNavEff* . *SACenter* and
+*SlotPerSACenter* are both associated and correlated with *ActNavEff*, while,
+*slotsNode* is associated but weakly correlated with it.
+
+**Discussion.** We have obtained different correlation and association results in
+**PdM1** and **PdM2** for the total efforts, while some similarities may be found in
+the predictors for the effort categories. These results might partially be caused
+by the fact that our subjects were students: their skills are very different, and
+even more importantly not all students want to allocate the same effort to a
+given course. Also, this highlights the need for further empirical studies in an
+exploratory study like ours. Results that seem to be supported in an initial
+study need to undergo additional empirical studies. At any rate, it is important
+that even results that initially are not supported by both a correlation and association analysis should not be discarded and should undergo further analyses.
+Previous studies (e.g., Mendes et al. [2002b] and Costagliola et al. [2004]) did
+not seem to find significant correlations between internal measures and effort
+data either.
+
+6. VALIDITY OF THE EMPIRICAL STUDIES
+
+Like in any empirical study, we need to examine the possible factors that may
+have biased our results. We believe that the following factors may influence an
+empirical study like ours, from both an internal and an external point of view:
+subjects, applications, availability of tools, notation, classes, data collection,
+and constructs. We focus on how these factors may have influenced the internal
+and external validity of our study. Internal validity is related to the study in
+itself, for example, to the fact that the right conclusions have been drawn within
+the study, the data analysis has been carried out correctly, no self-selection or
+“mortality” effects occur in the sample, etc. External validity is related to the
+generalizability of the results of the study to some target population, that is, the
+population of professional web designers in our case. Threats to both internal
+and external validity need to be examined and discussed in every empirical
+study, to assess the extent of their impact.
+
+6.1 Internal Validity
+
+Here, we need to examine whether the factors could pose a threat to the internal
+validity of the empirical studies.
+
+**Subjects.** No initial selection of the subjects was carried out, so no initial bias
+was introduced. The degree of self-selection among the subjects was also limited. In our presentation, we have chosen to show the results of the three empirical studies separately. If we had lumped together all the data points in
+one sample, we could have introduced a bias in the selection of the students,
+since they came from two engineering courses and one communication sciences
+course. The students in each empirical study had been exposed to the same
+techniques in previous classes, so the background of the subjects within each
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:30 - L. Baresi and S. Morasca
+
+empirical study can be considered sufficiently homogeneous, though there are
+differences between engineering and communication students. In addition, the
+students were enrolled in different years at college, so our results may have
+been influenced by that factor too, and that is an additional reason why we
+have kept the results separate.
+
+**Applications.** Even though we let the subjects choose the application they
+preferred, all applications only differed in their specific details, but they were
+all related to e-commerce.
+
+**Availability of Tools.** At the time of the empirical studies, no automated
+supporting tools existed for W2000. So, the students used standard text and
+graphics editors.
+
+**Notation.** All the subjects used the same notation.
+
+**Classes.** There was little difference in the percentage of classes attended by
+the subjects, that is, they attended almost all the classes.
+
+**Data Collection.** The data we collected seem to be trustworthy enough. For
+instance, the results show that the students did not just provide a copy of their
+effort estimates as their actual efforts. We did not disclose any of our hypotheses to the students, and we made it clear that the data we collected would not
+have any influence on the grade the students would obtain. The accuracy of the
+reported data was clearly not perfect, but it was an economically viable compromise between the needs of the subjects and the needs of the researchers [Carver
+et al. 2003]. A stricter data reporting mechanism might have been too imposing
+on the students and would have got in the way of their work.
+
+**Constructs.** The risk is that the measures for the internal attributes of W2000
+artifacts (see Table VI) do not adequately quantify the attributes they purport to
+measure. The measures we used are fairly simple, to capture the most important
+elements and attributes of the W2000 models in a straightforward way. We
+cannot totally exclude that other measures for the same attributes (e.g., other
+size measures) would be correlated with the dependent variables.
+
+Thus, we believe that our studies were not biased by the choice of subjects,
+applications (in the context of e-commerce), and data collection mechanism.
+The results were clearly influenced by the lack of tools, the notation, and the
+percentage of class attendance, that is, we could have obtained different results in different empirical studies with students if tools had been available,
+a set of different notations had been used, and our sample of students had attended from 0% to 100% of the classes instead of attending basically all the
+classes.
+
+6.2 External Validity
+
+We need to check how representative our empirical studies are in the population
+of empirical studies on Web application effort estimation. In other words, we
+need to examine the factors that may make it difficult to extend the results of
+these studies to web development organizations.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:31
+
+**Subjects.** Since no preselection was carried out, our subjects can be considered
+representative of the entire population of students attending advanced web
+design classes. Furthermore, the subjects may be considered also somewhat
+representative of the population of Web designers and developers since many
+Web designers are still young professionals who got their degrees recently.
+
+**Applications.** E-commerce applications, like the ones in our studies, are typical Web applications. Those proposed to our subjects present all the typical
+features of traditional e-commerce applications, but with a controlled size since
+they were projects proposed to students.
+
+**Availability of Tools.** The design of Web applications may be carried out with
+the aid of automated tools in industrial environments. However, professional
+tools may be used for designing Web applications, so this factor could have been
+a threat to the external validity of our studies.
+
+**Notation.** W2000 has many aspects in common with UML, which is a standard
+software development notation. UML and W2000 share the same underlying
+concepts. W2000 can be seen as a proper UML profile, that is, a special-purpose
+customization of the notation. It is more complex than UML because of its layered nature. UML does not force the use of the MVC pattern to design complex
+software systems, even if it would be good common practice, while W2000 forces
+designers to define the different models to address the main aspects of a complex Web application (i.e., information, navigation, and presentation). Notice
+that the same applies to other notations for modeling Web applications: for
+example, both UWE and WebML can be explained by means of proper UML
+meta-models, that is, UML profiles. Again, this means that these notations too
+can be seen as proper customizations of UML and thus have many aspects in
+common with UML.
+
+**Classes.** The specific educational content provided to the students attending
+the classes in which the empirical studies were run may not be entirely representative. However, little could be done about this, since we could certainly
+not prevent a part of the students from attending the classes, and the instructors’ first responsibility is to provide students with education on techniques and
+methods that the instructors deem best for their students. In addition, it must
+be said that Web designers and developers are trained personnel, who need to
+continuously update their knowledge.
+
+**Data Collection.** The data may not necessarily be of worse quality than the
+data collected in industrial organizations, where people are required to fill out
+timesheets that may sometimes be biased for a number of reasons. Actually,
+the students may be thought of having less at stake than practitioners during
+data collections (even though that may not be the students’ perspective).
+
+**Constructs.** Other measures may be used depending on the notation chosen.
+At any rate, the attributes quantified by these measures may not necessarily
+change.
+Therefore, our studies may be fairly representative as for choice of subjects,
+applications (in the context of e-commerce), and data collection mechanism,
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:32 - L. Baresi and S. Morasca
+
+but less so as for tools, notation, percentage of class attendance (i.e., college
+education), and constructs.
+
+7. LESSONS LEARNED
+
+The studies support the idea that people with different background adopt particular mental attitudes while designing Web applications. In our case, computer
+scientists ( **PdM1** and **PdM2** ) concentrate on the information model, that is, the
+foundations of the application, while experts in communication ( **USI** ) privilege
+the user interfaces. This may support the idea that a team with mixed expertise produces better Web application. The different background, along with the
+related mental attitude, is also supported by the fact that the subjects in **PdM1**
+and **PdM2**, who are used to software modeling and design, appear to be better
+at estimating the effort to become proficient in W2000 than **USI** subjects. In
+contrast, we have no correlation between the actual background of the subjects
+and their capability to accurately predict the design efforts.
+Our idea, borrowed from conventional software development, that there is a
+tendency to underestimate the effort required to fully model a realistic Web application, is fully supported in **PdM1** and **USI**, and at least partially supported
+in **PdM2** . **PdM2** still shows the need for further empirical studies (possibly
+with professional developers as subjects). These results demonstrate that the
+“economics” behind software projects should be taught better to students and
+studies like ours might provide valuable insights to this end.
+However, our empirical studies consistently highlight the good fit of estimated efforts as indicators for the actual ones. The exploratory approach and
+the need for further experiments do not allow us to propose general models to
+predict the actual effort given the estimated one, but we are pretty confident
+that these first three empirical studies give good evidence of the feasibility of
+such a model.
+The statistical analyses used to correlate the effort with internal attributes
+of application designs did not give the results we expected. The different studies
+correlate different size measures with the actual effort. There are no general
+hypotheses supported by the analyses we conducted, but we still think that
+the designer’s background impact the perception of complexity. We would have
+expected that computer scientists, who tend to embed the complexity of their
+applications in the information model and then adopt a “simplified” navigation
+and presentation, had privileged the number of entities, components, and collections as candidates for possible correlations with the actual effort. Similarly,
+we would have expected that experts in communication, who usually adopt a
+simple information model, and then concentrate on its navigation and presentation, had considered pages, sections, and units as “their” preferred indicators of
+complexity. Unfortunately, this is not fully confirmed by the statistical analyses
+presented in the previous sections. Similarly, the correlation between segments
+(i.e., reuse) and effort is not supported by all the experiments.
+Even though we studied W2000, we are confident that these lessons apply
+to other notations for Web applications as well. OOHDM, W2000, WebML and
+other notations come from HDM, which was one of the first notation proposed
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:33
+
+for modeling complex Web applications. This means that even if concepts are
+not exactly the same, these notations are based on the same underpinnings.
+For example, all these notations foster a layered view of a Web application and
+propose similar modeling concepts. Moreover, the underestimation problem is
+not peculiar of Web development, but it applies to the wider domain of software
+development. Needless to say, our studies are exploratory in their essence and
+thus all results need further investigations.
+
+8. RELATED WORK
+
+In the last few years, a number of studies have appeared in the scientific literature on effort estimation and building prediction models for Web
+applications.
+
+8.1 Frameworks and Taxonomies
+
+Despite the novelty of the field, a few papers have appeared in the literature to
+provide a framework for Web measures, on which effort studies are based.
+Dhyani et al. [2002] provide a survey of a number of Web-related measures.
+Specifically, measures are classified as related to the graph structure (of the
+entire Web or parts thereof, such as Web sites), Web page significance (on the
+relevance and usefulness of Web pages), usage characterization (on the dynamic
+usage of Web sites), Web page similarity (on the consistency across Web pages),
+Web page search and retrieval (on the performance of Web search and retrieval
+services), and information theoretic (related to information needs, production,
+and consumption). Among these categories, the graph structure measures are
+those that are most closely related to the measures defined in this article. However, the survey does not mention any empirical evidence for assessing the
+actual usefulness of these metrics.
+Calero et al. [2004] propose WQM (Web Quality Model) as a means to organize
+the wide set of metrics proposed for quantifying the quality of Web applications.
+WQM is an important starting point to frame our contribution in this context.
+The model is organized around three main dimensions: web features, life cycle
+processes, and quality characteristics. Our work addresses the first dimension,
+in which the proposed framework further distinguishes among presentation,
+navigation, and content, which are exactly the three main layers around which
+W2000 models are organized.
+Mendes et al. [2005a] propose a taxonomy for size measures of hypermedia
+and Web applications, which are mostly based on high-level characteristics of
+the final artifacts such as the number Web pages. In this article, we have defined
+measures for the *design* of Web application and we have adopted a finer-grained
+and layered approach.
+
+8.2 Empirical Studies
+
+A number of empirical studies have been carried out. Size has often been believed to be the main effort driver in software engineering applications, so
+a number of studies have focused on the influence of size on the effort for
+developing Web applications. The studies have used different kinds of size
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:34 - L. Baresi and S. Morasca
+
+measures, specifically either related to the structure of a Web application or its
+functionality.
+The *Tukutuku* Benchmarking Project [2006] by Mendes et al. collects information about completed projects worldwide. On-line forms allow people to
+enter information about their projects. These data have originated a significant
+amount of work and a dedicated monograph on *theory and practice of metrics*
+*and measurements for Web development* [Mendes and Mosley 2006]. In this
+book, there is an interesting chapter on Web effort estimation where Mendes
+et al. [2006] introduce the concepts related to effort estimation, and present a
+case study on building and validating an effort estimation model based on the
+data collected in the Tukutuku database.
+The proposed model is built by means of a manual stepwise procedure. The
+two selected variables are the total number of new Web pages and the total
+number of high-effort features/functions in the application. Together, they explain 76% of the variation in total effort, but the cross-validation revealed the
+scarce accuracy– *MMRE* too high and *Pred* (25) too low–of the proposed models.
+The final suggestion is to use the proposed models to obtain an estimated effort,
+and then tailor it by considering factors like previous experience with similar
+projects and the skills of developers. Even if our proposal concentrates on the artifacts produced while designing applications, and this work addresses the final
+artifacts directly, these results support the first hypotheses of our work, that is,
+the relative novelty of problem and the need for more empirical studies–further
+data–before being able to create significant models.
+Mendes et al. [2005b] try to identify size measures and cost drivers for early
+Web cost estimation based on current practices of several Web companies worldwide. They analyzed 133 Web projects and obtained that the two most common
+size metrics used for Web cost estimation are “total number of Web pages” (70%)
+and “which features/functionality to be provided by the application” (66%).
+These results, after validation, were used to prepare Web project data entry
+forms to gather data on Web projects worldwide. After gathering data on 67
+real Web projects worldwide, multivariate regression applied to the data confirmed that the number of Web pages and features/functionality provided by
+the application to be developed were the two most influential effort predictors.
+Mendes et al. [2003b] propose a comparative study of cost estimation models
+for Web applications. The study compares the prediction accuracy of three CBR
+(case-based reasoning) techniques to estimate the effort to develop Web applications and to choose the one with the best estimates, starting from a data set
+that includes several size measures. It also compares the prediction accuracy of
+the best CBR technique against two prediction models built with stepwise regression and regression trees, and concludes that stepwise regression produces
+the best predictions.
+The use of early size measures for the estimation of the development cost of
+Web application is investigated by Fewster and Mendes [2003]. Having early
+size measures that are related to cost would provide Web development companies with a competitive advantage in pricing their Web applications. A survey
+was carried out with data from 133 companies from several countries, to identify
+the main drivers that companies use to quote a price for their Web applications.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:35
+
+By far, the total number of Web pages and which features/functionalities turned
+out to be most used pieces of information for pricing Web applications. The
+same paper also addressed the comparison of the accuracy of company specific
+models vs. estimation models built with data from several different companies.
+Mendes and Kitchenham [2004] show that a company-specific model may provide a higher accuracy.
+Kitchenham and Mendes [2004] study productivity measurement with multiple size measures, for different aspects of size. The idea is that productivity can
+be defined as the ratio between the estimated effort for a project to the actual
+effort. The estimated effort is computed via a regression-based effort estimation model in which all the size measures used as independent variables have
+a statistically significant impact on effort. The expected value of this indicator
+for a project is 1. Thus, though introducing a productivity notion that somewhat differs from the usual one, the approach comes with a built-in assessment
+criterion for the productivity of a project: if a project has a productivity index
+lower than 1, then its productivity is lower than expected; if the productivity
+index is greater than 1, its productivity is higher than expected. The approach
+is applied to the Web application projects of the Tukutuku data set.
+Costagliola et al. [2004] adopt a different approach. They propose the
+COSMIC-FFP (Cosmic Full Function Points, [COSMIC 2003]–a variant of
+Function Points [Albrecht and Gaffney Jr. 1983; Garmus and Herron 2001]–to
+estimate the development effort of Web applications. Mendes et al. [2002b] provided a formal method to adopt COSMIC-FFP to measure the size of static hypermedia Web applications, while Costagliola et al. [2004] extend it to dynamic
+applications. The proposal starts from the UML profile proposed by Conallen
+
+[2002] for modeling Web applications and defines rules to measure the functional size of client-server applications. The empirical evaluation is based on
+32 projects from students attending a Web engineering course, and is performed
+by using an Ordinary Least-Squares regression analysis. The linear regression
+analysis shows a high adjusted *R* [2] = 0 *.* 763, which indicates that 76.3% is the
+variance of the dependent variable *effort* that is explained by the model. Moreover, a high *F value* and a low *p* − *value* indicate that the prediction is possible
+with a high degree of confidence. This proposal and our approach share “adjusted” UML diagrams as starting point and students as subjects. The main
+difference is that we want to investigate the relations between significant elements of W2000 models and the global effort, while this proposal adapts a
+well-known sizing model to a specific modeling notation for Web applications.
+Abrah˜ao et al. [2003] define and validate measures for size and structural
+complexity of navigational models. After a theoretical validation of the measures, an empirical study was carried out with students. The dependent attribute chosen was the maintainability of navigational models, quantified in
+terms of both maintenance time and measures of the ISO9126 maintainability
+sub/characteristics. The measures for size and structural complexity turned out
+to be correlated or associated with the dependent measures.
+Abrah˜ao et al. [2004] validate OOmFPWeb as a functional size measurement
+method for Web applications *per se*, but it is not investigated whether it is also
+a predictor of Web development effort. An empirical investigation is carried
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:36 - L. Baresi and S. Morasca
+
+out to assess, for example, the estimated and the actual ease of use and the
+effectiveness of the size measure.
+Umbers and Miles [2004] address the estimation of Web development effort
+and use COSMIC-FFP as the sizing measure. Starting from unadjusted size and
+productivity estimates, multiplicative coefficients are used to obtain adjusted
+estimates for size and productivity.
+Mendes et al. [2002b] propose a case study in which they describe size metrics to characterize length, complexity, and functionality of Web applications
+and generate effort prediction models. Results suggest that in general all categories present a similar prediction accuracy, but none of them had the required
+statistical significance level for the absolute residuals. They counted the number of COSMIC-FFP functional size units using the final implementation and
+conclude that measuring the functionality of those applications was very much
+related to the number of links that the application has. But the low statical significance suggests that further investigation is needed to determine whether
+functionality is correlated to connectivity.
+Reifer (WebMo, [Reifer 2000; 2002]) tailors the COCOMO II model to Web
+development by revising the cost factors. Notice that WebMo introduces *Web*
+*objects* as a size measure for these applications. *Web objects* are an extension
+and adaptation of Function Points to Web applications, by taking into account
+additional features that are typical of Web applications such as multimedia
+files, web building blocks, scripts, and links, which are added to the five function
+types of the original Function Point approach.
+Ruhe et al. [2003a] propose an empirical validation of Web Objects for the
+estimation of the development effort for Web applications. The empirical study
+was carried out on twelve projects from a small web development company.
+By using leave-one-out cross-validation, twelve OLS models (each using eleven
+projects) were built with Web objects and twelve models were built with Function Points. The accuracy of the models obtained with Web Objects was compared to the accuracy of the models obtained with Function Points in terms of
+Mean Magnitude of Relative Error. The difference between the MMRE’s turned
+out to be statistically significant and showed an advantage of Web Objects over
+Function Points. The accuracy of expert opinion was also compared against
+that of the OLS models. Though Web Object-based models appeared to be more
+accurate than expert opinion, the results were not statistically significant.
+Mangia and Paiano [2003] propose a sizing model for Web applications deeply
+based on W2000. They concentrate on a limited number of W2000 features and
+suggest a hierarchy of sizing models to measure the functionality, navigational
+capabilities, presentation features, and multimedia contents of W2000-based
+Web applications. The authors do not document any empirical study: They only
+propose their sizing model and claim, in the Conclusions, that its application
+on real projects always had a Magnitude of Relative Error of less than 12%.
+Via the replication of previous studies, Mendes et al. [2003a] show how adaptation rules and Feature Subset Selection can be used in analogy-based estimation of web cost to improve the accuracy of estimation for datasets characterized
+by the absence of outliers and small collinearity. The results were not as good
+on a dataset with different characteristics.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:37
+
+Mendes and Kitchenham [2004] investigate whether it is useful to use a cost
+model built on Web applications taken from several companies to estimate the
+cost of the projects of a company that were not used to build the cost model.
+The study shows that the cost model provided much worse results than a cost
+model built based on projects coming from the same company. Also, the cost
+model built based on the project from that company provided poor results when
+applied to the projects of the other companies. This provides evidence that
+cost models for Web applications cannot be reused “as-is” across companies.
+The investigation confirms that more studies are needed before a generally
+applicable cost model for Web applications can be found and used (if that is
+even a realistic goal). In addition, the paper says that “All company estimates
+were underestimates.” which shows that the underestimation phenomenon is
+common to software professional and students.
+Similarly, Ruhe et al. [2003b] propose an adaptation of the COBRA method
+(COst estimation, Benchmarking, and Risk Assessment [Briand et al. 1998]) to
+the Web domain and apply it to the data from 12 projects developed by a small
+Australian company.
+
+9. CONCLUSIONS AND FUTURE WORK
+
+In this article, we have illustrated three empirical studies carried out on the
+effort required to design web applications. Students are not perfect subjects,
+but the peculiarities of the problem domain allowed us to obtain interesting
+results. Moreover, the different background and curricula of our subjects helped
+us obtain a good mix of the professionals usually involved in the development
+of Web applications.
+Because of the relative novelty of the field, our empirical studies were exploratory, rather than confirmatory ones. We investigated a number of hypotheses that seemed likely to be true based on our beliefs and knowledge about the
+W2000 notation, the subjects’ skills, and the steps of the design process used.
+Nevertheless, the hypotheses and results may apply to a wider class of modeling notations for Web applications, which can be viewed as special-purpose
+customizations (i.e., profiles) of UML.
+Though with some inconsistencies across the empirical studies, a number of
+predictors have been identified, so our studies can be used as a starting point
+for further research in the field. As already stated by other similar studies, we
+need further empirical studies to identify further predictors that may explain
+a larger percentage of effort variance than is now possible.
+Therefore, future work will include further empirical studies with students
+that will help us confirm the hypotheses that were supported in our research
+by providing even more evidence. Empirical studies with software professionals
+will be carried out, based on the current and future results. This will allow us
+to build prediction models that are practically useful for software companies.
+We do not believe that the prediction models obtained for one companies will be
+readily reusable in other contexts. However, by carrying our empirical studies in
+a number of industrial contexts and studying their similarities and differences,
+we will identify not only individual predictors for effort, but build possibly
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:38 - L. Baresi and S. Morasca
+
+multivariate prediction models. The future studies will address other notations,
+in addition to W2000, because it will be necessary to use the specific notations
+used by the software companies involved in the empirical studies. It is expected
+that most of them can be viewed as UML profiles, so they will share a number
+of common features. During this process, it may be necessary to investigate and
+define new measures because the existing ones may not be fully applicable to all
+of these other notations and because these other notations will have additional
+constructs that will be useful to measure. In addition, new measures may help
+us better quantify internal software attributes than the measures we have used
+in this article.
+
+ACKNOWLEDGMENTS
+
+We wish to thank the anonymous referees for their useful suggestions that have
+helped us improve the article.
+
+REFERENCES
+
+A BRAHAO ˜, S. M., C ONDORI -F ERNANDEZ ´, N., O LSINA, L., AND P ASTOR, O. 2003. Defining and validating
+metrics for navigational models. In *Proceedings of the 9th IEEE International Software Metrics*
+*Symposium (METRICS 2003)* (Sydney, Australia, Sept. 3–5). IEEE Computer Society Press, Los
+Alamitos, CA, 200–210.
+A BRAHAO ˜, S. M., P OELS, G., AND P ASTOR, O. 2004. Evaluating a functional size measurement method
+for web applications: An empirical analysis. In *Proceedings of the 10th IEEE International Soft-*
+*ware Metrics Symposium (METRICS 2004)* (Chicago, IL, Sept. 11–17). IEEE Computer Society
+Press, Los Alamitos, CA, 358–369.
+A LBRECHT, A. J. AND G AFFNEY, J R ., J. E. 1983. Software function, source lines of code, and development effort prediction: A software science validation. *IEEE Trans. Softw. Eng. 9,* 6, 639–648.
+B ARESI, L., M ORASCA, S., AND P AOLINI, P. 2002. An empirical study on the design effort of web
+applications. In *Proceedings of the 3rd International Conference on Web Information Systems*
+*Engineering (WISE 2002)* (Singapore, Dec. 12–14). IEEE Computer Society Press, Los Alamitos,
+CA, 345–354.
+B ARESI, L., M ORASCA, S., AND P AOLINI, P. 2003. Estimating the design effort of web applications.
+In *Proceedings of the 9th IEEE International Software Metrics Symposium (METRICS 2003)*
+(Sydney, Australia, Sept. 3–5). IEEE Computer Society Press, Los Alamitos, CA, 62–72.
+B ARESI, L., C OLAZZO, S., M AINETTI, L., AND M ORASCA, S. 2006. Web engineering, W2000: A modeling
+notation for complex Web applications. In *Web Engineering*, Mendes, E. and Mosley, N. Eds.,
+Springer-Verlag, 335–364.
+B OEHM, B. M., H OROWITZ, E., M ADACHY, R., R EIFER, D., C LARK, B. K., S TEECE, B., B ROWN, A. W., C HULANI,
+S., AND A BTS, C. 2000. *Software Cost Estimation with Cocomo II* . Prentice-Hall, Upper Saddle
+River, NJ.
+B OEHM, B. W. 1981. *Software Engineering Economics* . Prentice-Hall, Upper Saddle River, NJ.
+B RIAND, L., E L E MAM, K., AND B OMARIUS, F. 1998. COBRA: A hybrid method for software cost
+estimation, benchmarking, and risk assessment. In *Proceedings of the 20th International Con-*
+*ference on Software Engineering* (Kyoto, Japan, Apr. 19–25). IEEE Computer Society Press, Los
+Alamitos, CA, 390–399.
+C ALERO, C., R UIZ, J., AND, P IATTINI, M. 2004. A web metrics survey using WQM. In *Web*
+*Engineering—4th International Conference, ICWE 2004* (Munich, Germany, July 26–30), *Pro-*
+*ceedings* . Lecture Notes in Computer Science, vol. 3140. Springer-Verlag, Berlin, Germany, 147–
+160.
+
+C ARVER, J., J ACCHERI, L., M ORASCA, S., AND S HULL, F. 2003. Issues in using students in empirical
+studies in software engineering education. In *Proceedings of the 9th IEEE International Software*
+*Metrics Symposium (METRICS 2003)* (Sydney, Australia, Sept. 3–5). IEEE Computer Society
+Press, Los Alamitos, CA, 239–248.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+Three Empirical Studies on Estimating the Design Effort of Web Applications - 15:39
+
+C ERI, S., F RATERNALI, P., AND B ONGIO, A. 2000. Web modeling language (WebML): A modeling
+language for designing Web sites. *Comput. Netw. 33,* 1–6 (June), 137–157.
+C ONALLEN, J. 2002. *Building Web Applications with UML*, 2nd ed. Addison-Wesley, Boston, MA.
+COSMIC. 2003. *COSMIC-FFP Measurement Manual, vers. 2.2* . Common Software Measurement
+International Consortium. http://www.cosmicon.com.
+C OSTAGLIOLA, G., F ERRUCCI, F., G RAVINO, C., T ORTORA, G., AND V ITIELLO, G. 2004. A COSMIC-FFP
+based method to estimate web application development effort. In *Web Engineering—4th Inter-*
+*national Conference, ICWE 2004* (Munich, Germany, July 26–30). Lecture Notes in Computer
+Science, vol. 3140. Springer-Verlag, Berlin, Germany, 161–165.
+D HYANI, D., N G, W. K., AND B HOWMICK, S. S. 2002. A survey of web metrics. *ACM Comput.*
+*Surv. 34,* 4, 469–503.
+F ENTON, N. 1991. *Software Metrics: A Rigorous Approach* . Chapman and Hall, London, UK.
+F ENTON, N. AND P FLEEGER, S. L. 1996. *Software Metrics: A Rigorous and Practical Approach*, 2nd
+ed. International Thomson Computer Press, London, UK.
+F EWSTER, R. M. AND M ENDES, E. 2003. Portfolio management method for deadline planning. In *Pro-*
+*ceedings of the 9th IEEE International Software Metrics Symposium (METRICS 2003)* (Sydney,
+Australia, Sept. 3–5). IEEE Computer Society Press, Los Alamitos, CA, 325–334.
+G ARMUS, D. AND H ERRON, D. 2001. *Function point analysis: Measurement Practices for Successful*
+*Software Projects* . Addison-Wesley Longman Publishing Co., Inc., Boston, MA.
+G ARRETT, J. J. 2002. *The Elements of User Experience: User-Centered Design for the Web* . New
+Riders Press, Berkeley, CA.
+G ARZOTTO, F., S CHWABE, D., AND P AOLINI, P. 1993. HDM—A model based approach to hypermedia
+application design. *ACM Trans. Inform. Syst. 11,* 1 (Jan.), 1–26.
+G IBBONS, J. D. 1993. *Nonparametric Measures of Association* . SAGE Publications, Thousand
+Oaks, CA.
+G INIGE, A. AND M URUGESAN, S. 2001. Guest editors’ introduction: Web engineering—an introduction. *IEEE MultiMedia 8,* 1, 14–18.
+K APPEL, G., P ROLL ¨, B., R EICH, S., AND R ETSCHITZEGGER, W. 2006. *Web Engineering: The Discipline*
+*of Systematic Development of Web Applications* . Wiley, New York, NY.
+K ITCHENHAM, B. A. AND M ENDES, E. 2004. Software productivity measurement using multiple size
+measures. *IEEE Trans. Softw. Eng. 30,* 12, 1023–1035.
+K NAPP, A., K OCH, N., Z HANG, G., AND H ASSLER, H.-M. 2004. Modeling business processes in
+web applications with argouwe. In *Proceedings of UML 2004—The Unified Modelling Lan-*
+*guage: Modelling Languages and Applications. 7th International Conference* (Lisbon, Portugal,
+Oct. 11–15). Lecture Notes in Computer Science, vol. 3273. Springer-Verlag, Berlin, Germany,
+69–83.
+
+M ANGIA, L. AND P AIANO, R. 2003. MMWA: A software sizing model for web applications. In *Pro-*
+*ceedings of the 4th International Conference on Web Information Systems Engineering (WISE*
+*2003)* (Rome, Italy, Dec. 10–12). IEEE Computer Society Press, Los Alamitos, CA, 53–61.
+M ENDES, E., C OUNSELL, S., AND M OSLEY, N. 2005a. Towards a taxonomy of hypermedia and web
+application size metrics. In *Web Engineering, 5th International Conference, ICWE 2005* (Sydney,
+Australia, July 27–29). Lecture Notes in Computer Science, vol. 3579. Springer-Verlag, Berlin,
+Germany, 110–123.
+M ENDES, E. AND K ITCHENHAM, B. A. 2004. Further comparison of cross-company and withincompany effort estimation models for web applications. In *Proceedings of the 10th IEEE In-*
+*ternational Software Metrics Symposium (METRICS 2004)* (Chicago, IL, Sept. 11–17). IEEE
+Computer Society Press, Los Alamitos, CA, 348–357.
+M ENDES, E. AND M OSLEY, N. 2006. *Web Engineering* . Springer-Verlag, Berlin, Germany.
+M ENDES, E., M OSLEY, N., AND C OUNSELL, S. 2002a. Comparison of web size measures for predicting
+web design and authoring effort. *IEE Proc.—Softw. 149,* 3, 86–92.
+M ENDES, E., M OSLEY, N., AND C OUNSELL, S. 2003a. A replicated assessment of the use of adaptation
+rules to improve web cost estimation. In *Proceedings of the 2003 International Symposium on*
+*Empirical Software Engineering (ISESE 2003)* (Rome, Italy, Sept. 30–Oct. 1). IEEE Computer
+Society Press, Los Alamitos, CA, 100–109.
+M ENDES, E., M OSLEY, N., AND C OUNSELL, S. 2005b. Investigating web size metrics for early web
+cost estimation. *J. Syst. Softw. 77,* 2, 157–172.
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.
+
+
+15:40 - L. Baresi and S. Morasca
+
+M ENDES, E., M OSLEY, N., AND C OUNSELL, S. 2006. *Web Engineering* . Springer-Verlag, Berlin,
+Germany (Chapter: Web Effort Estimation), 31–76.
+M ENDES, E., W ATSON, I., T RIGGS, C., M OSLEY, N., AND C OUNSELL, S. 2002b. A comparison of length,
+complexity and functionality as size measures for predicting web design and authoring effort. In
+*Proceedings of the IEEE Metrics Symposium, 2002* . IEEE Computer Society Press, Los Alamitos,
+CA.
+
+M ENDES, E., W ATSON, I., T RIGGS, C., M OSLEY, N., AND C OUNSELL, S. 2003b. A comparative study of
+cost estimation models for web hypermedia applications. *Empir. Softw. Eng. 8,* 2, 163–196.
+M URUGESAN, S., AND D ESHPANDE, Y. 2002. Meeting the challenges of web application development:
+The web engineering approach. In *Proceedings of the 22rd International Conference on Software*
+*Engineering, ICSE 2002* (Orlando, FL, May 19–25). ACM, New York, 687–688.
+R EIFER, D. 2000. Web-development: Estimating quick-time-to-market software. *IEEE Softw. 17,* 8
+(Nov./Dec.), 57–64.
+R EIFER, D. 2002. Ten deadly risks in internet and intranet software development. *IEEE*
+*Softw. 18,* 2 (Mar./Apr.), 12–14.
+R OUSSEEUW, P. J. AND L EROY, A. M. 1987. *Robust Regression and Outlier Detection* . Wiley, New
+York.
+
+R UHE, M., J EFFERY, D. R., AND W IECZOREK, I. 2003a. Using web objects for estimating software
+development effort for web applications. In *Proceedings of the 9th IEEE International Software*
+*Metrics Symposium (METRICS 2003)* (Sydney, Australia, Sept. 3–5). IEEE Computer Society
+Press, Los Alamitos, CA, 30–39.
+R UHE, M., J EFFERY, R., AND W IECZOREK, I. 2003b. Cost estimation for web applications. In *Proceed-*
+*ings of the 25th International Conference on Software Engineering* (Portland, OR, May 3–10).
+IEEE Computer Society Press, Los Alamitos, CA, 285–294.
+S CHWABE, D. AND R OSSI, G. 1998. An object oriented approach to web-based applications design.
+*Theory Pract. Obj. Syst. 4,* 4, 207–225.
+T UKUTUKU B ENCHMARKING P ROJECT 2006. Home page, http://www.cs.auckland.ac.nz/tukutuku/.
+U MBERS, P. AND M ILES, G. 2004. Resource estimation for web applications. In *Proceedings of the*
+*10th IEEE International Software Metrics Symposium (METRICS 2004)* (Chicago, IL, Sept. 11–
+17). IEEE Computer Society Press, Los Alamitos, CA, 370–381.
+
+Received February 2006; revised August 2006; accepted December 2006
+
+ACM Transactions on Software Engineering and Methodology, Vol. 16, No. 4, Article 15, Pub. date: Sept. 2007.

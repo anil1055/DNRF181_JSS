@@ -1,0 +1,1140 @@
+# **Early Web Size Measures and Effort Prediction for Web Costimation [1]**
+
+
+Steve Counsell
+
+*Computer Science*
+*Department*
+*Birkbeck College,*
+*University of London*
+*London, UK*
+*steve@dcs.bbk.ac.uk*
+
+
+Emilia Mendes
+
+*Computer Science*
+*Department*
+*The University of Auckland*
+*Auckland, New Zealand*
+*emilia@cs.auckland.ac.nz*
+
+**Abstract**
+
+
+Nile Mosley
+*MxM Technology*
+*P.O. Box 3539*
+
+*Shortland Street*
+
+*Auckland*
+
+*New Zealand*
+*nile_mosley@xtra.co.nz*
+
+
+*Size measures for Web costimation proposed in the*
+*literature are invariably related to implemented Web*
+*applications.* *Even* *when* *targeted* *at* *measuring*
+*functionality* *based* *on* *function* *point* *analysis,*
+*researchers only considered the final Web application,*
+*rather than requirements documentation generated using*
+*any existing Web development methods. This makes their*
+*usefulness as early effort predictors questionable.*
+*In addition, it is believed that company-specific data*
+*provide a better basis for accurate estimates. Many*
+*software engineering researchers have compared the*
+*accuracy* *of* *company-specific* *data* *with* *multi-*
+*organisation databases. However the datasets employed*
+*were comprised of data from conventional applications.*
+*To date no similar comparison has been adopted for Web*
+*project datasets.*
+*As a result, this paper has two objectives: The first is*
+*to present a survey where early size measures for Web*
+*costimation were identified using data collected from 133*
+*Web companies worldwide. All companies included in the*
+*survey used Web forms to give quotes on Web*
+*development projects, based on gathered size measures.*
+*The second is to compare the prediction accuracy of a*
+*Web company-specific data with data from a multi-*
+*organisation database. Both datasets were obtained via*
+*Web forms, used as part of a research project called*
+*Tukutuku. Our results show that best predictions were*
+*obtained for company-specific dataset, for the two*
+*estimation techniques employed.*
+
+**Keywords:** cost estimation, cost prediction models,
+case-based reasoning, effort estimation, empirical study,
+
+1 Coined term for cost estimation
+
+
+industry data, internet, multi-organisational data, Web
+measurement, Web metrics, regression model.
+
+**1. Introduction**
+
+Recently, growth of the Web as a delivery environment
+has given rise to a new research field - Web engineering,
+the application of engineering principles to develop
+quality Web applications [1].
+The Web is used as the delivery platform for two types
+of applications: Web hypermedia applications and Web
+software applications [2]. A Web hypermedia application
+is a non-conventional application characterised by the
+authoring of information using nodes (chunks of
+information), links (relations between nodes), anchors,
+access structures (for navigation) and its delivery over the
+Web. Technologies commonly used for developing such
+applications are HTML, JavaScript and multimedia. In
+addition, typical developers are writers, artists and
+organisations who wish to publish information on the
+Web and/or CD-ROM without the need to use
+programming languages such as Java.
+Conversely, a Web software application represents
+conventional software applications that depend on the
+Web or use the Web's infrastructure for execution.
+Typical applications include legacy information systems
+such as databases, booking systems, knowledge bases etc.
+Many e-commerce applications fall into this category.
+Typically they employ technology such as Components
+off-the-shelf, components such as DCOM, OLE, ActiveX,
+XML, PHP, dynamic HTML, databases, and development
+solutions such as J2EE. Typical developers are young
+programmers fresh from a Computer Science or Software
+Engineering degree, managed by more senior staff.
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+We use Web application to refer to both Web
+hypermedia and software applications.
+A variety of technological solutions are available for
+Web developers to facilitate the delivery of quality Web
+applications and bring them quickly to market, with
+typical durations ranging from 3 to 6 months [3].
+However, there are no standardised development
+techniques or large datasets of historical data on Web
+development projects.
+For Web development, cost can be very challenging to
+estimate because:
+
+- There is no standard way of sizing Web applications.
+Each can be created using diverse technologies such
+as varieties of Java (Java, servlets, Enterprise java
+Beans, applets, and Java Server Pages), HTML,
+JavaScript, XML, XSL, and so on.
+
+- Web project’s primary goal is to bring quality
+applications to market as quickly as possible, varying
+from a few weeks [1] to 6 months [4].
+
+- People involved in Web development are represented
+by less experienced programmers, users as
+developers, graphic designers and new hires straight
+from university [4].
+
+- Typical project team size is small, between 3 to 7
+members [4].
+
+- Processes employed are in general heuristic, although
+some organisations are starting to look into the use of
+agile methods [5].
+
+Over the last seven years hypermedia size measures
+have been adapted and new size measures were proposed
+for Web applications [3,6-14].
+Size is considered a primary input to software cost
+models, and to be of use, must be estimated at the start of
+the development process.
+To date few papers have proposed Web size measures
+
+[13,14,3,7-11] aimed at Web costimation. [13,14,3,10]
+have used industrial datasets of Web projects to justify
+their size measures and to generate corresponding cost
+models, each collecting their data from just one Web
+company, which may affect the external validity of their
+results. [9] proposes size measures for static and dynamic
+Web applications and [8] proposes size measures for Web
+hypermedia applications. However the datasets employed
+in these studies are based on Web applications developed
+by students, which may also affect the external validity of
+their results.
+Another aspect of importance for the generation of
+costimation models is the availability of datasets of past
+finished projects. These datasets are used to generate
+models then applied to estimate costs for new projects.
+Although prediction can be generated using different
+models (algorithmic, machine learning-based etc) it seems
+that for most, if not all, the number of finished projects
+
+
+available in a dataset is directly related to the model’s
+prediction accuracy.
+It is believed that company-specific datasets provide
+better basis for accurate estimates. However, the time
+required to accumulate enough data on past projects from
+a single company may be prohibitive. In addition, by the
+time the dataset is large, technologies used by the
+company may have changed, and older projects may no
+longer be representative of current practices [15]. Multicompany datasets (datasets containing data from several
+companies) is an approach to populate a large dataset of
+projects for prediction purposes. However, care is
+necessary as data needs to be collected in a consistent
+manner and differences in processes and practices, trends
+may differ considerably across companies [15].
+Several studies in Software engineering have compared
+the prediction accuracy of multi-company vs. companyspecific datasets [15-19] however a comparison using
+Web datasets has not been done.
+As a result, this paper’s contribution is twofold: First,
+it presents a survey where early Web size measures for
+early costimation were identified using data collected
+from 133 Web companies worldwide. These companies
+use Web forms to give quotes on Web development
+projects, based on early size measures. The survey results
+were used as input for the gathering of Web project data
+as part of a research project called the “Tukutuku [2]
+
+Benchmarking Project” (Section 2.4). Second, it
+compares the feasibility of using multi-company datasets
+to build Web costimation models compared to companyspecific data using datasets obtained from the Tukutuku
+database.
+The remainder of the paper is organised as follows:
+Section 2 briefly describes the survey carried out, its
+results and how the Web project datasets were obtained.
+Section 3 describes the comparison of a multi-company
+Web dataset to a company-specific Web company dataset.
+Conclusions and comments on future work are given in
+Section 4.
+
+**2. Early Web Size Measures Survey**
+
+**2.1 Introduction**
+
+The purpose of the survey [20] was to identify Web
+size measures used by Web companies as early cost
+estimators. The target population was that of Web
+companies that use early size measures to estimate costs.
+
+2 Tukutuku means “Web” in Maori, the language of New
+Zealand natives. The project’s main page is located at
+http://www.cs.auckland.ac.nz/Tukutuku/introduction.html
+
+.
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+Research questions we were interested in answering were
+as follows:
+
+- What are the size measures used as early cost
+estimators by Web companies?
+
+- Which of these are used the most?
+
+- Which of these are characteristic of Web hypermedia
+applications?
+
+- Which of these are characteristic of Web software
+applications?
+
+To obtain a sample of our population of interest, we
+used a Web search engine (www.google.com) to carry out
+a search, on the 7 [th] of August 2002, using the sentence
+“quote Web development project”. Google.com was
+chosen because it is the fourth most popular search engine
+in the world, where numbers 1 and 3 both licence Google
+technology for their Web searches. About half of all Web
+searches in the world are performed with Google, and is
+translated into 86 languages.
+Our objective was to obtain Web addresses (URLs) for
+Web companies that had on-line quotes for Web
+development projects, where these quotes could be used
+to identify early cost estimators. Two hundred and fifty
+nine (259) Web addresses were retrieved. Of those, 38 did
+not present any forms or description that could be used to
+identify cost estimators. Of the remaining 221 URLs, 88
+presented on-line quotes that were too general to obtain
+any useful information.
+A detailed description of this survey can be found in
+
+[20].
+
+**2.2 Results**
+
+The data collected from 133 on-line quotes was
+organised into 5 categories:
+1. Web application static measures
+2. Web application dynamic measures
+3. Web Project measures
+4. Web company measures
+5. Web interface design measures
+
+In the scope of this investigation size is represented
+using three attributes [21]: length, functionality and
+complexity. Length measures the physical size of a Web
+application; functionality measures the functions supplied
+by the application to the user; complexity of an application
+is measured by its structural complexity [21], where the
+structure of an application is represented by how Web
+pages are interconnected by links. Structures can be of
+three types: linear, hierarchical and network [22].
+
+**Table 1 – Measures organised by Category and**
+**Ranking**
+
+
+|Web application static measures|Col2|Col3|
+|---|---|---|
+|Measures|%|# Co.|
+|1. Total number of Web pages|70|92|
+|2. Total number images provided by customer|31|41|
+|3. Total number of text pages provided by<br>customer|30|39|
+|4. Total number of photos provided by customer|30|40|
+|5. Total number of products to sell|28|37|
+|6. Total number of flash animations|27|35|
+|7. Total number of photos from a library|23|30|
+|8. Total number of images from a library|22|29|
+|9. Total number of audio clips|20|27|
+|10. Total number of video clips|20|26|
+|11. Total number of photos to scan|15|20|
+|12. Total number of images to scan|14|19|
+|13. Total number of gif animations|14|18|
+|14. Total number of photos to process/create|11|15|
+|15. Total number of text pages to type|11|13|
+|16. Total number of images to process/create|9|12|
+|17. Total number of icons/buttons|8|10|
+|18. Total number of text pages to scan (OCR)|8|10|
+|19. Total number existing components to add|4|5|
+|20. Total number of PDF/Word documents to<br>download|2|3|
+|21. Total amount of Graphics per product|2|3|
+|22. Average length audio clips|2|2|
+|23. Average length video clips|2|2|
+|24. How much text necessary for each product|1|1|
+|Web application dynamic measures|Web application dynamic measures|Web application dynamic measures|
+|Measures|%|# Co.|
+|Which Features/Functionality3|66|87|
+|% - percentage of Companies that asked for the measure<br># Co. – number of Companies that asked for the measure|% - percentage of Companies that asked for the measure<br># Co. – number of Companies that asked for the measure|% - percentage of Companies that asked for the measure<br># Co. – number of Companies that asked for the measure|
+
+
+Static measures correspond to measures that have been
+commonly used to characterise Web hypermedia
+applications (e.g., number of Web pages, number of
+
+3 All have been considered as functionality/features for the sake of our
+ranking. Features/functionality are: Auction/Bid utility, Bulletin Boards,
+Discussion Forum/Newsgroups, Chat Rooms, E-postcard, Email-aFriend, Mailing List for Site, Subscriptions, Vote System, Web-based email, Database creation, Database integration, Other persistent storage
+integration (e.g. flat files), Credit Card Authorization, Member login,
+Online Secure Order Form, Password protected pages, Online Content
+Updating, Online feedback form, Shopping Cart Services, Invoices/
+Billing, Calendars/Event Calendar, Display current date, CSS (Style
+sheets) Charts, File upload/download, HR Handbooks, Job Accounting,
+Job Scheduling, Specialized Reports, Live data (stock quotes etc),
+Performance reviews, Time Tracking, Traffic Statistics, Knowledge
+Base, Language Translation, Page counters, Personalisation, Search
+Engine, User Guest book, Visitor statistics, Cell Phone Optimisations,
+Palm PDA Web Clipping.
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+graphics etc). Dynamic measures refer to any features or
+functionality mentioned (e.g., database integration, online secure order form etc). Web project measures are
+measures relative to a Web project (e.g., project budget).
+Web company measures are measures used in relation to a
+Web company (e.g., target audience), and Web interface
+design measures relate to the final appearance of the Web
+application (e.g., background colour, style etc).
+Table 1 presents measures for the first two categories,
+as these are relevant to understand the measures used in
+Section 3. Table 1 also shows the percentage and
+corresponding number of Web companies that have
+included these measures in their costimation quote form.
+The full list of measures per category is presented in [20].
+Two measures in particular stand out, ***total number of***
+***Web pages*** and *which* ***features/functionality*** . The first is a
+typical length size measure and the second is an abstract
+measure of functionality.
+
+**Answering the survey research questions:**
+
+- *What are the size measures used as early cost*
+*estimators by Web companies?*
+Size measures identified in the survey are presented in
+Table 1, under **Web application static measures** and
+**Web application dynamic measures** . Observe that no
+complexity measures have been identified. Those that
+have been ranked highest are possibly the most important,
+given that they were suggested by the greatest number of
+Web companies. For static measures, Web companies
+require from the beginning, how much information (text,
+photos, images) ready to use is provided by customers,
+how much information needs to be digitized or needs to
+be created from scratch. Number of pages was also
+important information. We believe this to be the case as
+most Web companies use number of pages as one of the
+core components for Web applications (e.g., 5 pages with
+text only or 5 pages with text, images etc). Regarding
+dynamic measures, Web companies listed features and
+functionality, rather than using a more sophisticated
+mechanism to measure functionality. This is probably due
+to the difficulty in identifying well-defined functional
+components early on in the development.
+
+- *Which measures are used the most?*
+According to the survey, the two measures used the
+most are *total number of Web pages* and *which*
+*features/functionality* . Together they represent 70% and
+66% respectively of those Web companies that
+participated in the survey. This suggests that they are the
+two strongest effort predictors obtained from the survey,
+despite the need for empirical evidence to support this
+claim. It is interesting that *total number of Web pages*
+represents a length measure, characteristic of Web
+hypermedia applications and *which features/functionality*
+
+
+represents more closely an abstract measure of
+functionality, characteristic of Web software applications.
+We believe this is an attractive result as it seems to
+suggest a balance between static and dynamic
+characteristics which may be present in Web applications.
+In addition, *total number of Web pages* has also been the
+measure chosen by most literature in Web costimation
+
+[20].
+
+- *Which* *measures* *are* *characteristic* *of* *Web*
+*hypermedia applications?*
+The category **Web application static measures**
+characterise closely Web hypermedia applications.
+
+- *Which measures are characteristic of Web software*
+*applications?*
+The category **Web application dynamic measures**
+characterise closely Web software applications.
+
+**2.3 Moving Towards a Repository of Web**
+**Projects**
+
+Once the ranking described in the previous sub-section
+was completed, the next stage was to contact an
+experienced Web company to confirm/deny, based on the
+ranking provided, those measures identified as most
+important for early costimation. Based on this company’s
+feedback, we prepared Web forms to be used to gather
+data on Web projects worldwide. This data gathering
+initiative is called the Tukutuku benchmarking project
+(Section 2.4).
+The Web company contacted is based in Rio de
+Janeiro, Brazil. Five people work in Web design and
+development within the company. Three of those are
+company directors, also managing Web projects and
+preparing quotes for customers. This company has a
+portfolio of more than 50 Web applications and has been
+established for 10 years. They use a documented process
+and depending on the type of project, one out of two types
+of process models are used: incremental prototyping or
+waterfall.
+One of the directors was contacted by one of the
+authors and helped validate the measures identified in the
+survey. This director has worked in software development
+for 18 years and is experienced in management of large
+projects, conventional or Web-based.
+For Web application static measures, agreement was
+reached for most (from number 1 to 18, see Table 1),
+examining those which could actually be estimated early
+on in the Web development life cycle. More measures
+were added to the list, and some were re-arranged (see
+Table 3, Section3).
+For Web application dynamic measures, more
+features/functionality were added to the list and suggested
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+that adding a complexity level to each
+feature/functionality would help discern more difficult
+implementations. These measures were also confirmed as
+suitable for early costimation.
+Regarding the Web application dynamic measures,
+careful consideration was given to differentiate more
+complex features/functions from less complex ones,
+without infringing the Representational Theory of
+Measurement. The solution was devised as follows:
+
+- Companies contributing Web project data to
+Tukutuku would be asked to identify those features
+and functionality where they spent a high amount of
+effort to develop or adapt.
+
+- Companies would also be asked to supply the average
+person hours that represent a high effort to develop
+and to adapt.
+
+- Companies would be able to provide
+features/functionality that we had not considered.
+
+In addition, we also characterised features/functionality
+into three types:
+
+- Feature off-the-shelf (FOTS) – feature/functionality
+reused as is.
+
+- FOTS adapted (modified) – feature/functionality
+reused and adapted to local circumstances.
+
+- New in-house Feature/ Functionality –
+feature/functionality developed from scratch.
+
+**2.4 The Tukutuku Benchmarking Project**
+
+The Tukutuku project aims to collect data about Web
+projects, to be used to develop Web costimation models
+and to benchmark productivity across and within Web
+Companies.
+The Web form to enter data on Web projects, which is
+used in the Tukutuku project, is available at
+http://www.cs.auckland.ac.nz/Tukutuku/project.html .
+The Web form used to gather demographics data on
+the participating Web companies used in the Tukutuku
+project, is available at
+http://www.cs.auckland.ac.nz/Tukutuku/demographics.ht
+ml .
+The Tukutuku project started officially on October
+2002. Invitation letters were e-mailed to Web companies
+in New Zealand, with a follow up phone call a few days
+later, seeking participation. The company from Brazil
+volunteering data is the same one that has helped us
+define the early size measures to use at Tukutuku. To date
+we have received 36 Web projects from 17 Web
+companies (see Table 2).
+Six companies had their development teams involved
+in a process improvement programme; three have
+development teams that are part of a metrics programme;
+21 projects followed a defined and documented process;
+
+
+six Web projects were a re-design of an existing Web
+application and 30 were new applications.
+
+
+|Total #<br>projects<br>volunteered|# years<br>established|Mean #<br>People in<br>Web<br>development|# companies<br>volunteered<br>data to date|
+|---|---|---|---|
+|3|> 10 years|5|1|
+|16|7-10 years|10|4|
+|11|3-6 years|6|7|
+|4|1-2 years|2|3|
+|2|< 1 year|11|2|
+
+
+Languages and tools used to develop Web applications
+reflect a conservative approach where HMTL + Javascript
+are ranked higher than J2EE and XML/XSL.
+
+**T** **ab** **l** **e** **3** **– L** **a** **n** **guages** **a** **n** **d** **too** **l** **s** **used**
+
+|Languages/Tools|% Companies|
+|---|---|
+|HTML|86|
+|Javascript|61|
+|Various Graphics Tools|50|
+|Perl|36|
+|Coldfusion|22|
+|ASP|19|
+|PHP|17|
+|Other|17|
+|J2EE|11|
+|XML/XSL|6|
+
+
+
+We used a pre-selected respondent sample, and the
+data obtained is a result of a self-selected sample. We
+believe the data in the Tukutuku database can be useful as
+an indicator, provided one is aware of the limitations.
+
+**3. Comparing Multi-company data to**
+**Company-specific data**
+
+**3.1 Datasets description**
+
+All analysis presented in this Section was based on the
+Tukutuku database.
+Each Web application provided 32 variables from
+which we identified 25 (Table 4), to characterise a Web
+application and its development process. These variables
+form a basis for our data analysis. Total effort (tot-effort)
+is our dependent/response variable and the other 24
+variables are our independent/predictor variables. All
+variables were measured on a ratio scale.
+In order to compare the prediction accuracy of multicompany Web projects to that of company-specific Web
+projects we split the Tukutuku database into two datasets
+
+
+**T** **ab** **l** **e** **2 –** **Co** **m** **pa** **ni** **es** **t** **h** **at** **v** **o** **l** **u** **n** **tee** **r** **ed** **data** **to** **dat** **e**
+
+
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+containing respectively 24 (multi-company dataset
+( **MCD** )) and 12 Web projects (company-specific dataset
+( **CSD** )). For CSD pairs of variables Webpages and
+NewWP, and Hnew and Tot-high had the same values.
+Therefore we only used NewWP and Hnew to obtain
+predictions. Only one company to date had contributed
+with more than 3 Web projects so the data provided by
+that company was used for the **CSD** dataset.
+
+**T** **ab** **l** **e** **4 – V** **a** **ri** **ab** **l** **es** **f** **o** **r th** **e** **T** **u** **k** **u** **t** **u** **k** **u** **da** **t** **abase**
+
+|Variable|Description|
+|---|---|
+|Webpages|number of Web pages|
+|NewWP|number of Web pages created from scratch|
+|WPcustomer|Web pages given by the customer|
+|WPoutsourced|Web pages developed by third party|
+|TextTyped|number of text pages typed (600 words)|
+|TextElectronic|number of text pages in electronic format|
+|TextScan|number of text pages that had to be scanned|
+|ImgNew|number of new images developed.|
+|Img3rdParty|number of images developed by third party|
+|Imgscanned|number of images that had to be scanned|
+|ImgLibrary|number of images reused from a library|
+|Animnew|number of new animations|
+|AnimLib|number of animations reused from a library|
+|AVNew|number of new audio/video files|
+|AVLib|number of reused audio/video files|
+|TotdiffProducts|number of different products offered.|
+|Hfots|high effort FOTS (features off the shelf)|
+|Hfots-a|high effort FOTS-A (features off the shelf<br>adapted to the application)|
+|Hnew|high effort new features|
+|Tot-high|number of high effort features|
+|Fots|low effort FOTS|
+|Fots-a|low effort FOTS-A|
+|New|low effort new features|
+|Tot-nhigh|number of low effort features|
+|Teffort4|effort to develop the Web application|
+
+
+
+Table 5 outlines the properties of the datasets used.
+Collinearity represents the number of statistically
+significant correlations with other independent variables
+out of the total number of independent variables [23].
+Similarly to [24], outliers were defined as falling outside
+the whiskers of a boxplot.
+Summary statistics for all the variables of each dataset
+are given in the Appendix.
+Given that two projects has the effort data missing, we
+applied the similar response pattern imputation method
+
+[25] such that effort values could be attributed to these
+projects.
+
+4
+Teffort only includes the time the Company’s own development team
+spent in development. For example, if images are outsourced, this time
+is not included as part of Teffort.
+
+
+|Table 5 - Properties of datasets|Col2|Col3|Col4|Col5|Col6|Col7|
+|---|---|---|---|---|---|---|
+|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|Multi-Company dataset (MCD)|
+|Cases|Features|Categorical<br>features|Outliers|Outliers|Collinearity|Collinearity|
+|24|25|0|14/24|58%|20/24|83%|
+|Company-specific dataset (CSD)|Company-specific dataset (CSD)|Company-specific dataset (CSD)|Company-specific dataset (CSD)|Company-specific dataset (CSD)|Company-specific dataset (CSD)|Company-specific dataset (CSD)|
+|Cases|Features|Categorical<br>features|Outliers|Outliers|Collinearity|Collinearity|
+|12|25|0|6/24|25%|6/24|25%|
+
+
+**3.2 Threats to Validity**
+
+Predictor variables were based on the results of our
+survey, which in turn were based on data from Web
+costimation forms gathered worldwide. Consequently we
+believe we have used predictors that are meaningful and
+realistic measures for Web companies. However we have
+not supplied Web companies with automatic measurement
+tools that could be used to gather data on their Web
+applications. We relied on their own mechanisms to do
+so, meaning that we cannot guarantee 100% accuracy.
+Regarding our response variable, in order to have a better
+idea of how reliable the effort data entered was, we also
+asked how the effort data has been collected (Table 6).
+Two companies had collected effort differently
+depending on the project ( 1 and (3 or 4)).
+More than half of the projects had effort which has
+been recorded for each day or week, so we believe these
+values have not been guessed.
+
+**Table 6 – How** **e** **ff** **o** **r** **t** **data** **w** **as** **co** **ll** **ected**
+
+|Col1|MCD|Col3|CSD|
+|---|---|---|---|
+|How effort data was<br>collected:|# and %<br>projects|# different<br>companies|# and %<br>projects|
+|1) No timesheets were<br>recorded by the<br>development team|9 (37.5%)|6|-|
+|2) Recorded only total<br>hours worked each day or<br>week|1 (4.2%)|1|-|
+|3) Recorded hours worked<br>for each project for each<br>day/week|9 (37.5%)|9|12<br>(100%)|
+|4) Recorded the hours<br>worked on each project<br>task on each day|5 (20.8%)|3|-|
+
+
+
+The data collected to date for the Tukutuku project has
+contributors from five countries worldwide and no
+rigorous quality assurance procedures were followed to
+validate the data provided. In addition, the application
+domains are mixed.
+
+The Tukutuku database is still considered small,
+making it difficult to generalise our results.
+
+**3.3 Prediction Techniques Employed**
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+The prediction techniques employed in this study were
+chosen by taking into consideration the characteristics of
+the datasets employed, as suggested by [24]. Given that
+our datasets both present outliers and collinearity, the best
+technique, according to recent findings [24], should be
+Case-based reasoning (CBR). However, in order to
+provide a benchmark against which results can be
+compared, we also employed Stepwise Regression
+(SWR).
+
+*Case-based Reasoning (CBR)*
+The rationale for CBR is the use of historical
+information from completed projects with known effort. It
+involves [26]:
+�� Characterising a new active project *p,* for which an
+estimate is required, with attributes (features)
+common to those completed project stored in the case
+base. In our context most features represent size
+measures which have a bearing on effort. Feature
+values are normally standardized (between 0 and 1)
+such that they have the same degree of influence on
+the results.
+�� Use of this characterisation as a basis for finding
+similar (analogous) completed projects, for which
+effort is known. This process can be achieved by
+measuring the “distance” between two projects, based
+on the values for the *k* features for these projects.
+�� Generation of a predicted value of effort for project *p*
+based on the effort for those completed projects that
+are similar to *p* . The number of similar projects
+normally depends on the size of the dataset. For small
+datasets typical values are 1, 2 and 3 closest
+neighbours (analogies). The calculation of estimated
+effort is often obtained by using the same effort value
+of the closest neighbour, or the mean of effort values
+(2 or more analogies). In Software engineering and
+Web engineering a common choice is the nearest
+neighbour or the mean for 2 and 3 analogies.
+
+When using CBR there are a number of parameters to
+decide upon [24]:
+
+- Feature Subset Selection - optimum subset of features
+that give the most accurate estimation.
+
+- Similarity Measure - the level of similarity between
+
+cases.
+
+- Scaling - transformation of attribute values according
+to a defined rule such that all attributes have the same
+degree of influence and the method is immune to the
+choice of units [26].
+
+- Number of analogies - the number of most similar
+cases that will be used to generate the estimation.
+
+- Analogy Adaptation - how to generate the estimation
+for the “new” project *p* .
+
+
+All the results for CBR were obtained using CBRWorks [27], a commercially available CBR tool.
+As CBR-Works does not offer the Feature Subset
+Selection option, we used the Weighted Euclidean
+distance as the similarity measure. Weights attributed to
+variables were obtained by measuring the linear
+association between the predictor and response variables
+using a two-tailed Spearman’s rho test, a non-parametric
+test as most variables are not normally distributed. All
+values were scaled between 0 and 1. Regarding the
+number of closest analogies, although the nearest
+neighbour showed very good prediction accuracy for
+another Web projects dataset [28] we decided to use 1, 2
+and 3 analogies.
+
+*Stepwise Regression (SWR)*
+Stepwise regression [29] builds a prediction model by
+adding to the model, at each stage, the variable with the
+highest partial correlation to the response variable, taking
+into account all variables currently in the model. Its aim is
+to find the set of predictors that maximise *F* . *F* assesses
+whether the regressors, taken together, are significantly
+associated with the response variable. The criteria used to
+add a variable is whether it increases the *F* value for the
+regression by some specified amount *k* . When a variable
+reduces *F*, also by some specified amount *w,* it is removed
+from the model.
+Stepwise regression has been frequently used as a
+benchmark [30,23,24,9] and is regarded by some as a
+good prediction technique [31].
+Linear models revealed heteroscedasticity so we had to
+investigate a plausible functional form to fit our data. The
+exponential functional form was the most reasonable. We
+have also estimated effort for both datasets by applying
+the stepwise ANOVA procedure [32]. However, as
+stepwise regression presented slightly better results, we
+only provide the results obtained using stepwise
+regression.
+All statistical analyses presented in the paper, were
+conducted using the statistical software SPSS v.10.01
+
+[33].
+
+**3.4 Evaluation Criteria**
+
+Results are compared using the Mean Magnitude of
+Relative Error [30], Prediction at level n (Pred(n)) [34]
+and boxplots of absolute residuals [35] as measures of
+prediction accuracy. MMRE was chosen for two reasons:
+Firstly, MMRE is the de facto standard evaluation
+criterion to assess the accuracy of software prediction
+models [36]; Secondly, recent empirical investigation did
+not find evidence to discourage the use of MRE and
+MMRE [37].
+Pred(n) is used because it is also an indicator which is
+commonly used to assess prediction accuracy.
+Suggestions have been made [38] that n should be set at
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+25% and that a good prediction system should offer this
+accuracy level 75% of the time.
+Absolute residuals are employed as they are less
+vulnerable to bias than the asymmetric MMRE [24].
+The statistical significance of the results was based on
+absolute residuals. As these were skewed (confirmed by
+the Kolmogorov-Smirnov test for non-Normality), robust
+tests had to be used. The Kruskal-Wallis test was used for
+
+comparing variance (α=0.05); Wilcoxon Signed Rank
+test was used to compare the difference in location
+between two populations when the data was naturally
+paired, and the Mann-Whitney U test otherwise (both
+using α=0.05).
+
+**3.5 Cross-validation**
+
+To generate the estimations for each dataset, for both
+CBR and stepwise regression, we used a twenty-fold
+cross-validation approach [39], as according to recent
+studies, less than twenty training/validation sets may lead
+to untrustworthy results [39].
+Cross-validation involves dividing the whole dataset
+into multiple train and validation sets, calculating the
+accuracy for each validation set, and aggregating the
+accuracy across all validation sets. A twenty-fold crossvalidation yields twenty different training-validation set
+combinations. Each validation set is randomly generated
+from the original dataset, and we use the remaining
+projects as the training set. There is no standard to what is
+the best size for training sets. However, as it seems that
+larger training sets reduce prediction errors (measured as
+absolute residuals) [24] we decided to use a split where
+there were more projects in the training set than in the
+validation set, similarly to [15]. We used a 66% split (For
+the multi-company dataset, 16 observations in the train set
+and 8 in validation set; for the company-specific dataset, 8
+observations in the train set and 4 in the validation set).
+We therefore had in total twenty different combinations
+for each technique employed.
+
+**3.6 Data Analysis Results**
+
+Table 7 shows the aggregated MMRE for each
+technique employed, followed by boxplots of absolute
+residuals (Figure 1) organised by technique (in case of
+CBR, organised by number of closest analogies, 1,2 or 3).
+The legend used is as follows:
+MCSWR – Multi-company dataset, Stepwise regression.
+CSSWR – Company-specific dataset, Stepwise regression
+MCCBRn – Multi-company dataset, CBR for n analogies
+CSCBRn – Company-specific dataset, CBR for n
+analogies.
+MMRE and Pred(25) suggest that all techniques gave
+better predictions for **CSD** dataset than for the **MCD**
+dataset. However, when comparing both datasets using
+
+
+alike techniques (SRW(MCD) vs. SWR(CSD),
+CBR1(MCD) vs. CBR1(CSD) etc) both Kruskal-Wallis
+and Mann-Whitney showed that this does not hold true
+for CBR using 1 analogy. In other words, predictions for
+the Company-specific dataset were not statistically
+superior to those for the Multi-company dataset for CBR
+using 1 analogy.
+
+**Table 7 – Aggregated MMREs and Pred(25) for each**
+**dataset and technique employed**
+
+|Col1|Datasets|Col3|
+|---|---|---|
+|Indicators|MCD|CSD|
+|MMRE SWR (%)|297.69|108.01|
+|MMRE CBR1 (%)|151.37|72.14|
+|MMRE CBR2 (%)|160.36|62.35|
+|MMRE CBR3 (%)|199.31|56.29|
+|Pred(25) SWR (%)|7.5|27.5|
+|Pred(25) CBR1 (%)|20.63|30|
+|Pred(25) CBR2 (%)|6.25|20|
+|Pred(25) CBR 3 (%)|5.63|30|
+
+
+
+Investigating further these results revealed that, for the
+MCD dataset, the best CBR predictions were obtained for
+CBR1, confirmed statistically using a paired Wilcoxon
+Signed Rank test. On the other hand, for CSD, CBR1
+showed significantly worse predictions than CBR2,
+however similar predictions to CBR3. The best CBR
+technique for CSD is not as clear-cut as it is for MCD,
+however, based also on the MMRE and Pred(25) CBR3
+would be the best choice for the CSD dataset.
+
+**Figure 1 - Boxplots of Absolute Residuals organised**
+**by technique and dataset**
+
+If we were to compare predictions between both
+datasets, for the CBR technique, based on the “best” CBR
+for each dataset, we would have to compare CBR1(MCD)
+to CBR3(CSD), which would indeed give statistically
+better predictions for CBR3(CSD), confirming the trend
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+that predictions for the Company-specific dataset were
+better than for the Multi-company dataset.
+Regarding the prediction accuracy of CBR, compared
+to that for SWR, CBR clearly gave better predictions,
+corroborating [24].
+Our results confirm previous work in Software
+Engineering where traditional datasets collected from
+companies worldwide without rigorous quality-assurance
+procedures were compared. The best results were also
+obtained for Company-specific datasets [17,18].
+Another two aspects that may well have influenced our
+results are 1) the number of outliers present in the MCD
+dataset (58%), compared to 25% in the CSD dataset, and
+2) the size of the MCD dataset, which is relatively small
+and only twice the size of the CSD dataset.
+
+*Selected model variables*
+Table 8 summarises the predictor variables selected for
+the different model techniques to help acquire insight into
+the importance of these variables regarding costimation.
+Variables are presented in decreasing order of importance
+when using the whole dataset for model building (CBR),
+and in brackets the number of cases that have selected that
+variable. For stepwise regression we include the final
+model, also based on the whole dataset, and
+corresponding adjusted R [2] .
+
+|Table 8 – Selected Model Variables|Col2|
+|---|---|
+|Multi-company dataset|Multi-company dataset|
+|Technique|Predictors|
+|SWR|LN(Teffort) = 3.994 + 1.677E-03*Webpages +<br>0.234*Tot-high (adj. R2 0.48)|
+|CBR1|Hnew (23), Tot-high (23), ImgNew (20), Webpages<br>(5), NewWP (4), WPoutsourced (2), TextTyped (2)|
+|CBR2|ImgNew (24), Tot-high (13), Hnew (11), Webpages<br>(5), NewWP (4), WPoutsourced (2), TextTyped (2)|
+|CBR3|Hnew (23), Tot-high (22), ImgNew (10), Webpages<br>(5), NewWP (4), WPoutsourced (2), TextTyped (2)|
+|Company-specific dataset|Company-specific dataset|
+|Technique|Predictors|
+|SWR|LN(Teffort) = 3.883 + 0.756*Hnew (adj. R2 0.88)|
+|CBR1|NewWP (6), Hnew (5)|
+|CBR2|NewWP (9), Hnew (7)|
+|CBR3|NewWP (10), Hnew (6)|
+
+
+
+For the Multi-company dataset the prevailing trends
+are as follows: Regarding the CBR technique the number
+of new features using a high amount of effort (Hnew) and
+the total number of features using a high amount of effort
+(Tot-high) have a strong effect on total effort (Teffort). As
+Tot-high also includes Hnew, we checked to see if (Tothigh-Hnew) would still lead to a linear relationship with
+LN(Teffort). As it did, we will consider only Tot-high as
+a strong trend. The number of new images (ImgNew),
+although only ranked high for CBR2, is also a trend for
+CBR1 and CBR3 and, in practice, seems a reasonable
+variable to have an effect on total effort. Stepwise
+regression selected the number of Web pages (Webpages)
+
+
+and total number of features using high amount of effort
+(Tot-high), which were exactly the two top ranking
+measures identified in our survey (Section 2).
+Unfortunately the model generated had a low adjusted R [2] .
+CBR identified one of the top raking measures in our
+survey. The results for CBR can also be explained by the
+weights we used for each variable, where the highest
+correlation coefficients were obtained for ImgNew,
+NewWP and Tot-high in descending order.
+It is clear from the CBR results for the Companyspecific dataset that the two main prevailing trends are the
+effect of number of new Web pages (NewWP) and new
+features using high effort (Hnew) on total effort (Teffort).
+Here the highest correlation coefficients were identified
+for NewWP and Hnew in descending order. These are
+similar to the two top ranking measures identified in our
+survey (Section 2). SWR selected Hnew with a good R [2] .
+The number of features that used a high effort was
+selected by all techniques, which may suggest that the
+number of pages may be a surrogate size measure.
+However only when a larger dataset is built we will be
+able to assess further these findings.
+The Tukutuku project receives more contributions as
+time goes and our aim is to have a dataset large enough to
+allow us to investigate further the issues raised in this
+Section. The Tukutuku database is available to any
+company that contributes at least three Web projects to
+the database.
+
+**4. Conclusions and Future Work**
+
+In this study we investigated two issues related to Web
+costimation, which were:
+1) What early Web size measures are used by industry
+for Web costimation.
+2) The feasibility of using multi-company datasets to
+build Web costimation models as compared to
+company-specific data.
+
+Early Web size measures for Web costimation were
+identified using a survey where data from 133 Web
+companies worldwide were collected. These companies
+use Web forms to give quotes on Web development
+projects, based on gathered early size measures. Two size
+measures stood out, ***total number of Web pages*** and *which*
+***features/functionality*** . The first is a typical length size
+measure and the second is an abstract measure of
+functionality. The survey results were used as input for the
+gathering of Web project data, which is as part of a
+research project called the Tukutuku Benchmarking
+Project.
+Regarding the use of Multi-company datasets vs.
+Company-specific datasets our results suggest that best
+predictions were obtained for company-specific datasets,
+corroborating previous work using non Web-based project
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+datasets [17,18]. Several factors could have contributed to
+these results, such as: small size of our datasets, presence
+of outliers, in particular in the Multi-company dataset, data
+obtained without rigorous quality-assurance procedures.
+However, we plan to continue our effort to obtain Web
+project data so we can build up a large dataset of projects
+that hopefully will help Web companies to estimate costs
+and benchmark productivity.
+From our experience, data collection involving
+industrial data is difficult to obtain even when companies
+see the benefit of contributing data on their projects. Most
+Web companies contacted by one of the authors were
+always under pressure either to finish existing projects or
+to bid for new ones and, unless the Tukutuku project was
+willing to pay for their time they were unwilling to
+participate. Given that only two companies were part of a
+software metrics programme it is easier to understand why
+it is hard to obtain participants.
+
+**Appendix**
+
+|Multi-company dataset|Col2|Col3|Col4|Col5|Col6|Col7|
+|---|---|---|---|---|---|---|
+|Variable|Mean|Median|Std. deviation|Skewness|Minimum|Maximum|
+|Webpages|237.96|30|568.37|3.35|6|2500|
+|NewWP|207.13|24.5|561.01|3.59|0|2500|
+|WPcustomer|24.63|0|101.76|4.82|0|500|
+|WPoutsourced|12.63|0|49.80|4.53|0|240|
+|TextTyped|64.92|2|236.63|4.58|0|1150|
+|TextElectronic|50.33|10.5|127.87|3.91|0|600|
+|TextScan|41.04|0|200|4.9|0|980|
+|ImgNew|129|27.5|206.52|2.22|0|800|
+|Img3rdParty|126|10|312.81|3.12|0|1238|
+|Imgscanned|9.88|0|28.18|3.76|0|130|
+|ImgLibrary|9.96|0|20.24|2.29|0|75|
+|Animnew|8.42|2|22.17|4.54|0|110|
+|AnimLib|0|0|0|0|0|0|
+|AVNew|0.29|0|0.86|3.86|0|4|
+|AVLib|0|0|0|0|0|0|
+|TotdiffProducts|81.63|5.5|328.39|4.86|0|1620|
+|Hfots|0.17|0|0.64|4.26|0|3|
+|Hfots-a|0.42|0|0.88|3.19|0|4|
+|Hnew|2.08|0|3.14|1.34|0|10|
+|Tot-high|2.67|1|3.46|1.4|0|12|
+|Fots|1.17|0|1.93|2.33|0|8|
+|Fots-a|2.33|1.5|2.68|0.94|0|8|
+|New|2.46|1.5|3.44|1.9|0|13|
+|Tot-nhigh|5.96|5.5|4.61|0.67|0|16|
+|Teffort|739.33|101|1460.87|2.5|6|5000|
+|Company-specific dataset|Company-specific dataset|Company-specific dataset|Company-specific dataset|Company-specific dataset|Company-specific dataset|Company-specific dataset|
+|Variable|Mean|Median|Std. deviation|Skewness|Minimum|Maximum|
+|Webpages|124.5|89|129.33|1.76|7|440|
+|NewWP|124.5|89|129.33|1.76|7|440|
+|WPcustomer|0|0|0|0|0|0|
+|WPoutsourced|0|0|0|0|0|0|
+|TextTyped|0|0|0|0|0|0|
+|TextElectronic|0|0|0|0|0|0|
+|TextScan|0|0|0|0|0|0|
+|ImgNew|12.58|0|29.39|2.06|0|158|
+|Img3rdParty|25.42|0|51.37|2.16|0|158|
+|Imgscanned|0|0|0|0|0|0|
+|ImgLibrary|88.67|0|307.15|3.46|0|1064|
+|Animnew|0|0|0|0|0|0|
+|AnimLib|22.17|0|53.2|2.94|0|170|
+|AVNew|0|0|0|0|0|0|
+|AVLib|0|0|0|0|0|0|
+|TotdiffProducts|0|0|0|0|0|0|
+|Hfots|0|0|0|0|0|0|
+|Hfots-a|0|0|0|0|0|0|
+|Hnew|1.42|0.5|1.78|0.94|0|5|
+|Tot-high|1.42|0.5|1.78|0.94|0|5|
+|Fots|0|0|0|0|0|0|
+|Fots-a|0|0|0|0|0|0|
+|New|3.5|3|2.2|-0.22|0|7|
+|Tot-nhigh|3.5|3|2.2|-0.22|0|7|
+|Teffort|348|115|518.56|2.33|21|1786|
+
+
+
+Proceedings of the Ninth International Software Metrics Symposium (METRICS’03)
+1530-1435/03 $17.00 © 2003 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:30:15 UTC from IEEE Xplore. Restrictions apply. IEEE

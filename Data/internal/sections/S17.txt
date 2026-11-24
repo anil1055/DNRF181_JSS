@@ -1,0 +1,1149 @@
+## **A Comparison of Development Effort Estimation Techniques for Web ** **Hypermedia Applications **
+
+Emilia Mendes [1], Ian Nile Mosley Steve Counsell
+Watson [1], Chris Triggs [2] *MxM Technology* *Computer Science*
+*1* *Computer Science* *P.O. Box 3539* *Department*
+*Department* *Shortland Street* *Birkbeck College,*
+*2* *Statistics Department* *Auckland* *University of London*
+*The University of Auckland* *New Zealand* *London, UK*
+*Auckland, New Zealand* *[nile_mosley@xtra.co.nz](mailto:nile_mosley@xtra.co.nz)* *[steve@dcs.bbk.ac.uk](mailto:emilia@cs.auckland.ac.nz)*
+1 *{emilia,ian}@cs.auckland.a*
+
+*c.nz*
+*2* *[triggs@stat.auckland.ac.nz](mailto:2triggs@stat.auckland.ac.nz)*
+
+
+Nile Mosley
+*MxM Technology*
+*P.O. Box 3539*
+
+*Shortland Street*
+
+*Auckland*
+
+*New Zealand*
+*[nile_mosley@xtra.co.nz](mailto:nile_mosley@xtra.co.nz)*
+
+
+Steve Counsell
+
+*Computer Science*
+*Department*
+*Birkbeck College,*
+*University of London*
+*London, UK*
+*[steve@dcs.bbk.ac.uk](mailto:emilia@cs.auckland.ac.nz)*
+
+
+**Abstract**
+
+*Several studies have compared the prediction accuracy*
+*of different types of techniques with emphasis placed on*
+*linear and stepwise regressions, and Case-based*
+*Reasoning (CBR). We believe the use of only one type of*
+*CBR technique may bias the results, as there are others*
+*that may also be used for effort prediction.*
+*This paper has two objectives. The first is to compare*
+*the prediction accuracy of three CBR techniques to*
+*estimate* *the* *effort* *to develop Web hypermedia*
+*applications. The second objective therefore, is to*
+*compare the prediction accuracy of the best CBR*
+*technique, according to our findings, against three*
+*commonly used prediction models, namely multiple linear*
+*regression, stepwise regression and regression trees.*
+*One dataset was used in the estimation process and the*
+*results showed that different measures of prediction*
+*accuracy gave different results. MMRE and MdMRE*
+*showed better prediction accuracy for Multiple regression*
+*models whereas boxplots showed better accuracy for*
+*CBR.*
+
+**Keywords:** Web hypermedia applications, effort
+prediction models, prediction accuracy, Case-based
+reasoning techniques, multiple regression models.
+
+**1. Introduction**
+
+Software practitioners recognise the importance of
+realistic estimates of effort to the successful management
+of software projects, the Web being no exception. Having
+
+
+realistic estimates at an early stage in a project's life cycle
+allow project managers and development organisations to
+manage resources effectively.
+Several techniques for cost and effort estimation have
+been proposed over the last 30 years, falling into three
+general categories [1]:
+1) **Expert judgement** **(EJ)** - Expert judgement has been
+widely used and can be an effective estimating tool on
+its own or as an adjusting factor for algorithmic
+models [2]. When applying EJ, the means of deriving
+an estimate are not explicit and therefore difficult to
+repeat.
+2) **Algorithmic models** **(AM)** - Algorithmic models
+represent the relationship between effort and one or
+more project characteristics. The main “cost driver”
+used in such a model is usually some notion of size
+(e.g. the number of lines of source code, number of
+pages, number of links). AM need calibration or to be
+adjusted to local circumstances [3,4]. Examples of
+AM are the COCOMO [5] and the SLIM [6] models.
+3) **Machine** **learning** **(ML)** - Machine learning
+techniques have in recent years been used as a
+complement or an alternative to the previous two
+categories. Examples include fuzzy logic models [7],
+regression trees [8], neural networks [9], and casebased reasoning [1]. A useful summary of these
+techniques is presented in [10].
+
+Several comparisons between the three categories of
+prediction techniques aforementioned have been made,
+based on their prediction power [10-27]. To date no
+convergence has been obtained. Most of those
+comparisons measure the prediction accuracy of
+techniques using attributes (e.g. lines of code, function
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+points) of conventional software. This paper looks at
+prediction accuracy based on attributes of Web
+hypermedia applications instead.
+A Web hypermedia application [28] is a nonconventional application characterised by the structuring
+of information using nodes (chunks of information), links
+(relations between nodes), anchors, access structures (for
+navigation) and the delivery of this structure over the
+Web. These applications have great potential in areas
+such as software engineering [29], literature [30]
+education [31], and training [32] etc.
+Conventional software applications (e.g. legacy
+systems) that depend on the Web or use the Web's
+infrastructure for execution are called Web software
+applications.
+Our research focus is on proposing and comparing
+development effort prediction models for Web
+hypermedia applications [25-27,33,34]. The metrics we
+use reflect current industrial practices for developing
+multimedia and Web hypermedia applications [35,36].
+This paper has two objectives. The first one is to
+compare the prediction accuracy of three CBR techniques
+to estimate the effort to develop Web hypermedia
+applications. As design decisions (e.g. similarity measure,
+analogy adaptation), when building CBR prediction
+systems, are influential upon the results [37], we wanted
+to reduce any bias that may hinder these results, before
+comparing them to other prediction models. The second
+objective therefore, is to compare the best CBR approach,
+according to our findings, against three commonly used
+algorithmic models, namely multiple linear regression and
+stepwise regression and regression trees. These objectives
+are reflected in the following research questions:
+1) Will different combinations of parameter categories
+(e.g. similarity measure, analogy adaptation) for the
+CBR technique generate statistically significantly
+different prediction accuracy?
+2) Which of the techniques employed in this study gives
+the most accurate predictions for the dataset?
+
+These issues are investigated using a dataset containing
+37 Web hypermedia projects developed by postgraduate
+students. Several confounding factors (e.g. Web authoring
+experience, tools used) were controlled, so increasing the
+validity of the obtained data.
+The remainder of the paper is organised as follows:
+Section 2 provides a literature review and places this
+paper in the context of existing research. Section 3
+describes our research method. Sections 4 and 5 present
+respectively the results for the comparison of CBR
+approaches, and the comparison of CBR to multiple linear
+regression, stepwise regression and regression trees.
+Section 6 presents our conclusions and comments on
+future work.
+
+**3. Research Method**
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+**3.1 Dataset**
+
+The analysis presented in this paper was based on a
+dataset containing information for 37 Web hypermedia
+applications developed by postgraduate students.
+Each Web hypermedia application provided 46
+variables [27], from which we identified 8, shown in
+Table 1, to characterise a Web hypermedia application
+and its development process. They form a basis for our
+data analysis. Total effort is our dependent/response
+variable and the remaining 7 are our
+independent/predictor variables. All variables were
+measured on a ratio scale.
+The criteria used to select the variables was [35]: i)
+practical relevance for Web hypermedia developers; ii)
+metrics which are easy to learn and cheap to collect; iii)
+counting rules which were simple and consistent.
+
+**Table 1 - Size and Com** **p** **lexit** **y** **Metrics**
+
+|Metric|Description|
+|---|---|
+|Page Count (PaC)|Number of html or shtml files<br>used in the application.|
+|Media Count (MeC)|Number of media files used in the<br>application.|
+|Program Count (PRC)|Number of JavaScript files and<br>Java applets used in the<br>application.|
+|Reused Media Count<br>(RMC)|Number of reused/modified<br>media files.|
+|Reused Program Count<br>(RPC)|Number of reused/modified<br>programs.|
+|Connectivity Density<br>(COD)|Total number of internal links1<br>divided by Page Count.|
+|Total Page Complexity<br>(TPC)|Average number of different<br>types of media per page.|
+|Total Effort (TE)|Effort in person hours to design<br>and author the application|
+
+
+Table 2 outlines the properties of the dataset used. The
+original dataset of 37 observations had three outliers
+where total effort was unrealistic compared to duration.
+Those outliers were removed, leaving 34 observations.
+
+**Table 2 - Pro** **p** **erties of the dataset**
+
+|Cases|Features|Categorical<br>features|outliers|Collinearity<br>[17]|
+|---|---|---|---|---|
+|34|8|0|0|2/7|
+
+
+Summary statistics for all the attributes are presented
+on table 3.
+
+1 Subjects did not use external links to other Web hypermedia
+applications. All the links pointed to pages within the original
+application only.
+
+
+**Table 3 - Summar** **y** **statistics for all attributes**
+
+|Col1|Mean|Med.|Min|Max|St.<br>dev|Skew<br>ness|
+|---|---|---|---|---|---|---|
+|PaC|55.21|53|33|100|11.26|1.85|
+|MeC|24.82|53|0|126|29.28|1.7|
+|PRC|0.41|0|0|5|1.04|3.27|
+|RMC|42.06|42.50|0|112|31.60|0.35|
+|RPC|0.24|0|0|8|1.37|5.83|
+|COD|10.44|9.01|1.69|23.30|6.14|0.35|
+|TPC|1.16|1|0|2.51|0.57|0.33|
+|TE|111.89|114.65|58.36|153.78|26.43|-0.36|
+|Obs.|34|34|34|34|34|34|
+
+
+
+All the measures collected, apart from total effort,
+were checked against the original Web hypermedia
+applications to ensure that attributes were precisely
+measured. Total effort was calculated as:
+
+
+where *PAE* is the *page authoring effort*, *MAE* *the media*
+*authoring effort* and *PRE* the *program authoring effort*
+
+[27]. When the dataset was collected, two levels of
+granularity were used to measure the total effort to
+develop a Web hypermedia application: the first level
+**(L1)** collected effort with respect to coarser sub-tasks
+related to the application's development process (e.g.,
+effort to plan the interface, effort to test all links in the
+whole application); the second level **(L2)** collected effort
+with respect to finer levels of granularity related to subtasks at the page, media and program levels (e.g. effort to
+create links for each page, effort to digitise each media
+etc). To record the finer levels of granularity subjects
+were given forms, similar to those used in the PSP
+method [40]. Although forms do not prevent the
+introduction of error in the data collection activity [41],
+we chose to use total-effort based on the finer granularity
+measures. We used both a T-test and a Wilcoxon Rank
+
+Sum Test (α = 0.01) to check if L1 and L2 came from the
+same population. No statistically significant results were
+obtained. Although these results do not mean that the two
+samples come from the same population, we cannot prove
+that they do *not* come from the same population.
+A detailed description of threats and comments on the
+validity of the case study is presented in [27].
+
+**3.2 Modelling Techniques**
+
+Several modelling techniques have been compared in
+the Software/Web engineering literature [10-27]. Three of
+which, multiple linear regression, stepwise regression and
+case-based reasoning, have also been compared in the
+Web engineering literature that focuses on Web
+hypermedia applications.
+For the scope of this paper we selected a subset of
+techniques based on the following criteria [11]:
+
+
+*i* = *n*
+
+
+*j* = *m*
+
+
+*k* = *o*
+
+# Total-effort = ∑ PAE + ∑ MAE + ∑
+
+
+*PAE* + *MAE* + *PRE* (1)
+
+1 =0 *k* =0
+
+
+*PAE* + *MAE* + *PRE*
+
+*i* =1 =0 *k* =0
+
+
++ +
+
+= =
+
+
+*k*
+
+
+=
+
+
+*j*
+
+
+=
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+- **Can the technique be automated?**
+As, similar to [11,12], we use a computationally
+intensive cross-validation approach to calculate the
+accuracy values, we opted for automated techniques.
+
+- **Has the technique been used previously in Web**
+**engineering?**
+By choosing techniques that had been used in Web
+engineering would give the opportunity to compare
+results, looking for convergence with other applicable
+techniques used in Web engineering.
+
+- **Are the results easy to understand from a**
+**practitioner's point of view?**
+If effort prediction techniques are to be used by
+practitioners they have to be easy to understand and
+interpret otherwise the chances are that they will not be
+applied in practice.
+Based on the criteria aforementioned we chose the
+following techniques:
+
+- Multiple Linear Regression
+
+- Stepwise Regression
+
+- Case-based reasoning
+
+- Regression tree-based model (CART)
+
+*Multiple Linear Regression*
+Multiple linear regression [42], an extension of simple
+linear regression, uses two or more predictor variables
+simultaneously to explain variations in a single response
+variable. It minimises the sum of squared errors looking
+for the best estimates for coefficients. The distance, for
+each observation, between the observed total effort and
+the predicted total effort represents the error.
+
+*Stepwise Regression (SR)*
+Stepwise regression [42] builds a prediction model by,
+at each stage, adding to the model the variable that has the
+highest partial correlation with the response variable,
+taking into account all variables currently in the model. Its
+aim is to find the set of predictors that maximise *F* . *F*
+assesses whether the regressors, taken together, are
+significantly associated with the response variable. The
+criteria used to add a variable is whether it increases the *F*
+value for the regression by some specified amount *k* .
+When a variable reduces *F*, also by some specified
+amount *w,* it is removed from the model.
+Stepwise regression has been frequently used as a
+benchmark [1,17,18,27] and is regarded by some as a
+good prediction technique [3].
+
+*Case-based Reasoning*
+CBR [1] provides estimates by comparing the current
+problem to be estimated against a library of past projects.
+The similarities of features in the current problem
+
+
+description are compared to those in past projects.
+Typically the development effort from the most similar
+past project is retrieved and may be adapted by
+interpolation or extrapolation to provide a final estimate.
+Numerous techniques can be used for the similarity
+assessment, but in recent years, nearest neighbour
+algorithms [43] have been the most widely used.
+
+*Classification and Regression tree-based model (CART)*
+The objective of CART [44] models is to develop a
+simple tree-structured decision process for classifying an
+observation *obs* . Trees used for problems with numerical
+features are often called *regression trees* and trees used
+for problems with categorical features are often called
+*classification trees* .
+CART models build a binary tree by recursively
+partitioning, according to splitting rules, the predictor
+space into subsets where the distribution of the response
+variable is successively more homogeneous. Each
+observation is assigned to a unique leaf node, where the
+conditional distribution of the response variable is
+determined.
+The best splitting for each node is searched based on a
+"purity" function calculated from the data. The data is
+considered to be pure when it contains data samples from
+only one class. The least squared deviation (LSD)
+measure of impurity was applied to our dataset. This
+index is computed as the within-node variance, adjusted
+for frequency or case weights (if any).
+All statistical analyses presented in the paper, except
+for CART models, were conducted using the statistical
+software SPSS v.10.01 [45].
+
+**3.3 Evaluation Criteria**
+
+The most common approaches to assessing the
+predictive power of effort prediction models are:
+
+- The Magniture of Relative Error **(MRE)** [19]
+
+- The Mean Magnitude of Relative Error **(MMRE)** [1]
+
+- The Median Magnitude of Relative Error **(MdMRE)**
+
+[15]
+
+- The Prediction at level n **(Pred(n))** [16]
+
+- Boxplots of residuals [38]
+
+The MRE is defined as:
+
+
+Where *i* represents each observation for which effort is
+predicted.
+The mean of all MREs is the MMRE, which is
+calculated as:
+
+
+*MRE* *i* =
+
+
+(2)
+
+***ActualEffort*** ***i***
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+***i*** **=** ***n*** **−**
+
+
+**=**
+
+
+***1*** ***rt*** ***i*** **−** ***ort*** ***i***
+# n ∑ rt  (3)
+
+
+*MMRE* =
+# **∑**
+
+
+***ActualEffort*** ***i*** **−** ***Pr*** ***edictedEffort***
+
+
+***i*** **−** ***i***
+
+***ActualEffort*** ***i***
+
+
+***i*** **=** ***1*** ***i***
+
+
+**=**
+
+
+The mean takes into account the numerical value of
+every observation in the data distribution, and is sensitive
+to individual predictions with large MREs.
+Another choice is the median, which also represents a
+measure of central tendency, however less sensitive to
+extreme values. The median of MRE values for the
+
+number *i* of observations is called the MdMRE.
+Other commonly used indicator is the Prediction at
+level *l,* also known as Pred( *l* ). It measures the percentage
+of estimates that are within *l* % of the actual values.
+Suggestions have been made [46] that *l* should be set at
+25% and that a good prediction system should offer this
+accuracy level 75% of the time.
+In addition, boxplots of the residuals (actual-estimate)
+
+[38] are an alternative to MMRE and Pred(n).
+The statistical significance of all the results, except
+boxplots, was tested using the t-test for paired MREs and
+MMREs and the Wilcoxon Rank Sum Test or MannWhitney U Test for MdMREs. Both were generated using
+1% and 5% levels of significance.
+
+**4. Comparing CBR approaches**
+
+**4.1 Introduction**
+
+During the process of applying case-based reasoning
+users need to choose five parameters, as follows:
+
+- Feature subset selection
+
+- Similarity measure
+
+- Scaling
+
+- Number of analogies
+
+- Analogy adaptation
+
+Each parameter in turn can be split into more detail,
+and optionally incorporated for a given CBR tool.
+To answer our first question (see Introduction) we
+compared the prediction accuracy of several estimations
+generated using different categories for a given parameter.
+Estimations were generated using two CBR tools, namely
+ANGEL [23] and CBR-Works [47].
+
+**4.2 Feature subset selection**
+
+Feature subset selection involves determining the
+optimum subset of features that gives the most accurate
+estimation. ANGEL optionally offers this functionality by
+applying a brute force algorithm, searching for all
+possible feature subsets. CBR-Works does not offer
+similar functionality.
+
+
+To investigate if the feature subset selection would
+help achieve better prediction accuracy, we used ANGEL,
+and the jackknife method, as follows:
+Step 1 One datapoint was chosen and had its status
+changed to "active", to be considered as a new
+project for the purpose of this evaluation.
+Step 2 The remaining 33 datapoints
+(status="completed") were used in the estimation
+
+process.
+Step 3 The optimum combination of attributes was
+generated for 1, 2 and 3 analogies by using the
+"Best attribute set" option.
+Step 4 Effort was estimated using 1 to 3 analogies and
+based on the corresponding best attribute sets.
+Step 5 The datapoint chosen in Step 1 had its status
+changed back to "completed".
+Step 6 Steps 1 through 5 were repeated until all 34
+projects had had their effort estimated.
+We repeated those steps, leaving out Step 3 and
+calculating effort for each number of analogies (1, 2 or 3)
+using the full set of attributes available in the dataset.
+The prediction accuracy of estimations obtained using
+Feature Subset Selection ( **FSS)** was higher than that for
+**No FSS** . Boxplots of the residuals showed that the best
+predictions were obtained using 1 analogy + **FSS** option,
+followed by two analogies + **FSS**, and 3 analogies + **FSS** .
+These results were also confirmed by the values for
+MMRE, MdMRE and Pred(25).
+For one analogy, the MRE for **FSS** was significantly
+less than that for **No FSS** ( α =0.01), using a T-test. For
+two and 3 analogies the difference between **FSS** and **No**
+**FSS** was not statistically significant. Comparing these
+results to the boxplots of residuals suggested that for k=1
+the feature subset selection may indeed affect the
+accuracy of the prediction obtained.
+
+**4.2 Similarity Measure**
+
+Similarity Measure measures the level of similarity
+between cases. To our knowledge, the similarity measure
+most frequently used in the Software engineering and
+Web engineering literature is the unweighted Euclidean
+distance. In the context of this investigation we have used
+three measures of similarity, namely the unweighted
+Euclidean distance, the weighted Euclidean distance and
+the Maximum measure, detailed as follows:
+
+*Unweighted Euclidean distance:* The Euclidean distance *d*
+between the points *(x* *0* *,y* *0* *)* and *(x* *1* *,y* *1* *)* is given by the
+formula:
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+*Weighted Euclidean distance:* It is common in CBR for
+the features vectors to be weighted to reflect the relative
+importance of each feature. The weighted Euclidean
+distance *d* between the points *(x* *0* *,y* *0* *)* and *(x* *1* *,y* *1* *)* is given
+by the formula:
+
+where *w* *x* and *w* *y* are the weights of *x* and *y* respectively.
+
+We attributed weight=2 to attributes PaC, MeC and
+RMC and weight =1 to the remaining 4 attributes. Those
+attributes were chosen as they presented statistically
+significant correlation ( α =0.01) with Total effort. By
+doing so we believed would simulate the "Feature subset
+selection" option, provided by the ANGEL tool.
+
+*Maximum measure:* Using the maximum measure, the
+maximum feature similarity defines the case similarity.
+For two points *(x* *0* *,y* *0* *)* and *(x* *1* *,y* *1* *)*, the maximum measure *d*
+is equivalent to the formula:
+
+This effectively reduces the similarity measure down
+to a single feature, although the maximum feature may
+differ for each retrieval episode.
+
+**4.4 Scaling or Standardisation**
+
+Standardisation represents the transformation of
+attribute values according to a defined rule such that all
+attributes are measured using the same unit. One possible
+solution is to assign zero to the minimum observed value
+and one to the maximum observed value [23]. This is the
+strategy used by ANGEL and was the strategy chosen for
+part of the analysis carried out using CBR-Works.
+
+**4.5 Number of Analogies**
+
+The number of analogies refers to the number of most
+similar cases that will be used to generate the estimation.
+For [20] when small sets of data are used it is reasonable
+to consider only a small number of analogies. In this
+study we have used 1, 2 and 3 analogies, similarly to [1113,20,23,26,34].
+
+**4.6 Analogy Adaptation**
+
+Once the most similar case(s) has/have been selected
+the next step is to decide how to generate the estimation.
+Choices of analogy adaptation techniques presented in the
+Software Engineering literature vary from the nearest
+
+
+neighbour [11,13], the mean of the closest analogies [16],
+the median [20], inverse distance weighted mean and
+inverse rank weighted mean [37], to illustrate just a few.
+In the Web engineering literature, the adaptation used to
+date is the mean of the closest analogies [26,34].
+We opted for the mean, median and the inverse rank
+weighted mean.
+
+**Mean:** Represents the average of k analogies, when k>1.
+
+**Inverse rank weighted mean** : Allows higher ranked
+analogies to have more influence than lower ones. If we
+use 3 analogies, for example, the closest analogy (CA)
+would have weight = 3, the second closest (SC) weight =
+2 and the last one (LA) weight =1. The estimation would
+then be calculated as:
+
+(3*CA + 2*SC + LA)/6            (7)
+
+**Median:** Represents the median of k analogies, when
+k>2.
+
+**4.7 Comparison of techniques**
+
+The results in Table 4 have been obtained by
+considering three similarity measures (unweighted
+Euclidean, weighted Euclidean and Maximum), three
+choices for the number of analogies (1, 2 and 3), three
+choices for the analogy adaptation (mean, inverse rank
+weighted mean and median) and two alternatives
+regarding the standardisation of the attributes ("Yes" for
+standardised and "No" for not standardised).
+Our first step was to check for statistically significant
+differences between results obtained using Standardised
+and Non-standardised variables. A T-test (for MMREs)
+and a Mann-Whitney U Test (for MdMREs), for α =0.01
+and α =0.05 did not reveal any statistically significant
+differences.
+Our second step was to check for statistically
+significant differences between different distances. This
+time we restricted our analysis to results obtained using
+standardised variables. Both T-test (for MMREs and
+Pred(25)) and a Wilcoxon Signed Rank Test (for
+MdMREs), using α =0.01 and α =0.05 were performed.
+The Maximum distance showed statistically significant
+worse results than the other two distances. The Weighted
+Euclidean (WE) showed statistically significant better
+results ( α =0.01) than the Unweighted Euclidean (UE), for
+MMREs and paired MREs, however none when we used
+MdMREs. Boxplots of the residuals corroborated the
+results obtained using the T-test.
+Consequently, the answer to our **first question** (see
+Introduction) was, at least for the dataset used, **positive** :
+Different combinations of parameter categories for the
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+CBR technique gave statistically significantly different
+prediction accuracy.
+
+**Table 4 - Comparison of CBR techniques**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|Dist.|K|Adpt.|SV?|MMRE|MdMRE|Pred(25)|
+|---|---|---|---|---|---|---|
+|UE|1|Mean|Yes|0.12|0.10|88.24|
+|UE|1|Mean|No|0.11|0.09|91.18|
+|UE|2|Mean|Yes|0.15|0.12|82.35|
+|UE|2|Mean|No|0.13|0.11|88.24|
+|UE|2|IRWM|Yes|0.13|0.11|85.29|
+|UE|2|IRWM|No|0.12|0.11|91.18|
+|UE|3|Mean|Yes|0.14|0.11|82.35|
+|UE|3|Mean|No|0.12|0.10|91.18|
+|UE|3|IRWM|Yes|0.13|0.12|85.29|
+|UE|3|IRWM|No|0.11|0.08|91.18|
+|UE|3|Median|Yes|0.14|0.10|76.47|
+|UE|3|Median|No|0.14|0.09|82.35|
+|WE|1|Mean|Yes 0.10 0.09 94.12|Yes 0.10 0.09 94.12|Yes 0.10 0.09 94.12|Yes 0.10 0.09 94.12|
+|WE|1|Mean|No|0.11|0.09|94.12|
+|WE|2|Mean|Yes|0.13|0.11|94.12|
+|WE|2|Mean|No|0.13|0.11|94.12|
+|WE|2|IRWM|Yes|0.12|0.11|97.06|
+|WE|2|IRWM|No|0.11|0.11|97.06|
+|WE|3|Mean|Yes|0.13|0.09|88.24|
+|WE|3|Mean|No|0.12|0.09|88.24|
+|WE|3|IRWM|Yes|0.12|0.12|94.12|
+|WE|3|IRWM|No|0.12|0.12|94.12|
+|WE|3|Median|Yes|0.14|0.10|82.35|
+|WE|3|Median|No|0.13|0.10|82.35|
+|MX|1|Mean|Yes|0.32|0.34|26.47|
+|MX|1|Mean|No|0.32|0.33|26.47|
+|MX|2|Mean|Yes|0.23|0.17|67.65|
+|MX|2|Mean|No|0.23|0.17|67.65|
+|MX|2|IRWM|Yes|0.25|0.23|58.82|
+|MX|2|IRWM|No|0.25|0.23|58.82|
+|MX|3|Mean|Yes|0.25|0.15|76.47|
+|MX|3|Mean|No|0.24|0.15|76.47|
+|MX|3|IRWM|Yes|0.23|0.16|67.65|
+|MX|3|IRWM|No|0.23|0.16|67.65|
+|MX|3|Median|Yes|0.31|0.17|58.82|
+|MX|3|Median|No|0.31|0.16|61.76|
+|Dist. = distance<br>UE = Unweighted Euclidean<br>WE = Weighted Euclidean<br>MX = Maximum|Dist. = distance<br>UE = Unweighted Euclidean<br>WE = Weighted Euclidean<br>MX = Maximum|Dist. = distance<br>UE = Unweighted Euclidean<br>WE = Weighted Euclidean<br>MX = Maximum|Dist. = distance<br>UE = Unweighted Euclidean<br>WE = Weighted Euclidean<br>MX = Maximum|K = number of analogies<br>Adpt. = adaptation<br>SV? = Standardised Variable?|K = number of analogies<br>Adpt. = adaptation<br>SV? = Standardised Variable?|K = number of analogies<br>Adpt. = adaptation<br>SV? = Standardised Variable?|
+
+
+Our next step was to choose the WE combination that
+gave the best prediction accuracy, and to assess whether
+different prediction accuracies would be statistically
+significant or not. To decide upon it, we compared paired
+MREs for one, two and three analogies using a T-test.
+Boxplots for their residuals confirmed the results obtained
+by the T-test, i.e., one analogy gave the best results,
+statistically significantly better than those for two and
+three analogies. Therefore the CBR technique that gave
+the best results used **one analogy** using a **weighted**
+**distance** .
+
+**5. Comparing Several Estimation Techniques**
+
+
+To address our second question (see Introduction), we
+compared the prediction accuracy of estimations
+generated using several techniques, namely CBR,
+multiple linear regression, stepwise regression and
+regression trees.
+To determine their accuracy we used a three-fold
+cross-validation approach [11,13,17]. Cross-validation
+involves dividing the whole dataset into multiple train and
+validation sets, calculating the accuracy for each
+validation set, and aggregating the accuracy across all
+validation sets. A three-fold cross-validation yields three
+different training-validation set combinations. We used
+two different types of split: the first one **(SP1)** was a 66%
+split (23 observations in the train set and 11 in validation
+set); the second **(SP2)** was a 86% split (29 observations in
+the train set and 5 in the validation set). We therefore had
+in total six different combinations for each technique
+employed. All train sets were generated randomly.
+For the linear and stepwise regression models we
+addressed several issues [15]:
+
+- Does the model use the right and most important
+attributes?
+
+- Is the formal model correctly specified?
+
+To investigate the first issue we performed both
+Pearson's and Spearman's correlation looking for those
+attributes statistically significantly correlated to total
+effort ( α =0.01). Three attributes, namely Page Count
+(PaC), Media Count (MeC) and Reused Media Count
+(RMC), were selected. This result supports information
+obtained from several practitioners regarding those
+attributes taken into consideration when bidding for Web
+hypermedia development projects.
+To investigate the second issue we verified the
+distribution of the residuals looking for any unusual
+patterns. The analysis of the residuals did not indicate any
+non-linearity.
+The final linear models for multiple linear regression
+and stepwise regression were the same (see Table 5).
+
+**Table 5 - Formulas for the Multi** **p** **le Re** **g** **ression Models**
+
+|version|Formula|R2 adj.|
+|---|---|---|
+|SP1 v1|5.107 + 1.276 PaC+ 0.644 MeC + 0.490 RMC|0.957|
+|SP1 v2|10.068 +1.226 PaC + 0.626 MeC + 0.470<br>RMC|0.945|
+|SP1 v3|5.712 +1.256 PaC + 0.653 MeC + 0.495 RMC|0.967|
+|SP2 v1|5.295 +1.284 PaC + 0.619 MeC + 0.490 RMC|0.97|
+|SP2 v2|4.710 +1.298 PaC + 0.6 MeC + 0.484 RMC|0.986|
+|SP2 v3|5.325 +1.292 PaC + 0.589 MeC + 0.476 RMC|0.985|
+
+
+
+All regressions presented high R [2] (adj.). R [2 ] measures
+the percentage of the variation in the response variable
+explained by variations in the predictor variables taken
+together. R [2] (adj.) represents R [2] adjusted for the number
+of predictor variables used in the regression [42]. Further
+investigation of the forms that recorded effort revealed
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+that most values for effort were either very similar or
+quite often the same, suggesting that subjects used values
+they previously agreed upon, rather than measuring their
+own separately. One of the authors inquired some Web
+development organisations whether the effort values
+given would be unrealistic in practice, to which the
+answers obtained indicated that they were not.
+Our regression trees were generated using SPSS
+Answer Tree version 2.1.1. For most cases we set the
+maximum tree depth to 5, the minimum number of cases
+in a parent node to 2 and the minimum number of cases in
+child nodes to 1. We looked to trees that gave the small
+risk estimates (SRE), which were set at a minimum of
+95%, and calculated as:
+
+
+-60
+
+
+80
+
+
+60
+
+
+
+40
+
+
+20
+
+
+0
+
+
+
+
+
+
+-20
+
+
+-40
+
+
+N = 11 11 11 11 11 11 11 11 11
+
+
+C ARTV1
+
+
+CARTV3
+
+
+CBRV3
+
+
+100 -  [] 1 − exp *lainednode* −− *error* var *iance*  []  (8)
+
+
+variables and when there is no underlying linear model
+
+[46].
+
+80
+
+40
+
+20
+
+-20
+
+-40
+
+-60
+
+N = 11 11 11 11 11 11 11 11 11
+
+CBRV1 C ARTV1 MRV2 CBRV3 CARTV3
+
+MRV1 CBRV2 CARTV2 MRV3
+
+**Figure 1 - Boxplots of the Residuals for SP1**
+
+40
+
+-20
+
+-40
+
+-80
+
+N = 5 5 5 5 5 5 5 5 5
+
+CBR1 CART1 REGRESS2 CBR3 CART3
+
+REGRESS1 CBR2 CART2 REGRESS3
+
+**Figure 2 - Boxplots of the Residuals for SP2**
+
+The tests of significance for MMREs and Pred(25) (Ttest) and MdMREs (Mann-Whitney Test) indicated that
+regression models generally gave statistically significant
+better results than CBR and CART models. Pred(25)
+confirmed the same trend between regression models and
+CART, for **SP1** . One would expect such outcome due to a
+very high R [2] adjusted values for our dataset, which
+favours regression techniques. However, to our surprise,
+according to the boxplots, CBR showed better prediction
+accuracy than LR/SR, contrary to what MMREs and
+MdMREs indicated.
+Therefore, the answer to our second question depends
+on what measure of prediction accuracy is used. For our
+dataset, Multiple regression and CBR gave the most
+accurate predictions, the former based on MMREs and
+MdMREs and the latter based on boxplots of the
+residuals. These results clearly suggest that different
+measures of prediction accuracy may lead to different and
+
+
+CBRV1
+
+
+MRV2
+
+
+ *node* − *error* 
+
+ [] 1 − exp *lained* − var *iance*  [] 
+
+
+SRE = 100 -  [] 1 − exp *lained* −− var *iance*  [] 
+
+
+CARTV2
+
+
+MRV3
+
+
+MRV1
+
+
+CBRV2
+
+
+where *node-error* is calculated as the within-node
+variance about the mean of the node. *Explained-variance*
+is calculated as the within-node (error) variance plus the
+between-node (explained) variance.
+By setting the SRE to a minimum of 95% we believe
+that we have captured the most important variables.
+The prediction accuracy for each technique used is
+presented in Table 6, where Multiple linear and Stepwise
+regressions gave the best prediction accuracy. Figures 1
+and 2 show boxplots of the residuals for both types of
+split.
+
+**Table 6 - Prediction Accuracy for the Techniques**
+**com** **p** **ared in this stud** **y**
+
+|Split<br>version|Technique|MMRE|MdMRE|Pred(25)|
+|---|---|---|---|---|
+|SP1 v1|CBR|0.12|0.09|90.91|
+|SP1 v1|L/Sw|0.03|0.03|100|
+|SP1 v1|CART|0.22|0.11|81.82|
+|SP1 v2|CBR|0.16|0.15|63.63|
+|SP1 v2|L/Sw|0.04|0.04|100|
+|SP1 v2|CART|0.15|0.08|81.82|
+|SP1 v3|CBR|0.09|0.06|90.90|
+|SP1 v3|L/Sw|0.03|0.02|100|
+|SP1 v3|CART|0.13|0.11|90.91|
+|SP2 v1|CBR|0.18|0.15|80|
+|SP2 v1|L/Sw|0.02|0.01|100|
+|SP2 v1|CART|0.10|0.07|80|
+|SP2 v2|CBR|0.10|0.09|100|
+|SP2 v2|L/Sw|0.04|0.03|100|
+|SP2 v2|CART|0.23|0.10|80|
+|SP2 v3|CBR|0.15|0.15|100|
+|SP2 v3|L/Sw|0.05|0.04|100|
+|SP2 v3|CART|0.11|0.08|80|
+|L/Sw - Linear and Stepwise regressions|L/Sw - Linear and Stepwise regressions|L/Sw - Linear and Stepwise regressions|L/Sw - Linear and Stepwise regressions|L/Sw - Linear and Stepwise regressions|
+
+
+
+The Boxplots of the residuals also confirmed that
+CART visibly gave the worst results, which was not
+surprising. Regression trees should, in principle, be used
+when there is a large number of nominal and ordinal scale
+
+
+40
+
+
+20
+
+
+
+
+0
+
+
+
+-20
+
+
+-40
+
+
+-60
+
+
+
+-80
+
+
+N = 5 5 5 5 5 5 5 5 5
+
+
+CBR1
+
+
+CART1
+
+
+REGRESS2
+
+
+CBR3
+
+
+CART3
+
+
+REGRESS1
+
+
+CBR2
+
+
+CART2
+
+
+REGRESS3
+
+
+
+Proceedings of the Eighth IEEE Symposium on Software Metrics (METRICS’02)
+0-7695-1339-5/02 $17.00 © 2002 Authorized licensed use limited to: Aarhus University. Downloaded on September 06,2024 at 14:28:33 UTC from IEEE Xplore. Restrictions apply. IEEE
+
+
+sometimes contradictory conclusions, corroborating [48].
+The same way as predicting effort using one single model
+can be misleading, one should not compare the prediction
+accuracy of several models using only one measure of
+
+accuracy.
+Some tables and boxplots of residuals were omitted due
+to shortage of space. However, they are available at
+http://www.cs.auckland.ac.nz/~emilia/metrics2002.pdf.
+
+**6. Conclusions and Future Work**
+
+In this study we investigated two questions related to
+effort prediction models for Web hypermedia
+applications, which were:
+1) Will different combinations of parameter categories
+for the CBR technique generate statistically
+significantly different prediction accuracy?
+2) Which of the techniques employed in this study gives
+the most accurate predictions for the dataset?
+
+In addressing the first question, our results show that
+the CBR technique which gave the most accurate results
+used as similarity measure the Weighted Euclidean
+distance, for k=1 analogy.
+In addressing the second question, our results show
+that multiple regression and CBR gave the most accurate
+predictions, the former based on MMREs and MdMREs
+and the latter based on boxplots of the residuals.
+In general all models showed very good prediction
+accuracy based on MMRE, MdMRE and Pred(25).
+However, boxplots of the residuals revealed that CART
+regression trees gave worse results than CBR and
+Multiple regression models, which might be explained
+due to the nature of the dataset variables and underlying
+model.
+We are on the process of replicating this study using
+another dataset of Web hypermedia projects, addressing
+not only the questions asked in this paper, but also
+questions such as:
+
+- What are the typical characteristics that may be found
+in a Web hypermedia project dataset?
+
+- To what extent those datasets show similar
+characteristics to Web software project datasets and
+conventional software project datasets?

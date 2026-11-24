@@ -1,0 +1,656 @@
+# **Using Support Vector Regression for ** **Web Development Effort Estimation **
+
+Anna Corazza [1], Sergio Di Martino [1], Filomena Ferrucci [2], Carmine Gravino [2],
+
+and Emilia Mendes [3 ]
+
+1 The University of Napoli “Federico II” Via Cinthia, I-80126 Napoli, Italy
+
+{corazza,dimartino}@na.infn.it
+2 The University of Salerno, Via Ponte Don Melillo, I-84084 Fisciano (SA), Italy
+
+{fferrucci,gravino}@unisa.it
+3 University of Auckland, Private Bag 92019
+Auckland, New Zealand, 0064 9 3737599 ext. 86137
+
+emilia@cs.auckland.ac.nz
+
+**Abstract.** The objective of this paper is to investigate the use of Support Vector
+Regression (SVR) for Web development effort estimation when using a crosscompany data set. Four kernels of SVR were used, linear, polynomial, Gaussian
+and sigmoid and two preprocessing strategies of the variables were applied,
+namely normalization and logarithmic. The hold-out validation process was
+carried out for all the eight configurations using a training set and a validation
+set from the Tukutuku data set. Our results suggest that the predictions obtained
+with linear kernel applying a logarithmic transformation of variables (LinLog)
+are significantly better than those obtained with the other configurations. In
+addition, SVR has been compared with the traditional estimation techniques,
+such as Manual StepWise Regression, Case-Based Reasoning, and Bayesian
+Networks. Our results suggest that SVR with LinLog configuration can provide
+significantly superior prediction accuracy than other techniques.
+
+**Keywords:** Effort Estimation, Empirical Web Engineering, Support Vector
+Regression.
+
+**1  Introduction**
+
+When planning a software project, estimation of development effort/cost is a critical
+management activity, aiming at predicting an accurate effort estimate and at using this
+information to allocate resources adequately. Many techniques have been proposed to
+estimate the effort necessary to develop a new project. These techniques use data
+from past projects, characterized by some cost drivers, to estimate effort for a new
+project under development (see e.g., [6], [9]). Thus, the availability of past data
+suitable to obtain reliable effort predictions represents a critical issue [15]. Indeed,
+software companies may lack their own data set of previously developed projects,
+also due to the time required to accumulate enough past data [22][14]. The use of
+cross-company data sets, i.e. data sets that contain project data volunteered by several
+companies, could overcome this issue. Nevertheless, the application of traditional
+
+A. Abran et al. (Eds.): IWSM/Mensura 2009, LNCS 5891, pp. 255–271, 2009.
+© Springer-Verlag Berlin Heidelberg 2009
+
+
+256 A. Corazza et al.
+
+estimation techniques, such as Linear Regression and Case-Based Reasoning, may not
+provide good results with cross-company data sets [31].
+
+Thus, it is important to investigate new solutions, able to better correlate cost
+drivers and development effort in the case of cross-company data sets. In this paper,
+we propose to use *Support Vector Regression* (SVR), an approach based on Support
+Vector Machines, which are a new generation of Machine Learning algorithms
+
+[40][42]. Our choice is also motivated by the fact that SVR can be easily integrated
+with *kernel functions*, allowing the learning mechanism to adapt to different data sets.
+To the best of our knowledge, only two previous studies have investigated the
+application of SVR for effort estimation, and none of these focused on Web projects
+or the use of cross-company data sets. In particular, Oliveira [32] was the first to
+apply SVR for effort estimation, exploiting 18 applications from a NASA data set [2],
+reporting that SVR significantly outperformed both linear regression and Radial Basis
+Function Networks (RBFNs). In the second study, the authors compared various AIbased prediction techniques [4] using two single company data sets: again the results
+showed that SVR performed very well.
+
+However, it is widely recognized that the use of cross-company data sets is very
+challenging for Software Engineers, and to date there are no studies that investigated
+whether SVR is able to deal with the complexity of cross-company data sets in a
+significantly superior fashion than other techniques. Moreover, the data sets employed
+in the previous studies were characterized by very few independent variables: only
+two for the NASA data set, and nine for the second case study.
+
+To overcome this lack of empirical evidence on the effectiveness of SVR in the
+field of Web development effort estimation, the contribution of the present paper is to
+analyze the application of SVR to a cross-company data set of Web projects, using
+data from the Tukutuku database, which has been used in several studies the field of
+Web effort estimation [11][21][23][27][31]. Indeed, the Tukutuku database contains
+data on 195 Web projects developed worldwide, using different technologies,
+methodologies and size. Each project is described by a set of 25 features.
+
+Four kernels for SVR were used, namely linear, polynomial, Gaussian and
+sigmoid. Moreover, to reduce the risk that large differences in the variables values,
+typical of cross-company data sets, could have unwanted effects on the predictions,
+two preprocessing strategies were applied to the variables, namely normalization and
+logarithmic transformation. Thus, a total of eight different configurations of the
+method were applied.
+
+To evaluate the prediction accuracy of SVR, we carried out for all the
+configurations a hold-out protocol, with a training set containing 130 projects
+randomly selected from the Tukutuku database, and a test set containing the
+remaining 65 projects. As benchmark, we employed Manual StepWise Regression
+(MSWR) and Case-Based Reasoning (CBR) due to their frequent use in software
+effort estimation studies, Bayesian Networks as used in [22], and the Mean effort and
+the Median effort of the data set. Prediction accuracy was measured using the Mean
+Magnitude of Relative Error (MMRE) [7], the Median Magnitude of Relative Error
+(MdMRE) [7], Prediction at level 25 (Pred(25)) [7], the Mean Magnitude of Relative
+Error relative to the Estimate (MEMRE) [17], the Median Magnitude of Relative
+Error relative to the Estimate (MdEMRE) [17], boxplots of absolute residuals (actual
+effort – estimated effort) and finally boxplots of z (estimated effort / actual effort).
+
+
+Using Support Vector Regression for Web Development Effort Estimation 257
+
+Accuracy of estimates was also assessed by tests on statistical significance, in order to
+verify if the predictions obtained with one technique significantly outperformed the
+others.
+
+Consequently, the research question addressed in this paper is the following:
+
+−
+Are the effort predictions obtained by Support Vector Regression significantly
+
+superior to the ones obtained by other techniques?
+
+The remainder of the paper is organized as follows: in Section 2 there is a description
+of the data set we used for our empirical study. In Section 3 we present the evaluation
+techniques used to assess the effectiveness of the predictions. In Section 4 there is a
+description of the SVR approach, together with information on how we set-up some
+parameters for the evaluations. In Section 5 there is a discussion of the results,
+together with a comparison with other widely adopted estimation techniques, while
+finally in Section 6 there are some concluding remarks and future work.
+
+**2  Data Set Description**
+
+In this section the Tukutuku database [24] is described. This database aims to collect
+data from completed Web projects, to develop Web cost estimation models and to
+benchmark productivity across and within Web Companies [24]. The Tukutuku
+database includes information on Web hypermedia systems and Web applications [6].
+The former are characterized by the authoring of information using nodes (chunks of
+information), links (relations between nodes), anchors, access structures (for navigation)
+and its delivery over the Web. Conversely, the latter represents software applications
+that depend on the Web or use the Web's infrastructure for execution, and are
+characterized by functionality affecting the state of the underlying business logic. Web
+applications usually include tools suited to handle persistent data, such as XML files,
+(remote) databases, or Web Services. Typical developers are young programmers fresh
+from a Computer Science or Software Engineering degree, managed by senior staff.
+
+The Tukutuku database contains data on 195 projects where:
+
+−
+Projects came mostly from 10 different countries, mainly New Zealand (47%),
+
+Italy (17%), Spain (16%), Brazil (10%), United States (4%), England (2%), and
+Canada (2%).
+
+−
+Project types are new developments (65.6%) or enhancement projects (34.4%).
+
+−
+With respect to the dynamic technologies, PHP is used in 42.6% of the projects,
+
+ASP (VBScript or .Net) in 13.8%, Perl in 11.8%, J2EE in 9.2%, while 9.2% of
+the projects used other solutions. The remaining projects used only HTML
+and/or JavaScript.
+
+Each Web project in the database is characterized by some process and product
+variables [24]. Summary statistics for the numerical variables from the Tukutuku
+database are given in Table 1, while Table 2 summarizes the number and percentages
+of projects for the categorical variables.
+
+
+258 A. Corazza et al.
+
+**Table 1.** Summary Statistics for numerical variables of Tukutuku database
+
+
+
+
+
+|Variable|Description|Mean|Median|Std.<br>Dev.|Min.|Max.|
+|---|---|---|---|---|---|---|
+|nlang|Number of programming<br>languages adopted in the project|3.9|4|1.4|1|8|
+|DevTeam|Number of Developers involved<br>in the project|2.6|2|2.4|1|23|
+|TeamExp|Mean number of years of<br>experience for the team<br>members|3.8|4|2.0|1|10|
+|TotEff|Effort in person/hours|468.1|88|938.5|1.1|5,000|
+|TotWP|Total number of Web pages<br>(new and reused).|69.5|26|185.7|1|2,000|
+|NewWP|Total number of new Web<br>pages.|49.5|10|179.1|0|1,980|
+|TotImg|Total number of images (new<br>and reused).|98.6|40|218.4|0|1,820|
+|NewImg|Total number of new images.|38.3|1|125.5|0|1,000|
+|Fots|Number of features/functions<br>reused without any adaptation.|3.2|1|6.2|0|63|
+|HFotsA|Number of reused high-effort<br>features/functions adapted.|12.0|0|59.9|0|611|
+|Hnew|Number of new high-effort<br>features/functions.|2.1|0|4.7|0|27|
+|totHigh|Total number of high-effort<br>features/functions|1|59.6|0.0|611|611|
+|FotsA|Number of reused low-effort<br>features adapted.|2.2|0|4.5|0|38|
+|New|Number of new low-effort<br>features/functions.|4.2|1|9.7|0|99|
+|totNHigh|Total number of low-effort<br>features/functions|6.5|4|13.2|0|137|
+
+
+**Table 2.** Summary of number of projects and percentages for categorical variables of Tukutuku
+database
+
+
+
+
+|Variable|Description|Level|Num. Projects|% Projects|
+|---|---|---|---|---|
+|TypeProj|Type of project (new or<br>enhancement).|Enhancement|128|65.6|
+|TypeProj|Type of project (new or<br>enhancement).|New|67|34.4|
+|DocProc|Did the project followa defined<br>and documented process?|No|104|53.3|
+|DocProc|Did the project followa defined<br>and documented process?|Yes|91|46.7|
+|ProImpr|Was the project team involved<br>in a process improvement<br>programme?|No|105|53.8|
+|ProImpr|Was the project team involved<br>in a process improvement<br>programme?|Yes|90|46.2|
+|Metrics|Was the project team part of a<br>software metrics programme?|No|130|66.7|
+|Metrics|Was the project team part of a<br>software metrics programme?|Yes|65|33.3|
+
+
+**3  Validation Method and Evaluation Criteria**
+
+We assessed the effectiveness of Support Vector Regression carrying out a hold-out
+validation. Indeed, we used a training set to get the estimates and a test set to validate
+them. In order to compare the results obtained using Support Vector Regression with
+other estimation techniques, such as Manual Stepwise Regression, Case-Based
+
+
+Using Support Vector Regression for Web Development Effort Estimation 259
+
+reasoning, and Bayesian Networks, we employed the same training set and test set
+used by Mendes in [21], where the training set was obtained by randomly selecting
+130 observations from the original 195 projects contained in the Tukutuku database,
+and the remaining 65 observations form the test set.
+
+To assess the accuracy of the obtained estimations, we employed commonly used
+measures, including the Mean of Magnitude of Relative Error (MMRE), Median of
+MRE (MdMRE), and Prediction at level 25% (Pred(25)) [8].
+
+MRE is the basis for calculating MMRE and MdMRE, and defined as:
+
+e − eˆ
+
+
+MRE **=**
+
+e
+
+
+(1)
+
+
+where *e* represents actual effort and *ê* estimated effort. The difference between
+MMRE and MdMRE is that the former is more sensitive to predictions containing
+extreme MRE values. Pred( *n* ) measures the percentage of estimates that are within
+*n* % of the actual values, and *n* is set at 25, as usually done in this kind of researches
+
+[8] [13].
+
+It is important to observe that Kitchenham *et al.* [13] showed that MMRE and
+
+eˆ
+
+
+Pred( *l* ) are respectively measures of the spread and kurtosis of *z*, where ( *z* =
+e
+
+
+). They
+
+
+suggest the use of boxplots of *z* and boxplots of the residuals ( e − eˆ ) as useful
+alternatives to simple summary measures since they can give a good indication of the
+distribution of residuals and *z*, and can help gathering insight on statistical indicators
+such as MMRE and Pred(25). Indeed, Boxplots are widely employed in exploratory
+data analysis since they provide a quick visual representation to summarize the data,
+using five values: median, upper and lower quartiles, minimum and maximum values,
+and outliers [13].
+
+The same authors suggest the use of the Magnitude of Relative Error relative to the
+Estimate (EMRE) as a comparative measure as well. The EMRE has the same form as
+MRE, but the denominator is the estimate, giving thus a stronger penalty to underestimates. As with the MRE, we can also calculate the mean EMRE (MEMRE) and
+Median EMRE (MdEMRE).
+
+e − eˆ
+
+
+EMRE **=**
+eˆ
+
+
+(2)
+
+
+As benchmark, we employed Manual StepWise Regression (MSWR) and Case-Based
+Reasoning (CBR) due to their frequent use in Web & software effort estimation
+studies, and Bayesian Networks as used in [22]. In addition, following the suggestion
+of Mendes and Kitchenham [14][22], we also compared MMRE, MdMRE, and
+Pred(25) using two models based on the mean effort (i.e., MeanEffort) and median
+effort (i.e., MedianEffort) as predicted values, respectively. The aim is to assess
+whether the estimates obtained with a prediction technique are significantly better
+than estimates based simply on the mean or median effort of all the previous projects.
+
+The statistical significance of the results was tested using absolute residuals, in
+order to establish if one estimation technique provided significantly better results than
+
+
+260 A. Corazza et al.
+
+the others [13][29]. The statistical significance test checks whether two sets of data
+come from the same population. If they do, we can conclude that neither of the two
+experiments significantly outperforms the other.
+
+**4  Support Vector Regression**
+
+In this section, we present *Support Vector Regression* (SVR) and describe the settings
+employed in our case study. SVR is a regression technique based on support vector
+machines, a very effective and mathematically well founded machine learning
+approach [40][42]. Support vector machines were developed as a nonlinear
+generalization of the *Generalized Portrait* algorithm developed in Russia in the sixties
+
+[40] [41], and have been largely developed at AT&T Bell Laboratories in the nineties,
+with applications to OCR (Optical Character Recognition), where soon support vector
+classifiers became competitive with the other best available techniques [36]. Also in
+prediction applications, excellent performances were obtained by support vector
+solutions [19].
+
+The large number of applications of support vector approaches to machine learning
+tasks are due not only to their performance, but also to the fact that they easily paired
+with “kernel functions”, which, as discussed below, allow an actual nonlinear
+transformation of the input data space. For the problem at hand, we consider the
+application of support vector approach to function estimation, obtaining Support
+Vector Regression (SVR). A good introduction to SVR’s mathematical background is
+given in a tutorial by Smola and Schölkopf [38], together with some extensions and
+implementations and a list of references. Pointers to papers about SVR’s history can
+also be found in the references of the cited tutorial.
+
+**Fig. 1.** The soft margin loss setting for a linear SVM [37]
+
+In effort estimation, the input data space has different features for dimensions and
+the target function is the effort estimate; both input features and effort estimate are
+real numbers. In the version of ε-SVR where no kernel is introduced, we aim at
+finding the line which best approximates the training data, but we allow an error no
+greater than ε, thus focusing on training points which are farther than ε from the
+candidate line. Among all possible solutions, the flattest one is chosen, because this is
+usually the optimal choice.
+
+In some cases, it is not possible to find a function satisfying all constraints, and the
+introduction of slack variables becomes necessary in order to relax the ε precision
+constraint for some of the points. A constant C is introduced to find a tradeoff
+
+
+Using Support Vector Regression for Web Development Effort Estimation 261
+
+between the flatness of the function and the amount of error introduced by slack
+variables. Efficiency reasons suggest the solution of the optimization problem in the
+primary or in the dual space depending on whether the number of dimensions is
+smaller or larger than the number of training examples. The solution of the dual
+problem, with the introduction of Lagrange multipliers, shows how a solution can be
+expressed as a linear combination of some of the training examples, namely the
+support vectors, and the complexity of the function representation only depends on
+their number. Moreover, the introduction of Lagrange multipliers and dual space
+solution makes the introduction of kernel functions [37] particularly smooth. Kernels
+are very effective to solve the problem in the non-linear case. Indeed, using a kernel
+corresponds to a dot product in the feature space, where we apply the linear version of
+support vector machines. The literature proposes a large choice of such functions;
+some of them are of general application, while others are specific to particular
+domains. All of them induce different deformation of the input data space. For our
+case study, we applied the four most used kernels, namely *linear*, *polynomial*,
+*Gaussian* and *sigmoid* .
+
+The actual application of SVR requires the choice of the values for two sets of
+parameters: one regarding the support vector algorithm, including the choice of ε and
+C, as discussed above, and a second set regarding the specific kernel adopted. In our
+experiments, we have tested various parameter settings.
+
+In our case study, we exploited the *SVM-light* software [18] [1] . This tool takes as input
+a text file, contaning a sparse matrix that represents a training dataset of *n* features, and
+a set of parameters that allow the user to choose the desidered kernel, ε and C to train an
+SVM model. Then, as second step, the tool takes in input a new text file, with a sparse
+matrix representing a test dataset with *n* -1 features, and uses it to generate the
+predictions for the missing feature, exploiting the previously trained model.
+
+Our results basically confirm the discussion reported in [32], where the best
+predictions were obtained with small values of ε (10 [-4] ). We carried out a series of
+experiments looking for the best choice of the parameters to use; these are the ones
+reported herein.
+
+Another key point of the application of SVR is the normalization of the features.
+Indeed, it is worth noting that large differences in the values of the features can have
+the unwanted effect of giving greater importance to some of the examples with
+respect to the others. This is especially true for the data set we considered, since, as
+reported in Table 1, the feature values corresponding to the different projects are very
+different in the Tukutuku data set (e.g.: Number of Languages is in a range 1..8, while
+Number of Web Pages is in 1..2000]). To avoid such a risk, we considered two
+possible strategies: normalization and logarithmic transformation. The former consists
+in separately considering each feature vector and divide each of its elements by the
+norm of the vector, in order to force all vectors to have norm equal to one.
+Logarithmic preprocessing is usually adopted to reduce differences between values:
+here we applied it to all the feature values. Of course, once obtained the predictions
+by the dataset with the logarithmic transformation, we applied the inverse exponential
+function to get the effort in terms of person/hours. This allowed us also to compare in
+a uniform way all the gathered results.
+
+1 SVM-light is freely available in http://svmlight.joachims.org/ for scientific use.
+
+
+262 A. Corazza et al.
+
+Crucially, both transformations only require the knowledge of the single feature
+vector and can be applied also to new items for which effort need to be evaluated.
+
+It is worth noting that all these steps are not supported by *SVM-light* .
+
+**5  Results and Discussion**
+
+In the following, we describe the results we achieved by applying SVR with the
+different configurations, then in Section 5.2 we will compare the best result achieved
+with SVR with those obtained by Mendes with Manual StepWise Regression, CaseBased Reasoning, and Bayesian Networks in a previous case study that used the same
+training and test sets [21].
+
+**5.1  Comparison among Different SVR Configurations**
+
+The results in terms of MMRE, MdMRE, Pred(25), MEMRE, and MdEMRE obtained
+by applying the SVR configurations described in Section 4 are reported in Tables 3
+and 4. In particular, for each kernel we have reported the results achieved by
+considering the normalization (Table 3) and the Log transformation (Table 4) of the
+variables.
+
+**Table 3.** Accuracy measures obtaining by using SVR and normalization of the variables
+
+|Kernel|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|---|---|---|---|---|---|
+|Linear (LinNorm)|1.45|0.81|0.08|7.25|1.58|
+|Polynomial (PolNorm)|1.25|0.73|0.17|2.63|0.71|
+|Gaussian (GauNorm)|0.81|0.85|0.17|14.50|4.27|
+|Sigmoid (SigNorm)|2.08|0.85|0.08|3.94|0.81|
+
+
+
+For normalization based configurations, we can observe that the best results in
+terms of MMRE, MdMRE, Pred(25), MEMRE, and MdEMRE have been achieved
+with the Polynomial kernel. Although the Gaussian kernel presents a better MMRE,
+the remaining indicators reveal that the results for MdMRE, MEMRE, and MdEMRE
+are worse than for the Linear kernel, due to heavy underestimates of the effort. These
+results are confirmed by the boxplots in Fig 2 (top), showing that the boxes and tails
+of the boxplot of PolNorm are less skewed than those of the others and its median is
+more close to zero.
+
+**Table 4.** Accuracy measures obtaining by using SVR and Log transformation of the variables
+
+|Col1|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|---|---|---|---|---|---|
+|Linear (LinLog)|0.78|0.38|0.32|0.79|0.53|
+|Polynomial (PolLog)|1.08|0.58|0.20|4.95|0.91|
+|Gaussian (GauLog)|1.81|0.85|0.11|2.40|0.75|
+|Sigmoid (SigLog)|1.84|0.85|0.16|13.44|2.46|
+
+
+Using Support Vector Regression for Web Development Effort Estimation 263
+
+Concerning the Log transformation based configurations, we can observe that the
+best results in terms of MMRE, MdMRE, Pred(25), MEMRE, and MdEMRE have
+been achieved with the Linear kernel. Again, these results are confirmed by the
+boxplots in Fig 2 (bottom), showing that the boxes and tails of the boxplot of LinLog
+are less skewed than those of the others and median is more close to zero.
+
+**Fig. 2.** Boxplots of absolute residuals obtained by considering Normalization (top) and Log
+Transformation (bottom) of the variables
+
+
+264 A. Corazza et al.
+
+As for the comparison between the results achieved with PolNorm and LinLog we
+can observe that the latter presents better MMRE, MdMRE, Pred(25), MEMRE, and
+MdEMRE values. In order to verify if the differences observed using these measures,
+and boxplots of absolute residuals, are significant or due to chance, we checked if the
+absolute residuals obtained with PolNorm and LinLog come from the same
+population, by applying a statistical significance test. The statistical significance of all
+results was checked using the nonparametric test Wilcoxon Signed Ranks test (α =
+0.05). The results reveal that the absolute residuals achieved with LinLog are
+significantly less than those obtained with PolNorm (p-value < 0.01), meaning that
+the predictions obtained with Linear kernel and logarithmic transformation are
+significantly better than the others.
+
+**5.2  Comparison with Other Techniques**
+
+In this section, we compare the results achieved with LinLog with those obtained by
+Mendes in [22] with Manual StepWise Regression, Case-Based Reasoning, and
+Bayesian Networks using the same training set and test set. In Table 5 there are
+reported the results in terms of MMRE, MdMRE, Pred(25), MEMRE, and MdEMRE
+obtained in [22]. We adopted the following acronyms:
+
+ - BNAuHu: BN automatically generated using the Hugin Bayesian Network
+tool;
+
+ - BNHyHu: BN Hybrid model using Hugin,
+
+ - MSWR: Manual Stepwise Regression
+
+ - CBR1: Case-based reasoning using one analogy
+
+ - CBR2: Case-based reasoning using two analogies;
+
+ - CBR3: Case-based reasoning using three analogies;
+
+ - MeanEffort: Mean value of the effort in the data set;
+
+ - MedianEffort: Median value of the effort in the data set;
+
+Readers are referred to [21] for details on how these models were created.
+
+**Table 5.** Accuracy measures
+
+|Col1|MMRE|MdMRE|Pred(25)|MEMRE|MdEMRE|
+|---|---|---|---|---|---|
+|LinLog|0.78|0.38|0.32|0.79|0.53|
+|MSWR|1.50|0.64|0.23|1.36|0.64|
+|CBR1|5.27|0.97|0.08|31.70|3.43|
+|CBR2|5.06|0.87|0.11|3.59|0.81|
+|CBR3|5.63|0.97|0.09|4.17|0.88|
+|BNAuHu|7.65|1.67|0.08|1.07|0.76|
+|BNHyHu|1.90|0.86|0.15|13.06|2.38|
+|MedianEffort|5.02|0.93|0.09|4.43|0.94|
+|MeanEffort|30.35|3.99|0.15|1.07|0.91|
+
+
+
+Taking into account these summary measures, we can note that SVR provided
+better results than the other techniques even if they do not meet the thresholds by
+Conte *et al.* [8] usually adopted in software engineering. Moreover, it is worth noting
+
+
+Using Support Vector Regression for Web Development Effort Estimation 265
+
+that all the techniques outperform MeanEffort, while only SVR, MSWR and
+BNHyHu provide better predictions than MedianEffort.
+
+The analysis of boxplots of absolute residuals and z reported in Figure 3 and 4,
+respectively, graphically confirm the above considerations.
+
+**Fig. 3.** Boxplots of absolute residuals for the considered estimation techniques
+
+**Fig. 4.** Boxplots of z for the considered estimation techniques
+
+
+266 A. Corazza et al.
+
+Indeed, even the boxplots of absolute residuals of SVR, MSWR, CBR2, BNHyHu,
+and MedianEffort are very similar, we can observe that the boxes and the tails of SVR
+are less skewed than those of the others.
+
+Furthermore, the outliers of SVR boxplot are less far from tails than those of the
+other boxplots and the median of the SVR boxplot is closer to zero than the others.
+Similar considerations can be done for boxplots of z. Boxplots of absolute residuals
+and z also suggest that the estimations provided by CBR are slightly worse than those
+obtained by using SVR, BNHyHu, and MSWR.
+
+We again verified if the absolute residuals of the used techniques come from the
+same population, by applying the nonparametric test Wilcoxon Signed Ranks test (α
+= 0.05). The results are reported in Table 6, where “Yes” in a cell means that the
+technique indicated on the row is significantly superior to the one indicated on the
+column.
+
+**Table 6.** Comparison of the absolute residuals using the Wilcoxon test (p-values are reported
+between brackets)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|<|MSWR|CBR1|CBR2|CBR3|BNAuHu|BNHyHu|Mean<br>Effort|Median<br>Effort|
+|---|---|---|---|---|---|---|---|---|
+|SVR|Yes<br>(0.013)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.001)|Yes<br>(0.000)|Yes<br>(0.000)|
+|MSWR|-|Yes<br>(0.000)|Yes<br>(0.001)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|Yes<br>(0.000)|
+|CBR1||-|No<br>(0.052)|No<br>(0.398)|No<br>(0.188)|“>”<br>(0.000)|Yes<br>(0.022)|“>”<br>(0.003)|
+|CBR2|||-|No<br>(0.217)|Yes<br>(0.021)|No<br>(0.219)|Yes<br>(0.000)|No<br>(0.335)|
+|CBR3||||-|Yes<br>(0.023)|No<br>(0.188)|Yes<br>(0.000)|No<br>(0.422)|
+|BNAuHu|||||-|“>”<br>(0.038)|No<br>(0.113)|No<br>(0.822)|
+|BNHyHu||||||-|Yes<br>(0.022)|“>”<br>(0.042)|
+
+
+From these results, we can gather the following observations:
+
+1. The predictions obtained with SVR (LinLog case) are significantly
+
+superior than those obtained with all the other techniques.
+2. All the estimations obtained using the analyzed techniques (except for
+
+BNAuHu) were significantly superior to those using MeanEffort. Thus,
+for a software company, it is vault to use a prediction technique instead of
+using the simple mean effort of the previous projects.
+3. Only SVR and MSWR provided significantly superior accuracy to
+
+MedianEffort.
+
+4. MSWR significantly outperformed the Bayesian based techniques.
+5. The three CBR configurations, and CBR2 and CBR3 provided better
+
+results than BNAuHu, while no difference has been found between the
+three CBR configurations.
+
+
+Using Support Vector Regression for Web Development Effort Estimation 267
+
+From all these considerations, we can positively answer our research question “Are
+the effort predictions obtained by Support Vector Regression significantly superior to
+the ones obtained by other techniques?”, because with our dataset, SVR with Linear
+kernel and logaritmic transformation of the variables provided significantly better
+estimations than all other the other techniques, including MSWR and CBR, that are to
+date the most widely and successfully employed prediction techniques in Software
+Engineering.
+
+**7  Conclusions and Future Work**
+
+Dealing with effort estimation of new projects is a critical issue for the competitiveness
+of software companies, made worse also because of the difficulties of creating own
+single-company data sets. In this paper, we have reported our experience in applying a
+machine learning-based technique, the Support Vector Regression, to obtain effort
+predictions, exploiting a large, cross-company data set of web application, i.e. the
+Tukutuku, to date widely adopted for estimation studies in the field of web engineering.
+
+The result we have gathered from this empirical study is that SVR outperforms any
+other traditional technique, such as Linear Regression, Case Based Reasoning, and
+Bayesian Networks, since it provided significantly superior predictions when dealing
+with the considered cross-company data set. In particular, the Linear kernel provided
+the best results, after a Logarithmic transformation was applied to the data to
+normalize them.
+
+These results confirm the trends observed in [32], and represent a further
+contribution to the field by providing evidence of the effectiveness of the SVR
+technique also on a much wider, cross-company, Web-oriented data set. Moreover, in
+our work the comparison of the prediction accuracy has been carried out using not
+only summary measures but also statistical significance tests.
+
+It is worth noting that as with any other real industrial data sets of software or Web
+projects, the Tukutuku database does not represent a random sample of projects,
+therefore the results presented herein are only applicable to the Web companies that
+volunteered data the Tukutuku project and companies that develop similar projects to
+those used in this study. Thus, replication of the analysis would be important, as soon
+as more data became available.
+
+
+Using Support Vector Regression for Web Development Effort Estimation 269
+
+To further support the project manager in his/her tasks, currently we are working on
+the design of a Recommender System embedding SVR, in order to provide a tool that
+could automatically choose the best kernel, parameters, and kind of transformation.
+Moreover, although in this work we considered four of the most used kernel functions, a
+lot more have been proposed and can be considered. The Recommender System based
+on SVR could then try each of the kernel functions and different parameter settings to
+find out which one has the best performance on the considered data set and then
+effectively adapt to the data.

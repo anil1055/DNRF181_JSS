@@ -1,0 +1,1016 @@
+**Title:** A Comparison of Case-Based Reasoning Approaches to Web Hypermedia Project Cost
+Estimation
+
+**Authors:**
+
+Emilia Mendes
+
+Computer Science Department, The University of Auckland
+Private Bag 92019, Auckland, New Zealand
+emilia@cs.auckland.ac.nz
+phone: ++64 09 3737599 extn. 6137
+
+Ian Watson
+
+Computer Science Department, The University of Auckland
+Private Bag 92019, Auckland, New Zealand
+ian@cs.auckland.ac.nz
+phone: ++64 09 3737599 extn. 6137
+
+Nile Mosley
+Computer Science Department, Auckland University of Technology
+Private Bag 92006, Auckland, New Zealand
+nile_mosley@yahoo.com
+phone: ++64 09 3079999 extn. 5345
+
+**Abstract:** Over the years software engineering researchers have suggested numerous techniques
+for estimating development effort. These techniques have been classified mainly as algorithmic,
+machine learning and expert judgement. Several studies have compared the prediction accuracy of
+those techniques, with emphasis placed on linear regression, stepwise regression, and Case-based
+Reasoning (CBR). To date no converging results have been obtained and we believe they may be
+influenced by the use of the same CBR configuration.
+The objective of this paper is twofold. First, to describe the application of case-based reasoning
+for estimating the effort for developing Web hypermedia applications. Second, comparing the
+prediction accuracy of different CBR configurations, using two Web hypermedia datasets.
+Results show that for both datsets the best estimations were obtained with weighted euclidean
+distance, using either one analogy (dataset 1) or 3 analogies (dataset 2).
+We suggest therefore that case-based reasoning is a candidate technique for effort estimation and,
+with the aid of an automated environment, can be applied to Web hypermedia development effort
+prediction.
+
+**Keywords:** effort prediction, Web hypermedia development, case-based reasoning, estimation,
+Web hypermedia metrics.
+
+**Approximate word counts:** 6,433
+
+
+## **A Comparison of Case-Based Reasoning Approaches to Web** **Hypermedia Project Cost Estimation**
+
+**Abstract**
+
+Over the years software engineering researchers have suggested numerous techniques for
+
+estimating development effort. These techniques have been classified mainly as
+
+algorithmic, machine learning and expert judgement. Several studies have compared the
+
+prediction accuracy of those techniques, with emphasis placed on linear regression,
+
+stepwise regression, and Case-based Reasoning (CBR). To date no converging results
+
+have been obtained and we believe they may be influenced by the use of the same CBR
+
+configuration.
+
+The objective of this paper is twofold. First, to describe the application of case-based
+
+reasoning for estimating the effort for developing Web hypermedia applications. Second,
+
+comparing the prediction accuracy of different CBR configurations, using two Web
+
+hypermedia datasets.
+
+Results show that for both datsets the best estimations were obtained with weighted
+
+euclidean distance, using either one analogy (dataset 1) or 3 analogies (dataset 2). We
+
+suggest therefore that case-based reasoning is a candidate technique for effort estimation
+
+and, with the aid of an automated environment, can be applied to Web hypermedia
+
+development effort prediction.
+
+**1 Introduction**
+
+Software practitioners recognise the importance of realistic estimates of effort to the
+
+successful management of software projects, the Web being no exception. Having
+
+realistic estimates at an early stage in a project's life cycle allow project managers and
+
+development organisations to manage resources effectively.
+
+
+Several techniques for cost and effort estimation have been proposed over the last 30
+
+years, falling into three general categories [1]:
+
+1) **Expert judgement** **(EJ)** - a technique widely used, aims to derive estimates based on
+
+an expert's previous experience on similar projects. The means of deriving an estimate
+
+are not explicit and therefore not repeatable. However, although always difficult to
+
+quantify, expert judgement can be an effective estimating tool on its own or as an
+
+adjusting factor for algorithmic models [2].
+
+2) **Algorithmic models** **(AM)** - to date the most popular in the literature, attempt to
+
+represent the relationship between effort and one or more of a project's characteristics.
+
+The main “cost driver” in such a model is usually taken to be some notion of software
+
+size (e.g. the number of lines of source code, number of pages, number of links).
+
+Algorithmic models need calibration to be adjusted to local circumstances. Examples
+
+are the COCOMO model [3], the SLIM model [4] and function points [5].
+
+3) **Machine learning** **(ML)** - Machine learning techniques have in recent years been
+
+used as a complement or alternative to the previous two techniques. Examples include
+
+fuzzy logic models [6], regression trees [7], neural networks [8], and case-based
+
+reasoning [9]. A useful summary of these techniques is presented in [10].
+
+Recently several comparisons have been made between the three categories of prediction
+
+techniques aforementioned, based on their prediction accuracy [10-28]. However no
+
+convergence has been obtained to date. It is believed that the reasons for this are twofold
+
+[18]. First, the characteristics of the dataset used have an impact on the effectiveness of
+
+any prediction technique. For example, CBR seems to be favoured when datasets do not
+
+present strong linear relationships between effort and the product size used, contrary to
+
+algorithmic models. Second, when using CBR, there are several decisions that must be
+
+made (e.g., number of analogies, similarity measures) which may as well influence the
+
+accuracy of estimations.
+
+
+To date most literature in effort prediction generates and compares prediction models
+
+using attributes (e.g. lines of code, function points) of conventional software. This paper
+
+looks at effort prediction based on attributes of Web hypermedia applications instead.
+
+The World Wide Web (Web) has become the best known example of a hypermedia
+
+system. To date, numerous organisations across the Globe have developed thousands of
+
+commercial and/or educational Web applications. The Web has been used as the delivery
+
+platform for two types of applications: Web hypermedia applications and Web software
+
+applications [29]. A Web hypermedia application is a non-conventional application
+
+characterised by the structuring of information using nodes (chunks of information), links
+
+(relations between nodes), anchors, access structures (for navigation) and the delivery of
+
+this structure over the Web. Whereas a Web software application represents any
+
+conventional software application that depends on the Web, or uses the Web's
+
+infrastructure, for execution. Typical applications include legacy information systems
+
+such as databases, booking systems, knowledge bases etc. Many e-commerce
+
+applications fall into the latter category.
+
+Our research focus is on proposing and comparing [26-28,30,31] development effort
+
+prediction models for Web hypermedia applications. These applications have a potential
+
+in areas such as software engineering [32], literature [33], education [34], and training
+
+[35], to mention but a few. Readers interested in effort estimation models for Web
+
+software applications are referred to [36,37].
+
+This paper has two objectives. The first is to describe the application of case-based
+
+reasoning to estimating the effort for developing Web hypermedia applications. The
+
+second is to compare the prediction accuracy of several CBR configurations, based on
+
+two datasets of Web hypermedia projects.
+
+
+Those objectives are reflected in the following research questions:
+
+1) Will different CBR configurations generate significantly different prediction
+
+accuracy?
+
+2) Which of the CBR configurations employed in this study gives the most accurate
+
+predictions for the datasets employed?
+
+These issues are investigated using data gathered through two case studies where sets of
+
+suggested metrics for effort prediction were measured. These metrics reflect current
+
+industrial practices for developing multimedia and Web hypermedia applications [38,39].
+
+Both case studies gathered data on Web hypermedia projects developed by Computer
+
+Science Honours or postgraduate students *,* attending a Hypermedia and Multimedia
+
+Systems course at the University of Auckland. The first case study took place during the
+
+first semester of 2000 and the second, a replication of the first, took place during the first
+
+semester of 2001. The metrics collected were classified as size, effort and confounding
+
+factors [40].
+
+Both case studies looked at effort prediction for design and authoring processes, adopting
+
+the classification proposed by Lowe and Hall [41]. Using this classification, authoring
+
+encompasses the management of activities for the actual content and structure of the
+
+application and its presentation. Design covers the methods used for generating the
+
+structure and functionality of the application, and typically does not include aspects such
+
+as application requirements elicitation, feasibility consideration and applications
+
+maintenance.
+
+In this paper we chose to use CBR as a prediction technique for the following reasons:
+
+- An early study comparing CBR to other prediction techniques [27], CBR presented
+
+the best prediction accuracy when using a dataset of Web hypermedia projects.
+
+
+- A second study, using a different dataset, also showed good prediction accuracy
+
+using CBR [31].
+
+- CBR is an intuitive method and there is evidence that experts apply analogic
+
+reasoning when making estimates [25].
+
+- CBR is simple and flexible, compared to algorithmic models.
+
+- CBR can be used on qualitative and quantitative data, reflecting closer types of
+
+datasets found in real life.
+
+The rationale for CBR is to characterise the project, for which the estimate is to be made, relative
+
+to a number of attributes (e.g. application complexity, link complexity etc). This
+
+description is then used to find other similar already finished projects, and an estimate for
+
+the new project is made based on the known effort values for those finished projects.
+
+This paper is organised as follows: Section 2 presents related work in development effort
+
+prediction for Web hypermedia applications. Section 3 presents in more depth the
+
+technique of case-based reasoning and in Section 4 we describe the two case studies
+
+where the datasets were collected. Section 5 describes the empirical results of applying
+
+CBR. Finally, Section 6 concludes with an analysis of the strengths and weaknesses of
+
+using CBR and suggestions on future work.
+
+**3 Case-based Reasoning**
+
+Case-based Reasoning involves [19]:
+
+� Characterising the project for which an estimate is required, i.e., identifying project
+
+attributes (application size, link complexity etc) which can influence effort.
+
+� Use of this characterisation as a basis for finding similar (analogous) completed
+
+projects, for which effort is known.
+
+� Use of these effort values, possibly with adjustment, to generate a predicted value of
+
+effort.
+
+When using CBR there are a number of parameters to decide upon [1,19]:
+
+- Similarity measure
+
+- Scaling
+
+- Number of analogies
+
+- Analogy adaptation
+
+Each parameter in turn can be split into more detail, and maybe incorporated for a given
+
+CBR tool, allowing several CBR configurations.
+
+
+**3. 1 Similarity Measure**
+
+Similarity Measure measures the level of similarity between projects, i.e., cases. To our
+
+knowledge, the similarity measure most frequently used in Software engineering and
+
+Web engineering literature is the unweighted Euclidean distance. In the context of this
+
+investigation we have used three measures of similarity, namely the unweighted
+
+Euclidean distance, the weighted Euclidean distance and the Maximum measure, each of
+
+which are detailed below:
+
+All formulas presented in this sub-section assume that *x* and *y* represent size attributes for
+
+Web hypermedia applications, e.g., *x* might be page-count and *y* page-complexity. The
+
+pair ( *x* *i*, *y* *i* ) represents instances of *x* and *y* for project *i* .
+
+*Unweighted Euclidean distance:*
+
+The Euclidean distance *d* between the points (x 0,y 0 ) and (x 1,y 1 ) is given by (1) and
+
+illustrated in figure 1 by representing co-ordinates on a two-dimensional space:
+
+*d* = ( *x* 0 − *x* 1 ) 2 + ( *y* 0 − *y* 1 ) 2 (1)
+
+The number of attributes employed will determine the number of dimensions used.
+
+*Weighted Euclidean distance:*
+
+It is common in CBR for the attributes, i.e., features vectors to be weighted to reflect the
+
+relative importance of each feature. The weighted Euclidean distance *d* between the
+
+points *(x* *0* *,y* *0* *)* and *(x* *1* *,y* *1* *)* is given by the formula:
+
+*d* = *w* *x* ( *x* 0 − *x* 1 ) 2 + *w* *y* ( *y* 0 − *y* 1 ) 2 (2)
+
+where *w* *x* and *w* *y* are the weights of *x* and *y* respectively.
+
+
+**Page-complexity**
+
+***Y*** ***1***
+
+***Y*** ***0***
+
+
+
+*0*
+
+|Col1|d|Col3|Col4|
+|---|---|---|---|
+||d|d|d|
+|||||
+|||||
+
+
+***x*** ***0*** ***x*** ***1*** **Page-count**
+
+Figure 1 - Weighted Euclidean distance using two size attributes
+
+
+*Maximum measure:*
+
+Using the maximum measure, the maximum feature similarity defines the case similarity.
+
+For two points *(x* *0* *,y* *0* *)* and *(x* *1* *,y* *1* *)*, the maximum measure *d* is equivalent to the formula:
+
+*d* = max(( *x* 0 − *x* 1 ) 2 (, *y* 0 − *y* 1 ) 2 ) (3)
+
+This effectively reduces the similarity measure down to a single feature, although the
+
+maximum feature may differ for each retrieval episode.
+
+**3.2 Scaling or Standardisation**
+
+Standardisation represents the transformation of attribute values according to a defined
+
+rule such that all attributes are measured using the same unit. One possible solution is to
+
+assign the value *zero* to the minimum observed value and *one* to the maximum observed
+
+value [48]. This was the strategy chosen for the analysis carried out using CBR-Works
+
+(see Section 5).
+
+
+**3.3 Number of Analogies**
+
+The number of analogies refers to the number of most similar cases that will be used to
+
+generate the estimation. For Angelis and Stamelos [21] when small sets of data are used it
+
+is reasonable to consider only a small number of analogies. In this study we have used 1,
+
+2 and 3 analogies, similarly to [11-13, 21,24,27,31].
+
+**3.4 Analogy Adaptation**
+
+Once the most similar case(s) has/have been selected the next step is to decide how to
+
+generate the estimation. Choices of analogy adaptation techniques presented in the
+
+Software engineering literature vary from the nearest neighbour [11,13], the mean of the
+
+closest analogies [17], the median [21], inverse distance weighted mean and inverse rank
+
+weighted mean [48], to illustrate just a few. In the Web engineering literature, the
+
+adaptation used to date is the mean of the closest analogies [27,31]. We opted for the
+
+mean, median and the inverse rank weighted mean.
+
+*Mean:* Represents the average of k analogies, when k>1.
+
+*Inverse rank weighted mean:* Allows higher ranked analogies to have more influence than
+
+lower ones. For example, using 3 analogies, the closest analogy (CA) would have a
+
+weight = 3, the second closest (SC) a weight = 2 and the last one (LA) a weight =1. The
+
+estimation would then be calculated as:
+
+(3*CA + 2*SC + LA)/6                          (4)
+
+*Median:* Represents the median of k analogies, when k>2.
+
+All the estimations presented in this paper were generated using CBR-Works [49], a
+
+commercial CBR environment [49] the result of years of collaborative European research
+
+by the INRECA I & II projects [50]. It is available commercially from Empolis a
+
+knowledge management company (www.tecinno.com). The tool provides a variety of
+
+
+retrieval algorithms (Euclidean, weighted Euclidean, Maximum Similarity etc) as well as
+
+fine control over individual feature similarity metrics. In addition, it provides
+
+sophisticated support for symbolic features and taxonomies hierarchies as well as
+
+providing adaptation rules and formulae.
+
+**4 The Case Studies**
+
+**4.1 Datasets**
+
+The analysis presented in this paper was based on two datasets containing information
+
+about Web hypermedia applications developed by Computer Science Honours or
+
+postgraduate students, attending a Hypermedia and Multimedia Systems course, at the
+
+University of Auckland.
+
+The first dataset (DS1, 34 applications) was obtained using a case study (CS1) consisting
+
+of the design and authoring, by each student, of Web hypermedia applications aimed at
+
+teaching a chosen topic, structured according to the Cognitive Flexibility Theory (CFT)
+
+principles [46], using a minimum of 50 pages. Each Web hypermedia application
+
+provided 46 pieces of data [28], from which we identified 8 attributes, shown in Table 1,
+
+to characterise a Web hypermedia application and its development process.
+
+The second dataset (DS2, 25 applications) was obtained using another case study (CS2)
+
+consisting of the design and authoring, by pairs of students, of Web hypermedia
+
+applications structured using an adaptation of the Unified Modelling Language [51], with
+
+a minimum of 25 pages. Each Web hypermedia application provided 42 pieces of data,
+
+from which we identified 6 attributes, shown in Table 2, to characterise a Web
+
+hypermedia application and its development process.
+
+
+Tables 1 and 2 show the attributes that form a basis for our data analysis. Total effort is
+
+our dependent/response variable; remaining attributes our independent/predictor
+
+variables. All attributes were measured on a ratio scale.
+
+The criteria used to select the attributes was [39]: i) practical relevance for Web
+
+hypermedia developers; ii) metrics which are easy to learn and cheap to collect; iii)
+
+counting rules which were simple and consistent.
+
+|Metric|Description|
+|---|---|
+|Page Count (PaC)|Total number of html or shtml files|
+|Media Count (MeC)|Total number of original media files|
+|Program Count (PRC)|Total number of JavaScript files and Java applets|
+|Reused Media Count (RMC)|Total number of reused/modified media files.|
+|Reused Program Count (RPC)|Total number of reused/modified programs.|
+|Connectivity Density (COD)|Average number of internal links1 per page.|
+|Total Page Complexity (TPC)|Average number of different types of media per page.|
+|Total Effort (TE)|Effort in person hours to design and author the<br>application|
+
+
+
+Table 1 - Size and Complexity Metrics for DS1
+
+|Metric|Description|
+|---|---|
+|Page Count (PaC)|Total number of html files.|
+|Media Count (MeC)|Total number of original media files.|
+|Program Length (PRL)|Total number of statements used in either Javascript or<br>Cascading Style Sheets.|
+|Connectivity Density (COD)|Average number of links, internal or external, per page.|
+|Total Page Complexity (TPC)|Average number of different types of media per page.|
+|Total Effort (TE)|Effort in person hours to design and author the application|
+
+
+
+Table 2 - Size and Complexity Metrics for DS2
+
+1 Subjects did not use external links to other Web hypermedia applications. All the links only pointed to
+pages within the original application.
+
+
+On both case studies two questionnaires were used to collect data. The first [2] asked
+
+subjects to rate their Web hypermedia authoring experience using five scales, from no
+
+experience (zero) to very good experience (four). The second questionnaire [3] was used to
+
+measure characteristics of the Web hypermedia applications developed (suggested
+
+metrics) and the effort involved in designing and authoring those applications. On both
+
+questionnaires, we describe in depth each scale type, to avoid misunderstanding.
+
+Members of the research group checked both questionnaires for ambiguous questions,
+
+unusual tasks, and number of questions and definitions in the Appendix.
+
+To reduce learning effects in both case studies, subjects were given a coursework prior to
+
+designing and authoring the Web hypermedia applications, consisting of creating a
+
+simple Web hypermedia application and loading the application onto a Web server. In
+
+addition, in order to measure possible factors that could influence the validity of the
+
+results, we also asked subjects about the main structure (backbone) of their applications [4],
+
+their authoring experience before and after developing the applications, and the type of
+
+tool used to author/design the Web pages [5] .
+
+Finally, CS1 subjects received training on the Cognitive Flexibility Theory authoring
+
+principles (approximately 150 minutes) and CS2 subjects received training on the UML's
+
+adapted version (approximately 120 minutes). The adapted version consisted of Use Case
+
+Diagrams, Class Diagrams and Transition Diagrams.
+
+**4.2 Validity of both Case Studies**
+
+Here we present our comments on the validity of both case studies:
+
+2 http://www.cs.auckland.ac.nz/~emilia/Assignments/exp-questionnaire1.html and
+http://www.cs.auckland.ac.nz/~emilia/Assignments/exp-questionnaire2.html
+3 http://www.cs.auckland.ac.nz/~emilia/Assignments/questionnaire1.html. and
+http://www.cs.auckland.ac.nz/~emilia/Assignments/questionnaire2.html.
+4 Sequence, hierarchy or network.
+5 WYSIWYG (What You See Is What You Get), close to WYSIWYG or text-based.
+
+
+- The metrics collected, except for effort, experience, structure and tool, were all
+
+objective, quantifiable, and re-measured by one of the authors using the applications
+
+developed, which had been saved on a CD-ROM. The scales used to measure
+
+*experience, structure* and tool were described in detail in both questionnaires.
+
+- Subjects' authoring and design experiences were mostly scaled little or average, with
+
+a low difference between skill levels. Consequently the original datasets were left
+
+intact.
+
+- To reduce maturation effects, i.e. learning effects caused by subjects learning as an
+
+evaluation proceeds, subjects had to develop a small Web hypermedia application
+
+prior to developing the application measured. They also received training in the CFT
+
+principles, for the first case study, and in the OOHDM's adapted version, for the
+
+second case study.
+
+- The majority of applications used a hierarchical structure.
+
+- Notepad and FirstPage were the two tools most frequently used on CS1 and FirstPage
+
+was the tool most frequently used on CS2. Notepad is a simple text editor while
+
+FirstPage is freeware offering button-embedded HTML tags. Although they differ
+
+with respect to the functionality offered, data analysis using DS1 revealed that the
+
+corresponding effort was similar, suggesting that confounding effects from the tools
+
+were controlled.
+
+- As the subjects who participated in the case studies were either Computer Science
+
+Honours or postgraduate students, it is likely that they present skill sets similar to
+
+Web hypermedia professionals at the start of their careers. The use of students as
+
+subjects, while sometimes considered unrealistic, is justified for two reasons: firstly,
+
+empirical evidence [52,53] indicates that students are equal to professionals in many
+
+quantifiable measures, including their approach to developing software; secondly, for
+
+pragmatic considerations, having students as subjects was the only viable option for
+
+both case studies.
+
+
+**5 Comparing CBR Approaches**
+
+**5.1 Evaluation Criteria**
+
+The most common approaches to assessing the accuracy of prediction models are:
+
+- The Mean Magnitude of Relative Error **(MMRE)** [16]
+
+- The Median Magnitude of Relative Error **(MdMRE)** [15]
+
+- The Prediction at level n **(Pred(n))** [17]
+
+The MMRE is defined as:
+
+
+***i*** **=** ***n*** **−**
+
+
+**=**
+
+
+***1*** ***rt*** ***i*** **−** ***ort*** ***i***
+# n ∑ rt                 (5)
+
+
+*MMRE* =
+# **∑**
+
+
+***ActualEffort*** ***i*** **−** ***Pr*** ***edictedEffort***
+
+
+***i*** **−** ***i***
+
+***ActualEffort*** ***i***
+
+
+***i*** **=** ***1*** ***i***
+
+
+**=**
+
+
+Where *i* represents each observation for which effort is predicted.
+
+The mean takes into account the numerical value of every observation in the data
+
+distribution, and is sensitive to individual predictions with large Magnitude of Relative
+
+Error (MRE), where MRE is calculated as:
+
+
+*MRE* *i* =
+
+
+(6)
+
+***ActualEffort*** ***i***
+
+
+where *i* represents each observation for which effort is predicted.
+
+An option to the mean is the median, which also represents a measure of central
+
+tendency, however it is less sensitive to extreme values. The median of MRE values for
+
+the number *i* of observations is called the MdMRE.
+
+
+Another indicator which is commonly used is the Prediction at level *l,* also known as
+
+Pred( *l* ). It measures the percentage of estimates that are within l% of the actual values.
+
+Suggestions have been made [54] that *l* should be set at 25% and that a good prediction
+
+system should offer this accuracy level 75% of the time.
+
+We have used all three approaches to assess the accuracy of the different CBR
+
+configurations presented in this paper.
+
+**5.2 Method Used**
+
+As stated earlier, during the process of applying case-based reasoning users need to
+
+configure the CBR tool according to four different parameters (similarity measure,
+
+scaling, number of analogies and analogy adaptation).
+
+We wanted to answer the following questions:
+
+1) Will different CBR configurations generate significantly different prediction
+
+accuracy?
+
+2) Which of the CBR configurations employed in this study gives the most accurate
+
+predictions for the datasets employed?
+
+Therefore, we compared the prediction accuracy of several estimations generated using
+
+different categories for a given parameter (see Table 3).
+
+We calculated effort according to the jackknife method (also known as leave one out
+
+cross-validation), as follows:
+
+Step 1 CBR-works was configured to the type of distance to be used: unweighted
+
+euclidean, weighted euclidean or maximum.
+
+Step 2 One datapoint was chosen and marked as "unconfirmed", in order to be
+
+considered as a new project for the purpose of this evaluation.
+
+
+Step 3 The remaining 33/24 datapoints were kept in the dataset and used in the
+
+estimation process.
+
+Step 4 For the "unconfirmed", its actual effort data was discarded, and only the known
+
+size metrics kept. This was done in an attempt to simulate a new project for use
+
+with CBR-Works to calculate estimated effort.
+
+Step 5 Effort was estimated for 1 to 3 analogies and recorded on a spreadsheet to be
+
+used to calculate mean, median, inverse rank weighed mean, mmre, mdmre and
+
+pred(25).
+
+Step 6 The datapoint that had been changed to "unconfirmed" was changed back to
+
+"confirmed".
+
+Step 7 Steps 2 through 6 were repeated until all 34/25 projects had had their effort
+
+estimated. Then another distance would be chosen and the entire jackknife
+
+method would be repeated.
+
+
+
+
+
+
+
+|Distance|Analogies|Adaptation|Standardised variables?|
+|---|---|---|---|
+|Unweighed Euclidean<br>Distance|1|Closest analogy|Yes|
+|Unweighed Euclidean<br>Distance|2|Mean|Yes|
+|Unweighed Euclidean<br>Distance|2|IRWM|Yes|
+|Unweighed Euclidean<br>Distance|3|Mean|Yes|
+|Unweighed Euclidean<br>Distance|3|IRWM|Yes|
+|Unweighed Euclidean<br>Distance|3|Median|Yes|
+|Weighted Euclidean<br>Distance|1|Closest analogy|Yes|
+|Weighted Euclidean<br>Distance|2|Mean|Yes|
+|Weighted Euclidean<br>Distance|2|IRWM|Yes|
+|Weighted Euclidean<br>Distance|3|Mean|Yes|
+|Weighted Euclidean<br>Distance|3|IRWM|Yes|
+|Weighted Euclidean<br>Distance|3|Median|Yes|
+|Maximum<br>Distance|1|Closest analogy|Yes|
+|Maximum<br>Distance|2|Mean|Yes|
+|Maximum<br>Distance|2|IRWM|Yes|
+|Maximum<br>Distance|3|Mean|Yes|
+|Maximum<br>Distance|3|IRWM|Yes|
+|Maximum<br>Distance|3|Median|Yes|
+|IRWM - Inverse Rank Weighed Mean|IRWM - Inverse Rank Weighed Mean|IRWM - Inverse Rank Weighed Mean|IRWM - Inverse Rank Weighed Mean|
+
+
+Table 3 - CBR approaches that were compared
+
+
+When using the Weighted Euclidean distance we attributed weight=2 to measures Page
+
+Count (PaC), Media Count (MeC) and Reused Media Count (RMC) for dataset 1 (DS1)
+
+and measures PaC and MeC for dataset 2 (DS2). All remaining measures received weight
+
+=1. The chosen measures were those that presented the strongest statistical relationship
+
+with effort, based on the datasets used. An alternative to measuring the statistical
+
+relationship would be to ask Web hypermedia authors.
+
+**5.3 Comparative Results**
+
+The results in Tables 4 and 5 have been obtained by considering: three similarity
+
+measures (unweighted Euclidean, weighted Euclidean and Maximum), three choices for
+
+the number of analogies (1, 2 and 3), three choices for the analogy adaptation (mean,
+
+inverse rank weighted mean and median) and one alternative regarding the
+
+standardisation of the attributes. The legend used on both tables is as follows:
+
+
+Dist. = distance
+
+K = number of analogies
+Adap. = adaptation
+UE = Unwei g hted Euclidean
+
+
+WE = Weighted Euclidean
+
+MX = Maximum
+
+CA = Closest Analogy
+IRWM = Inverse Rank Wei g hed Mean
+
+
+The maximum distance gave much worse estimations than the other two distances, on
+
+both datasets, for all the measures of accuracy employed. The weighted euclidean
+
+distance gave for both datasets the best estimates, however not always for the same
+
+number of analogies: using DS1 the best estimations were obtained using the closest
+
+analogy whereas for DS2 the best estimations were obtained using the mean for the three
+
+closest analogies.
+
+Estimations obtained using DS1 were all better than those obtained using DS2. One
+
+reason might be that DS1 had 36% more projects than DS2 reflecting more options
+
+
+during the jack-knifing process. Another reason might be that projects on DS1 were more
+
+similar to each other or had more similar clusters than those on DS2. Further
+
+investigation of both datasets confirmed that DS1 was more homogenous than DS2.
+
+
+
+
+
+
+|Distance|K|Adaptation|MMRE|MdMRE|Pred(25)|
+|---|---|---|---|---|---|
+|UE|1|CA|0.12|0.10|88.24|
+|UE|2|Mean|0.15|0.12|82.35|
+|UE|2|IRWM|0.13|0.11|85.29|
+|UE|3|Mean|0.14|0.11|82.35|
+|UE|3|IRWM|0.13|0.12|85.29|
+|UE|3|Median|0.14|0.10|76.47|
+|WE|1|CA|0.10|0.09|94.12|
+|WE|2|Mean|0.13|0.11|94.12|
+|WE|2|IRWM|0.12|0.11|97.06|
+|WE|3|Mean|0.13|0.09|88.24|
+|WE|3|IRWM|0.12|0.12|94.12|
+|WE|3|Median|0.14|0.10|82.35|
+|MX|1|CA|0.32|0.34|26.47|
+|MX|2|Mean|0.23|0.17|67.65|
+|MX|2|IRWM|0.25|0.23|58.82|
+|MX|3|Mean|0.25|0.15|76.47|
+|MX|3|IRWM|0.23|0.16|67.65|
+|MX|3|Median|0.31|0.17|58.82|
+
+
+Table 4 - Comparison of CBR approaches for DS1
+
+
+One interesting aspect of this investigation is that it suggests that, at least for Web
+
+hypermedia projects, the weighted euclidean distance might be the best distance to
+
+choose to obtain good estimations. Both datasets were collected at different points in
+
+time, using different subjects, different application domains and still the best estimations
+
+were both obtained using the weighted euclidean.
+
+The answer to our first question is therefore, positive: different CBR configurations did
+
+indeed generate significantly different prediction accuracy.
+
+
+In addition, the answer to our second question is that the most accurate predictions for the
+
+datasets employed were generated using the weighted euclidean distance.
+
+
+
+
+
+
+
+
+|Dist.|K|Adap.|MMRE|MdMRE|Pred(25)|
+|---|---|---|---|---|---|
+|UE|1|CA|0.14|0.11|52.94|
+|UE|2|Mean|0.18|0.18|44.12|
+|UE|2|IRWM|0.22|0.17|55.88|
+|UE|3|Mean|0.16|0.18|44.12|
+|UE|3|IRWM|0.21|0.16|50.00|
+|UE|3|Median|0.22|0.13|47.06|
+|WE|1|CA|0.13|0.11|55.88|
+|WE|2|Mean|0.09|0.11|67.65|
+|WE|2|IRWM|0.11|0.09|67.65|
+|WE|3|Mean|0.08|0.08|70.59|
+|WE|3|IRWM|0.10|0.09|70.59|
+|WE|3|Median|0.13|0.10|64.71|
+|MX|1|CA|0.64|0.54|26.47|
+|MX|2|Mean|0.67|0.57|05.88|
+|MX|2|IRWM|0.86|0.55|14.71|
+|MX|3|Mean|0.64|0.83|05.88|
+|MX|3|IRWM|0.86|0.57|08.82|
+|MX|3|Median|0.88|0.66|05.88|
+
+
+Table 5 - Comparison of CBR approaches for DS2
+
+How can the results and prediction methodology presented in this paper be of benefit to
+
+Web hypermedia developers?
+
+Whatever type of Web hypermedia application (educational, business etc) there is at least
+
+one phase of their development common to all - authoring. Furthermore, several Web
+
+hypermedia applications are still developed using static HTML, even when translated
+
+from XML. Consequently, the metrics suggested in this paper may be of interest and
+
+useful to a wide range of Web hypermedia authors. In addition, the prediction
+
+
+methodology we have used can be applied to any organisation and to any type of
+
+application and development environment.
+
+**6 Conclusions and Future Work**
+
+This paper described the application of case-based reasoning to estimating the effort for
+
+developing Web hypermedia applications and compared the prediction accuracy of
+
+different CBR configurations, using two Web hypermedia datasets. These datasets were
+
+obtained using two separate case studies where effort and product size measures were
+
+collected using questionnaires.
+
+All the estimations were performed using a Case-based reasoning tool - CBR Works. The
+
+best prediction on both datasets were obtained using the weighted euclidean distance, with
+
+one analogy for the first dataset and the median of the closest three analogies for the
+
+second dataset.
+
+These results suggest that Case-based reasoning is a candidate technique to effort
+
+estimation and that with the aid of an automated environment it is a practical technique to
+
+apply to Web hypermedia development effort prediction.
+
+As part of our future work we plan to compare the performance of case-based reasoning
+
+against human estimation and regression techniques, in a similar way to [2,15,25].
+
+To conclude, there is an urgent need for adequate hypermedia development effort
+
+prediction at an early stage in the development. As the use of the Web as a delivery
+
+environment increases, effort estimation can contribute significantly to the reduction of
+
+costs and time involved in developing Web hypermedia applications.
+

@@ -1,0 +1,962 @@
+# Software Cost Estimation by Classical and Fuzzy Analogy for Web Hypermedia Applications: A replicated study
+
+
+Ali Idri and Azeddine Zahi
+
+Department of Software Engineering
+ENSIAS, Mohamed V University, Morocco
+E-mail: idri@ensias.ma, a.zahi@usmba.ac.ma
+
+***Abstract*** **—The aim of this paper is to evaluate and to compare the**
+**Classical Analogy and Fuzzy Analogy for software cost**
+**estimation on a Web software dataset. Hence, the paper aims to**
+**replicate the results of our precedent experiments on this dataset.**
+**Moreover, questions regarding the estimates accuracy, the**
+**tolerance of imprecision and uncertainty of cost drivers, and the**
+**favorable context to use estimation by analogy are discussed. This**
+**study approved the usefulness of Fuzzy Analogy for software cost**
+**estimation.** 
+
+described by a set of attributes that must be relevant
+and independent. Second, we determine the similarity
+between the candidate project and each project in the
+historical database. In the third step, known as Case
+Adaptation, the known effort values for the most
+similar historical projects are used to derive an estimate
+for the new project.
+
+
+***Keywords—Estimation by Analogy; Fuzzy Logic, Genetic***
+***Algorithm.***
+
+I. I NTRODUCTION
+
+The challenge for software cost estimation community is to
+build accurate cost estimation models with the following
+advantages:
+
+  - Capabilities to adequately model the complex set of
+relationship between the effort or cost (the independent
+variable) and cost drivers (dependent variables).
+
+  - Capabilities to correctly handle imprecision and
+uncertainty. Indeed, most software projects attributes
+(cost drivers) are measured by linguistic values such as
+‘very low’, ‘complex’, ‘important’ and ‘essential’
+which come from human judgments that are always
+vague, imprecise and uncertain.
+
+  - Capabilities to learn from historical projects data.
+
+  - Capabilities to be easy to understand and to explain to
+users. Otherwise, equivalence or equality must be
+established between the model under construction and
+
+an understandable cost model.
+
+To reach these objectives, many techniques have been
+developed [1, 2]; most of them are based on a set of artificial
+intelligence techniques such as: neural networks [3, 4, 5, 6],
+regression trees [7, 8] and case-based reasoning [9, 10, 11, 12,
+13, 14]. In this paper, we are concerned with estimation by
+analogy, especially an attractive technique referred to as Fuzzy
+Analogy [9]. Fuzzy Analogy is based on:
+
+  - *Estimation by analogy*, which is a form of Case-Based
+Reasoning [14, 15] based on the following assumption:
+*similar software projects have similar costs*, and it has
+been deployed as follows. First, each project is
+
+
+
+- *Fuzzy logic*, which suggests the use of fuzzy sets rather
+than classical sets to represent linguistic values [16]. A
+fuzzy set, by contrast to a classical set, is associated
+with a membership function, which maps elements in a
+real interval (0,1). Thus, a fuzzy set representation
+captures the vagueness of one linguistic value by the
+use of gradual rather than abrupt-step membership
+function.
+
+
+
+  - *Linguistic quantifiers*, which are used to evaluate the
+similarity between projects when software project
+attributes are described by linguistic values [9]. Fuzzy
+Analogy uses Regular Increasing Monotone (RIM)
+linguistic quantifiers such as ‘ *all* ’, ‘ *most* ’, ‘ *many’*, ‘ *at*
+*most* α’ or *‘there exists’* to aggregate the individual
+similarities between two projects. The choice of the
+appropriate RIM linguistic quantifier, Q, depends on
+the characteristics and the needs of each environment.
+Q indicates the proportion of individual distances that
+we feel is necessary for a good evaluation of the
+overall similarity.
+
+Fuzzy Analogy was validated on the COCOMO’81 dataset
+that contains 63 historical software projects [9]; each of which
+is described by 12 attributes measured on an ordinal scale
+composed of six linguistic values: ‘very low’, ‘low’, ‘nominal’,
+‘high’, ‘very high’ and ‘extra high’ [17]. The fuzzy
+representation (fuzzy sets and their membership functions) of
+the 12 COCOMO’81 cost drivers has been empirically
+achieved based on their descriptions [18].The results of this
+validation were compared to those of the Classical Analogy
+approach, ‘fuzzy’ intermediate COCOMO’81 and original
+intermediate COCOMO’81. The experiment concluded that
+when integrating fuzzy logic in estimation by analogy, the
+following results are found:
+
+
+978-1-4673-5895-8/13/$31.00 c *⃝* 2013 IEEE 207
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+  - Tolerance of imprecision in software project attributes
+(cost drivers); as a consequence gradual estimates of
+effort are generated.
+
+  - Improvements of the accuracy of the estimates; Fuzzy
+Analogy generates more accurate estimates than other
+techniques, especially than classical analogy.
+
+  - Capability to be easily adapted and configured
+according to the specifications of each environment.
+
+Recently, Fuzzy Analogy was validated using the
+International Software Benchmarking Standards Group
+(ISBSG) repository [19]. The dataset contains more than 2000
+software projects from which 148 projects were retained; each
+of which is described by 12 attributes. The results of this
+validation showed that Fuzzy Analogy generates accurate
+estimates especially when using trapezoidal representation.
+
+In order to approve these promising results, Fuzzy Analogy
+must be validated by using various datasets in which software
+projects are described either by linguistic or numerical values.
+Hence, this paper aims to replicate the above experiments on a
+Web software dataset, which contains 53 Web Hypermedia
+Applications. Each project is described by 9 numerical
+attributes [20]. This objective is reflected in the following
+research questions. Using the Web dataset and the experiment
+procedure of [9]:
+
+  - Question 1: How accurate is Fuzzy Analogy compared
+to Classical Analogy?
+
+  - Question 2: Will Fuzzy Analogy tolerates imprecision
+and correctly deals with linguistic values?
+
+  - Question 3: Will Trapezoidal fuzzy representation of
+cost drivers generates accurate estimates than
+Triangular or Gaussian ones?
+
+  - Question 5: What are the favorable estimation context
+of Classical and Fuzzy analogy?
+
+The remainder of the paper is organized as follows: Section
+2 describes the research method employed. Section 3 presents
+fuzzy representations of the Web software attributes generated
+by the FCM-RCGA process. Section 4 presents and discusses
+the results of the replication. Finally, conclusions and future
+work are given in Section 5.
+
+II. R ESEARCH M ETHOD
+
+This section presents a description of the Web Hypermedia
+dataset as well as the evaluation methods used in this study.
+
+*A.* *Data Description*
+
+The dataset used in this study represents Web Hypermedia
+Applications. The dataset contains 53 Web hypermedia
+projects [20]. Each project is described by 9 numerical
+attributes, such as the number of html or shtml files used, the
+number of media files and team experience (Table 1). Initially,
+this dataset contains more than 9 software attributes, but some
+of them may be grouped together. For example, we have
+grouped together the following three attributes: number of new
+Web pages developed by the team, number of Web pages
+provided by the customer and the number of Web pages
+
+
+developed by a third party (outsourced) in one attribute
+reflecting the number of Web pages in the application
+(Webpages). The use of Fuzzy Analogy on the Web dataset
+requires the transformation of numerical values to linguistic
+ones. Indeed, the use of linguistic values instead (or in
+addition) of numbers serves many major purposes such as
+allowance of imprecision and allowance of easy modelinterpretation [22].
+
+TABLE I. S OFTWARE ATTRIBUTES FOR THE W EB DATASET
+
+|Software Attribute|Description|
+|---|---|
+|Teamexp<br>Devteam<br>Webpages<br>TextP<br>Imag<br>Anim<br>Audio/video<br>Tot-high<br>Tot-nhigh|Average number of years’ experience the team<br>has in web development<br>Number of people who have worked on the<br>software project<br>Number of Web pages in the software<br>Number of text pages in the software (600<br>words to a text page)<br>Number of images in the software<br>Number of animations in the software<br>Number of audio/video files<br>Number of high-effort features<br>Number of low-effort features|
+
+
+
+*B.* *Evaluation Method*
+
+Two methods were used, in this experiment, to evaluate the
+Classical and Fuzzy analogy techniques on the Web dataset:
+
+  - The first method is referred as *jackknife* method, also
+called *leave one out cross-validation* . It consists to
+derive the estimate for a project by excluding this
+project from the dataset; the effort calculation is then
+made by using all projects in dataset except the project
+under estimation.
+
+  - The second method consists to derive estimate for a
+project by considering the project under estimation as
+a historical project; the effort calculation is made by
+using all projects in dataset. This method is referred to
+as All-In method.
+
+The accuracy of the estimates is evaluated by using the
+Magnitude of Relative E rror, MRE, defined as:
+
+−
+*MRE* = *Effort* *actual* *Effort* *estimated* . (1)
+*Effort* *actual*
+
+The MRE is calculated for each project in the dataset. In
+addition, we use the measure PREDiction level Pred. This
+criterion is often used in the literature and is defined by:
+
+*k*
+Pr *ed* ( *p* ) = (2)
+
+*N*
+
+Where N is the total number of observations, k is the
+number of observations with an MRE less than or equal to p. In
+this evaluation, we use p equal to 0.20. The Pred(0.20) gives
+the percentage of projects that were predicted with an MRE
+less than or equal to 0.20.
+
+
+208 *2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)*
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+III. B UILDING F UZZY R EPRESENTATIONS FOR THE W EB
+
+S OFTWARE A TTRIBUTES
+
+The use of Fuzzy Analogy to estimate software
+development effort on the Web dataset requires the
+determination of fuzzy representations for the attributes
+describing software projects. Because the descriptions given of
+the Web software attributes are insufficient to empirically build
+their fuzzy representations, we suggest the use of an automatic
+process to build fuzzy sets and their membership functions. The
+proposed fuzzy sets generation process is based on the Fuzzy
+C-Means clustering technique (FCM) and a Real Coded
+Genetic Algorithm (RCGA). It consists of two main steps (Fig.
+1). First, the well-known FCM algorithm and the Xie-Beni
+validity criterion are used to decide on the number of clusters
+(fuzzy sets) [23, 24]. Second, an RCGA is used to build
+membership functions for these fuzzy sets [25, 26].
+Membership functions can be trapezoidal, triangular or
+Gaussian.
+
+
+TABLE II. E XAMPLE OF A CLASSIFICATION GENERATED BY THE FCM
+
+ALGORITHM
+
+After generating fuzzy sets (clusters ( *C* *j* ), 1 ≤ *j* ≤ *c* ) with
+
+their partition *U* = ( *u* *ij* ) by means of FCM, we use an RCGA
+
+to build membership functions for these clusters [25, 26];
+membership functions can be trapezoidal, triangular or
+Gaussian. Our RCGA consists in building a set of membership
+functions (μ *j* ), 1 ≤ *j* ≤ *c* that interpolates and minimizes the
+
+mean square error, which is defined as follows:
+
+
+1 2
+## (μ 1,..,μ c ) = � (μ 1 ( x ),..,μ c ( x ))(- u 1,..,u )
+
+## � (
+
+
+*j* = *n*
+
+
+=
+
+
+
+
+
+*MSE* (μ 1,..,μ *c* ) = (μ 1 ( *x* *j* ),..,μ *c* ( *x* *j* ))(- *u* 1 *j* *,..,u* *c,j*
+*n*
+*j* =1
+
+## Subject to:  �
+
+
+(μ 1,..,μ *c* ) = (μ 1 ( *x* *j* ),..,μ *c* ( *x* *j* ))(- *u* 1 *j* *,..,u* *c,j* ) (4)
+
+*n*
+
+=
+
+
+μ *j* ( *[x]* *i* ) = 1, for all *[x]* *i*
+
+=
+
+
+μ *j* *[x]* *i*
+
+*j* =1
+
+
+μ *j* ( *[x]* *i* ) = 1
+
+1
+
+
+1
+
+
+*c*
+
+
+Clustering by FCM Approximating by RCGA
+
+Figure 1. Fuzzy set generation process.
+
+The FCM algorithm is a fuzzy clustering method used to
+generate a known number of clusters (c) from a set of
+numerical data. The determination of this number is still an
+open problem in clustering. Often, empirical knowledge or a
+set of evaluation criteria is used to choose the best set of
+clusters. In this work, the fuzzy cluster validity criterion
+proposed in [24] is used. FCM is an iterative algorithm that
+aims to find cluster centers  and the matrix  that minimizes the
+following objective function:
+
+
+2
+
+
+*i* = *n*
+
+
+*j* = *c*
+
+## ( U, C ) = �� ( ) u ij
+
+##, C ) = ��
+
+*i* =1 =1
+
+## Min J p ( U, C ) = �� u ij m x i − c j
+
+*i* =1 *j* =1
+
+
+and μ *j* ( *x* *i* ) = *u* *ij*, 1 ≤ *i* ≤ *n* ; 1 ≤ *j* ≤ *c*
+
+The use of an RCGA to find membership functions μ *j*
+requires the determination of certain parameters, such as the
+coding scheme, the fitness function and the various genetic
+operators (selection, crossover and mutation). Concerning the
+coding scheme, a chromosome in the population of our RCGA,
+*m* *i*, 1 ≤ *i* ≤ *M*, represents the set of the unknown membership
+functions, ( μ *j* ), 1 ≤ *j* ≤ *c*, associated with the c fuzzy sets
+
+generated by the FCM. The shape of the membership functions
+can be trapezoidal, triangular or Gaussian. Thus, each
+chromosome encodes a set of membership functions in a real
+1 *K* *j*
+vector ( *m* *i*,..., *m* *i* ) . The genes *m* *i* are obtained from the shape
+of the membership functions. Fig. 2 shows the structure of a
+chromosome, m i, encoding trapezoidal membership functions.
+
+1
+
+0
+
+1 2 3 4 5 6
+*m* *i* *m* *i* *m* *i* *m* *i* *m* *i* *m* *i*
+
+Figure 2. Structure of a chromosome associated with trapezoidal
+membership functions.
+
+The fitness function is obtained in the objective of
+minimizing the mean square error, defined by the formula:
+
+
+= *u* *ij* *x* *i* −
+
+= =
+
+
+(3)
+
+
+*i*
+
+
+=
+
+
+*c*
+
+### Subject to    � u ij =,1∀ j =
+
+=
+
+
+*u* *ij* =,1∀ *j* = 1,...,
+
+1
+
+
+*u* *ij* =,1∀ *j* = 1,..., *n*
+*i* =1
+
+
+Where *m* is the control parameter of fuzziness; *U* = ( *u* *ij* ) is
+
+the partition matrix, containing the membership values of all
+data in all clusters;
+
+For each Web software attribute, several experiments were
+conducted with the FCM algorithm, each time using a different
+initial matrix U. The desired number of clusters (c) is varied
+within the interval [2,7]. The parameter m is fixed to 2 in all
+experiments. As mentioned earlier, we use the Xie-Beni
+criterion to decide on the number of clusters. For each attribute,
+we choose the number of clusters that minimizes the value of
+
+the Xie-Beni criterion. Table 2 shows the ‘best’ classification
+obtained according to the Xie-Beni index.
+
+
+*2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)* 209
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+0 500 1000 1500 2000 2500
+(e)
+
+0 500 1000 1500 2000 2500
+(f)
+
+
+*j* = *n*
+
+
+=
+
+
+1 2
+## ( m i ) = � μ( x ) - y
+
+## �
+
+
+= μ( *x* *j* ) - *y* *j* (5)
+
+*n*
+
+=
+
+
+1
+
+0.5
+
+0
+
+1
+
+0.5
+
+0
+
+
+*MSE* ( *m* *i* ) = μ( *x* *j* ) - *y* *j*
+*n*
+*j* = 1
+
+
+1
+
+
+Where μ ( *x* *j* ) = ( μ 1 ( *x* *j* ),..., μ *c* ( *x* *j* )), *y* = *j* ( *u* 1 *j*,..., *u* *cj* ) and
+
+M is the size of the population. For the three genetic operators
+(selection, crossover and mutation), we use those that are
+specific to RCGAs. Hence, the linear ranking is used as a
+selection operator [27]. The line recombination method is
+considered as a crossover operator; The Breeder Genetic
+Algorithm is used as a mutation operator [26].
+
+For each software attribute, the RCGA algorithm was
+applied to the correspondent fuzzy clusters to build their
+membership functions. This algorithm is applied with
+populations of up to 300, the mutation probability fixed to 0.9,
+and the number of generations is equal to 200. Fig. 3 shows
+three different shapes of membership functions associated with
+the fuzzy sets of the IMAG and TEXTP attributes respectively.
+
+1
+
+0.5
+
+0
+
+0 400 800 1200 1600 2000
+
+(a)
+
+1
+
+0.5
+
+0
+
+0 400 800 1200 1600 2000
+
+(b)
+
+1
+
+0.5
+
+0
+
+0 400 800 1200 1600 2000
+
+(c)
+
+1
+
+0.5
+
+0
+
+0 500 1000 1500 2000 2500
+
+(d)
+
+
+
+Figure 3. Membership functions associated with the fuzzy sets of the IMAG
+and TEXTP attributes respectively: (a) Trapezoidal for IMAG; (b) Triangular
+for IMAG; (c) Gaussian for IMAG; (d) Trapezoidal for TEXTP; (e)
+Triangular for TEXTP; and (f) Gaussian for TEXTP.
+
+IV. E MPIRICAL R ESULTS
+
+*A.* *Classical Analogy Evaluation*
+
+The calculations were made by using the free ArchAngel
+tool developed by the Empirical Software Engineering
+Research Group [14]. Hence, we need to configure the
+ArchAngel according to the following parameters: similarity
+measure, the attributes considered in the Adaptation step, an
+adaptation strategy for generating estimates, and the number of
+analogies used to adapt the effort. In this study, all experiments
+are conducted by using the Unweighted Euclidian Distance as a
+similarity measure. In the Adaptation step, the effort estimates
+were made by considering all attributes with three different
+adaptation strategies: Simple Average (SA), Inverse Rank
+Weighted (IRW), and Inverse Distance Weighted (IDW). For
+each adaptation strategy, the number of analogies (k) is varied
+within the interval [2-5]. Table 3 and Table 4 show the results
+obtained when validating Classical Analogy by means of the
+two evaluation methods ( jackknife and All-In) on the Web
+dataset.
+
+TABLE III. R ESULTS OF THE EVALUATION OF C LASSICAL A NALOGY BY
+
+JACKKNIFE METHOD
+
+
+|Case Adaptation Numb|er of analogies Pre|d(0.20)|MMRE (%)|
+|---|---|---|---|
+|Simple Average|2 1<br>3 1<br>4<br>5 1|3.21|188<br>174<br>160<br>175|
+|Simple Average|2 1<br>3 1<br>4<br>5 1|1.32|1.32|
+|Simple Average|2 1<br>3 1<br>4<br>5 1|9.43|9.43|
+|Simple Average|2 1<br>3 1<br>4<br>5 1|8.87|8.87|
+|Inverse Distance<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|5.09|178<br>163<br>155<br>170|
+|Inverse Distance<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|5.09|5.09|
+|Inverse Distance<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|1.32|1.32|
+|Inverse Distance<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|3.21|3.21|
+|Inverse Rank<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|6.98|173<br>165<br>159<br>165|
+|Inverse Rank<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|5.09|5.09|
+|Inverse Rank<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|6.98|6.98|
+|Inverse Rank<br>Weighted|2 1<br>3 1<br>4 1<br>5 1|8.87|8.87|
+
+
+210 *2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)*
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+The evaluation of Classical Analogy by the All-In method
+consists in considering the project under estimation as an
+historical project, which is considered in the adaptation step.
+However, the ArchAngel tool doesn’t support this method of
+validation. For that, we must modify the original dataset for
+each estimate. Indeed, we duplicate the project under
+estimation in original dataset, and then we apply the jack-knife
+method to generate an estimate for this project.
+
+By analyzing the validation results of the Classical Analogy
+procedure using both evaluation methods (Tables 3 and 4), we
+noticed that in general Classical Analogy performs better in
+terms of accuracy when:
+
+    - IDS or IRS are used rather than SA as an
+adaptation strategy. Indeed, in IDS or IRS, the
+selected historical projects contribute in the
+estimates according to their degrees of similarity
+to the new project (e.g. similar is the project
+higher is the contribution); while in SA their
+contributions to the estimates are the same.
+
+    - 2 or 3 analogies are considered in the Adaptation
+formula even if it seems not to be the case of the
+Jackknife method in which the best accuracy for
+the SA and IRW adaptation strategies is obtained
+with 5 analogies (Pred(0.20)=18,87.
+
+    - The dataset contains at least one historical project
+that is closely similar to the new project (case of
+All-In method, Table 4, Pred(0.20)=80.02).
+Otherwise, the use of estimation by analogy is not
+recommended (case of jackknife method, Table 3,
+Pred(0.20)=18,87).
+
+T ABLE IV: R ESULTS OF THE EVALUATION OF C LASSICAL A NALOGY BY ALL - IN
+
+METHOD
+
+
+
+|Case Adaptation|Number of analogies|Pred(0.20)|MMRE (%)|
+|---|---|---|---|
+|Simple Average|2<br>3<br>4<br>5|35.85<br>18.87<br>15.09<br>18.87|75<br>125<br>131<br>128|
+|Inverse Distance<br>Weighted|2<br>3<br>4<br>5|78.15<br>80.02<br>75.47<br>71.70|10<br>19<br>25<br>29|
+|Inverse Rank<br>Weighted|2<br>3<br>4<br>5|45.28<br>32.08<br>32.08<br>28.30|50<br>81<br>88<br>90|
+
+
+*B.* *Fuzzy Analogy Evaluation*
+
+To generate effort estimates, a quantifier must be specified
+beforehand. Normally, for the overall distances, each
+environment must define its appropriate quantifier (Q) by
+studying its features and its requirements. Because a lack of
+knowledge concerning the appropriate quantifier for the
+environment from which Web dataset was collected, we used
+various α-RIM linguistic quantifiers to combine the individual
+similarities. An α-RIM linguistic quantifier is defined by a
+
+
+fuzzy set in the unit interval with membership function Q given
+by:
+
+*Q* ( *r* ) = *r* α α       - 0 (6)
+
+By analyzing the validation results of the Fuzzy Analogy
+using both evaluation methods (Tables 5 and 6), we noticed
+that the accuracy of the estimates depends on the linguistic
+quantifier ( α ) used in the evaluation of the overall similarity
+between software projects. So, if we consider the accuracy
+measured by Pred(0.20) as a function of α, we can say that, in
+general, it increases monotonously according to α (Fig. 4 and
+Fig 5). This is because our similarity measures decrease
+monotonously according to α . Indeed, when α tends towards
+zero, this implies that the overall similarity will take into
+account fewer attributes among all those describing Web
+software projects. The minimum number of attributes to
+consider is one. As a consequence, the overall similarity will be
+higher because we are more likely to find at least one attribute
+in the Web dataset for which the associated linguistic values
+are the same for the two projects. By contrast, when α tends
+towards infinity, it implies that the overall similarity will take
+into account many attributes among all the available ones
+describing the software projects. As a maximum, we may
+consider all attributes. Consequently, the overall similarity will
+be minor because we are more likely to find one attribute in the
+Web dataset for which the associated linguistic values are
+different for the two projects.
+
+TABLE IV. R ESULTS OF THE EVALUATION OF F UZZY A NALOGY BY
+
+JACKKNIFE METHOD
+
+|Col1|Trapezoidal<br>functions|Col3|Triangular<br>functions|Col5|Gaussian<br>functions|Col7|
+|---|---|---|---|---|---|---|
+|alpha<br>-<br>RIM|Pred<br>(0.20)|MMRE|Pred<br>(0.20)|MMRE|Pred<br>(0.20)|MMRE|
+|1/15<br>1/10<br>1/7<br>1/3<br>1<br>3<br>7<br>10<br>15<br>30<br>50<br>70<br>90<br>100<br>200<br>500|11.32<br>11.32<br>11.32<br>11.32<br>9.43<br>7.55<br>7.55<br>11.32<br>11.32<br>11. 32<br>13.21<br>13.21<br>17.02<br>23.15<br>23.15<br>23.15|737.28<br>732.05<br>725.46<br>697.67<br>616.30<br>459.06<br>310.00<br>267.55<br>251.16<br>249.47<br>228.29<br>222.13<br>221.84<br>221.79<br>221.76<br>221.76|11.32<br>11.32<br>11.32<br>11.32<br>9.43<br>7.55<br>7.55<br>9.43<br>9.43<br>7.55<br>13.21<br>11.32<br>11.32<br>11.32<br>11.32<br>13.21|737.66<br>732.60<br>726.23<br>699.33<br>620.00<br>464.10<br>312.99<br>268.23<br>248.86<br>242.47<br>234.28<br>236.95<br>247.13<br>251.81<br>254.67<br>254.67|11.32<br>11.32<br>11.32<br>11.32<br>9.43<br>7.55<br>7.55<br>11.32<br>11.32<br>11.32<br>11.32<br>13.21<br>16.98<br>18.87<br>18.87<br>18.87|737.79<br>732.74<br>726.37<br>699.49<br>620.23<br>465.07<br>314.76<br>270.08<br>250.67<br>256.30<br>267.58<br>272.56<br>277.79<br>280.39<br>308.01<br>307.81|
+
+
+
+Moreover, we noticed that Fuzzy Analogy generates, for
+both evaluation methods, accurate estimates when it used
+Trapezoidal membership functions rather than Triangular or
+Gaussian to represent fuzzy sets:
+
+
+*2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)* 211
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+    - For All-in method, the Pred(0.20) is 84.91 for
+Trapezoidal functions while the Pred(0.20) for
+Triangular and Gaussian functions are 83.02 and
+77.36, respectively.
+
+    - For Jackknife method, the Pred(0.20) is 23.15 for
+Trapezoidal functions while the Pred(0.20) for
+Triangular and Gaussian functions are 13.21 and
+18.87, respectively.
+
+However, as it was the case of Classical Analogy, the use of
+Fuzzy Analogy to estimate effort of a new project is
+recommended when the dataset contains at least one closely
+similar project to this new project (case of All-In method when
+Pred(0.20)=84.91 instead of Jackknife method when
+Pred(0.20)=23.15).
+
+*C.* *Fuzzy Analogy vs classical Analogy*
+
+When comparing the accuracy of Fuzzy Analogy with that
+of Classical Analogy for both evaluation methods, we noticed
+that Fuzzy Analogy performs better when � is higher than a
+given value, especially when the shape of membership
+functions is trapezoidal. Indeed,
+
+ - For the All-In evaluation method, the Classical Analogy
+takes into consideration all Web dataset cost drivers and
+the best accuracy was obtained when using the IDW
+adaptation strategy and three analogies in the adaptation
+formula (Pred(20)=80,02%). The Fuzzy Analogy when
+using a high value of (>80) also took into consideration
+all cost drivers in the evaluation of projects similarity.
+However, its accuracy was higher than that of Classical
+Analogy (Pred(0.20)=84,91).
+
+ - For the Jackknife evaluation method, the Fuzzy Analogy
+performs better in terms of accuracy than the Classical
+Analogy (Pred(0.20)=23.15 instead of Pred(0.20)=18.87).
+However, the two values of Pred(0.20) still less than the
+well-known accepted value of Pred that is around 70%.
+This is because the lack of similarities between the
+historical projects of the Web dataset.
+
+
+TABLE V. R ESULTS OF THE EVALUATION OF F UZZY A NALOGY BY THE
+
+ALL             - IN METHOD
+
+|Col1|Trapezoidal<br>functions|Triangular<br>functions|Gaussian<br>functions|Col5|
+|---|---|---|---|---|
+|alpha<br>-<br>RIM|Pred<br>(0.20) MMRE|Pred<br>(0.20) MMRE|Pred<br>(0.20)|MMRE|
+|1/10<br>1/7<br>1/3<br>1<br>3<br>7<br>10<br>15<br>25<br>30<br>40<br>50<br>60<br>70<br>80|11.32 717.58<br>13.21 710.83<br>11.32 682.34<br>9.43 598.21<br>7.55 429.71<br>13.21 243.06<br>28.30 165.66<br>52.83 100.53<br>69.81 51.41<br>79.25 41.32<br>81.13 31.79<br>83.02 28.69<br>84.91 27.74<br>84.91 27.46<br>84.91 27.38|11.32 718.14<br>13.21 711.61<br>11.32 684.00<br>9.43 601.95<br>7.55 435.20<br>15.09 248.29<br>28.30 170.05<br>54.72 103.97<br>67.92 54.07<br>77.36 44.65<br>81.13 35.48<br>83.02 32.55<br>83.02 31.73<br>83.02 31.47<br>83.02 31.39|11.32<br>13.21<br>11.32<br>11.32<br>7.55<br>11.32<br>22.64<br>47.17<br>64.15<br>73.58<br>75.47<br>77.36<br>77.36<br>77.36<br>77.36|718.25<br>711.73<br>684.13<br>602.11<br>436.10<br>250.84<br>173.72<br>108.60<br>61.53<br>52.62<br>44.83<br>42.37<br>41.60<br>41.37<br>41.29|
+
+
+
+
+
+
+20,00
+
+18,00
+
+16,00
+
+14,00
+
+12,00
+
+10,00
+
+8,00
+
+6,00
+
+4,00
+
+2,00
+
+0,00
+
+
+Pred(20)-Trapezoidal Shape
+
+Pred(20)-Triangular Shape
+
+Pred(20)-Gaussian Shape
+
+
+Figure 5. Relationship between α and the accuracy of Fuzzy Analogy for the
+three shapes of membership functions using the All-In method.
+
+V. C ONCLUSION
+
+In this paper, we have validated and compared the Fuzzy
+Analogy and Classical analogy approaches for estimating the
+cost of Web hypermedia applications. The results obtained
+approve those found on the COCOMO’81 and ISBSG datasets:
+(1) Fuzzy Analogy generates accurate estimates than Classical
+Analogy; (2) Fuzzy Analogy tolerate imprecision and
+uncertainty when describing cost drivers; (3) Fuzzy Analogy
+generates accurate estimates when using Trapezoidal
+membership functions rather than Triangular or Gaussian ones;
+(4) For both Fuzzy Analogy and Classical Analogy, the
+favorable context of their use for a new project is that the
+dataset should contains at least one closely similar historical
+project to the new project.
+
+A CKNOWLEDGMENT
+
+
+**Alpha**
+
+Figure 4. Relationship between α and the accuracy of Fuzzy Analogy for the
+three shapes of membership functions using the jackknife method.
+
+
+We thank Dr. Emilia Mendes for providing us with the data
+on the 54 Web software projects.
+
+212 *2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)*
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.
+
+
+R EFERENCES
+
+[1] M. Jørgensen, M. Shepperd, "A systematic review of software
+development cost estimation studies", IEEE Transactions on Software
+Engineering, vol. 33, no. 1, pp. 33-53, 2007.
+
+[2] J. Wen, S. Li, Z. Lin, Y. Huc, C. Huang, "Systematic literature review of
+machine learning based software development effort estimation models",
+Information and Software Technology, vol. 54, pp. 41–59, 2012.
+
+[3] S.J. Huang, N.H. Chiu, "Applying fuzzy neural network to estimate
+software development effort", Applied Intelligence, vol. 30, no. 2, pp.
+73–83, 2009.
+
+[4] K.V. Kumar, V. Ravi, M. Carr, N.R. Kiran, "Software development cost
+estimation using wavelet neural networks", Journal of Systems and
+Software, vol.81, pp. 1853–1867, 2008.
+
+[5] H. Park, S. Baek, "An empirical validation of a neural network model for
+software effort estimation", Expert Systems with Applications, vol.35,
+no. 3, pp. 929–937, 2008.
+
+[6] R. Setiono, K. Dejaeger, W. Verbeke, D. Martens, B. Baesens,
+"Software effort prediction using regression rule extraction from neural
+networks", Proceedings of the 22nd International Conference on Tools
+with Artificial Intelligence, Arras, France, vol. 2, pp. 45–52, 2010.
+
+[7] S. Bibi, I. Stamelos, L. Angelis, "Combining probabilistic models for
+explanatory productivity estimation", Information and Software
+Technology, vol. 50, pp. 656–669, 2008.
+
+[8] M.O. Elish, "Improved estimation of software project effort using
+multiple additive regression trees", Expert Systems with Applications,
+vol. 36, no. 7, pp. 10774–10778, 2009.
+
+[9] A. Idri, A. Abran, T. Khoshgoftaar, “Estimating software project effort
+by analogy based on linguistic values”, 8th IEEE International Software
+Metrics Symposium, Ottawa, pp. 21-30, June 2002.
+
+[10] J. Keung, B. Kitchenham, D. R. Jeffery, "Analogy-X: providing
+statistical inference to analogy-based software cost estimation", IEEE
+Transactions on Software Engineering, vol. 34, no. 4, pp. 471- 484,
+2008.
+
+[11] J. Li, G. Ruhe, A. Al-Emran, M. Richter, "A flexible method for
+software effort estimation by analogy", Empirical Software Engineering,
+vol. 12, pp. 65–106, 2007.
+
+[12] N. Mittas, M. Athanasiades, L. Angelis, "Improving analogy-based
+software cost estimation by a resampling method", Information and
+Software Technology, vol. 50, pp. 221–230, 2008.
+
+[13] N. Mittas, L. Angelis, "LSEbA: least squares regression and estimation
+by analogy in a semi-parametric model for software cost estimation",
+Empirical Software Engineering, vol. 15, pp. 523–555, 2010.
+
+
+
+[14] M. Shepperd, C. Schofield, “Estimating software project effort using
+analogies”, IEEE Transactions on Software Engineering, vol. 23, no. 12,
+pp. 736-747, 1997.
+
+[15] S. Vicinanza, M. J. Prietolla, “Case-based reasoning in software effort
+estimation”, Proceedings of the 11th International Conference on
+Information Systems, 1990.
+
+[16] L. A. Zadeh, “Fuzzy sets”, Information and Control, vol. 8, pp. 338-352,
+1965.
+
+[17] B. W. Boehm, “Software engineering economics”, Prentice-Hall, 1981.
+
+[18] A. Idri, L. Kjiri, A. Abran, “COCOMO cost model using fuzzy logic”,
+Proceedings of the 7th International Conference on Fuzzy Set Theory
+and Technology, NJ, pp. 219-223, 2000.
+
+[19] A. Idri, F.A. Amazal, "Software cost estimation by fuzzy analogy for
+ISBSG repository", Proceedings of the 10th International FLINS
+Conference on Uncertainty Modeling in Knowledge Engineering and
+Decision Making, Istanbul, August 26-29, 2012.
+
+[20] E. Mendes, W. C. Triggs, N. Mosley, S. Counsell, “A comparison of
+development effort estimation techniques for web hypermedia
+applications”, 8th IEEE International Software Metrics Symposium,
+Ottawa, pp. 131-140, 2002.
+
+[21] A. Idri, A. Zahi, A. Abran, “Generating fuzzy term sets for software
+project attributes using fuzzy c-means and real coded genetic
+algorithms”, ICT4M, Malaysia, pp.120-127, November 2006.
+
+[22] Zadeh L. A., “From Computing with Numbers to Computing with
+Words—From Manipulation of Measurements to Manipulation of
+Perceptions”, IEEE Transactions on Circuits and Systems, 45, 1999, pp.
+105-119
+
+[23] J.C. Bezdek, “Pattern recognition with fuzzy objective function
+algorithms”, Plenum Press, New York, 1981.
+
+[24] X. L. Xie, G. Beni, “A validity measure for fuzzy clustering”, IEEE
+Transactions on Pattern Analysis Machine Intelligence, vol. 13, no 8, pp.
+841-847, 1991.
+
+[25] F. Herrera, M. Loazano, A. M. Sanchez, “A taxonomy for the crossover
+operator for real- coded genetic algorithms: an experimental study”,
+International Journal of Intelligent Systems, vol. 18, no 3, pp. 309-338,
+2003.
+
+[26] H. Mühlenbein, D. Schlierkamp-Voosen, “Predictive models for the
+breeder genetic algorithm: i. continuous parameter optimization,”
+Evolutionary Computation, vol. 1, no. 1, pp. 25-49, 1993.
+
+[27] J. E. Baker, “Reducing bias and inefficiency in the selection algorithm”,
+Proc. ICGA 2, pp. 14-21, 1987.
+
+
+*2013 IEEE Symposium on Computational Intelligence and Data Mining (CIDM)* 213
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:17:52 UTC from IEEE Xplore. Restrictions apply.

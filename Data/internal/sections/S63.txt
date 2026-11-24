@@ -1,0 +1,487 @@
+**IEEE 8th International Conference on Computer and Information Technology Workshops**
+# **Comparative Study on Applicability of WEBMO in Web Application Cost ** **Estimation within Klang Valley in Malaysia **
+
+Tan Chin Hooi Yunus Yusoff Zainuddin Hassan
+*chinhooi@uniten.edu.my* *yunusy@uniten.edu.my* *zainuddin@uniten.edu.my*
+
+
+**Abstract**
+
+*Parametric web application cost estimation is*
+*referred to the usage of mathematical model to derive*
+*the estimated effort and duration of web application*
+*development. Typically, majority of web application*
+*developers* *are* *applying expert judgment* *and*
+*estimation by analogy in web application development.*
+
+*This paper is focusing on feasibility study of*
+*WEBMO (Web Model), a parametric web application*
+*cost estimation model, in web application development*
+*within Klang Valley in Malaysia. WEBCOMO, a*
+*parametric web application tool is developed based on*
+*WEBMO’s methodology to fulfill the objective of the*
+*study.*
+
+**1. Introduction**
+
+Software cost estimation is referred to practice of
+deriving estimated effort and duration of a software
+development. It is easier to get confused with software
+cost estimation as the term itself contains cost. It is
+
+used to reason the effort and duration of software
+development. It is not used to estimate the cost of the
+software development. This research is about
+parametric software cost estimation, parametric web
+application cost estimation in particular. Parametric
+web application cost estimation is focused on
+conducting software cost estimation in web application
+domain. It derives estimated effort and duration of web
+application development based on mathematical
+formula. It falls under software engineering body of
+knowledge; it is a subset of software measurement.
+There are three elements under software cost
+
+estimation, i.e.: software metric, software cost
+estimation model and software cost estimation tool.
+
+Software cost estimation model consists of a list of
+software metrics with respective weightages to be used
+to derive the estimated effort and duration of web
+application development. The practice of software cost
+
+
+estimation is automated with software cost estimation
+
+tool.
+
+This research focuses on development of a web
+application cost estimation tool, WEBCOMO, to study
+the usage of WEBMO (Web Model), a parametric web
+application cost estimation model, to explore the
+current web application cost estimation practice within
+Klang Valley in Malaysia context. It is focused on IT
+companies in Klang Valley since most of these IT
+companies are MSC status companies based in Klang
+Valley area and have branches throughout Malaysia.
+Klang Valley contains the highest population of IT
+companies in Malaysia. These companies have projects
+locally as well as in overseas. A parametric web
+application tool, WEBCOMO, is developed based on
+WEBMO principle for the research purpose.
+
+Figure 1.1 represents the software cost estimation in
+research domain of knowledge [1].
+
+**Figure 1.1 Research Domain of Knowledge**
+
+**2. Research Methodology**
+
+The research is exploratory in nature. It was
+designed to be conducted one after another based on
+the result from the earlier survey. There are
+suggestions for a general approach to designing case
+studies, and also recommendations for exploratory,
+explanatory, and descriptive case studies [10]. It can be
+either single or multiple-case studies, where multiple
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:11:04 UTC from IEEE Xplore. Restrictions apply.
+
+
+case studies are replication, not sampled cases [10].
+When no other cases are available for replication, the
+researcher is limited to single-case designs. In this
+research, since the major constraint is to get the data
+from local companies that are focusing on web
+application development, replication is hardly possible
+for multiple-cases studies. Thus, the case study design
+for this research is single-case study design. There is
+no duplication for the case studies as each respondent
+has different web application project specifications
+although they have similar application types.
+
+In exploratory case studies, fieldwork and data
+collection may be undertaken prior to definition of the
+research questions and hypotheses [2]. The framework
+of the study must be created ahead of time. Pilot
+projects are very useful in determining the final
+deliverables that will be used. Survey questions may be
+dropped or added based on the outcome of the pilot
+study [2]. In this research, some fieldworks have been
+done before starting to evaluate WEBMO using
+WEBCOMO. Surveys have been conducted to explore
+the usage of parametric software cost estimation tool
+and identify the shortcomings of COCOMO II as the
+web application cost estimation model. Online
+questionnaire and phone interview were carried out to
+find out the usage of parametric cost estimation model
+and tool in web application development within Klang
+Valley in Malaysia. Literature reviews were conducted
+on evaluation of WEBMO over Internet, books,
+conference proceedings and journals were performed
+to discover the major problem statement, which is to
+find out whether WEBMO is applicable in web
+application development within Klang Valley in
+Malaysia. However, there is no existing literature
+review on evaluating WEBMO in Malaysia. From the
+surveys result, it indicated that exploratory case study
+research is the appropriate method to explore the
+validity of hypothesis of the research and find out the
+answer for the problem statement.
+
+There were four stages in the research. Every stage
+was interrelated to each other. The first three stages
+were prerequisites for the last stage of the research.
+Preliminary problem statement was established at the
+beginning of the research to find out whether there is a
+scientific way of conducting software cost estimation.
+First stage was conducted to find out the usage of
+parametric tool for software cost estimation in
+Malaysia. It is important to know awareness of
+Malaysian on the usage of parametric tool as the
+finding would be the first step to discover whether
+scientific way of conducting software cost estimation is
+currently practiced or not in Malaysia. Online
+questionnaire and phone interview were used as the
+
+
+research instruments to collect the sample data from
+industrial respondents. Quantitative analysis was
+chosen as the research analysis method for survey
+result.
+
+After knowing the result on usage of parametric
+tool, second stage of research was conducted to find
+out parametric model applicability in web application
+development. COCOMO II is one of the prominent
+parametric software cost estimation model which is
+used in standalone application cost estimation. It is
+necessary to find out the usefulness of this model in
+web application development in Malaysia since there is
+no literature review on applicability of COCOMO II in
+Malaysia from the survey conducted from the first
+stage. It is also crucial to find out whether cost factors
+and scale drivers of COCOMO II are applicable for
+industrial practices. It was discovered that some of the
+cost factors in COCOMO II are not suitable for web
+application development and inadequate to address
+certain differences in web application development.
+
+Thus, third stage of research was conducted to study
+a proclaimed web application cost estimation model,
+WEBMO in web application development in Malaysia.
+The same respondents were assessed with online
+questionnaire and phone interview method. Second
+stage and third stage could not be combined together
+since cost factors and scale drivers of COCOMO II and
+WEBMO are different. Furthermore, WEBMO is a
+newly introduced web application model which is yet
+to be evaluated in Malaysia scenario. There is no
+literature review on WEBMO applicability throughout
+the findings from journals, conferences and resources
+from internet. It is appropriate to separate the survey
+on COCOMO II and WEBMO since WEBMO is
+specifically designed for web application development.
+Quantitative analysis was conducted for second and
+third stage of the research for COCOMO II and
+WEBMO surveys.
+
+After three surveys, problem statement and
+hypothesis were defined. The hypothesis for the
+research is “WEBMO is applicable for web application
+cost estimation within Klang Valley in Malaysia with
+the automated parametric tool”. Efficacy and
+effectiveness were the two parameters used to evaluate
+the applicability of WEBMO in web application
+development. Efficacy is referred to doing the things
+right, which is evaluating WEBMO by following the
+methodology of the framework. Effectiveness is
+referred to doing the right things, it is assessed by four
+parameters, i.e.: acceptability, practicality, accuracy
+and appropriateness. Acceptability is referred to
+whether the model is acceptable by industrial
+
+
+117
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:11:04 UTC from IEEE Xplore. Restrictions apply.
+
+
+respondents. Practicality is referred to whether the
+model is practical in industrial web application
+development. Accuracy is referred to whether the
+model is within the acceptable estimation range based
+on historical data. Appropriateness is referred to
+whether the model is appropriate to be utilized in
+Malaysia’s industrial development environment. It is
+said to be effective if it fulfills these four parameters.
+
+From the three stages of research, it was discovered
+that there is a need to explore the usage of parametric
+web application cost estimation model and its
+applicability in industry. Furthermore, there is no
+parametric tool developed based on WEBMO
+principles to evaluate the applicability of WEBMO in
+web application cost estimation. In order to find out the
+usage of parametric web application model in industry,
+survey is not appropriate to be chosen as the research
+method. On the other hand, case study research is
+suitable to be applied to evaluate WEBMO with
+automated tool in Malaysia context. WEBCOMO, a
+web based parametric web application cost estimation
+tool developed based on WEBMO's framework was
+adopted to evaluate the model applicability. One to one
+interview was identified as the research instrument.
+Detailed design on the interview and thorough
+evaluation on WEBCOMO were conducted with
+selected industrial respondents within Klang Valley in
+fourth stage research. Qualitative analysis was applied
+as the research analysis method after the fourth stage
+research. Qualitative analysis was chosen instead of
+quantitative analysis due to limitation of quantitative
+analysis to assess applicability of WEBMO within
+Klang Valley in Malaysia. Evaluation mechanism and
+steps are documented in next section.
+
+
+**Figure 2.1 Research Methodology Diagram**
+
+**3. Evaluation Mechanism**
+
+Qualitative analysis is applied in the case study
+research to not only to explore the applicability of
+WEBMO in web application development but also to
+discover the current industry web application cost
+estimation practice in Malaysia. One to one interview
+is carried out as the case study research method. The
+research is narrowed down to Klang Valley in
+Malaysia.
+
+WEBCOMO is evaluated by the respondents with
+the prior knowledge to WEBMO. The respondents are
+managing director, project manager, senior manager,
+senior system analyst or system analyst with
+knowledge in managing web application development.
+They are from MSC status companies and focusing on
+web application development. They are either involved
+directly or indirectly in web application cost
+estimation.
+
+A thorough interview is designed with open ended
+questions. There is no right or wrong answer. It
+documents opinions and views from the respondents to
+explore the current industry web application cost
+estimation practice. The interview is divided into two
+sections. Section A deals with general questions on
+web application cost estimation and usage of
+parametric web application cost estimation tool.
+Section B covers more specific questions on
+
+
+118
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:11:04 UTC from IEEE Xplore. Restrictions apply.
+
+
+WEBCOMO, the web application tool developed based
+on WEBMO principle that is used to evaluate the usage
+and applicability of WEBMO in web application cost
+estimation in Malaysia. Before the interviewees answer
+questions in section B, they are presented with
+WEBMO papers and thorough explanation on details
+of WEBMO. They are briefed with different
+application types, web objects and cost drivers in
+WEBMO. They are informed that the web application
+development is referred to the starting of requirement
+gathering, planning, analysis, design, implementation,
+testing up to deployment stage. They are explained on
+the expected output of WEBCOMO, which are the
+estimated effort and duration derived from WEBMO
+formula. During the interview, the industrial
+respondents are asked on the major elements involved
+in web application development based on web objects
+and cost factors listed in WEBMO. They are given
+example of web objects. For instance, multimedia
+elements are inclusive of animation files, static
+graphics and flash movies. Scripting is inclusive of
+web scripting and multimedia scripting. Web building
+blocks are inclusive of plug-in codes, reusable codes,
+database connection codes and off-the-shelf objects.
+Links are inclusive of internal application links and
+external links to other websites or applications. Apart
+from that, function points are included in the web
+objects calculation. The five elements in function
+points, i.e.: internal logical file, external interface file,
+external inputs, external outputs and external inquiries
+are explained during the interview. Figure 3.1 shows
+the graphical representation of evaluation mechanism
+flow.
+
+There are 16 samples collected from 8 respondents
+among the 5 application types stated in WEBMO.
+Relative error is used as the quantitative analysis
+parameters to compare the actual result (actual effort
+and actual duration) with the estimated result
+(estimated effort and estimated duration). The formula
+of relative error is as below:
+
+RE = Actual – Estimated
+
+Estimated
+
+A high relative error means that there is a strong
+tendency to underestimation [3] [4] [5].
+
+
+**Figure 3.1 Evaluation Mechanism Flow Diagram**
+
+**4. Results**
+
+Estimation accuracy is narrowed down along the
+software development stages. According to Barry
+Boehm, estimation range will reach an exact figure
+during the delivery of the accepted software [6]. Figure
+4.1 illustrates the estimation accuracy suggested by
+Barry Boehm while figure 4.2 illustrates the estimation
+accuracy graph suggested by Richard Stutzke. Richard
+Stutzke in his new book “Estimating Software
+Intensive Systems” invalidated the suggested graph. He
+argued that it will not be able to get an exact cost
+although it has reached the end of the software
+development stage [7].
+
+**Figure 4.1 Estimation Accuracy Diagram**
+
+
+119
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:11:04 UTC from IEEE Xplore. Restrictions apply.
+
+
+**Figure 4.2 Estimation Accuracy Diagram**
+
+From the statistical analysis result gathered from
+interviews, it is observed that the average relative error
+for the effort and duration are substantially high across
+multiple application types. All the industrial
+respondents agree in consensus that the parametric web
+application cost estimation model, WEBMO, is not
+helpful and not significant in contributing to the web
+application cost estimation. Table 4.1 shows a
+summary of relative error of different application
+types.
+
+|Application Types|Average<br>Effort<br>Relative<br>Error|Average<br>Duration<br>Relative<br>Error|
+|---|---|---|
+|Business application|-99.88|-98.03|
+|Electronic Commerce|-99.96|-98.85|
+|Financial/trading<br>application|-99.96|-99.16|
+|Information portal|-99.76|-97.45|
+|Information utilities|-99.31|-96.17|
+
+
+
+**Table 4.1 Summary of Relative Error of Different**
+**Application Types**
+
+From the statistical analysis, it is noticed that the
+actual web development duration takes 1 to 2 months.
+According to the industrial respondents in the
+interviews, it rarely takes more than 6 months except
+for enterprise web application projects. Some of the
+small web application developments might only take a
+few weeks. On the other hand, the actual effort
+involved in web application development is 1 to 2
+staff. According to the industrial respondents, normally
+it involves 3 to 6 people.
+
+It is undisputable to conclude that WEBMO is not
+applicable to be used in web application cost
+estimation within Klang Valley in Malaysia context. It
+
+
+would not be logical to have a relative error of more
+than ninety percent since it is supported by the fact that
+web application development is ranging from 1 to 6
+months [8] [9]. Moreover, from the interview
+transcripts, it is discovered that this mentioned fact is
+valid and applicable within Klang Valley in Malaysia.
+Besides, according to the estimation accuracy graphs
+suggested by Barry Boehm and Richard Stutzke, the
+estimation range should fall between 0.35x to 4x,
+where it should between +-75 percent. The average
+relative error for both effort and duration estimation is
+more than -95 percent.
+
+Although there is no standard work breakdown
+structure for IT projects up to date, activity based
+costing is at least could improve the breakdown of the
+project details to an activity, the smallest unit of the
+project management. Thus, it would be more reliable to
+derive the estimated effort and duration from activities
+level. However, the current adopted activity based
+costing technique by the industrial developers to
+estimate their effort, duration and cost based on past
+historical data is yet to be standardized. It is supported
+by the fact that there is no standard working hour’s rate
+for resources involved in web application development.
+
+It is believed that it is possible to establish a
+standard framework for activity based costing in
+Malaysia for software development as well as web
+application development. It would then benefit the
+software developers as well as clients. It would create a
+win-win situation as the software developers would be
+able to justify the cost and competent enough to
+compete in this globalization edge. For the clients, it
+would be easier and transparent for them to understand
+the process of deriving the cost from effort and
+duration of the software development. It would be a
+clear cut solution for both parties to benefit the growth
+of IT industry in Malaysia. The only issue remains is
+the timing that would make this to be actualized and
+practiced in industry. To make this a reality, it would
+need the collaboration between industrial and
+academic. Data collected from past historical web
+application projects is essential to be used for future
+research to derive a standard framework for activity
+based costing.
+
+**5. Conclusion**
+
+In short, there is no silver bullet in web application
+cost estimation in today’s globalization edge. Every
+web application project would have different work
+breakdown structures with different activities.
+Adaptability and sensitive to customer requirements
+
+
+120
+
+Authorized licensed use limited to: Aarhus University. Downloaded on September 05,2024 at 11:11:04 UTC from IEEE Xplore. Restrictions apply.
+
+
+are vital to ensure time to market and quality of the
+web application delivery. Each web application project
+in an organization would have different team of web
+developers. Even similar projects might have different
+duration based on different resources assigned to the
+activities with respective competency. Understand
+customer requirements and deliver the web application
+within the stipulated duration and cost are web
+developers’ ultimate objective. It is the responsibility
+of the project manager to ensure that the objective is
+fulfilled.
+
+Parametric web application cost estimation model
+does not help in realizing the needs of project
+management objective. It purely focuses on usage of
+mathematical model to derive the estimated effort and
+duration of web application development. It is not
+suitable to fit in as an embedded tool for web
+application project management since it does not
+follow the industry software project management
+methodology. The bottom line is activity based costing
+still remains as the fundamental of software project
+management due to the nature of activity based
+software project management.
